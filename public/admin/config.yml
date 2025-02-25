@@ -1,6 +1,9 @@
 backend:
-  name: decap-cms
+  name: git-gateway
   branch: main
+  identity_url: "https://whpubs.netlify.app/.netlify/identity"
+  gateway_url: "https://whpubs.netlify.app/.netlify/git/github"
+  accept_roles: [admin, editor]  # Specify which roles can access the CMS
   commit_messages:
     create: 'Create {{collection}} "{{slug}}"'
     update: 'Update {{collection}} "{{slug}}"'
@@ -27,7 +30,7 @@ collections:
       preview: false
     access:
       create: admin
-      update: admin
+      update: [admin, editor]
       delete: admin
     workflow:
       name: editorial
