@@ -2,6 +2,7 @@
 import '../styles/globals.css'
 import { Menu as MenuIcon, MapPin, Clock, Phone } from 'lucide-react';
 import { X } from 'lucide-react';
+import AdminBadge from '@/components/AdminBadge.astro';
 
 interface Props {
 	title: string;
@@ -24,12 +25,12 @@ const { title } = Astro.props;
 		<meta name="msapplication-TileColor" content="#050231">
 		<meta name="theme-color" content="#050231">
 		<meta name="generator" content={Astro.generator} />
-		<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 		<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@600;700&family=Nanum+Myeongjo:wght@400;700&display=swap" rel="stylesheet" />
 		<title>{title}</title>
 	</head>
 	<body class="font-nanum bg-background text-foreground">
 		<header class="bg-primary fixed w-full z-50">
+			<AdminBadge />
 			<nav class="container mx-auto px-4 py-4">
 				<div class="flex items-center justify-between">
 					<a href="/" class="text-4xl font-bold text-white">WH Pubs</a>
@@ -163,14 +164,32 @@ const { title } = Astro.props;
 			</div>
 		</footer>
 		<script>
-			if (window.netlifyIdentity) {
-				window.netlifyIdentity.on("init", user => {
+			if (window.decapIdentity) {
+				window.decapIdentity.on("init", user => {
 					if (!user) {
-						window.netlifyIdentity.on("login", () => {
+						window.decapIdentity.on("login", () => {
 							window.location.href = "/admin/";
 						});
 					}
 				});
 			}
 		</script>
+		<script>
+			// Import Decap CMS identity widget if in browser
+			if (typeof window !== 'undefined') {
+				// Dynamically load the Decap CMS identity widget
+				const script = document.createElement('script');
+				script.src = 'https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms-identity-widget.js';
+				script.onload = () => {
+					if (window.decapIdentity) {
+						window.decapIdentity.init({
+							container: '#decap-identity-container'
+						});
+					}
+				};
+				document.head.appendChild(script);
+			}
+		</script>
+		<div id="decap-identity-container"></div>
 	</body>
+</html>

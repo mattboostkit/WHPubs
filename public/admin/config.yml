@@ -1,5 +1,5 @@
 backend:
-  name: git-gateway
+  name: decap-cms
   branch: main
   commit_messages:
     create: 'Create {{collection}} "{{slug}}"'
@@ -13,6 +13,7 @@ public_folder: "/images/uploads"
 site_url: https://whpubs.netlify.app
 display_url: https://whpubs.netlify.app
 logo_url: /favicon-32x32.png
+publish_mode: editorial_workflow
 
 collections:
   - name: "blog"
@@ -22,6 +23,25 @@ collections:
     format: "frontmatter"
     slug: "{{slug}}"
     preview_path: "blog/{{slug}}"
+    editor:
+      preview: false
+    access:
+      create: admin
+      update: admin
+      delete: admin
+    workflow:
+      name: editorial
+      label: Editorial Workflow
+      steps:
+        - label: Draft
+          name: draft
+          delete: false
+        - label: In Review
+          name: review
+          delete: false
+        - label: Ready
+          name: ready
+          delete: false
     fields:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Publish Date", name: "date", widget: "datetime"}

@@ -1,0 +1,45 @@
+---
+let user = null;
+
+// Client-side only code
+if (typeof window !== 'undefined') {
+  // We'll check for the user in the client-side script
+}
+---
+
+<div id="admin-badge-container"></div>
+
+<script>
+  // Client-side script to check for admin status
+  if (typeof window !== 'undefined' && window.decapIdentity) {
+    const user = window.decapIdentity.currentUser();
+    const container = document.getElementById('admin-badge-container');
+    
+    if (user?.app_metadata?.roles?.includes('admin') && container) {
+      container.innerHTML = `
+        <div class="admin-badge">
+          <a href="/admin" class="text-sm font-medium hover:underline">
+            Admin Dashboard
+          </a>
+        </div>
+      `;
+    }
+  }
+</script>
+
+<style>
+  .admin-badge {
+    background-color: #f59e0b;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+  }
+  
+  .admin-badge a {
+    color: white;
+    text-decoration: none;
+  }
+</style>
