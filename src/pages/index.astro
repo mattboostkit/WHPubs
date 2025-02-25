@@ -1,0 +1,201 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Button } from "@/components/ui/button"
+import { MapPin, Clock, Phone, Menu as MenuIcon, ChefHat, Beer } from 'lucide-react';
+---
+
+<Layout title="WH Pubs - Traditional British Pubs in South East England">
+	<main>
+		<!-- Hero Section -->
+		<div class="relative h-[90vh]">
+			<div class="absolute inset-0">
+				<img
+					src="https://ik.imagekit.io/boostkit/WH%20Pubs/Home.webp?updatedAt=1739820583743"
+					alt="Warm and inviting traditional English pub interior featuring wooden beams, a well-stocked bar, and comfortable seating areas bathed in ambient lighting" 
+					class="w-full h-full object-cover"
+				/>
+				<div class="absolute inset-0 bg-black/50"></div>
+			</div>
+			<div class="relative h-full flex items-center justify-center">
+				<div class="text-center text-white px-4">
+					<h1 class="text-5xl md:text-7xl font-bold mb-6">WH Pubs</h1>
+					<p class="text-xl md:text-2xl mb-8 text-secondary">Traditional British Hospitality in the Heart of South East England</p>
+					<div class="flex gap-4 justify-center">
+						<Button 
+							variant="default" 
+							size="lg" 
+							class="bg-secondary hover:bg-secondary/90 text-primary font-semibold"
+							id="scroll-to-pubs"
+						>
+							View Our Pubs
+						</Button>
+						<a href="/book">
+							<Button variant="outline" size="lg" class="bg-transparent text-white border-white hover:bg-white hover:text-primary">
+							Book a Table
+							</Button>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script is:inline>
+			document.getElementById('scroll-to-pubs')?.addEventListener('click', () => {
+				const section = document.getElementById('establishments');
+				if (section) {
+					section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+				}
+			});
+		</script>
+
+		<!-- Featured Pubs Section -->
+		<section id="establishments" class="py-20 bg-secondary/10">
+			<div class="container mx-auto px-4">
+				<h2 class="text-4xl font-bold text-center mb-12 text-primary">Our Establishments</h2>
+				<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+					{[
+						{
+							name: "The Chaser Inn",
+							image: "https://ik.imagekit.io/boostkit/WH%20Pubs/ChaserInn.jpg",
+							location: "Shipbourne",
+							description: "Discover The Chaser Inn, a country dining pub nestled in outstanding natural beauty. Enjoy homecooked meals by award-winning chefs, paired with a fine selection of wines and beers.",
+							url: "https://www.thechaser.co.uk/"
+						},
+						{
+							name: "The Little Brown Jug",
+							image: "https://ik.imagekit.io/boostkit/WH%20Pubs/LittleBrownJug.jpg",
+							location: "Chiddingstone Causeway",
+							description: "At The Little Brown Jug, enjoy a stunning beer garden with bookable Tiki huts, full service, and a heated retractable-roof area. Inside, relish award-winning food and superb wines and beers.",
+							url: "https://www.thelittlebrownjug.co.uk/"
+						},
+						{
+							name: "The Cricketers Inn",
+							image: "https://ik.imagekit.io/boostkit/WH%20Pubs/Cricketers%20Inn.webp",
+							location: "Meopham",
+							description: "The Cricketers Inn is a family-owned gastro pub offering award-winning homemade food and a beer garden with a retractable roof overlooking a Kent windmill. Enjoy wine or beer.",
+							url: "https://www.thecricketersinn.co.uk/"
+						},
+						{
+							name: "The Rose & Crown",
+							image: "https://ik.imagekit.io/boostkit/WH%20Pubs/RoseAndCrown.jpg",
+							location: "Green Street Green",
+							description: "The Rose & Crown is a friendly local pub serving Young's award-winning beers and home-cooked food. Enjoy our garden with play equipment and a beer garden offering full service.",
+							url: "https://www.the-roseandcrown.co.uk/"
+						}
+					].map(pub => (
+						<div class="bg-white rounded-lg shadow-lg overflow-hidden">
+							<img 
+								src={pub.image} 
+								alt={`${pub.name} - A charming ${pub.description.toLowerCase()} Located in ${pub.location}`} 
+								class="w-full h-56 object-cover" 
+							/>
+							<div class="p-6">
+								<h3 class="text-xl font-bold mb-2 text-primary">{pub.name}</h3>
+								<p class="text-primary/70 mb-4">{pub.description}</p>
+								<div class="flex items-center text-primary/60 mb-4">
+									<MapPin class="w-4 h-4 mr-2" />
+									<span>{pub.location}</span>
+								</div>
+								<a href={pub.url} target="_blank" rel="noopener noreferrer" class="block w-full">
+									<Button variant="outline" class="w-full border-primary text-primary hover:bg-primary hover:text-secondary">Learn More</Button>
+								</a>
+							</div>
+						</div>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<!-- Features Section -->
+		<section class="py-16 bg-primary text-secondary">
+			<div class="container mx-auto px-4">
+				<div class="grid md:grid-cols-3 gap-8">
+					<div class="text-center">
+						<div class="bg-secondary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+							<ChefHat class="w-8 h-8 text-secondary" />
+						</div>
+						<h3 class="text-xl font-bold mb-2">Seasonal Menus</h3>
+						<p class="text-secondary/80">Fresh, locally-sourced ingredients prepared by our skilled chefs.</p>
+					</div>
+					<div class="text-center">
+						<div class="bg-secondary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+							<Beer class="w-8 h-8 text-secondary" />
+						</div>
+						<h3 class="text-xl font-bold mb-2">Local Ales</h3>
+						<p class="text-secondary/80">Carefully selected craft beers and traditional cask ales.</p>
+					</div>
+					<div class="text-center">
+						<div class="bg-secondary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+							<MenuIcon class="w-8 h-8 text-secondary" />
+						</div>
+						<h3 class="text-xl font-bold mb-2">Special Events</h3>
+						<p class="text-secondary/80">Regular events, live music, and themed dining experiences.</p>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Latest News Section -->
+		<section class="py-20 bg-white text-primary">
+			<div class="container mx-auto px-4">
+				<h2 class="text-4xl font-bold text-center mb-12">Latest News</h2>
+				<div class="grid md:grid-cols-3 gap-8">
+					{[
+						{
+							title: "New Summer Menu Launch",
+							date: "15th June 2024",
+							url: "/blog/new-summer-menu-launch",
+							image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=2070&auto=format&fit=crop",
+							excerpt: "Discover our new seasonal dishes featuring the finest local produce.",
+							alt: "Beautifully plated seasonal dish featuring colorful local vegetables and herbs"
+						},
+						{
+							title: "Live Music Weekends",
+							date: "10th June 2024",
+							url: "/blog/live-music-weekends",
+							image: "https://images.unsplash.com/photo-1501612780327-45045538702b?q=80&w=2070&auto=format&fit=crop",
+							excerpt: "Join us every Friday and Saturday for live acoustic performances.",
+							alt: "Acoustic guitarist performing in an intimate pub setting with warm lighting"
+						},
+						{
+							title: "Bank Holiday Festival",
+							date: "5th June 2024",
+							url: "/blog/bank-holiday-festival",
+							image: "https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?q=80&w=2070&auto=format&fit=crop",
+							excerpt: "Three days of food, drink, and entertainment across all our pubs.",
+							alt: "Festive outdoor pub garden decorated for a summer celebration with bunting and fairy lights"
+						}
+					].map(news => (
+						<div class="bg-white rounded-lg shadow-lg overflow-hidden">
+							<img src={news.image} alt={news.alt} class="w-full h-48 object-cover" />
+							<div class="p-6">
+								<p class="text-primary/60 text-sm mb-2">{news.date}</p>
+								<h3 class="text-xl font-bold mb-2">{news.title}</h3>
+								<p class="text-primary/70 mb-4">{news.excerpt}</p>
+								<a href={news.url} class="inline-block">
+									<Button variant="link" class="p-0 text-primary hover:text-primary/80">Read More →</Button>
+								</a>
+							</div>
+						</div>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<!-- Newsletter Section -->
+		<section class="bg-primary py-16">
+			<div class="container mx-auto px-4 text-center">
+				<h2 class="text-3xl font-bold text-secondary mb-4">Stay Updated</h2>
+				<p class="text-secondary/80 mb-8">Subscribe to our newsletter for the latest news and special offers.</p>
+				<div class="max-w-md mx-auto flex gap-4">
+					<input 
+						type="email" 
+						placeholder="Enter your email" 
+						class="flex-1 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary bg-secondary/10 text-secondary placeholder:text-secondary/50 border border-secondary/20"
+					/>
+					<Button variant="secondary" class="bg-secondary text-primary hover:bg-secondary/90">Subscribe</Button>
+				</div>
+			</div>
+		</section>
+	</main>
+</Layout>

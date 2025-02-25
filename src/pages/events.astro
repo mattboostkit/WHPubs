@@ -1,0 +1,92 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Button } from "@/components/ui/button"
+import { Calendar, Music, PartyPopper, Utensils } from 'lucide-react';
+---
+
+<Layout title="Events - WH Pubs">
+	<main class="pt-24 bg-secondary/10 min-h-screen">
+		<div class="container mx-auto px-4">
+			<h1 class="text-5xl font-bold text-center mb-4 text-primary">Upcoming Events</h1>
+			<p class="text-center text-lg text-primary/70 mb-12 max-w-2xl mx-auto">
+				Join us for special events, live music, and seasonal celebrations across our establishments.
+			</p>
+
+			<div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+				{[
+					{
+						title: "Live Music Nights",
+						date: "Every Friday & Saturday",
+						image: "https://images.unsplash.com/photo-1501612780327-45045538702b?q=80&w=2070&auto=format&fit=crop",
+						description: "Local acoustic performers and bands",
+						icon: Music,
+						location: "All Locations"
+					},
+					{
+						title: "Summer BBQ Series",
+						date: "Weekends in July",
+						image: "https://images.unsplash.com/photo-1534797258760-1bd2cc95a5bd?q=80&w=2070&auto=format&fit=crop",
+						description: "Outdoor grilling and live music",
+						icon: Utensils,
+						location: "The Chaser Inn"
+					},
+					{
+						title: "Quiz Night",
+						date: "Every Wednesday",
+						image: "https://images.unsplash.com/photo-1606167668584-78701c57f13d?q=80&w=2070&auto=format&fit=crop",
+						description: "Test your knowledge and win prizes",
+						icon: Calendar,
+						location: "The Little Brown Jug"
+					},
+					{
+						title: "Wine Tasting Evening",
+						date: "Last Thursday Monthly",
+						image: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=2070&auto=format&fit=crop",
+						description: "Guided tasting of selected wines",
+						icon: PartyPopper,
+						location: "The Cricketers Inn"
+					},
+					{
+						title: "Family Fun Day",
+						date: "First Sunday Monthly",
+						image: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=2070&auto=format&fit=crop",
+						description: "Activities and special menu for kids",
+						icon: PartyPopper,
+						location: "The Rose & Crown"
+					},
+					{
+						title: "Craft Beer Festival",
+						date: "August Bank Holiday",
+						image: "https://images.unsplash.com/photo-1436076863939-06870fe779c2?q=80&w=2070&auto=format&fit=crop",
+						description: "Featuring local breweries",
+						icon: Calendar,
+						location: "All Locations"
+					}
+				].map(event => (
+					<div class="bg-white rounded-lg shadow-lg overflow-hidden">
+						<img 
+							src={event.image} 
+							alt={`${event.title} at ${event.location}`}
+							class="w-full h-48 object-cover"
+						/>
+						<div class="p-6">
+							<div class="flex items-center gap-2 mb-4">
+								<event.icon class="w-6 h-6 text-primary" />
+								<h2 class="text-xl font-bold">{event.title}</h2>
+							</div>
+							<p class="text-primary/70 mb-2">{event.description}</p>
+							<p class="text-sm text-primary/60 mb-2">{event.date}</p>
+							<p class="text-sm font-semibold mb-4">{event.location}</p>
+							<Button variant="outline" class="w-full">Book Now</Button>
+						</div>
+					</div>
+				))}
+			</div>
+
+			<div class="mt-12 text-center">
+				<p class="text-primary/70 mb-4">Want to host your own event? Get in touch to discuss private bookings.</p>
+				<Button variant="default" size="lg" class="bg-primary text-white hover:bg-primary/90">Enquire Now</Button>
+			</div>
+		</div>
+	</main>
+</Layout>

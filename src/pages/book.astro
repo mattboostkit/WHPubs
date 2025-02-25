@@ -1,0 +1,48 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Button } from "@/components/ui/button"
+import { Calendar, Clock, Users, Utensils } from 'lucide-react';
+
+---
+
+<Layout title="Book a Table - WH Pubs">
+	<main class="pt-24 pb-32">
+		<div class="container mx-auto px-4">
+			<div class="max-w-4xl mx-auto">
+				<h1 class="text-4xl md:text-5xl font-bold text-center mb-6">Book a Table</h1>
+				<p class="text-lg text-center text-primary/70 mb-12">Reserve your table at any of our establishments. We look forward to welcoming you.</p>
+
+				<div class="bg-white rounded-lg shadow-lg overflow-hidden">
+					<iframe 
+						src="https://events-widget.liveres.co.uk/widget.html?siteId=4c4d14e2-7bf3-4952-baea-69da60126460"
+						class="w-full h-[800px] border-0"
+						title="Book a table"
+					></iframe>
+				</div>
+
+				<!-- Additional Information -->
+				<div class="mt-12 grid md:grid-cols-2 gap-8">
+					<div class="bg-secondary/10 p-6 rounded-lg">
+						<div class="flex items-center gap-3 mb-4">
+							<Clock class="w-6 h-6 text-primary" />
+							<h3 class="text-xl font-bold">Opening Hours</h3>
+						</div>
+						<ul class="space-y-2 text-primary/70">
+							<li>Monday - Saturday: 11:00 - 23:00</li>
+							<li>Sunday: 12:00 - 22:30</li>
+							<li>Food Service: 12:00 - 21:00 daily</li>
+						</ul>
+					</div>
+
+					<div class="bg-secondary/10 p-6 rounded-lg">
+						<div class="flex items-center gap-3 mb-4">
+							<Users class="w-6 h-6 text-primary" />
+							<h3 class="text-xl font-bold">Large Parties</h3>
+						</div>
+						<p class="text-primary/70">For groups of 13 or more, please contact us directly to discuss your requirements and ensure we can accommodate your party.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+</Layout>

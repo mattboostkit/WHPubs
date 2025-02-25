@@ -1,0 +1,57 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { Button } from "@/components/ui/button"
+import { PartyPopper } from 'lucide-react';
+---
+
+<Layout title="Bank Holiday Festival - WH Pubs">
+	<main class="pt-24">
+		<div class="container mx-auto px-4">
+			<div class="max-w-4xl mx-auto">
+				<img 
+					src="https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?q=80&w=2070&auto=format&fit=crop"
+					alt="Festive outdoor pub garden decorated for a summer celebration with bunting and fairy lights"
+					class="w-full h-[400px] object-cover rounded-lg mb-8"
+				/>
+				<div class="prose max-w-none">
+					<p class="text-primary/60 text-sm">5th June 2024</p>
+					<h1 class="text-4xl font-bold text-primary mb-6">Bank Holiday Festival</h1>
+					
+					<div class="flex items-center gap-4 mb-8">
+						<div class="bg-primary/5 p-3 rounded-full">
+							<PartyPopper class="w-6 h-6 text-primary" />
+						</div>
+						<div>
+							<p class="font-semibold">Events Team</p>
+							<p class="text-sm text-primary/60">WH Pubs Group</p>
+						</div>
+					</div>
+
+					<p class="text-lg mb-6">Join us for three days of celebration across all WH Pubs establishments this bank holiday weekend. We've planned an exciting festival of food, drink, and entertainment for the whole family.</p>
+
+					<h2 class="text-2xl font-bold mb-4">Festival Highlights</h2>
+					<ul class="list-disc pl-6 mb-6">
+						<li>Craft Beer Tastings</li>
+						<li>Live Music Performances</li>
+						<li>Family Fun Day</li>
+						<li>BBQ Masterclass</li>
+						<li>Local Artisan Market</li>
+					</ul>
+
+					<h2 class="text-2xl font-bold mb-4">Schedule</h2>
+					<p class="mb-6">Each pub will host unique events throughout the weekend. Check individual locations for specific timings and activities.</p>
+
+					<div class="bg-secondary/20 p-6 rounded-lg mb-8">
+						<h3 class="text-xl font-bold mb-2">Join the Celebration</h3>
+						<p class="mb-4">Pre-book your tickets for special events and workshops. Limited availability for some activities.</p>
+						<Button variant="default" size="lg" class="bg-primary text-white hover:bg-primary/90">Book Festival Events</Button>
+					</div>
+
+					<a href="/blog" class="text-primary hover:text-primary/80 inline-flex items-center">
+						← Back to Blog
+					</a>
+				</div>
+			</div>
+		</div>
+	</main>
+</Layout>
