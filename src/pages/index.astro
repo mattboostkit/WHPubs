@@ -2,6 +2,41 @@
 import Layout from '../layouts/Layout.astro';
 import { Button } from "@/components/ui/button"
 import { MapPin, Clock, Phone, Menu as MenuIcon, ChefHat, Beer } from 'lucide-react';
+import { getPosts, getPubs } from '../lib/sanity'; // Use new function names
+// Check for the target pub slug environment variable
+const targetPubSlug = import.meta.env.TARGET_PUB_SLUG;
+
+// If a target pub is defined (i.e., we're building/running a specific pub's site),
+// redirect the root URL ('/') to that pub's specific page.
+if (targetPubSlug) {
+  return Astro.redirect(`/pubs/${targetPubSlug}`);
+}
+
+// --- Code below only runs if TARGET_PUB_SLUG is NOT set (i.e., for the main hub site) ---
+
+// Fetch all posts and pubs for the main hub page
+const posts = await getPosts();
+const pubs = await getPubs();
+// Removed duplicate declaration
+
+// Format the date for display
+const formatDate = (dateString) => {
+  if (!dateString) return '';
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  });
+};
+
+// Define image sources with fallbacks
+const heroImage = {
+  primary: "https://ik.imagekit.io/boostkit/WH%20Pubs/Home.webp?updatedAt=1739820583743",
+  fallback: "/images/hero-fallback.jpg"
+};
+
+// Removed the hardcoded pubImages array, data now comes from 'pubs' fetched via getAllPubs()
 ---
 
 <Layout title="WH Pubs - Traditional British Pubs in South East England">
@@ -10,9 +45,11 @@ import { MapPin, Clock, Phone, Menu as MenuIcon, ChefHat, Beer } from 'lucide-re
 		<div class="relative h-[90vh]">
 			<div class="absolute inset-0">
 				<img
-					src="https://ik.imagekit.io/boostkit/WH%20Pubs/Home.webp?updatedAt=1739820583743"
+					src={heroImage.primary}
 					alt="Warm and inviting traditional English pub interior featuring wooden beams, a well-stocked bar, and comfortable seating areas bathed in ambient lighting" 
 					class="w-full h-full object-cover"
+					onerror="this.onerror=null; this.src=this.getAttribute('data-fallback');"
+					data-fallback={heroImage.fallback}
 				/>
 				<div class="absolute inset-0 bg-black/50"></div>
 			</div>
@@ -53,42 +90,15 @@ import { MapPin, Clock, Phone, Menu as MenuIcon, ChefHat, Beer } from 'lucide-re
 			<div class="container mx-auto px-4">
 				<h2 class="text-4xl font-bold text-center mb-12 text-primary">Our Establishments</h2>
 				<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-					{[
-						{
-							name: "The Chaser Inn",
-							image: "https://ik.imagekit.io/boostkit/WH%20Pubs/ChaserInn.jpg",
-							location: "Shipbourne",
-							description: "Discover The Chaser Inn, a country dining pub nestled in outstanding natural beauty. Enjoy homecooked meals by award-winning chefs, paired with a fine selection of wines and beers.",
-							url: "https://www.thechaser.co.uk/"
-						},
-						{
-							name: "The Little Brown Jug",
-							image: "https://ik.imagekit.io/boostkit/WH%20Pubs/LittleBrownJug.jpg",
-							location: "Chiddingstone Causeway",
-							description: "At The Little Brown Jug, enjoy a stunning beer garden with bookable Tiki huts, full service, and a heated retractable-roof area. Inside, relish award-winning food and superb wines and beers.",
-							url: "https://www.thelittlebrownjug.co.uk/"
-						},
-						{
-							name: "The Cricketers Inn",
-							image: "https://ik.imagekit.io/boostkit/WH%20Pubs/Cricketers%20Inn.webp",
-							location: "Meopham",
-							description: "The Cricketers Inn is a family-owned gastro pub offering award-winning homemade food and a beer garden with a retractable roof overlooking a Kent windmill. Enjoy wine or beer.",
-							url: "https://www.thecricketersinn.co.uk/"
-						},
-						{
-							name: "The Rose & Crown",
-							image: "https://ik.imagekit.io/boostkit/WH%20Pubs/RoseAndCrown.jpg",
-							location: "Green Street Green",
-							description: "The Rose & Crown is a friendly local pub serving Young's award-winning beers and home-cooked food. Enjoy our garden with play equipment and a beer garden offering full service.",
-							url: "https://www.the-roseandcrown.co.uk/"
-						}
-					].map(pub => (
-						<div class="bg-white rounded-lg shadow-lg overflow-hidden">
-							<img 
-								src={pub.image} 
-								alt={`${pub.name} - A charming ${pub.description.toLowerCase()} Located in ${pub.location}`} 
-								class="w-full h-56 object-cover" 
-							/>
+					{pubs && pubs.length > 0 ? (
+						pubs.map(pub => (
+							<div class="bg-white rounded-lg shadow-lg overflow-hidden">
+								<img
+									src={pub.image?.asset?.url || 'https://via.placeholder.com/600x400'} // Use Sanity image URL
+									alt={pub.image?.alt || `Image of ${pub.name}`} // Use alt text from Sanity or generate default
+									class="w-full h-56 object-cover"
+									onerror="this.onerror=null; this.src='https://via.placeholder.com/600x400';" // Simple fallback
+								/>
 							<div class="p-6">
 								<h3 class="text-xl font-bold mb-2 text-primary">{pub.name}</h3>
 								<p class="text-primary/70 mb-4">{pub.description}</p>
@@ -96,12 +106,15 @@ import { MapPin, Clock, Phone, Menu as MenuIcon, ChefHat, Beer } from 'lucide-re
 									<MapPin class="w-4 h-4 mr-2" />
 									<span>{pub.location}</span>
 								</div>
-								<a href={pub.url} target="_blank" rel="noopener noreferrer" class="block w-full">
+								<a href={pub.url || '#'} target="_blank" rel="noopener noreferrer" class="block w-full"> {/* Link to external URL from Sanity */}
 									<Button variant="outline" class="w-full border-primary text-primary hover:bg-primary hover:text-secondary">Learn More</Button>
 								</a>
 							</div>
 						</div>
-					))}
+					))
+				) : (
+					<p class="col-span-full text-center text-primary/70">No establishments found.</p>
+				)}
 				</div>
 			</div>
 		</section>
@@ -140,39 +153,19 @@ import { MapPin, Clock, Phone, Menu as MenuIcon, ChefHat, Beer } from 'lucide-re
 			<div class="container mx-auto px-4">
 				<h2 class="text-4xl font-bold text-center mb-12">Latest News</h2>
 				<div class="grid md:grid-cols-3 gap-8">
-					{[
-						{
-							title: "New Summer Menu Launch",
-							date: "15th June 2024",
-							url: "/blog/new-summer-menu-launch",
-							image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=2070&auto=format&fit=crop",
-							excerpt: "Discover our new seasonal dishes featuring the finest local produce.",
-							alt: "Beautifully plated seasonal dish featuring colorful local vegetables and herbs"
-						},
-						{
-							title: "Live Music Weekends",
-							date: "10th June 2024",
-							url: "/blog/live-music-weekends",
-							image: "https://images.unsplash.com/photo-1501612780327-45045538702b?q=80&w=2070&auto=format&fit=crop",
-							excerpt: "Join us every Friday and Saturday for live acoustic performances.",
-							alt: "Acoustic guitarist performing in an intimate pub setting with warm lighting"
-						},
-						{
-							title: "Bank Holiday Festival",
-							date: "5th June 2024",
-							url: "/blog/bank-holiday-festival",
-							image: "https://images.unsplash.com/photo-1533777857889-4be7c70b33f7?q=80&w=2070&auto=format&fit=crop",
-							excerpt: "Three days of food, drink, and entertainment across all our pubs.",
-							alt: "Festive outdoor pub garden decorated for a summer celebration with bunting and fairy lights"
-						}
-					].map(news => (
+					{posts.slice(0, 3).map(post => (
 						<div class="bg-white rounded-lg shadow-lg overflow-hidden">
-							<img src={news.image} alt={news.alt} class="w-full h-48 object-cover" />
+							<img 
+								src={post.mainImage?.asset?.url || 'https://via.placeholder.com/600x400'} 
+								alt={post.imageAlt || 'Blog post image'} 
+								class="w-full h-48 object-cover"
+								onerror="this.onerror=null; this.src='https://via.placeholder.com/600x400';"
+							/>
 							<div class="p-6">
-								<p class="text-primary/60 text-sm mb-2">{news.date}</p>
-								<h3 class="text-xl font-bold mb-2">{news.title}</h3>
-								<p class="text-primary/70 mb-4">{news.excerpt}</p>
-								<a href={news.url} class="inline-block">
+								<p class="text-primary/60 text-sm mb-2">{formatDate(post.publishedAt)}</p>
+								<h3 class="text-xl font-bold mb-2">{post.title}</h3>
+								<p class="text-primary/70 mb-4">{post.excerpt}</p>
+								<a href={`/blog/${post.slug.current}`} class="inline-block">
 									<Button variant="link" class="p-0 text-primary hover:text-primary/80">Read More →</Button>
 								</a>
 							</div>

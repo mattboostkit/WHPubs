@@ -1,3 +1,5 @@
+@import './fonts.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -50,14 +52,10 @@
     --destructive-foreground: 0 0% 98%;
     --border: 0 0% 14.9%;
     --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    --ring: 0 0% 83.9%;
   }
 }
+
 @layer base {
   * {
     @apply border-border;
@@ -71,32 +69,32 @@
   }
 
   .prose h1 {
-    @apply text-4xl font-bold text-primary mb-6 font-cormorant;
+    @apply text-4xl font-bold text-primary mb-6 font-quattrocento;
     font-weight: 700;
   }
 
   .prose h2 {
-    @apply text-2xl font-bold text-primary mb-4 mt-8 font-cormorant;
+    @apply text-2xl font-bold text-primary mb-4 mt-8 font-quattrocento;
     font-weight: 700;
   }
 
   .prose h3 {
-    @apply text-xl font-bold text-primary mb-3 mt-6 font-cormorant;
+    @apply text-xl font-bold text-primary mb-3 mt-6 font-quattrocento;
     font-weight: 600;
   }
 
   .prose p {
-    @apply text-primary/80 mb-4 leading-relaxed font-nanum;
+    @apply text-primary/80 mb-4 leading-relaxed font-alice;
     font-weight: 400;
   }
 
   .prose ul {
-    @apply list-disc pl-6 mb-6 text-primary/80 space-y-2 font-nanum;
+    @apply list-disc pl-6 mb-6 text-primary/80 space-y-2 font-alice;
     font-weight: 400;
   }
 
   .prose a {
-    @apply text-primary hover:text-primary/80 transition-colors font-nanum;
+    @apply text-primary hover:text-primary/80 transition-colors font-alice;
     font-weight: 400;
   }
 

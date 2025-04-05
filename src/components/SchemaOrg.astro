@@ -1,0 +1,145 @@
+---
+// SchemaOrg.astro - Component for adding structured data to pages
+interface Props {
+  type: 'Organization' | 'LocalBusiness' | 'Article' | 'BreadcrumbList';
+  data?: any;
+  url?: string;
+}
+
+const { type, data = {}, url = Astro.url } = Astro.props;
+
+// Default organization data
+const orgData = {
+  name: "WH Pubs",
+  logo: "https://www.whpubs.com/logo.png",
+  url: "https://www.whpubs.com",
+  sameAs: [
+    "https://www.facebook.com/WHPubsSouthEast/",
+    "https://www.instagram.com/wh_pubs_/",
+    "https://twitter.com/WH_PUBS"
+  ],
+  ...data
+};
+
+// Generate schema based on type
+let schema;
+
+switch (type) {
+  case 'Organization':
+    schema = {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": orgData.name,
+      "url": orgData.url,
+      "logo": orgData.logo,
+      "sameAs": orgData.sameAs,
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+44-20-1234-5678",
+        "contactType": "customer service"
+      }
+    };
+    break;
+    
+  case 'LocalBusiness':
+    schema = {
+      "@context": "https://schema.org",
+      "@type": "Restaurant",
+      "name": data.name || "WH Pubs Location",
+      "image": data.image || "https://www.whpubs.com/pub-image.jpg",
+      "url": data.url || url,
+      "telephone": data.telephone || "+44-20-1234-5678",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": data.streetAddress || "123 Pub Street",
+        "addressLocality": data.addressLocality || "London",
+        "addressRegion": data.addressRegion || "Greater London",
+        "postalCode": data.postalCode || "SW1A 1AA",
+        "addressCountry": "GB"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": data.latitude || "51.5074",
+        "longitude": data.longitude || "0.1278"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
+          ],
+          "opens": "11:00",
+          "closes": "23:00"
+        }
+      ],
+      "servesCuisine": "British",
+      "priceRange": "££"
+    };
+    break;
+    
+  case 'Article':
+    schema = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": data.title || "WH Pubs Article",
+      "image": data.image || "https://www.whpubs.com/article-image.jpg",
+      "datePublished": data.publishedDate || new Date().toISOString(),
+      "dateModified": data.modifiedDate || new Date().toISOString(),
+      "author": {
+        "@type": "Person",
+        "name": data.author || "WH Pubs Team"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "WH Pubs",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.whpubs.com/logo.png"
+        }
+      },
+      "description": data.description || "An article from WH Pubs",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": data.url || url
+      }
+    };
+    break;
+    
+  case 'BreadcrumbList':
+    schema = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": data.items || [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.whpubs.com"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Current Page",
+          "item": url
+        }
+      ]
+    };
+    break;
+    
+  default:
+    schema = {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "WH Pubs",
+      "url": "https://www.whpubs.com"
+    };
+}
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)}></script>

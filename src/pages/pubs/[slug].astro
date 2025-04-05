@@ -1,0 +1,212 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { getPubs, getPubBySlug, getPosts } from '@/lib/sanity'; // Import getPosts
+import { Button } from "@/components/ui/button";
+import { MapPin, Clock, Phone, UtensilsCrossed, CalendarDays, Image as ImageIcon } from 'lucide-react'; // Added more icons
+
+// 1. Generate routes for all pubs
+// This page will exist in each deployment, but getStaticPaths ensures
+// only the relevant pub page is built if TARGET_PUB_SLUG is set during build.
+// In dev mode, it builds all pub pages found.
+export async function getStaticPaths() {
+  // In a real multi-site build, you might filter here based on TARGET_PUB_SLUG
+  // but for simplicity in dev and allowing the hub site, we fetch all.
+  const pubs = await getPubs(); // Fetch all pub data (includes slugs) using new function name
+
+  return pubs.map((pub) => ({
+    params: { slug: pub.slug.current }, // The slug will be used in the URL
+    props: { pub }, // Pass the full pub data to the page component
+  }));
+}
+
+// 2. Get the specific pub data for this page
+const { pub } = Astro.props;
+
+// 3. Fetch posts related to this specific pub
+const relatedPosts = await getPosts(pub?.slug?.current);
+
+// Basic error handling if pub data isn't found for the slug
+if (!pub) {
+  return Astro.redirect('/404');
+}
+
+const pageTitle = `${pub.name} - WH Pubs`;
+const pageDescription = pub.description || `Learn more about ${pub.name}, one of our fine establishments.`;
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <main class="container mx-auto px-4 py-12">
+    <article class="max-w-4xl mx-auto">
+      <!-- Pub Image -->
+      <img
+        src={pub.image?.asset?.url || 'https://via.placeholder.com/1200x600'}
+        alt={pub.image?.alt || `Image of ${pub.name}`}
+        class="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg mb-8"
+        onerror="this.onerror=null; this.src='https://via.placeholder.com/1200x600';"
+      />
+
+      <!-- Pub Name -->
+      <h1 class="text-4xl md:text-5xl font-bold text-primary mb-4">{pub.name}</h1>
+
+      <!-- Location -->
+      {pub.location && (
+        <div class="flex items-center text-primary/70 mb-2"> {/* Reduced bottom margin */}
+          <MapPin class="w-5 h-5 mr-2" />
+          <span>{pub.location}</span>
+        </div>
+      )}
+
+      <!-- Book Table CTA -->
+      {pub.reservationsUrl && (
+        <div class="my-6"> {/* Added margin */}
+          <a href={pub.reservationsUrl} target="_blank" rel="noopener noreferrer">
+            <Button variant="default" size="lg" class="bg-green-600 hover:bg-green-700 text-white font-semibold">
+              Book A Table
+            </Button>
+          </a>
+        </div>
+      )}
+
+      <!-- Description -->
+      {pub.description && (
+        <div class="prose prose-lg max-w-none text-primary/90 mb-8">
+          <p>{pub.description}</p>
+          {/* If description were Portable Text, you'd render it here */}
+        </div>
+      )}
+
+      <!-- Opening Hours -->
+      {pub.openingHours && (
+        <div class="mb-8 p-6 bg-secondary/10 rounded-lg">
+          <h3 class="text-xl font-semibold text-primary mb-2 flex items-center"> {/* Changed to h3 */}
+            <Clock class="w-5 h-5 mr-2 text-primary/80" /> Opening Hours
+          </h3>
+          <pre class="whitespace-pre-wrap font-sans text-primary/90 text-sm">{pub.openingHours}</pre> {/* Smaller text */}
+        </div>
+      )}
+
+      <!-- Food Serving Times -->
+      {pub.foodServingTimes && (
+        <div class="mt-4"> {/* Added top margin */}
+          <h3 class="text-xl font-semibold text-primary mb-2 flex items-center">
+            <UtensilsCrossed class="w-5 h-5 mr-2 text-primary/80" /> Food Serving Times
+          </h3>
+          <pre class="whitespace-pre-wrap font-sans text-primary/90 text-sm">{pub.foodServingTimes}</pre> {/* Smaller text */}
+        </div>
+      )}
+      </div>
+
+      <!-- Contact Info -->
+      {pub.contactPhone && (
+         <div class="mb-8 p-6 bg-secondary/10 rounded-lg">
+           <h3 class="text-xl font-semibold text-primary mb-2 flex items-center"> {/* Changed to h3 */}
+             <Phone class="w-5 h-5 mr-2 text-primary/80" /> Contact Us
+           </h3>
+           <p class="text-primary/90 text-sm"> {/* Smaller text */}
+             Call us on: <a href={`tel:${pub.contactPhone.replace(/\s/g, '')}`} class="underline hover:text-secondary">{pub.contactPhone}</a>
+           </p>
+           {/* Could add address here too if needed */}
+         </div>
+      )}
+
+      <!-- Image Gallery -->
+      {pub.gallery && pub.gallery.length > 0 && (
+        <div class="mb-12">
+          <h2 class="text-3xl font-semibold text-primary mb-6 border-b pb-2 flex items-center">
+             <ImageIcon class="w-6 h-6 mr-3 text-primary/80" /> Gallery
+          </h2>
+          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {pub.gallery.map((image) => (
+              <a href={image.asset?.url} target="_blank" rel="noopener noreferrer" class="block overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                <img
+                  src={image.asset?.url + '?w=400&h=300&fit=crop'} // Add query params for smaller thumbs
+                  alt={image.alt || `Gallery image for ${pub.name}`}
+                  class="w-full h-40 object-cover"
+                  loading="lazy"
+                  onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300';"
+                />
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <!-- Placeholder for Menus -->
+      <div class="mb-12"> {/* Increased bottom margin */}
+        <h2 class="text-3xl font-semibold text-primary mb-4 border-b pb-2">Menus</h2>
+        <p class="text-primary/70 italic">Menu information coming soon...</p>
+        {/* Fetch and display menu data here later */}
+      </div>
+
+      <!-- Placeholder for Events -->
+      <div class="mb-12"> {/* Increased bottom margin */}
+        <h2 class="text-3xl font-semibold text-primary mb-4 border-b pb-2 flex items-center">
+           <CalendarDays class="w-6 h-6 mr-3 text-primary/80" /> Events
+        </h2>
+        <p class="text-primary/70 italic">Check back soon for upcoming events at {pub.name}!</p>
+        {/* Fetch and display event data specific to this pub here later */}
+      </div>
+
+
+      <!-- Related Blog Posts -->
+      <div class="mb-12">
+        <h2 class="text-3xl font-semibold text-primary mb-4 border-b pb-2">Latest News from {pub.name}</h2>
+        {relatedPosts && relatedPosts.length > 0 ? (
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-6">
+            {relatedPosts.slice(0, 3).map(post => ( // Show latest 3 posts
+              <div class="bg-white rounded-lg shadow-md overflow-hidden border border-secondary/10">
+                 <a href={`/blog/${post.slug.current}`} class="block hover:opacity-90 transition-opacity"> {/* Assuming a /blog/[slug].astro exists */}
+                   <img
+                     src={post.mainImage?.asset?.url + '?w=400&h=250&fit=crop' || 'https://via.placeholder.com/400x250'}
+                     alt={post.imageAlt || `Image for ${post.title}`}
+                     class="w-full h-48 object-cover"
+                     loading="lazy"
+                     onerror="this.onerror=null; this.src='https://via.placeholder.com/400x250';"
+                   />
+                 </a>
+                 <div class="p-4">
+                   {/* <p class="text-primary/60 text-xs mb-1">{formatDate(post.publishedAt)}</p> Need formatDate or similar */}
+                   <h3 class="text-lg font-semibold mb-2 text-primary hover:text-secondary transition-colors">
+                     <a href={`/blog/${post.slug.current}`}>{post.title}</a>
+                   </h3>
+                   <p class="text-sm text-primary/70 mb-3 line-clamp-3">{post.excerpt}</p>
+                   <a href={`/blog/${post.slug.current}`} class="text-sm text-secondary hover:underline">Read More &rarr;</a>
+                 </div>
+               </div>
+            ))}
+          </div>
+          {/* Optional: Link to a dedicated blog page for this pub */}
+          {relatedPosts.length > 3 && (
+             <div class="text-center mt-8">
+                <a href="/blog"> {/* Link to a general blog page or a pub-specific one */}
+                   <Button variant="outline">View All News</Button>
+                </a>
+             </div>
+          )}
+        ) : (
+          <p class="text-primary/70 italic">No news posts found for {pub.name} yet.</p>
+        )}
+      </div>
+
+
+      <!-- External Website Link -->
+      {pub.url && (
+        <div class="mt-12 text-center">
+          <a href={pub.url} target="_blank" rel="noopener noreferrer">
+            <Button variant="outline" size="lg" class="border-primary text-primary hover:bg-primary hover:text-secondary"> {/* Changed variant */}
+              Visit {pub.name}'s Official Website
+            </Button>
+          </a>
+        </div>
+      )}
+
+      {/* Link back to homepage */}
+      <div class="mt-16 text-center"> {/* Increased top margin */}
+        <a href="/" class="text-primary hover:underline">
+          &larr; Back to All Establishments
+        </a>
+      </div>
+
+    </article>
+  </main>
+</Layout>

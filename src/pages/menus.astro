@@ -2,10 +2,36 @@
 import Layout from '../layouts/Layout.astro';
 import { Button } from "@/components/ui/button"
 import { ChefHat, Coffee, Beer, Wine } from 'lucide-react';
+
+// Define fallback images
+const menuFallbackImage = '/images/menu-fallback.jpg';
 ---
 
 <Layout title="Menus - WH Pubs">
 	<main class="pt-24 bg-secondary/10 min-h-screen">
+		<!-- Image fallback script -->
+		<script is:inline>
+			document.addEventListener('DOMContentLoaded', function() {
+				// Add error handler to all images with data-fallback attribute
+				const images = document.querySelectorAll('img[data-fallback]');
+				
+				images.forEach(img => {
+					img.addEventListener('error', function() {
+						// Only replace once to avoid infinite loops
+						if (!this.hasAttribute('data-replaced')) {
+							this.setAttribute('src', this.getAttribute('data-fallback'));
+							this.setAttribute('data-replaced', 'true');
+						}
+					});
+					
+					// Trigger a load event to check if the current src is valid
+					const currentSrc = img.getAttribute('src');
+					img.setAttribute('src', '');
+					img.setAttribute('src', currentSrc);
+				});
+			});
+		</script>
+		
 		<div class="container mx-auto px-4">
 			<h1 class="text-5xl font-bold text-center mb-4 text-primary">Our Menus</h1>
 			<p class="text-center text-lg text-primary/70 mb-12 max-w-2xl mx-auto">
@@ -18,6 +44,8 @@ import { ChefHat, Coffee, Beer, Wine } from 'lucide-react';
 						src="https://images.unsplash.com/photo-1514326640560-7d063ef2aed5?q=80&w=2070&auto=format&fit=crop"
 						alt="Elegant table setting with perfectly plated main course"
 						class="w-full h-48 object-cover"
+						onerror="this.onerror=null; this.src=this.getAttribute('data-fallback');" 
+						data-fallback={menuFallbackImage}
 					/>
 					<div class="p-6">
 						<div class="flex items-center gap-2 mb-4">
@@ -38,6 +66,8 @@ import { ChefHat, Coffee, Beer, Wine } from 'lucide-react';
 						src="https://images.unsplash.com/photo-1513442542250-854d436a73f2?q=80&w=2070&auto=format&fit=crop"
 						alt="Selection of craft beers and ales on a rustic wooden bar"
 						class="w-full h-48 object-cover"
+						onerror="this.onerror=null; this.src=this.getAttribute('data-fallback');" 
+						data-fallback={menuFallbackImage}
 					/>
 					<div class="p-6">
 						<div class="flex items-center gap-2 mb-4">
@@ -58,6 +88,8 @@ import { ChefHat, Coffee, Beer, Wine } from 'lucide-react';
 						src="https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?q=80&w=2070&auto=format&fit=crop"
 						alt="Traditional Sunday roast with all the trimmings"
 						class="w-full h-48 object-cover"
+						onerror="this.onerror=null; this.src=this.getAttribute('data-fallback');" 
+						data-fallback={menuFallbackImage}
 					/>
 					<div class="p-6">
 						<div class="flex items-center gap-2 mb-4">
@@ -76,6 +108,8 @@ import { ChefHat, Coffee, Beer, Wine } from 'lucide-react';
 						src="https://images.unsplash.com/photo-1495214783159-3503fd1b572d?q=80&w=2070&auto=format&fit=crop"
 						alt="Freshly baked pastries and coffee for breakfast"
 						class="w-full h-48 object-cover"
+						onerror="this.onerror=null; this.src=this.getAttribute('data-fallback');" 
+						data-fallback={menuFallbackImage}
 					/>
 					<div class="p-6">
 						<div class="flex items-center gap-2 mb-4">

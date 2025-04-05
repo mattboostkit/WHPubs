@@ -1,0 +1,49 @@
+---
+import { PortableText as PortableTextComponent } from 'astro-portabletext';
+
+const { value } = Astro.props;
+
+// Define fallback image for content images
+const contentImageFallback = '/images/content-fallback.jpg';
+
+// Define custom components for the Portable Text renderer
+const components = {
+  // You can customize how different block types are rendered
+  types: {
+    image: ({ value }) => {
+      if (!value?.asset?.url) {
+        return `<img src="${contentImageFallback}" alt="Placeholder image" class="w-full rounded-lg my-4" />`;
+      }
+      return `<img src="${value.asset.url}" alt="${value.alt || ''}" class="w-full rounded-lg my-4" onerror="this.onerror=null; this.src='${contentImageFallback}';" data-fallback="${contentImageFallback}" />`;
+    },
+  },
+  // Customize marks (like bold, italic, etc.)
+  marks: {
+    link: ({ children, value }) => {
+      const rel = value.href.startsWith('/') ? undefined : 'noreferrer noopener';
+      return `<a href="${value.href}" rel="${rel}" class="text-primary hover:underline font-alice">${children}</a>`;
+    },
+    strong: ({ children }) => `<strong class="font-bold font-alice">${children}</strong>`,
+    em: ({ children }) => `<em class="italic font-alice">${children}</em>`,
+  },
+  // Customize block styles
+  block: {
+    h2: ({ children }) => `<h2 class="text-2xl font-bold mt-6 mb-3 font-quattrocento">${children}</h2>`,
+    h3: ({ children }) => `<h3 class="text-xl font-bold mt-5 mb-2 font-quattrocento">${children}</h3>`,
+    normal: ({ children }) => children ? `<p class="my-3 font-alice">${children}</p>` : '',
+    blockquote: ({ children }) => `<blockquote class="border-l-4 border-primary/20 pl-4 italic my-4 font-alice">${children}</blockquote>`,
+  },
+  list: {
+    bullet: ({ children }) => `<ul class="list-disc pl-6 my-4 font-alice">${children}</ul>`,
+    number: ({ children }) => `<ol class="list-decimal pl-6 my-4 font-alice">${children}</ol>`,
+  },
+  listItem: {
+    bullet: ({ children }) => `<li class="mb-1 font-alice">${children}</li>`,
+    number: ({ children }) => `<li class="mb-1 font-alice">${children}</li>`,
+  },
+};
+---
+
+<div class="prose prose-lg">
+  <PortableTextComponent value={value} components={components} />
+</div>

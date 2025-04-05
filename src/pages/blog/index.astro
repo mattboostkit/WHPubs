@@ -1,25 +1,58 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { Button } from "@/components/ui/button"
-import { getCollection } from 'astro:content';
+import { getAllPosts } from '../../lib/sanity';
 
-const posts = await getCollection('blog');
+// Get all posts instead of just posts for a specific site
+const posts = await getAllPosts();
+
+// Create fallback image paths
+const blogFallbackImage = '/images/blog-fallback.jpg';
 ---
 
 <Layout title="Blog - WH Pubs">
 	<main class="pt-24 bg-secondary/10 min-h-screen">
+		<!-- Image fallback script -->
+		<script is:inline>
+			document.addEventListener('DOMContentLoaded', function() {
+				// Add error handler to all images with data-fallback attribute
+				const images = document.querySelectorAll('img[data-fallback]');
+				
+				images.forEach(img => {
+					img.addEventListener('error', function() {
+						// Only replace once to avoid infinite loops
+						if (!this.hasAttribute('data-replaced')) {
+							this.setAttribute('src', this.getAttribute('data-fallback'));
+							this.setAttribute('data-replaced', 'true');
+						}
+					});
+					
+					// Trigger a load event to check if the current src is valid
+					const currentSrc = img.getAttribute('src');
+					img.setAttribute('src', '');
+					img.setAttribute('src', currentSrc);
+				});
+			});
+		</script>
+		
 		<div class="container mx-auto px-4">
 			<h1 class="text-5xl font-bold text-center mb-12 text-primary">Latest News & Updates</h1>
 			
 			<div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
 				{posts.map(post => (
 					<div class="bg-white rounded-lg shadow-lg overflow-hidden">
-						<img src={post.data.image} alt={post.data.imageAlt} class="w-full h-48 object-cover" />
+						<img 
+							src={post.mainImage?.asset?.url || 'https://via.placeholder.com/800x400'} 
+							alt={post.imageAlt || 'Blog post image'} 
+							class="w-full h-48 object-cover" 
+							onerror="this.onerror=null; this.src=this.getAttribute('data-fallback');" 
+							data-fallback={blogFallbackImage}
+						/>
 						<div class="p-6">
-							<p class="text-primary/60 text-sm mb-2">{post.data.date}</p>
-							<h3 class="text-xl font-bold mb-2">{post.data.title}</h3>
-							<p class="text-primary/70 mb-4">{post.data.ctaDescription}</p>
-							<a href={`/blog/${post.slug}`}>
+							<p class="text-primary/60 text-sm mb-2">{new Date(post.publishedAt).toLocaleDateString()}</p>
+							<h3 class="text-xl font-bold mb-2">{post.title}</h3>
+							<p class="text-primary/70 mb-4">{post.ctaDescription}</p>
+							<a href={`/blog/${post.slug.current}`}>
 								<Button variant="link" class="p-0 text-primary hover:text-primary/80">Read More →</Button>
 							</a>
 						</div>

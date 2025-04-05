@@ -1,0 +1,17 @@
+# robots.txt for WH Pubs
+
+User-agent: *
+Allow: /
+
+# Disallow admin areas
+Disallow: /admin/
+Disallow: /wp-admin/
+Disallow: /wp-login.php
+
+# Disallow development/staging environments
+Disallow: /dev/
+Disallow: /staging/
+Disallow: /test/
+
+# Sitemap location
+Sitemap: https://www.whpubs.com/sitemap.xml

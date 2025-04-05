@@ -5,8 +5,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        'cormorant': ['Cormorant', 'serif'],
-        'nanum': ['Nanum Myeongjo', 'serif'],
+        'quattrocento': ['Quattrocento', 'serif'],
+        'alice': ['Alice', 'serif'],
       },
       colors: {
         primary: '#201D0F',
@@ -59,6 +59,33 @@ export default {
           5: 'hsl(var(--chart-5))',
         },
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            maxWidth: '100%',
+            color: '#050231',
+            p: {
+              marginTop: '1em',
+              marginBottom: '1em',
+              fontFamily: 'Alice, serif',
+            },
+            'h1, h2, h3, h4': {
+              marginTop: '1.5em',
+              marginBottom: '0.5em',
+              fontWeight: '700',
+              fontFamily: 'Quattrocento, serif',
+            },
+            a: {
+              color: '#050231',
+              textDecoration: 'underline',
+              '&:hover': {
+                color: '#050231',
+                opacity: 0.8,
+              },
+            },
+          },
+        },
+      },
       keyframes: {
         'accordion-down': {
           from: {
@@ -83,5 +110,8 @@ export default {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [
+    require('tailwindcss-animate'),
+    require('@tailwindcss/typography'),
+  ],
 };
