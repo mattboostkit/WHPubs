@@ -9,13 +9,23 @@ import { MapPin, Clock, Phone, UtensilsCrossed, CalendarDays, Image as ImageIcon
 // only the relevant pub page is built if TARGET_PUB_SLUG is set during build.
 // In dev mode, it builds all pub pages found.
 export async function getStaticPaths() {
-  // In a real multi-site build, you might filter here based on TARGET_PUB_SLUG
-  // but for simplicity in dev and allowing the hub site, we fetch all.
-  const pubs = await getPubs(); // Fetch all pub data (includes slugs) using new function name
+  const targetPubSlug = import.meta.env.TARGET_PUB_SLUG;
+  let pubsToBuild = [];
 
-  return pubs.map((pub) => ({
-    params: { slug: pub.slug.current }, // The slug will be used in the URL
-    props: { pub }, // Pass the full pub data to the page component
+  if (targetPubSlug) {
+    // If building a specific pub site, only fetch and build that pub's page
+    const singlePub = await getPubBySlug(targetPubSlug); // Use getPubBySlug for efficiency
+    if (singlePub) {
+      pubsToBuild.push(singlePub);
+    }
+  } else {
+    // If building the main hub site, fetch and build all pub pages
+    pubsToBuild = await getPubs();
+  }
+
+  return pubsToBuild.map((pub) => ({
+    params: { slug: pub.slug.current },
+    props: { pub },
   }));
 }
 
@@ -50,7 +60,7 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
 
       <!-- Location -->
       {pub.location && (
-        <div class="flex items-center text-primary/70 mb-2"> {/* Reduced bottom margin */}
+        <div class="flex items-center text-primary/70 mb-2"> <!-- Reduced bottom margin -->
           <MapPin class="w-5 h-5 mr-2" />
           <span>{pub.location}</span>
         </div>
@@ -58,7 +68,7 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
 
       <!-- Book Table CTA -->
       {pub.reservationsUrl && (
-        <div class="my-6"> {/* Added margin */}
+        <div class="my-6"> <!-- Added margin -->
           <a href={pub.reservationsUrl} target="_blank" rel="noopener noreferrer">
             <Button variant="default" size="lg" class="bg-green-600 hover:bg-green-700 text-white font-semibold">
               Book A Table
@@ -78,10 +88,10 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
       <!-- Opening Hours -->
       {pub.openingHours && (
         <div class="mb-8 p-6 bg-secondary/10 rounded-lg">
-          <h3 class="text-xl font-semibold text-primary mb-2 flex items-center"> {/* Changed to h3 */}
+          <h3 class="text-xl font-semibold text-primary mb-2 flex items-center"> <!-- Changed to h3 -->
             <Clock class="w-5 h-5 mr-2 text-primary/80" /> Opening Hours
           </h3>
-          <pre class="whitespace-pre-wrap font-sans text-primary/90 text-sm">{pub.openingHours}</pre> {/* Smaller text */}
+          <pre class="whitespace-pre-wrap font-sans text-primary/90 text-sm">{pub.openingHours}</pre> <!-- Smaller text -->
         </div>
       )}
 
@@ -92,7 +102,7 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
           <h3 class="text-xl font-semibold text-primary mb-2 flex items-center">
             <UtensilsCrossed class="w-5 h-5 mr-2 text-primary/80" /> Food Serving Times
           </h3>
-          {/* Reverted diagnostic change and removed invalid comments */}
+          <!-- Reverted diagnostic change and removed invalid comments -->
           <div class="whitespace-pre-wrap font-sans text-primary/90 text-sm">{pub.foodServingTimes}</div>
         </div>
       )}
@@ -205,7 +215,7 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
         </div>
       )}
 
-      {/* Link back to homepage */}
+      <!-- Link back to homepage -->
       <!-- Link back to homepage -->
       <div class="mt-16 text-center">
         <a href="/" class="text-primary hover:underline">

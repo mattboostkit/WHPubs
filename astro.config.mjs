@@ -12,4 +12,6 @@ export default defineConfig({
       applyBaseStyles: false,
     }),
   ],
+  // Ensure URLs are generated without trailing slashes
+  trailingSlash: 'never'
 });

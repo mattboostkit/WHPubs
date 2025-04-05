@@ -1,11 +1,10 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { Button } from "@/components/ui/button"
-import { getPosts } from '../../lib/sanity'; // Use new function name
+import { getAllPosts } from '../../lib/sanity';
 
 // Get all posts instead of just posts for a specific site
-// Fetch ALL posts (general and pub-specific) for the main blog index page
-const posts = await getPosts();
+const posts = await getAllPosts();
 
 // Create fallback image paths
 const blogFallbackImage = '/images/blog-fallback.jpg';

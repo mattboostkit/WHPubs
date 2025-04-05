@@ -2,13 +2,12 @@
 import Layout from '../../layouts/Layout.astro';
 import { Button } from "@/components/ui/button"
 import { ChefHat } from 'lucide-react';
-import { getPost, getPosts } from '../../lib/sanity'; // Use new function name
+import { getPost, getAllPosts } from '../../lib/sanity';
 import SanityPortableText from '../../components/SanityPortableText.jsx';
 
 export async function getStaticPaths() {
   // Get all posts to generate static paths
-  // Fetch ALL posts (general and pub-specific) to generate static paths for all possible blog posts
-  const posts = await getPosts();
+  const posts = await getAllPosts();
   
   return posts.map((post) => ({
     params: { slug: post.slug.current },
