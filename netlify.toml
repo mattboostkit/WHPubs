@@ -100,17 +100,7 @@
 # Let's modify src/pages/index.astro to return null if not hub site.
 # (This requires going back to edit index.astro)
 
-# --- Sticking with netlify.toml for now ---
-# Add a specific redirect for this known case as a test.
-# We will need a more robust solution later.
-[[redirects]]
-  from = "/"
-  to = "/the-little-brown-jug/"
-  status = 200 # Rewrite
-  force = true # Try forcing it
-  # This redirect will apply ONLY to the Netlify site where this netlify.toml is deployed.
-  # Since TARGET_PUB_SLUG is set for this site, this redirect should target the correct page.
-
+# Removed specific redirect now that index.astro handles conditional rendering
 [[headers]]
   for = "/*"
   [headers.values]
