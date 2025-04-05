@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "astro build && if [ ! -z \"$TARGET_PUB_SLUG\" ]; then echo \"Moving pub page to root...\"; mv dist/$TARGET_PUB_SLUG/index.html dist/index.html && rm -rf dist/$TARGET_PUB_SLUG; else echo \"Hub build, keeping index.html.\"; fi",
     "preview": "astro preview",
     "astro": "astro",
     "assign-admin": "node scripts/assign-admin-role.js"
