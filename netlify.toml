@@ -100,7 +100,13 @@
 # Let's modify src/pages/index.astro to return null if not hub site.
 # (This requires going back to edit index.astro)
 
-# Removed specific redirect now that index.astro handles conditional rendering
+# Re-adding specific redirect for LBJ site root as conditional rendering didn't work
+# This forces Netlify to serve the content from /the-little-brown-jug/ at the root URL
+[[redirects]]
+  from = "/"
+  to = "/the-little-brown-jug/"
+  status = 200 # Rewrite
+  force = true # Force rewrite even if /index.html exists
 [[headers]]
   for = "/*"
   [headers.values]

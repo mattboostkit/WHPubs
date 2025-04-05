@@ -3,23 +3,12 @@ import Layout from '../layouts/Layout.astro';
 import { Button } from "@/components/ui/button"
 import { MapPin, Clock, Phone, Menu as MenuIcon, ChefHat, Beer } from 'lucide-react';
 import { getPosts, getPubs } from '../lib/sanity'; // Use new function names
-// Check for the target pub slug environment variable
-const targetPubSlug = import.meta.env.TARGET_PUB_SLUG;
+// This page always renders the main hub content.
+// Individual pub sites rely on src/pages/[slug].astro being served at the root.
 
-let posts = [];
-let pubs = [];
-let isHubSite = true;
-
-if (!targetPubSlug) {
-  // --- Fetch data only if building the main hub site ---
-  posts = await getPosts(); // Fetch general posts
-  pubs = await getPubs(); // Fetch all pubs
-} else {
-  // --- This is an individual pub site build ---
-  isHubSite = false;
-  // Don't fetch data, this index page shouldn't render content.
-  // The actual content is served by src/pages/[slug].astro at the root.
-}
+// Fetch all general posts and all pubs for the main hub page
+const posts = await getPosts(); // Fetches general posts (no pub associated)
+const pubs = await getPubs(); // Fetches all pubs
 
 // Format the date for display
 const formatDate = (dateString) => {
@@ -41,168 +30,162 @@ const heroImage = {
 // Removed the hardcoded pubImages array, data now comes from 'pubs' fetched via getAllPubs()
 ---
 
-{/* Conditionally render the entire page content */}
-{isHubSite ? (
-  <Layout title="WH Pubs - Traditional British Pubs in South East England">
-    <main>
-      {/* ... (Keep all the original hub page content here) ... */}
-      {/* Hero Section */}
-      <div class="relative h-[90vh]">
-        <div class="absolute inset-0">
-          <img
-            src={heroImage.primary}
-            alt="Warm and inviting traditional English pub interior featuring wooden beams, a well-stocked bar, and comfortable seating areas bathed in ambient lighting"
-            class="w-full h-full object-cover"
-            onerror="this.onerror=null; this.src=this.getAttribute('data-fallback');"
-            data-fallback={heroImage.fallback}
-          />
-          <div class="absolute inset-0 bg-black/50"></div>
-        </div>
-        <div class="relative h-full flex items-center justify-center">
-          <div class="text-center text-white px-4">
-            <h1 class="text-5xl md:text-7xl font-bold mb-6">WH Pubs</h1>
-            <p class="text-xl md:text-2xl mb-8 text-secondary">Traditional British Hospitality in the Heart of South East England</p>
-            <div class="flex gap-4 justify-center">
-              <Button
-                variant="default"
-                size="lg"
-                class="bg-secondary hover:bg-secondary/90 text-primary font-semibold"
-                id="scroll-to-pubs"
-              >
-                View Our Pubs
+{/* Removed conditional rendering wrapper */}
+<Layout title="WH Pubs - Traditional British Pubs in South East England">
+  <main>
+    {/* ... (All original hub page content remains here) ... */}
+    {/* Hero Section */}
+    <div class="relative h-[90vh]">
+      <div class="absolute inset-0">
+        <img
+          src={heroImage.primary}
+          alt="Warm and inviting traditional English pub interior featuring wooden beams, a well-stocked bar, and comfortable seating areas bathed in ambient lighting"
+          class="w-full h-full object-cover"
+          onerror="this.onerror=null; this.src=this.getAttribute('data-fallback');"
+          data-fallback={heroImage.fallback}
+        />
+        <div class="absolute inset-0 bg-black/50"></div>
+      </div>
+      <div class="relative h-full flex items-center justify-center">
+        <div class="text-center text-white px-4">
+          <h1 class="text-5xl md:text-7xl font-bold mb-6">WH Pubs</h1>
+          <p class="text-xl md:text-2xl mb-8 text-secondary">Traditional British Hospitality in the Heart of South East England</p>
+          <div class="flex gap-4 justify-center">
+            <Button
+              variant="default"
+              size="lg"
+              class="bg-secondary hover:bg-secondary/90 text-primary font-semibold"
+              id="scroll-to-pubs"
+            >
+              View Our Pubs
+            </Button>
+            <a href="/book">
+              <Button variant="outline" size="lg" class="bg-transparent text-white border-white hover:bg-white hover:text-primary">
+              Book a Table
               </Button>
-              <a href="/book">
-                <Button variant="outline" size="lg" class="bg-transparent text-white border-white hover:bg-white hover:text-primary">
-                Book a Table
-                </Button>
-              </a>
-            </div>
+            </a>
           </div>
         </div>
       </div>
+    </div>
 
-      <script is:inline>
-        document.getElementById('scroll-to-pubs')?.addEventListener('click', () => {
-          const section = document.getElementById('establishments');
-          if (section) {
-            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }
-        });
-      </script>
+    <script is:inline>
+      document.getElementById('scroll-to-pubs')?.addEventListener('click', () => {
+        const section = document.getElementById('establishments');
+        if (section) {
+          section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    </script>
 
-      {/* Featured Pubs Section */}
-      <section id="establishments" class="py-20 bg-secondary/10">
-        <div class="container mx-auto px-4">
-          <h2 class="text-4xl font-bold text-center mb-12 text-primary">Our Establishments</h2>
-          <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {pubs && pubs.length > 0 ? (
-              pubs.map(pub => (
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                  <img
-                    src={pub.image?.asset?.url || 'https://via.placeholder.com/600x400'} // Use Sanity image URL
-                    alt={pub.image?.alt || `Image of ${pub.name}`} // Use alt text from Sanity or generate default
-                    class="w-full h-56 object-cover"
-                    onerror="this.onerror=null; this.src='https://via.placeholder.com/600x400';" // Simple fallback
-                  />
+    {/* Featured Pubs Section */}
+    <section id="establishments" class="py-20 bg-secondary/10">
+      <div class="container mx-auto px-4">
+        <h2 class="text-4xl font-bold text-center mb-12 text-primary">Our Establishments</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {pubs && pubs.length > 0 ? (
+            pubs.map(pub => (
+              <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <img
+                  src={pub.image?.asset?.url || 'https://via.placeholder.com/600x400'} // Use Sanity image URL
+                  alt={pub.image?.alt || `Image of ${pub.name}`} // Use alt text from Sanity or generate default
+                  class="w-full h-56 object-cover"
+                  onerror="this.onerror=null; this.src='https://via.placeholder.com/600x400';" // Simple fallback
+                />
+              <div class="p-6">
+                <h3 class="text-xl font-bold mb-2 text-primary">{pub.name}</h3>
+                <p class="text-primary/70 mb-4">{pub.description}</p>
+                <div class="flex items-center text-primary/60 mb-4">
+                  <MapPin class="w-4 h-4 mr-2" />
+                  <span>{pub.location}</span>
+                </div>
+                <a href={pub.url || '#'} target="_blank" rel="noopener noreferrer" class="block w-full"> {/* Link to external URL from Sanity */}
+                  <Button variant="outline" class="w-full border-primary text-primary hover:bg-primary hover:text-secondary">Learn More</Button>
+                </a>
+              </div>
+            </div>
+          ))
+        ) : (
+          <p class="col-span-full text-center text-primary/70">No establishments found.</p>
+        )}
+        </div>
+      </div>
+    </section>
+
+    {/* Features Section */}
+    <section class="py-16 bg-primary text-secondary">
+      <div class="container mx-auto px-4">
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="text-center">
+            <div class="bg-secondary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <ChefHat class="w-8 h-8 text-secondary" />
+            </div>
+            <h3 class="text-xl font-bold mb-2">Seasonal Menus</h3>
+            <p class="text-secondary/80">Fresh, locally-sourced ingredients prepared by our skilled chefs.</p>
+          </div>
+          <div class="text-center">
+            <div class="bg-secondary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Beer class="w-8 h-8 text-secondary" />
+            </div>
+            <h3 class="text-xl font-bold mb-2">Local Ales</h3>
+            <p class="text-secondary/80">Carefully selected craft beers and traditional cask ales.</p>
+          </div>
+          <div class="text-center">
+            <div class="bg-secondary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <MenuIcon class="w-8 h-8 text-secondary" />
+            </div>
+            <h3 class="text-xl font-bold mb-2">Special Events</h3>
+            <p class="text-secondary/80">Regular events, live music, and themed dining experiences.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* Latest News Section (Shows only general posts) */}
+    <section class="py-20 bg-white text-primary">
+      <div class="container mx-auto px-4">
+        <h2 class="text-4xl font-bold text-center mb-12">Latest News</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+          {posts && posts.length > 0 ? (
+             posts.slice(0, 3).map(post => (
+              <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                <img
+                  src={post.mainImage?.asset?.url || 'https://via.placeholder.com/600x400'}
+                  alt={post.imageAlt || 'Blog post image'}
+                  class="w-full h-48 object-cover"
+                  onerror="this.onerror=null; this.src='https://via.placeholder.com/600x400';"
+                />
                 <div class="p-6">
-                  <h3 class="text-xl font-bold mb-2 text-primary">{pub.name}</h3>
-                  <p class="text-primary/70 mb-4">{pub.description}</p>
-                  <div class="flex items-center text-primary/60 mb-4">
-                    <MapPin class="w-4 h-4 mr-2" />
-                    <span>{pub.location}</span>
-                  </div>
-                  <a href={pub.url || '#'} target="_blank" rel="noopener noreferrer" class="block w-full"> {/* Link to external URL from Sanity */}
-                    <Button variant="outline" class="w-full border-primary text-primary hover:bg-primary hover:text-secondary">Learn More</Button>
+                  <p class="text-primary/60 text-sm mb-2">{formatDate(post.publishedAt)}</p>
+                  <h3 class="text-xl font-bold mb-2">{post.title}</h3>
+                  <p class="text-primary/70 mb-4">{post.excerpt}</p>
+                  <a href={`/blog/${post.slug.current}`} class="inline-block">
+                    <Button variant="link" class="p-0 text-primary hover:text-primary/80">Read More →</Button>
                   </a>
                 </div>
               </div>
             ))
           ) : (
-            <p class="col-span-full text-center text-primary/70">No establishments found.</p>
+             <p class="col-span-full text-center text-primary/70">No general news posts found.</p>
           )}
-          </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      {/* Features Section */}
-      <section class="py-16 bg-primary text-secondary">
-        <div class="container mx-auto px-4">
-          <div class="grid md:grid-cols-3 gap-8">
-            <div class="text-center">
-              <div class="bg-secondary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <ChefHat class="w-8 h-8 text-secondary" />
-              </div>
-              <h3 class="text-xl font-bold mb-2">Seasonal Menus</h3>
-              <p class="text-secondary/80">Fresh, locally-sourced ingredients prepared by our skilled chefs.</p>
-            </div>
-            <div class="text-center">
-              <div class="bg-secondary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Beer class="w-8 h-8 text-secondary" />
-              </div>
-              <h3 class="text-xl font-bold mb-2">Local Ales</h3>
-              <p class="text-secondary/80">Carefully selected craft beers and traditional cask ales.</p>
-            </div>
-            <div class="text-center">
-              <div class="bg-secondary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <MenuIcon class="w-8 h-8 text-secondary" />
-              </div>
-              <h3 class="text-xl font-bold mb-2">Special Events</h3>
-              <p class="text-secondary/80">Regular events, live music, and themed dining experiences.</p>
-            </div>
-          </div>
+    {/* Newsletter Section */}
+    <section class="bg-primary py-16">
+      <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl font-bold text-secondary mb-4">Stay Updated</h2>
+        <p class="text-secondary/80 mb-8">Subscribe to our newsletter for the latest news and special offers.</p>
+        <div class="max-w-md mx-auto flex gap-4">
+          <input
+            type="email"
+            placeholder="Enter your email"
+            class="flex-1 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary bg-secondary/10 text-secondary placeholder:text-secondary/50 border border-secondary/20"
+          />
+          <Button variant="secondary" class="bg-secondary text-primary hover:bg-secondary/90">Subscribe</Button>
         </div>
-      </section>
-
-      {/* Latest News Section (Shows only general posts) */}
-      <section class="py-20 bg-white text-primary">
-        <div class="container mx-auto px-4">
-          <h2 class="text-4xl font-bold text-center mb-12">Latest News</h2>
-          <div class="grid md:grid-cols-3 gap-8">
-            {posts && posts.length > 0 ? (
-               posts.slice(0, 3).map(post => (
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                  <img
-                    src={post.mainImage?.asset?.url || 'https://via.placeholder.com/600x400'}
-                    alt={post.imageAlt || 'Blog post image'}
-                    class="w-full h-48 object-cover"
-                    onerror="this.onerror=null; this.src='https://via.placeholder.com/600x400';"
-                  />
-                  <div class="p-6">
-                    <p class="text-primary/60 text-sm mb-2">{formatDate(post.publishedAt)}</p>
-                    <h3 class="text-xl font-bold mb-2">{post.title}</h3>
-                    <p class="text-primary/70 mb-4">{post.excerpt}</p>
-                    <a href={`/blog/${post.slug.current}`} class="inline-block">
-                      <Button variant="link" class="p-0 text-primary hover:text-primary/80">Read More →</Button>
-                    </a>
-                  </div>
-                </div>
-              ))
-            ) : (
-               <p class="col-span-full text-center text-primary/70">No general news posts found.</p>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* Newsletter Section */}
-      <section class="bg-primary py-16">
-        <div class="container mx-auto px-4 text-center">
-          <h2 class="text-3xl font-bold text-secondary mb-4">Stay Updated</h2>
-          <p class="text-secondary/80 mb-8">Subscribe to our newsletter for the latest news and special offers.</p>
-          <div class="max-w-md mx-auto flex gap-4">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              class="flex-1 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary bg-secondary/10 text-secondary placeholder:text-secondary/50 border border-secondary/20"
-            />
-            <Button variant="secondary" class="bg-secondary text-primary hover:bg-secondary/90">Subscribe</Button>
-          </div>
-        </div>
-      </section>
-    </main>
-  </Layout>
-) : (
-  // If not the hub site, render nothing for index.astro.
-  // The actual content is served by [slug].astro at the root.
-  null
-)}
+      </div>
+    </section>
+  </main>
+</Layout>
