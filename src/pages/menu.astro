@@ -1,0 +1,61 @@
+---
+// src/pages/menu.astro
+import Layout from '@/layouts/Layout.astro';
+import { getPubBySlug, getMenusForPub } from '@/lib/sanity';
+import SanityPortableText from '@/components/SanityPortableText.jsx';
+
+// Determine the target pub for this build/request
+const targetPubSlug = import.meta.env.TARGET_PUB_SLUG;
+
+// Fetch the specific pub's data (needed for layout customization)
+// If TARGET_PUB_SLUG is not set (hub site), pubData will be null.
+const pubData = targetPubSlug ? await getPubBySlug(targetPubSlug) : null;
+
+// Fetch menus only if we have a target pub slug
+const menus = targetPubSlug ? await getMenusForPub(targetPubSlug) : [];
+
+// Determine page title - default for hub, specific for pub
+const pageTitle = pubData ? `${pubData.name} - Menu` : "Menus - WH Pubs";
+const pageDescription = pubData ? `View the menu for ${pubData.name}.` : "Explore menus from WH Pubs.";
+
+// Redirect hub site menu page to homepage section? Or show a generic message?
+// For now, hub site /menu will show a generic message if no pub is targeted.
+if (!targetPubSlug && !pubData) {
+  // Optional: Redirect to homepage or a specific section
+  // return Astro.redirect('/#menus-section'); // Example redirect
+}
+---
+
+<Layout title={pageTitle} description={pageDescription} pub={pubData}>
+  <main class="container mx-auto px-4 py-12 pt-28"> {/* Added padding-top */}
+    <h1 class="text-4xl md:text-5xl font-bold text-primary mb-12 text-center">
+      {pubData ? `${pubData.name} Menu` : 'Our Menus'}
+    </h1>
+
+    {menus && menus.length > 0 ? (
+      <div class="space-y-12">
+        {menus.map(menu => (
+          <section aria-labelledby={`menu-${menu.slug.current}`}>
+            <h2 id={`menu-${menu.slug.current}`} class="text-3xl font-semibold text-secondary mb-6 border-b pb-2">
+              {menu.title}
+            </h2>
+            <div class="prose prose-lg max-w-none prose-headings:text-primary prose-a:text-secondary hover:prose-a:text-secondary/80">
+              {menu.menuContent && <SanityPortableText value={menu.menuContent} client:load />}
+            </div>
+          </section>
+        ))}
+      </div>
+    ) : (
+      <p class="text-center text-lg text-primary/80">
+        {targetPubSlug ? `Menu details for ${pubData?.name || 'this pub'} are coming soon.` : 'Please visit our individual pub sites to view their menus.'}
+      </p>
+    )}
+
+    {/* Optional: Link back */}
+    <div class="mt-16 text-center">
+       <a href={pubData ? '/' : '/#establishments'} class="text-primary hover:underline">
+         &larr; {pubData ? `Back to ${pubData.name} Home` : 'Back to All Establishments'}
+       </a>
+    </div>
+  </main>
+</Layout>

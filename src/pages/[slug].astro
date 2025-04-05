@@ -45,18 +45,30 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
 ---
 
 <Layout title={pageTitle} description={pageDescription} pub={pub}> {/* Pass pub data to Layout */}
-  <main class="container mx-auto px-4 py-12">
-    <article class="max-w-4xl mx-auto">
-      <!-- Pub Image -->
+  <main> {/* Remove container/padding from main, apply later */}
+    <!-- Hero Section -->
+    <section class="relative h-[60vh] md:h-[70vh] w-full"> {/* Adjust height as needed */}
       <img
-        src={pub.image?.asset?.url || 'https://via.placeholder.com/1200x600'}
-        alt={pub.image?.alt || `Image of ${pub.name}`}
-        class="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg mb-8"
-        onerror="this.onerror=null; this.src='https://via.placeholder.com/1200x600';"
+        src={pub.image?.asset?.url || 'https://via.placeholder.com/1600x900'} // Use pub's main image
+        alt={pub.image?.alt || `Hero image for ${pub.name}`}
+        class="absolute inset-0 w-full h-full object-cover" // Cover the section
+        onerror="this.onerror=null; this.src='https://via.placeholder.com/1600x900';"
       />
+      {/* Optional: Add an overlay */}
+      <div class="absolute inset-0 bg-black/30"></div>
+      {/* Optional: Add text over the hero */}
+      {/* <div class="relative z-10 h-full flex items-center justify-center">
+        <h1 class="text-white text-4xl md:text-6xl font-bold text-center">{pub.name}</h1>
+      </div> */}
+    </section>
+
+    {/* Main Content Area */}
+    <div class="container mx-auto px-4 py-12"> {/* Add container/padding here */}
+      <article class="max-w-4xl mx-auto">
 
       <!-- Pub Name -->
-      <h1 class="text-4xl md:text-5xl font-bold text-primary mb-4">{pub.name}</h1>
+      <!-- Pub Name (moved below hero) -->
+      <h1 class="text-4xl md:text-5xl font-bold text-primary mb-4 text-center">{pub.name}</h1>
 
       <!-- Location -->
       {pub.location && (

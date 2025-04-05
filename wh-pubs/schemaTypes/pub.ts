@@ -150,6 +150,14 @@ export default defineType({
       title: 'Twitter/X URL',
       type: 'url',
     }),
+    defineField({
+      name: 'colorScheme',
+      title: 'Color Scheme',
+      type: 'string',
+      description: 'Optional: Define a theme name (e.g., "blue", "green", "rustic") to apply specific styles.',
+      // You could make this a dropdown list later:
+      // options: { list: ['default', 'blue', 'green', 'rustic'] }
+    }),
     // Optional: Link to an Author (Pub Manager)
     // defineField({
     //   name: 'manager',

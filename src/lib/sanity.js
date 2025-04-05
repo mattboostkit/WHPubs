@@ -157,7 +157,8 @@ export async function getPubBySlug(slug) {
       footerText,
       facebookUrl,
       instagramUrl,
-      twitterUrl
+      twitterUrl,
+      colorScheme // Fetch color scheme
     }
   `, { slug });
 }
@@ -201,8 +202,22 @@ export async function getPubs(targetPubSlug = null) {
       footerText,
       facebookUrl,
       instagramUrl,
-      twitterUrl
+      twitterUrl,
+      colorScheme // Fetch color scheme
     } | order(name asc)
+  `, params);
+}
+
+// Helper function to get menus for a specific pub slug
+export async function getMenusForPub(targetPubSlug) {
+  if (!targetPubSlug) return []; // Return empty if no slug provided
+  const params = { targetPubSlug };
+  return client.fetch(`
+    *[_type == "menu" && associatedPub->slug.current == $targetPubSlug] {
+      title,
+      slug,
+      menuContent[]{ ..., asset-> } // Fetch full block content, resolving image assets
+    } | order(title asc) // Or order by a custom 'order' field if added
   `, params);
 }
 // Note: getPubBySlug remains useful for the dynamic page generation

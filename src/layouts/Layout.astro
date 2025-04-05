@@ -23,14 +23,7 @@ const isPubLayout = !!pub;
 let siteName = "WH Pubs";
 let logoUrl = null; // No default logo, just text
 let logoAlt = "WH Pubs Logo";
-let headerLinks = [
-	{ title: "Our Pubs", url: "/#establishments", ariaLabel: "Our Pubs" },
-	{ title: "Menus", url: "/menus", ariaLabel: "Menus" },
-	{ title: "Book", url: "/book", ariaLabel: "Book a Table" },
-	{ title: "Events", url: "/events", ariaLabel: "Events" },
-	{ title: "Blog", url: "/blog", ariaLabel: "Blog" },
-	{ title: "Contact", url: "/contact", ariaLabel: "Contact Us" },
-];
+let headerLinks = []; // Initialize empty
 let footerContactLocation = "Various locations across South East England";
 let footerContactHours = "Mon-Sun: 11am - 11pm";
 let footerContactPhone = "+44 20 1234 5678";
@@ -42,20 +35,37 @@ if (isPubLayout && pub) {
 	siteName = pub.name || siteName;
 	logoUrl = pub.logo?.asset?.url || logoUrl;
 	logoAlt = pub.logo?.alt || `${pub.name} Logo`;
-	// Use pub nav links if provided and not empty, otherwise keep defaults
-	if (pub.headerNavLinks && pub.headerNavLinks.length > 0) {
-		headerLinks = pub.headerNavLinks.map(link => ({ ...link, ariaLabel: link.title }));
-	}
+
+	 // Define the specific nav structure for individual pub sites
+	 headerLinks = [
+	   { title: "Home", url: "/", ariaLabel: "Home" }, // Link to the root of the pub site
+	   { title: "Menu", url: "/menu", ariaLabel: "Menu" }, // Link to the new menu page
+	   { title: "Blog", url: "/blog", ariaLabel: "Blog" }, // Link to the blog index (will show only this pub's posts if logic added later)
+	   // Use reservationsUrl for the booking link, default to '#' if not set
+	   { title: "Make A Booking", url: pub.reservationsUrl || '#', ariaLabel: "Make a Booking" },
+	 ];
+
 	// Use pub footer text if provided, otherwise construct from other fields or keep default
 	footerDescription = pub.footerText || pub.description || footerDescription;
-	footerContactLocation = pub.location || footerContactLocation; // Assuming pub schema has location
-	footerContactHours = pub.openingHours || footerContactHours; // Assuming pub schema has openingHours
-	footerContactPhone = pub.contactPhone || footerContactPhone; // Assuming pub schema has contactPhone
+	footerContactLocation = pub.location || footerContactLocation;
+	footerContactHours = pub.openingHours || footerContactHours;
+	footerContactPhone = pub.contactPhone || footerContactPhone;
 	footerSocialLinks = {
 		facebook: pub.facebookUrl || footerSocialLinks.facebook,
 		instagram: pub.instagramUrl || footerSocialLinks.instagram,
 		twitter: pub.twitterUrl || footerSocialLinks.twitter,
 	};
+} else {
+	 // Define default nav links for the main hub site
+	 headerLinks = [
+	   { title: "Our Pubs", url: "/#establishments", ariaLabel: "Our Pubs" },
+	   // Maybe remove hub /menus link or point it elsewhere? For now, keep it.
+	   { title: "Menus", url: "/menu", ariaLabel: "Menus" },
+	   { title: "Book", url: "/book", ariaLabel: "Book a Table" }, // General booking page for hub
+	   { title: "Events", url: "/events", ariaLabel: "Events" }, // General events page for hub
+	   { title: "Blog", url: "/blog", ariaLabel: "Blog" }, // General blog page for hub
+	   { title: "Contact", url: "/contact", ariaLabel: "Contact Us" }, // General contact page for hub
+	 ];
 }
 
 // Use the provided description prop or generate a default one
@@ -117,7 +127,7 @@ const metaDescription = description || footerDescription;
 		
 		<title>{title}</title>
 	</head>
-	<body class="font-alice bg-background text-foreground">
+	<body class:list={["font-alice bg-background text-foreground", pub?.colorScheme ? `theme-${pub.colorScheme}` : 'theme-default']}>
 		<header class="bg-primary fixed w-full z-50">
 			<AdminBadge />
 			<nav class="container mx-auto px-4 py-4" aria-label="Main navigation">
@@ -237,7 +247,7 @@ const metaDescription = description || footerDescription;
 							{headerLinks.map(link => (
 								<li><a href={link.url} class="text-white/80 hover:text-white" aria-label={link.ariaLabel}>{link.title}</a></li>
 							))}
-							{/* Add other relevant footer links like Privacy Policy, Terms */}
+							<!-- Add other relevant footer links like Privacy Policy, Terms -->
 						</ul>
 					</div>
 				</div>
