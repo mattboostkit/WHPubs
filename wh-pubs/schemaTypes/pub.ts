@@ -52,7 +52,26 @@ export default defineType({
       fields: [
         { name: 'alt', type: 'string', title: 'Alternative text', validation: Rule => Rule.required() }
       ],
-      validation: Rule => Rule.required() // Make hero image required
+      validation: Rule => Rule.required()
+    }),
+     defineField({
+      name: 'heroOverlayText',
+      title: 'Hero Overlay Text (Optional)',
+      type: 'text',
+      rows: 3,
+      description: 'Optional text to display layered over the hero image.',
+    }),
+    defineField({
+      name: 'heroOverlayButtonText',
+      title: 'Hero Overlay Button Text (Optional)',
+      type: 'string',
+      description: 'Text for the button overlaid on the hero (requires Link below).',
+    }),
+    defineField({
+      name: 'heroOverlayButtonLink',
+      title: 'Hero Overlay Button Link (Optional)',
+      type: 'url',
+      description: 'URL for the button overlaid on the hero (requires Text above).',
     }),
     // Moved these fields outside the 'image' field definition
     defineField({

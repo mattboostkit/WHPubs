@@ -151,7 +151,10 @@ export async function getPubBySlug(slug) {
         },
         alt
       },
-      heroImage { asset->{ _id, url }, alt }, // Fetch hero image
+      heroImage { asset->{ _id, url }, alt },
+      heroOverlayText, // Fetch overlay text
+      heroOverlayButtonText, // Fetch overlay button text
+      heroOverlayButtonLink, // Fetch overlay button link
       // Layout fields
       logo { asset->{ _id, url }, alt },
       headerNavLinks[]{ title, url },
@@ -159,7 +162,7 @@ export async function getPubBySlug(slug) {
       facebookUrl,
       instagramUrl,
       twitterUrl,
-      colorScheme // Fetch color scheme
+      colorScheme
     }
   `, { slug });
 }
@@ -195,9 +198,12 @@ export async function getPubs(targetPubSlug = null) {
           _id,
           url
         },
-        heroImage { asset->{ _id, url }, alt }, // Fetch hero image
         alt
       },
+      heroImage { asset->{ _id, url }, alt }, // Fetch hero image
+      heroOverlayText, // Fetch overlay text
+      heroOverlayButtonText, // Fetch overlay button text
+      heroOverlayButtonLink, // Fetch overlay button link
       // Layout fields
       logo { asset->{ _id, url }, alt },
       headerNavLinks[]{ title, url },
@@ -205,7 +211,7 @@ export async function getPubs(targetPubSlug = null) {
       facebookUrl,
       instagramUrl,
       twitterUrl,
-      colorScheme // Fetch color scheme
+      colorScheme
     } | order(name asc)
   `, params);
 }

@@ -63,9 +63,27 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
         class="absolute inset-0 w-full h-full object-cover" // Cover the section
         onerror="this.onerror=null; this.src='https://via.placeholder.com/1600x900';"
       />
-      {/* Optional: Add an overlay */}
-      <div class="absolute inset-0 bg-black/30"></div>
-      {/* Optional: Add text over the hero */}
+      {/* Overlay */}
+      <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent"></div> {/* Gradient overlay */}
+
+      {/* Overlay Content (Text and Button) */}
+      <div class="relative z-10 h-full flex flex-col items-center justify-center text-center text-white px-6">
+        {pub.heroOverlayText && (
+          // Use prose classes for potential rich text formatting if overlay text becomes blockContent later
+          <div class="prose prose-invert prose-xl md:prose-2xl mb-6 text-shadow-md">
+             {/* For now, assuming plain text. If blockContent, use SanityPortableText */}
+             <p>{pub.heroOverlayText}</p>
+          </div>
+        )}
+        {pub.heroOverlayButtonText && pub.heroOverlayButtonLink && (
+          <a href={pub.heroOverlayButtonLink} target="_blank" rel="noopener noreferrer">
+             <Button variant="secondary" size="lg" class="bg-white/90 hover:bg-white text-primary font-semibold px-8 py-3 shadow-lg">
+               {pub.heroOverlayButtonText}
+             </Button>
+          </a>
+        )}
+      </div>
+      {/* Original H1 was here, moved below hero */}
       {/* <div class="relative z-10 h-full flex items-center justify-center">
         <h1 class="text-white text-4xl md:text-6xl font-bold text-center">{pub.name}</h1>
       </div> */}
