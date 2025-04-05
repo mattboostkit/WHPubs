@@ -87,26 +87,28 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
 
       <!-- Food Serving Times -->
       {pub.foodServingTimes && (
-        <div class="mt-4"> {/* Added top margin */}
+        <!-- Food Serving Times section -->
+        <div class="mt-4">
           <h3 class="text-xl font-semibold text-primary mb-2 flex items-center">
             <UtensilsCrossed class="w-5 h-5 mr-2 text-primary/80" /> Food Serving Times
           </h3>
-          {/* Using div instead of pre as a test */}
+          {/* Reverted diagnostic change and removed invalid comments */}
           <div class="whitespace-pre-wrap font-sans text-primary/90 text-sm">{pub.foodServingTimes}</div>
         </div>
       )}
-      {/* Removed extra closing div */}
+      <!-- Removed extra closing div previously -->
 
       <!-- Contact Info -->
       {pub.contactPhone && (
          <div class="mb-8 p-6 bg-secondary/10 rounded-lg">
-           <h3 class="text-xl font-semibold text-primary mb-2 flex items-center"> {/* Changed to h3 */}
+           <!-- Contact Info section -->
+           <h3 class="text-xl font-semibold text-primary mb-2 flex items-center">
              <Phone class="w-5 h-5 mr-2 text-primary/80" /> Contact Us
            </h3>
-           <p class="text-primary/90 text-sm"> {/* Smaller text */}
+           <p class="text-primary/90 text-sm">
              Call us on: <a href={`tel:${pub.contactPhone.replace(/\s/g, '')}`} class="underline hover:text-secondary">{pub.contactPhone}</a>
            </p>
-           {/* Could add address here too if needed */}
+           <!-- Could add address here too if needed -->
          </div>
       )}
 
@@ -133,19 +135,21 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
       )}
 
       <!-- Placeholder for Menus -->
-      <div class="mb-12"> {/* Increased bottom margin */}
+      <!-- Placeholder for Menus section -->
+      <div class="mb-12">
         <h2 class="text-3xl font-semibold text-primary mb-4 border-b pb-2">Menus</h2>
         <p class="text-primary/70 italic">Menu information coming soon...</p>
-        {/* Fetch and display menu data here later */}
+        <!-- Fetch and display menu data here later -->
       </div>
 
       <!-- Placeholder for Events -->
-      <div class="mb-12"> {/* Increased bottom margin */}
+      <!-- Placeholder for Events section -->
+      <div class="mb-12">
         <h2 class="text-3xl font-semibold text-primary mb-4 border-b pb-2 flex items-center">
            <CalendarDays class="w-6 h-6 mr-3 text-primary/80" /> Events
         </h2>
         <p class="text-primary/70 italic">Check back soon for upcoming events at {pub.name}!</p>
-        {/* Fetch and display event data specific to this pub here later */}
+        <!-- Fetch and display event data specific to this pub here later -->
       </div>
 
 
@@ -156,7 +160,7 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
           <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-6">
             {relatedPosts.slice(0, 3).map(post => ( // Show latest 3 posts
               <div class="bg-white rounded-lg shadow-md overflow-hidden border border-secondary/10">
-                 <a href={`/blog/${post.slug.current}`} class="block hover:opacity-90 transition-opacity"> {/* Assuming a /blog/[slug].astro exists */}
+                 <a href={`/blog/${post.slug.current}`} class="block hover:opacity-90 transition-opacity"> <!-- Assuming a /blog/[slug].astro exists -->
                    <img
                      src={post.mainImage?.asset?.url + '?w=400&h=250&fit=crop' || 'https://via.placeholder.com/400x250'}
                      alt={post.imageAlt || `Image for ${post.title}`}
@@ -166,7 +170,7 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
                    />
                  </a>
                  <div class="p-4">
-                   {/* <p class="text-primary/60 text-xs mb-1">{formatDate(post.publishedAt)}</p> Need formatDate or similar */}
+                   <!-- <p class="text-primary/60 text-xs mb-1">{formatDate(post.publishedAt)}</p> Need formatDate or similar -->
                    <h3 class="text-lg font-semibold mb-2 text-primary hover:text-secondary transition-colors">
                      <a href={`/blog/${post.slug.current}`}>{post.title}</a>
                    </h3>
@@ -176,10 +180,10 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
                </div>
             ))}
           </div>
-          {/* Optional: Link to a dedicated blog page for this pub */}
+          <!-- Optional: Link to a dedicated blog page for this pub -->
           {relatedPosts.length > 3 && (
              <div class="text-center mt-8">
-                <a href="/blog"> {/* Link to a general blog page or a pub-specific one */}
+                <a href="/blog"> <!-- Link to a general blog page or a pub-specific one -->
                    <Button variant="outline">View All News</Button>
                 </a>
              </div>
@@ -194,7 +198,7 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
       {pub.url && (
         <div class="mt-12 text-center">
           <a href={pub.url} target="_blank" rel="noopener noreferrer">
-            <Button variant="outline" size="lg" class="border-primary text-primary hover:bg-primary hover:text-secondary"> {/* Changed variant */}
+            <Button variant="outline" size="lg" class="border-primary text-primary hover:bg-primary hover:text-secondary"> <!-- Changed variant -->
               Visit {pub.name}'s Official Website
             </Button>
           </a>
@@ -202,7 +206,8 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
       )}
 
       {/* Link back to homepage */}
-      <div class="mt-16 text-center"> {/* Increased top margin */}
+      <!-- Link back to homepage -->
+      <div class="mt-16 text-center">
         <a href="/" class="text-primary hover:underline">
           &larr; Back to All Establishments
         </a>
