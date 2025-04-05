@@ -151,6 +151,7 @@ export async function getPubBySlug(slug) {
         },
         alt
       },
+      heroImage { asset->{ _id, url }, alt }, // Fetch hero image
       // Layout fields
       logo { asset->{ _id, url }, alt },
       headerNavLinks[]{ title, url },
@@ -194,6 +195,7 @@ export async function getPubs(targetPubSlug = null) {
           _id,
           url
         },
+        heroImage { asset->{ _id, url }, alt }, // Fetch hero image
         alt
       },
       // Layout fields

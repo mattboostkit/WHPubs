@@ -10,15 +10,24 @@ import { MapPin, Clock, Phone, UtensilsCrossed, CalendarDays, Image as ImageIcon
 // In dev mode, it builds all pub pages found.
 export async function getStaticPaths() {
   const targetPubSlug = import.meta.env.TARGET_PUB_SLUG;
+  console.log(`[getStaticPaths] TARGET_PUB_SLUG: ${targetPubSlug}`); // Log the env var value
   let pubsToBuild = [];
 
   if (targetPubSlug) {
     // If building a specific pub site, only fetch and build that pub's page
-    const singlePub = await getPubBySlug(targetPubSlug); // Use getPubBySlug for efficiency
+    console.log(`[getStaticPaths] Fetching data for slug: ${targetPubSlug}`);
+    const singlePub = await getPubBySlug(targetPubSlug);
+    console.log(`[getStaticPaths] Fetched data for ${targetPubSlug}:`, singlePub ? `Pub Name: ${singlePub.name}` : 'Not Found'); // Log fetched data (or lack thereof)
     if (singlePub) {
       pubsToBuild.push(singlePub);
+    } else {
+       console.error(`[getStaticPaths] ERROR: Pub not found for slug: ${targetPubSlug}`);
+       // Optionally throw an error to fail the build if data is essential
+       // throw new Error(`Pub not found for slug: ${targetPubSlug}`);
     }
   } else {
+    // If building the main hub site, fetch and build all pub pages
+    console.log('[getStaticPaths] Fetching all pubs for hub site.');
     // If building the main hub site, fetch and build all pub pages
     pubsToBuild = await getPubs();
   }
@@ -49,8 +58,8 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
     <!-- Hero Section -->
     <section class="relative h-[60vh] md:h-[70vh] w-full"> {/* Adjust height as needed */}
       <img
-        src={pub.image?.asset?.url || 'https://via.placeholder.com/1600x900'} // Use pub's main image
-        alt={pub.image?.alt || `Hero image for ${pub.name}`}
+        src={pub.heroImage?.asset?.url || 'https://via.placeholder.com/1600x900'} // Use dedicated heroImage
+        alt={pub.heroImage?.alt || `Hero image for ${pub.name}`} // Use heroImage alt text
         class="absolute inset-0 w-full h-full object-cover" // Cover the section
         onerror="this.onerror=null; this.src='https://via.placeholder.com/1600x900';"
       />

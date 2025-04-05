@@ -43,6 +43,17 @@ export default defineType({
         }
       ]
     }),
+    defineField({
+      name: 'heroImage',
+      title: 'Hero Image',
+      type: 'image',
+      description: 'Large banner image for the top of the pub\'s page.',
+      options: { hotspot: true },
+      fields: [
+        { name: 'alt', type: 'string', title: 'Alternative text', validation: Rule => Rule.required() }
+      ],
+      validation: Rule => Rule.required() // Make hero image required
+    }),
     // Moved these fields outside the 'image' field definition
     defineField({
       name: 'foodServingTimes',
