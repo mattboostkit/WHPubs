@@ -1,17 +1,26 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { Button } from "@/components/ui/button"
-import { getPosts } from '../../lib/sanity'; // Use new function name
+import { getPosts, getPubBySlug } from '../../lib/sanity'; // Use getPosts and getPubBySlug
 
-// Get all posts instead of just posts for a specific site
-// Fetch ALL posts (general and pub-specific) for the main blog index page
-const posts = await getPosts();
+// Determine the target pub for this build/request
+const targetPubSlug = import.meta.env.TARGET_PUB_SLUG;
+
+// Fetch the specific pub's data (needed for layout customization)
+const pubData = targetPubSlug ? await getPubBySlug(targetPubSlug) : null;
+
+// Fetch posts: only for the target pub if specified, otherwise only general posts
+const posts = await getPosts(targetPubSlug);
+
+// Determine page title
+const pageTitle = pubData ? `${pubData.name} - Blog` : "Blog - WH Pubs";
+const pageDescription = pubData ? `Latest news from ${pubData.name}.` : "Latest news from WH Pubs.";
 
 // Create fallback image paths
 const blogFallbackImage = '/images/blog-fallback.jpg';
 ---
 
-<Layout title="Blog - WH Pubs">
+<Layout title={pageTitle} description={pageDescription} pub={pubData}>
 	<main class="pt-24 bg-secondary/10 min-h-screen">
 		<!-- Image fallback script -->
 		<script is:inline>
@@ -37,28 +46,41 @@ const blogFallbackImage = '/images/blog-fallback.jpg';
 		</script>
 		
 		<div class="container mx-auto px-4">
-			<h1 class="text-5xl font-bold text-center mb-12 text-primary">Latest News & Updates</h1>
+			<h1 class="text-5xl font-bold text-center mb-12 text-primary">
+				{pubData ? `Latest News from ${pubData.name}` : 'Latest News & Updates'}
+			</h1>
 			
 			<div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-				{posts.map(post => (
-					<div class="bg-white rounded-lg shadow-lg overflow-hidden">
-						<img 
-							src={post.mainImage?.asset?.url || 'https://via.placeholder.com/800x400'} 
-							alt={post.imageAlt || 'Blog post image'} 
-							class="w-full h-48 object-cover" 
-							onerror="this.onerror=null; this.src=this.getAttribute('data-fallback');" 
-							data-fallback={blogFallbackImage}
-						/>
-						<div class="p-6">
-							<p class="text-primary/60 text-sm mb-2">{new Date(post.publishedAt).toLocaleDateString()}</p>
-							<h3 class="text-xl font-bold mb-2">{post.title}</h3>
-							<p class="text-primary/70 mb-4">{post.ctaDescription}</p>
-							<a href={`/blog/${post.slug.current}`}>
-								<Button variant="link" class="p-0 text-primary hover:text-primary/80">Read More →</Button>
+				{posts && posts.length > 0 ? (
+					posts.map(post => (
+						<div class="bg-white rounded-lg shadow-lg overflow-hidden">
+							<a href={`/blog/${post.slug.current}`} class="block hover:opacity-90 transition-opacity">
+								<img
+									src={post.mainImage?.asset?.url || 'https://via.placeholder.com/800x400'}
+									alt={post.imageAlt || 'Blog post image'}
+									class="w-full h-48 object-cover"
+									onerror="this.onerror=null; this.src=this.getAttribute('data-fallback');"
+									data-fallback={blogFallbackImage}
+								/>
 							</a>
+							<div class="p-6">
+								<p class="text-primary/60 text-sm mb-2">{new Date(post.publishedAt).toLocaleDateString()}</p>
+								<h3 class="text-xl font-bold mb-2 hover:text-secondary transition-colors">
+									<a href={`/blog/${post.slug.current}`}>{post.title}</a>
+								</h3>
+								{/* Use excerpt field if available */}
+								<p class="text-primary/70 mb-4 line-clamp-3">{post.excerpt || post.ctaDescription}</p>
+								<a href={`/blog/${post.slug.current}`} class="text-sm text-secondary hover:underline">
+									Read More &rarr;
+								</a>
+							</div>
 						</div>
-					</div>
-				))}
+					))
+				) : (
+					<p class="col-span-full text-center text-primary/70">
+						{pubData ? `No news posts found for ${pubData.name} yet.` : 'No general news posts found.'}
+					</p>
+				)}
 			</div>
 		</div>
 	</main>
