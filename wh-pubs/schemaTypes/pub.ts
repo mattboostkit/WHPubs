@@ -104,6 +104,52 @@ export default defineType({
       title: 'Contact Phone',
       type: 'string',
     }),
+    // --- Layout Customization Fields ---
+    defineField({
+      name: 'logo',
+      title: 'Pub Logo',
+      type: 'image',
+      description: 'Specific logo for this pub to display in the header.',
+      options: { hotspot: true },
+      fields: [
+        { name: 'alt', type: 'string', title: 'Alternative text' }
+      ]
+    }),
+    defineField({
+      name: 'headerNavLinks',
+      title: 'Header Navigation Links',
+      type: 'array',
+      description: 'Custom navigation links for this pub\'s header (e.g., Home, Menu, Book). Leave empty to use default WH Pubs links.',
+      of: [{
+        type: 'object',
+        fields: [
+          defineField({ name: 'title', title: 'Link Title', type: 'string', validation: Rule => Rule.required() }),
+          defineField({ name: 'url', title: 'Link URL', type: 'string', description: 'Relative (e.g., /menu) or absolute URL', validation: Rule => Rule.required() })
+        ]
+      }]
+    }),
+     defineField({
+      name: 'footerText',
+      title: 'Footer Text',
+      type: 'text',
+      rows: 3,
+      description: 'Custom text/address/info for the footer. Leave empty to use default WH Pubs info.',
+    }),
+    defineField({
+      name: 'facebookUrl',
+      title: 'Facebook URL',
+      type: 'url',
+    }),
+    defineField({
+      name: 'instagramUrl',
+      title: 'Instagram URL',
+      type: 'url',
+    }),
+    defineField({
+      name: 'twitterUrl',
+      title: 'Twitter/X URL',
+      type: 'url',
+    }),
     // Optional: Link to an Author (Pub Manager)
     // defineField({
     //   name: 'manager',

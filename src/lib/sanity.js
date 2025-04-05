@@ -144,13 +144,20 @@ export async function getPubBySlug(slug) {
       contactPhone,
       foodServingTimes,
       reservationsUrl,
-      gallery[] { // Fetch the array of gallery images
-        asset->{ // Get details for each image asset
+      gallery[] {
+        asset->{
           _id,
           url
         },
-        alt // Get the alt text for each gallery image
-      }
+        alt
+      },
+      // Layout fields
+      logo { asset->{ _id, url }, alt },
+      headerNavLinks[]{ title, url },
+      footerText,
+      facebookUrl,
+      instagramUrl,
+      twitterUrl
     }
   `, { slug });
 }
@@ -187,7 +194,14 @@ export async function getPubs(targetPubSlug = null) {
           url
         },
         alt
-      }
+      },
+      // Layout fields
+      logo { asset->{ _id, url }, alt },
+      headerNavLinks[]{ title, url },
+      footerText,
+      facebookUrl,
+      instagramUrl,
+      twitterUrl
     } | order(name asc)
   `, params);
 }

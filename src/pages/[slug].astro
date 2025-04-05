@@ -44,7 +44,7 @@ const pageTitle = `${pub.name} - WH Pubs`;
 const pageDescription = pub.description || `Learn more about ${pub.name}, one of our fine establishments.`;
 ---
 
-<Layout title={pageTitle} description={pageDescription}>
+<Layout title={pageTitle} description={pageDescription} pub={pub}> {/* Pass pub data to Layout */}
   <main class="container mx-auto px-4 py-12">
     <article class="max-w-4xl mx-auto">
       <!-- Pub Image -->
