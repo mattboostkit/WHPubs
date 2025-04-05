@@ -6,8 +6,11 @@ import author from './author'
 import site from './site'
 import pub from './pub'
 import menu from './menu'
+import career from './career'
+import homepage from './homepage'
+import event from './event'
 
-export const schemaTypes = [post, author, category, site, pub, menu, blockContent]
+export const schemaTypes = [homepage, post, author, category, site, pub, menu, career, event, blockContent] // Added event
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [post, author, category, site, pub, menu, blockContent],
+  types: [homepage, post, author, category, site, pub, menu, career, event, blockContent], // Added event
 }

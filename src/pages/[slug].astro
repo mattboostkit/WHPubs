@@ -81,22 +81,24 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
 
       <!-- Location -->
       {pub.location && (
-        <div class="flex items-center text-primary/70 mb-2"> <!-- Reduced bottom margin -->
+        <div class="flex items-center justify-center text-primary/70 mb-6"> {/* Centered and added bottom margin */}
           <MapPin class="w-5 h-5 mr-2" />
           <span>{pub.location}</span>
         </div>
       )}
 
-      <!-- Book Table CTA -->
+      {/* Book Table CTA (Moved near top) */}
       {pub.reservationsUrl && (
-        <div class="my-6"> <!-- Added margin -->
+        <div class="text-center mb-10"> {/* Centered and added bottom margin */}
           <a href={pub.reservationsUrl} target="_blank" rel="noopener noreferrer">
-            <Button variant="default" size="lg" class="bg-green-600 hover:bg-green-700 text-white font-semibold">
+            <Button variant="default" size="lg" class="bg-green-600 hover:bg-green-700 text-white font-semibold px-8 py-3"> {/* Larger padding */}
               Book A Table
             </Button>
           </a>
         </div>
       )}
+
+      {/* Removed original CTA location */}
 
       <!-- Description -->
       {pub.description && (

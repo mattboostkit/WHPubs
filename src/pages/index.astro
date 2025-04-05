@@ -2,66 +2,65 @@
 import Layout from '../layouts/Layout.astro';
 import { Button } from "@/components/ui/button"
 import { MapPin, Clock, Phone, Menu as MenuIcon, ChefHat, Beer } from 'lucide-react';
-import { getPosts, getPubs } from '../lib/sanity'; // Use new function names
+import { getPosts, getPubs, getHomepageData } from '../lib/sanity'; // Import getHomepageData
 // This page always renders the main hub content.
-// Individual pub sites rely on src/pages/[slug].astro being served at the root.
 
-// Fetch all general posts and all pubs for the main hub page
+// Fetch data needed for the hub page
 const posts = await getPosts(); // Fetches general posts (no pub associated)
 const pubs = await getPubs(); // Fetches all pubs
+const homepageData = await getHomepageData(); // Fetch homepage content
 
 // Format the date for display
 const formatDate = (dateString) => {
   if (!dateString) return '';
   const date = new Date(dateString);
   return date.toLocaleDateString('en-GB', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric'
+    day: 'numeric', month: 'long', year: 'numeric'
   });
 };
-
-// Define image sources with fallbacks
-const heroImage = {
-  primary: "https://ik.imagekit.io/boostkit/WH%20Pubs/Home.webp?updatedAt=1739820583743",
-  fallback: "/images/hero-fallback.jpg"
-};
-
-// Removed the hardcoded pubImages array, data now comes from 'pubs' fetched via getAllPubs()
 ---
 
-<Layout title="WH Pubs - Traditional British Pubs in South East England">
+{/* Use homepage title from Sanity if available */}
+<Layout title={homepageData?.title || "WH Pubs - Traditional British Pubs"}>
   <main>
     {/* Hero Section */}
     <div class="relative h-[90vh]">
       <div class="absolute inset-0">
+        {/* Use Hero Image from Sanity */}
         <img
-          src={heroImage.primary}
-          alt="Warm and inviting traditional English pub interior featuring wooden beams, a well-stocked bar, and comfortable seating areas bathed in ambient lighting"
+          src={homepageData?.heroImage?.asset?.url || '/images/hero-fallback.jpg'}
+          alt={homepageData?.heroImage?.alt || 'WH Pubs Hero Image'}
           class="w-full h-full object-cover"
-          onerror="this.onerror=null; this.src=this.getAttribute('data-fallback');"
-          data-fallback={heroImage.fallback}
+          onerror="this.onerror=null; this.src='/images/hero-fallback.jpg';"
+          loading="eager" {/* Load hero image eagerly */}
         />
         <div class="absolute inset-0 bg-black/50"></div>
       </div>
       <div class="relative h-full flex items-center justify-center">
         <div class="text-center text-white px-4">
-          <h1 class="text-5xl md:text-7xl font-bold mb-6">WH Pubs</h1>
-          <p class="text-xl md:text-2xl mb-8 text-secondary">Traditional British Hospitality in the Heart of South East England</p>
+          {/* Use Hero Title/Subtitle from Sanity */}
+          <h1 class="text-5xl md:text-7xl font-bold mb-6">{homepageData?.heroTitle || 'WH Pubs'}</h1>
+          <p class="text-xl md:text-2xl mb-8 text-secondary">{homepageData?.heroSubtitle || 'Traditional British Hospitality...'}</p>
           <div class="flex gap-4 justify-center">
-            <Button
-              variant="default"
-              size="lg"
-              class="bg-secondary hover:bg-secondary/90 text-primary font-semibold"
-              id="scroll-to-pubs"
-            >
-              View Our Pubs
-            </Button>
-            <a href="/book">
-              <Button variant="outline" size="lg" class="bg-transparent text-white border-white hover:bg-white hover:text-primary">
-              Book a Table
+            {/* Use Button Text/Links from Sanity */}
+            {homepageData?.heroButton1Text && homepageData?.heroButton1Link && (
+              <Button
+                variant="default"
+                size="lg"
+                class="bg-secondary hover:bg-secondary/90 text-primary font-semibold"
+                id={homepageData.heroButton1Link.startsWith('/#') ? 'scroll-to-pubs' : undefined} /* Keep scroll ID only if it's an anchor link */
+                onclick={homepageData.heroButton1Link.startsWith('/#') ? undefined : `window.location.href='${homepageData.heroButton1Link}'`} /* Handle navigation */
+              >
+                {homepageData.heroButton1Text}
               </Button>
-            </a>
+            )}
+             {homepageData?.heroButton2Text && homepageData?.heroButton2Link && (
+               <a href={homepageData.heroButton2Link}>
+                 <Button variant="outline" size="lg" class="bg-transparent text-white border-white hover:bg-white hover:text-primary">
+                   {homepageData.heroButton2Text}
+                 </Button>
+               </a>
+             )}
           </div>
         </div>
       </div>

@@ -222,4 +222,61 @@ export async function getMenusForPub(targetPubSlug) {
     } | order(title asc) // Or order by a custom 'order' field if added
   `, params);
 }
+
+// Helper function to get all career opportunities
+export async function getAllCareers() {
+  return client.fetch(`
+    *[_type == "career"] {
+      position,
+      location,
+      roleRequirements[]{ ..., asset-> }, // Fetch full block content
+      salary,
+      applyUrl
+    } | order(position asc) // Order alphabetically by position title
+  `);
+}
+
+// Helper function to get the single homepage document
+export async function getHomepageData() {
+  // Fetches the first document of type 'homepage'. Assumes only one exists.
+  return client.fetch(`
+    *[_type == "homepage"][0] {
+      title,
+      heroImage { asset->{ _id, url }, alt },
+      heroTitle,
+      heroSubtitle,
+      heroButton1Text,
+      heroButton1Link,
+      heroButton2Text,
+      heroButton2Link
+      // Add other fields here if added to the schema
+    }
+  `);
+}
+
+// Helper function to get events, optionally filtered by pub slug
+export async function getEvents(targetPubSlug = null) {
+  let filter = '';
+  if (targetPubSlug) {
+    // Fetch events matching the specific pub slug
+    filter = `&& associatedPub->slug.current == $targetPubSlug`;
+  } else {
+    // Fetch events with NO pub reference (general WH Pubs events)
+    filter = `&& !defined(associatedPub)`;
+  }
+  const params = targetPubSlug ? { targetPubSlug } : {};
+
+  return client.fetch(`
+    *[_type == "event" ${filter}] {
+      title,
+      slug,
+      date,
+      description[]{ ..., asset-> }, // Fetch full block content
+      image { asset->{ _id, url }, alt },
+      bookingUrl,
+      locationOverride,
+      associatedPub->{ name, slug } // Include basic pub info if needed
+    } | order(date asc) // Order by event date
+  `, params);
+}
 // Note: getPubBySlug remains useful for the dynamic page generation

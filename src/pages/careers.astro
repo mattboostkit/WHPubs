@@ -1,117 +1,69 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { Button } from "@/components/ui/button"
-import { Briefcase, GraduationCap, Heart, Star } from 'lucide-react';
+// src/pages/careers.astro
+import Layout from '@/layouts/Layout.astro';
+import { getAllCareers } from '@/lib/sanity';
+import { Button } from "@/components/ui/button";
+import SanityPortableText from '@/components/SanityPortableText.jsx';
+import { MapPin, WalletMinimalIcon, FileTextIcon } from 'lucide-react'; // Example icons
 
+// Fetch all career opportunities
+const careers = await getAllCareers();
+
+const pageTitle = "Careers - WH Pubs";
+const pageDescription = "Join the team at WH Pubs. Explore current job opportunities across our locations.";
+
+// Note: This page currently assumes it's part of the main hub site.
+// If individual pubs need separate career pages, more logic would be needed.
 ---
 
-<Layout title="Careers - WH Pubs">
-	<main class="pt-24 pb-32">
-		<div class="container mx-auto px-4">
-			<div class="max-w-4xl mx-auto">
-				<img 
-					src="https://ik.imagekit.io/boostkit/WH%20Pubs/Chef.jpg?updatedAt=1740143232611"
-					alt="Professional hospitality team working together in a welcoming pub environment"
-					class="w-[940px] h-[788px] object-cover rounded-lg mb-12 mx-auto"
-				/>
-				
-				<div class="prose max-w-none">
-					<h1 class="text-center">Join Our Team</h1>
-					
-					<p class="text-lg mb-8 text-center">Build your career with one of South East England's most respected pub groups. We offer exciting opportunities for passionate individuals who share our commitment to exceptional hospitality.</p>
+<Layout title={pageTitle} description={pageDescription}>
+  <main class="container mx-auto px-4 py-12 pt-28"> {/* Added padding-top */}
+    <h1 class="text-4xl md:text-5xl font-bold text-primary mb-6 text-center">
+      Work With Us
+    </h1>
+    <p class="text-lg text-center text-primary/80 mb-12 max-w-2xl mx-auto">
+      We're passionate about great food, drink, and hospitality. If you share our passion, explore the opportunities to join the WH Pubs family below.
+    </p>
 
-					<div class="grid md:grid-cols-2 gap-8 mb-12">
-						<div class="bg-secondary/10 p-6 rounded-lg">
-							<div class="flex items-center gap-3 mb-4">
-								<GraduationCap class="w-6 h-6 text-primary" />
-								<h3 class="text-xl font-bold m-0">Training & Development</h3>
-							</div>
-							<p class="m-0">Comprehensive training programs and clear career progression paths for all team members.</p>
-						</div>
+    {careers && careers.length > 0 ? (
+      <div class="space-y-8 max-w-4xl mx-auto">
+        {careers.map(job => (
+          <div class="border border-secondary/20 rounded-lg p-6 shadow-sm bg-white">
+            <h2 class="text-2xl font-semibold text-secondary mb-2">{job.position}</h2>
 
-						<div class="bg-secondary/10 p-6 rounded-lg">
-							<div class="flex items-center gap-3 mb-4">
-								<Heart class="w-6 h-6 text-primary" />
-								<h3 class="text-xl font-bold m-0">Benefits</h3>
-							</div>
-							<p class="m-0">Competitive salary, flexible scheduling, staff discounts, and opportunities for growth.</p>
-						</div>
-					</div>
+            <div class="flex flex-wrap gap-x-4 gap-y-1 text-sm text-primary/70 mb-4">
+              {job.location && (
+                <span class="flex items-center">
+                  <MapPin class="w-4 h-4 mr-1.5" /> {job.location}
+                </span>
+              )}
+              {job.salary && (
+                <span class="flex items-center">
+                   <WalletMinimalIcon class="w-4 h-4 mr-1.5" /> {job.salary}
+                </span>
+              )}
+            </div>
 
-					<h2>Current Opportunities</h2>
-					
-					<div class="space-y-6">
-						{[
-							{
-								title: "Head Chef",
-								location: "The Chaser Inn, Shipbourne",
-								type: "Full Time",
-								description: "Experienced Head Chef needed to lead our kitchen team and maintain our high standards of cuisine."
-							},
-							{
-								title: "Bar Staff",
-								location: "The Little Brown Jug",
-								type: "Part Time",
-								description: "Enthusiastic individuals needed for weekend bar service. Experience preferred but not essential."
-							},
-							{
-								title: "Restaurant Manager",
-								location: "The Cricketers Inn",
-								type: "Full Time",
-								description: "Experienced manager required to oversee front-of-house operations and maintain service excellence."
-							}
-						].map(job => (
-							<div class="border border-secondary/20 rounded-lg p-6">
-								<div class="flex items-center gap-3 mb-4">
-									<Briefcase class="w-5 h-5 text-primary" />
-									<h3 class="text-xl font-bold m-0">{job.title}</h3>
-								</div>
-								<p class="text-primary/70 mb-2">{job.location}</p>
-								<p class="text-sm text-primary/60 mb-4">{job.type}</p>
-								<p class="mb-4">{job.description}</p>
-								<Button variant="outline" class="w-full md:w-auto">Apply Now</Button>
-							</div>
-						))}
-					</div>
+            {job.roleRequirements && (
+              <div class="prose prose-sm max-w-none mb-5">
+                <SanityPortableText value={job.roleRequirements} client:load />
+              </div>
+            )}
 
-					<h2 class="mt-12">Why Join Us?</h2>
-					<div class="grid md:grid-cols-3 gap-6 mb-8">
-						{[
-							{
-								icon: Star,
-								title: "Career Growth",
-								description: "Clear progression paths and development opportunities"
-							},
-							{
-								icon: Heart,
-								title: "Great Culture",
-								description: "Supportive team environment and work-life balance"
-							},
-							{
-								icon: GraduationCap,
-								title: "Skills Development",
-								description: "Continuous learning and professional training"
-							}
-						].map(benefit => (
-							<div class="text-center">
-								<div class="bg-secondary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-									<benefit.icon class="w-8 h-8 text-primary" />
-								</div>
-								<h3 class="text-lg font-bold mb-2">{benefit.title}</h3>
-								<p class="text-sm">{benefit.description}</p>
-							</div>
-						))}
-					</div>
-
-					<div class="bg-secondary/10 p-8 rounded-lg mt-12">
-						<h3 class="text-xl font-bold text-center mb-4">Can't Find the Right Role?</h3>
-						<p class="text-center mb-6">We're always interested in hearing from talented individuals. Send us your CV and we'll keep it on file for future opportunities.</p>
-						<div class="flex justify-center">
-							<Button variant="default" class="bg-primary text-white hover:bg-primary/90">Submit Your CV</Button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</main>
+            {job.applyUrl && (
+              <a href={job.applyUrl} target={job.applyUrl.startsWith('mailto:') ? '_self' : '_blank'} rel="noopener noreferrer">
+                <Button variant="default" class="bg-primary hover:bg-primary/90 text-white">
+                  Apply Now
+                </Button>
+              </a>
+            )}
+          </div>
+        ))}
+      </div>
+    ) : (
+      <p class="text-center text-lg text-primary/80 mt-16">
+        There are currently no open positions listed. Please check back soon!
+      </p>
+    )}
+  </main>
 </Layout>
