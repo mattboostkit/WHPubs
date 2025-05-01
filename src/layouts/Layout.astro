@@ -4,14 +4,14 @@ import { Menu as MenuIcon, MapPin, Clock, Phone } from 'lucide-react';
 import { X } from 'lucide-react';
 import AdminBadge from '@/components/AdminBadge.astro';
 import SchemaOrg from '@/components/SchemaOrg.astro';
-
+import { client as sanityClient } from '@/lib/sanity.js'; 
 // Import the Pub type if you have it defined, otherwise use 'any'
-// import type { Pub } from '@/types'; // Assuming a types file
+// import type { Pub } from '@/types'; 
 
 interface Props {
 	title: string;
-	pub?: any; // Make pub data optional
-	description?: string; // Add optional description prop
+	pub?: any; 
+	description?: string; 
 }
 
 const { title, pub, description } = Astro.props;
@@ -19,28 +19,44 @@ const { title, pub, description } = Astro.props;
 // Determine if we are rendering for a specific pub or the main hub
 const isPubLayout = !!pub;
 
-// Define default/hub values
-let siteName = "WH Pubs";
-let logoUrl = null; // No default logo, just text
-let logoAlt = "WH Pubs Logo";
-let headerLinks = []; // Initialize empty
+// --- Fetch Main Site Data ---
+// Fetch data only if it's the main hub or needed as fallback
+let mainSiteData: { title: string, logoUrl?: string, logoAlt?: string } | null = null;
+try {
+  mainSiteData = await sanityClient.fetch(`
+    *[_type == "site" && isMainSite == true][0]{
+      title,
+      'logoUrl': logo.asset->url, 
+      'logoAlt': logo.alt         
+    }
+  `);
+} catch (error) {
+  console.error('Failed to fetch main site data:', error);
+}
+
+// Define default/hub values (using fetched data if available)
+let siteName = mainSiteData?.title || "WH Pubs";
+let logoUrl = mainSiteData?.logoUrl || null;
+let logoAlt = mainSiteData?.logoAlt || "WH Pubs Logo";
+let headerLinks = []; 
 let footerContactLocation = "Various locations across South East England";
-let footerContactHours = "Mon-Sun: 11am - 11pm";
+let footerContactHours = "Mon-Sun: 11am - 11pm"; 
 let footerContactPhone = "+44 20 1234 5678";
-let footerSocialLinks = { facebook: "#", instagram: "#", twitter: "#" }; // Default placeholders
+let footerSocialLinks = { facebook: "#", instagram: "#", twitter: "#" }; 
 let footerDescription = "Traditional British pubs offering quality food, drink, and hospitality in the heart of South East England.";
 
 // Override with pub-specific data if available
 if (isPubLayout && pub) {
 	siteName = pub.name || siteName;
+	// Use pub logo if available, otherwise keep the fetched main site logo (or null)
 	logoUrl = pub.logo?.asset?.url || logoUrl;
 	logoAlt = pub.logo?.alt || `${pub.name} Logo`;
 
 	 // Define the specific nav structure for individual pub sites
 	 headerLinks = [
-	   { title: "Home", url: "/", ariaLabel: "Home" }, // Link to the root of the pub site
-	   { title: "Menu", url: "/menu", ariaLabel: "Menu" }, // Link to the new menu page
-	   { title: "Blog", url: "/blog", ariaLabel: "Blog" }, // Link to the blog index (will show only this pub's posts if logic added later)
+	   { title: "Home", url: "/", ariaLabel: "Home" }, 
+	   { title: "Menu", url: "/menu", ariaLabel: "Menu" }, 
+	   { title: "Blog", url: "/blog", ariaLabel: "Blog" }, 
 	   // Use reservationsUrl for the booking link, default to '#' if not set
 	   { title: "Make A Booking", url: pub.reservationsUrl || '#', ariaLabel: "Make a Booking" },
 	 ];
@@ -61,12 +77,13 @@ if (isPubLayout && pub) {
 	   { title: "Our Pubs", url: "/#establishments", ariaLabel: "Our Pubs" },
 	   // Maybe remove hub /menus link or point it elsewhere? For now, keep it.
 	   { title: "Menus", url: "/menu", ariaLabel: "Menus" },
-	   { title: "Book", url: "/book", ariaLabel: "Book a Table" }, // General booking page for hub
-	   { title: "Events", url: "/events", ariaLabel: "Events" }, // Link to the new general events page
-	   { title: "Blog", url: "/blog", ariaLabel: "Blog" }, // General blog page for hub
-	   { title: "Contact", url: "/contact", ariaLabel: "Contact Us" }, // General contact page for hub
-	   { title: "Careers", url: "/careers", ariaLabel: "Careers" }, // Add Careers link for hub
+	   { title: "Book", url: "/book", ariaLabel: "Book a Table" }, 
+	   { title: "Events", url: "/events", ariaLabel: "Events" }, 
+	   { title: "Blog", url: "/blog", ariaLabel: "Blog" }, 
+	   { title: "Contact", url: "/contact", ariaLabel: "Contact Us" }, 
+	   { title: "Careers", url: "/careers", ariaLabel: "Careers" }, 
 	 ];
+	 // For the main site, use the fetched logo details (already assigned above)
 }
 
 // Use the provided description prop or generate a default one
@@ -204,7 +221,13 @@ const metaDescription = description || footerDescription;
 				<div class="grid md:grid-cols-3 gap-8">
 					<div>
 						<!-- Footer Branding -->
-						<h3 class="text-2xl font-bold mb-4 font-quattrocento">{siteName}</h3>
+						{logoUrl ? (
+							<a href="/" aria-label={`${siteName} Home`}>
+								<img src={logoUrl} alt={logoAlt} class="h-12 max-w-[250px] object-contain mb-4" />
+							</a>
+						) : (
+							<h3 class="text-2xl font-bold mb-4 font-quattrocento">{siteName}</h3>
+						)}
 						<p class="text-white/80 mb-4">{footerDescription}</p>
 						<!-- Footer Social Links -->
 						<div class="flex space-x-4" aria-label="Social media links">
