@@ -35,7 +35,7 @@ try {
 }
 
 // Define default/hub values (using fetched data if available)
-let siteName = mainSiteData?.title || "WH Pubs";
+let siteName = mainSiteData?.title || "Traditional British hospitality in South East England";
 let logoUrl = mainSiteData?.logoUrl || null;
 let logoAlt = mainSiteData?.logoAlt || "WH Pubs Logo";
 let headerLinks = []; 
@@ -106,21 +106,20 @@ const metaDescription = description || footerDescription;
 		<meta name="generator" content={Astro.generator} />
 		
 		<!-- Preload fonts -->
-		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<!-- Font links removed as they are now handled in fonts.css -->
+		<!--
 		<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Quattrocento:wght@400;700&family=Alice&display=swap">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quattrocento:wght@400;700&family=Alice&display=swap" media="print" onload="this.media='all'">
 		<noscript>
 			<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quattrocento:wght@400;700&family=Alice&display=swap">
 		</noscript>
+		-->
 		
-		<!-- Font fallback -->
+		<!-- Font fallback - Updated to Lora -->
 		<style>
-			.font-quattrocento {
-				font-family: 'Quattrocento', Georgia, 'Times New Roman', serif;
-			}
-			.font-alice {
-				font-family: 'Alice', Georgia, 'Times New Roman', serif;
+			.font-quattrocento, .font-alice {
+				font-family: 'Lora', Georgia, 'Times New Roman', serif;
 			}
 		</style>
 		
