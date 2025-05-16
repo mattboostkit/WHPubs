@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { Button } from "@/components/ui/button"
-import { MapPin, Clock, Phone, Menu as MenuIcon, ChefHat, Beer } from 'lucide-react';
+import { MapPin, Clock, Phone, Music, ChefHat, Beer } from 'lucide-react';
 import { getPosts, getPubs, getHomepageData } from '../lib/sanity'; // Import getHomepageData
 // This page always renders the main hub content.
 
@@ -37,7 +37,7 @@ const formatDate = (dateString) => {
         <div class="absolute inset-0 bg-black/50"></div>
       </div>
       <div class="relative h-full flex items-center justify-center">
-        <div class="text-center text-white px-4">
+        <div class="text-center text-[#B79C64] px-4">
           {/* Use Hero Title/Subtitle from Sanity */}
           <h1 class="text-5xl md:text-7xl font-bold mb-6">{homepageData?.heroTitle || 'Traditional British Hospitality in the South East of England'}</h1>
           <p class="text-xl md:text-2xl mb-8 text-secondary">{homepageData?.heroSubtitle || 'Traditional British Hospitality...'}</p>
@@ -56,7 +56,7 @@ const formatDate = (dateString) => {
             )}
              {homepageData?.heroButton2Text && homepageData?.heroButton2Link && (
                <a href={homepageData.heroButton2Link}>
-                 <Button variant="outline" size="lg" class="bg-transparent text-white border-white hover:bg-white hover:text-primary">
+                 <Button variant="outline" size="lg" class="bg-transparent text-[#B79C64] border-[#B79C64] hover:bg-[#B79C64] hover:text-primary">
                    {homepageData.heroButton2Text}
                  </Button>
                </a>
@@ -114,24 +114,24 @@ const formatDate = (dateString) => {
       <div class="container mx-auto px-4">
         <div class="grid md:grid-cols-3 gap-8">
           <div class="text-center">
-            <div class="bg-secondary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <ChefHat class="w-8 h-8 text-secondary" />
+            <div class="bg-[#B79C64]/10 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-4">
+              <ChefHat class="w-12 h-12 text-[#B79C64]" />
             </div>
-            <h3 class="text-xl font-bold mb-2">Seasonal Menus</h3>
+            <h3 class="text-xl font-bold mb-2 text-[#B79C64]">Seasonal Menus</h3>
             <p class="text-secondary/80">Fresh, locally-sourced ingredients prepared by our skilled chefs.</p>
           </div>
           <div class="text-center">
-            <div class="bg-secondary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Beer class="w-8 h-8 text-secondary" />
+            <div class="bg-[#B79C64]/10 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Beer class="w-12 h-12 text-[#B79C64]" />
             </div>
-            <h3 class="text-xl font-bold mb-2">Local Ales</h3>
+            <h3 class="text-xl font-bold mb-2 text-[#B79C64]">Local Ales</h3>
             <p class="text-secondary/80">Carefully selected craft beers and traditional cask ales.</p>
           </div>
           <div class="text-center">
-            <div class="bg-secondary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <MenuIcon class="w-8 h-8 text-secondary" />
+            <div class="bg-[#B79C64]/10 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Music class="w-12 h-12 text-[#B79C64]" />
             </div>
-            <h3 class="text-xl font-bold mb-2">Special Events</h3>
+            <h3 class="text-xl font-bold mb-2 text-[#B79C64]">Special Events</h3>
             <p class="text-secondary/80">Regular events, live music, and themed dining experiences.</p>
           </div>
         </div>
@@ -154,7 +154,7 @@ const formatDate = (dateString) => {
                 />
                 <div class="p-6">
                   <p class="text-primary/60 text-sm mb-2">{formatDate(post.publishedAt)}</p>
-                  <h3 class="text-xl font-bold mb-2">{post.title}</h3>
+                  <h3 class="text-xl font-bold mb-2 text-[#B79C64]">{post.title}</h3>
                   <p class="text-primary/70 mb-4">{post.excerpt}</p>
                   <a href={`/blog/${post.slug.current}`} class="inline-block">
                     <Button variant="link" class="p-0 text-primary hover:text-primary/80">Read More →</Button>
@@ -180,7 +180,7 @@ const formatDate = (dateString) => {
             placeholder="Enter your email"
             class="flex-1 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary bg-secondary/10 text-secondary placeholder:text-secondary/50 border border-secondary/20"
           />
-          <Button variant="secondary" class="bg-secondary text-primary hover:bg-secondary/90">Subscribe</Button>
+          <Button variant="secondary" class="bg-[#B79C64] text-primary hover:bg-[#B79C64]/90">Subscribe</Button>
         </div>
       </div>
     </section>

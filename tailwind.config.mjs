@@ -29,7 +29,7 @@ export default {
           foreground: 'hsl(var(--popover-foreground))',
         },
         primary: {
-          DEFAULT: '#050231',
+          DEFAULT: '#000000',
           foreground: 'hsl(var(--primary-foreground))',
         },
         secondary: {
@@ -58,6 +58,7 @@ export default {
           4: 'hsl(var(--chart-4))',
           5: 'hsl(var(--chart-5))',
         },
+        gold: '#B79C64',
       },
       typography: {
         DEFAULT: {

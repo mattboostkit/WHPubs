@@ -12,7 +12,7 @@
     --card-foreground: 0 0% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 3.9%;
-    --primary: 244 89% 10%;
+    --primary: 0 0% 0%;
     --primary-foreground: 0 0% 98%;
     --secondary: 35 29% 89%;
     --secondary-foreground: 244 89% 10%;
@@ -31,6 +31,11 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+  }
+
+  /* Utility class for gold menu text in navigation/menus */
+  .menu-text {
+    @apply text-gold;
   }
 
   .dark {
