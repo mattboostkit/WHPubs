@@ -84,10 +84,10 @@ const formatDate = (dateString) => {
             pubs.map(pub => (
               <div class="bg-white rounded-lg shadow-lg overflow-hidden">
                 <img
-                  src={pub.image?.asset?.url || 'https://via.placeholder.com/600x400'} // Use Sanity image URL
+                  src={pub.image?.asset?.url || '/images/hero-fallback.jpg'} // Use Sanity image URL
                   alt={pub.image?.alt || `Image of ${pub.name}`} // Use alt text from Sanity or generate default
                   class="w-full h-56 object-cover"
-                  onerror="this.onerror=null; this.src='https://via.placeholder.com/600x400';" // Simple fallback
+                  onerror="this.onerror=null; this.src='/images/hero-fallback.jpg';" // Simple fallback
                 />
               <div class="p-6">
                 <h3 class="text-xl font-bold mb-2 text-primary">{pub.name}</h3>
@@ -147,10 +147,10 @@ const formatDate = (dateString) => {
              posts.slice(0, 3).map(post => (
               <div class="bg-white rounded-lg shadow-lg overflow-hidden">
                 <img
-                  src={post.mainImage?.asset?.url || 'https://via.placeholder.com/600x400'}
+                  src={post.mainImage?.asset?.url || '/images/blog-fallback.jpg'}
                   alt={post.imageAlt || 'Blog post image'}
                   class="w-full h-48 object-cover"
-                  onerror="this.onerror=null; this.src='https://via.placeholder.com/600x400';"
+                  onerror="this.onerror=null; this.src='https:///images/blog-fallback.jpg';"
                 />
                 <div class="p-6">
                   <p class="text-primary/60 text-sm mb-2">{formatDate(post.publishedAt)}</p>

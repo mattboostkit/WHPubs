@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(netlify:*)",
+      "Bash(rm:*)",
+      "Bash(npm run build:*)",
+      "Bash(node:*)",
+      "Bash(grep:*)",
+      "Bash(sed:*)",
+      "Bash(find:*)",
+      "Bash(npm install)",
+      "Bash(rg:*)",
+      "Bash(npx @sanity/cli@3.78.1:*)",
+      "Bash(npx create-og-image:*)",
+      "Bash(cp:*)",
+      "Bash(npm install:*)"
+    ],
+    "deny": []
+  }
+}

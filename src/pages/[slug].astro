@@ -10,24 +10,23 @@ import { MapPin, Clock, Phone, UtensilsCrossed, CalendarDays, Image as ImageIcon
 // In dev mode, it builds all pub pages found.
 export async function getStaticPaths() {
   const targetPubSlug = import.meta.env.TARGET_PUB_SLUG;
-  console.log(`[getStaticPaths] TARGET_PUB_SLUG: ${targetPubSlug}`); // Log the env var value
+  // Environment variable check handled silently in production
   let pubsToBuild = [];
 
   if (targetPubSlug) {
     // If building a specific pub site, only fetch and build that pub's page
-    console.log(`[getStaticPaths] Fetching data for slug: ${targetPubSlug}`);
+    // Fetching data for specific pub slug
     const singlePub = await getPubBySlug(targetPubSlug);
-    console.log(`[getStaticPaths] Fetched data for ${targetPubSlug}:`, singlePub ? `Pub Name: ${singlePub.name}` : 'Not Found'); // Log fetched data (or lack thereof)
+    // Data fetched for specific pub
     if (singlePub) {
       pubsToBuild.push(singlePub);
     } else {
-       console.error(`[getStaticPaths] ERROR: Pub not found for slug: ${targetPubSlug}`);
-       // Optionally throw an error to fail the build if data is essential
-       // throw new Error(`Pub not found for slug: ${targetPubSlug}`);
+       // Pub not found for specified slug - build will fail
+       throw new Error(`Pub not found for slug: ${targetPubSlug}`);
     }
   } else {
     // If building the main hub site, fetch and build all pub pages
-    console.log('[getStaticPaths] Fetching all pubs for hub site.');
+    // Fetching all pubs for hub site
     // If building the main hub site, fetch and build all pub pages
     pubsToBuild = await getPubs();
   }
@@ -58,10 +57,10 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
     <!-- Hero Section -->
     <section class="relative h-[60vh] md:h-[70vh] w-full"> {/* Adjust height as needed */}
       <img
-        src={pub.heroImage?.asset?.url || 'https://via.placeholder.com/1600x900'} // Use dedicated heroImage
+        src={pub.heroImage?.asset?.url || '/images/hero-fallback.jpg'} // Use dedicated heroImage
         alt={pub.heroImage?.alt || `Hero image for ${pub.name}`} // Use heroImage alt text
         class="absolute inset-0 w-full h-full object-cover" // Cover the section
-        onerror="this.onerror=null; this.src='https://via.placeholder.com/1600x900';"
+        onerror="this.onerror=null; this.src='/images/hero-fallback.jpg';"
       />
       {/* Overlay */}
       <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent"></div> {/* Gradient overlay */}
@@ -177,7 +176,7 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
                   alt={image.alt || `Gallery image for ${pub.name}`}
                   class="w-full h-40 object-cover"
                   loading="lazy"
-                  onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300';"
+                  onerror="this.onerror=null; this.src='/images/content-fallback.jpg';"
                 />
               </a>
             ))}
@@ -213,11 +212,11 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
               <div class="bg-white rounded-lg shadow-md overflow-hidden border border-secondary/10">
                  <a href={`/blog/${post.slug.current}`} class="block hover:opacity-90 transition-opacity"> <!-- Assuming a /blog/[slug].astro exists -->
                    <img
-                     src={post.mainImage?.asset?.url + '?w=400&h=250&fit=crop' || 'https://via.placeholder.com/400x250'}
+                     src={post.mainImage?.asset?.url + '?w=400&h=250&fit=crop' || '/images/blog-fallback.jpg'}
                      alt={post.imageAlt || `Image for ${post.title}`}
                      class="w-full h-48 object-cover"
                      loading="lazy"
-                     onerror="this.onerror=null; this.src='https://via.placeholder.com/400x250';"
+                     onerror="this.onerror=null; this.src='/images/blog-fallback.jpg';"
                    />
                  </a>
                  <div class="p-4">
