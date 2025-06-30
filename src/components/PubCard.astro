@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { MapPin, Clock, Phone, ExternalLink, Calendar, Utensils } from 'lucide-react';
+import { getPubUrl, isExternalUrl } from '@/lib/pub-urls';
 
 export interface Props {
   pub: {
@@ -31,10 +32,9 @@ const imageUrl = pub.heroImage?.asset?.url || pub.image?.asset?.url || '/images/
 const imageAlt = pub.heroImage?.alt || pub.image?.alt || `Image of ${pub.name}`;
 const location = pub.locationName || `${pub.addressLine1}, ${pub.postcode}`.trim();
 
-// Check if pub has its own website
-const hasOwnWebsite = pub.externalDomain || pub.url;
-const pubLink = pub.externalDomain ? `https://${pub.externalDomain}` : (pub.url || `/${pub.slug.current}`);
-const isExternal = hasOwnWebsite;
+// Get pub URL using the configuration
+const pubLink = getPubUrl(pub);
+const isExternal = isExternalUrl(pubLink);
 
 // Get opening status (simplified)
 const getDayOfWeek = () => {

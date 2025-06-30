@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { MapPin, Clock, Phone, Music, ChefHat, Beer, ExternalLink, Star, Utensils } from 'lucide-react';
 import { getPosts, getPubs, getHomepageData, getDevelopmentKitchen } from '../lib/sanity';
 import { HeroCarousel } from '@/components/HeroCarousel';
+import { getPubUrl, isExternalUrl } from '@/lib/pub-urls';
 // This page always renders the main hub content.
 
 // Fetch data needed for the hub page
@@ -149,20 +150,16 @@ const formatDate = (dateString) => {
                 </CardHeader>
                 <CardContent>
                   <CardDescription className="text-sm mb-4 line-clamp-2">{pub.description}</CardDescription>
-                  {pub.externalDomain ? (
-                    <a href={`https://${pub.externalDomain}`} target="_blank" rel="noopener noreferrer" class="block">
+                  {
+                    const pubUrl = getPubUrl(pub);
+                    const isExt = isExternalUrl(pubUrl);
+                    <a href={pubUrl} target={isExt ? "_blank" : undefined} rel={isExt ? "noopener noreferrer" : undefined} class="block">
                       <Button variant="outline" size="sm" className="w-full">
-                        Visit Website
-                        <ExternalLink className="w-3 h-3 ml-2" />
+                        {isExt ? 'Visit Website' : 'View Details'}
+                        {isExt && <ExternalLink className="w-3 h-3 ml-2" />}
                       </Button>
                     </a>
-                  ) : (
-                    <a href={`/${pub.slug.current}`} class="block">
-                      <Button variant="outline" size="sm" className="w-full">
-                        View Details
-                      </Button>
-                    </a>
-                  )}
+                  }
                 </CardContent>
                   </Card>
                 ))}
@@ -190,20 +187,20 @@ const formatDate = (dateString) => {
                       </CardHeader>
                       <CardContent>
                         <CardDescription className="text-sm mb-4 line-clamp-2">{pub.description}</CardDescription>
-                        {pub.externalDomain ? (
-                          <a href={`https://${pub.externalDomain}`} target="_blank" rel="noopener noreferrer" class="block">
-                            <Button variant="outline" size="sm" className="w-full">
-                              Visit Website
-                              <ExternalLink className="w-3 h-3 ml-2" />
-                            </Button>
-                          </a>
-                        ) : (
-                          <a href={`/${pub.slug.current}`} class="block">
-                            <Button variant="outline" size="sm" className="w-full">
-                              View Details
-                            </Button>
-                          </a>
-                        )}
+                        {
+                          (() => {
+                            const pubUrl = getPubUrl(pub);
+                            const isExt = isExternalUrl(pubUrl);
+                            return (
+                              <a href={pubUrl} target={isExt ? "_blank" : undefined} rel={isExt ? "noopener noreferrer" : undefined} class="block">
+                                <Button variant="outline" size="sm" className="w-full">
+                                  {isExt ? 'Visit Website' : 'View Details'}
+                                  {isExt && <ExternalLink className="w-3 h-3 ml-2" />}
+                                </Button>
+                              </a>
+                            );
+                          })()
+                        }
                       </CardContent>
                     </Card>
                   ))}
