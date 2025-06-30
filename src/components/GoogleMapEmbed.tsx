@@ -14,8 +14,8 @@ export default function GoogleMapEmbed({ iframe, className = '' }: GoogleMapEmbe
   const sanitizedIframe = iframe.trim();
   
   // Check if it's a valid Google Maps embed
-  if (!sanitizedIframe.includes('google.com/maps/embed')) {
-    console.warn('Invalid Google Maps embed URL');
+  if (!sanitizedIframe || !sanitizedIframe.includes('google.com/maps/embed')) {
+    console.warn('Invalid or missing Google Maps embed URL');
     return null;
   }
 

@@ -46,10 +46,10 @@ export default function ImageGallery({
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
-  // Filter images by category
-  const filteredImages = selectedCategory === 'all' 
-    ? images 
-    : images.filter(img => img.category === selectedCategory);
+  // Filter images by category and ensure they have valid assets
+  const filteredImages = images
+    .filter(img => img.asset?.url) // Only include images with valid assets
+    .filter(img => selectedCategory === 'all' || img.category === selectedCategory);
 
   // Get unique categories from images
   const availableCategories = categories.filter(cat => 
@@ -118,28 +118,32 @@ export default function ImageGallery({
       )}
 
       <div className={cn("grid gap-4", columnClasses[columns])}>
-        {filteredImages.map((image, index) => (
-          <Dialog 
-            key={image.asset._id} 
-            open={selectedImageIndex === index}
-            onOpenChange={(open) => {
-              if (!open) {
-                setSelectedImageIndex(null);
-                setIsFullscreen(false);
-              }
-            }}
-          >
-            <DialogTrigger asChild>
-              <div 
-                className="relative group cursor-pointer overflow-hidden rounded-lg aspect-square"
-                onClick={() => setSelectedImageIndex(index)}
-              >
-                <img
-                  src={image.asset.url}
-                  alt={image.alt}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                  loading="lazy"
-                />
+        {filteredImages.map((image, index) => {
+          // Skip images without assets
+          if (!image.asset?.url) return null;
+          
+          return (
+            <Dialog 
+              key={image.asset._id || index} 
+              open={selectedImageIndex === index}
+              onOpenChange={(open) => {
+                if (!open) {
+                  setSelectedImageIndex(null);
+                  setIsFullscreen(false);
+                }
+              }}
+            >
+              <DialogTrigger asChild>
+                <div 
+                  className="relative group cursor-pointer overflow-hidden rounded-lg aspect-square"
+                  onClick={() => setSelectedImageIndex(index)}
+                >
+                  <img
+                    src={image.asset.url}
+                    alt={image.alt || 'Gallery image'}
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                    loading="lazy"
+                  />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
                   <ZoomIn className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
@@ -156,15 +160,15 @@ export default function ImageGallery({
                     {categories.find(c => c.value === image.category)?.label}
                   </Badge>
                 )}
-              </div>
-            </DialogTrigger>
-            <DialogContent 
-              className={cn(
-                "max-w-7xl p-0 border-0",
-                isFullscreen && "w-screen h-screen max-w-full"
-              )}
-              onKeyDown={handleKeyDown}
-            >
+                </div>
+              </DialogTrigger>
+              <DialogContent 
+                className={cn(
+                  "max-w-7xl p-0 border-0",
+                  isFullscreen && "w-screen h-screen max-w-full"
+                )}
+                onKeyDown={handleKeyDown}
+              >
               <div className="relative w-full h-full flex items-center justify-center bg-black">
                 <Button
                   variant="ghost"
@@ -208,11 +212,11 @@ export default function ImageGallery({
                   </>
                 )}
 
-                {selectedImageIndex !== null && (
+                {selectedImageIndex !== null && filteredImages[selectedImageIndex]?.asset?.url && (
                   <div className="relative max-h-full max-w-full flex flex-col items-center">
                     <img
                       src={filteredImages[selectedImageIndex].asset.url}
-                      alt={filteredImages[selectedImageIndex].alt}
+                      alt={filteredImages[selectedImageIndex].alt || 'Gallery image'}
                       className={cn(
                         "object-contain",
                         isFullscreen ? "w-screen h-screen" : "max-h-[90vh] max-w-[90vw]"
@@ -233,7 +237,8 @@ export default function ImageGallery({
               </div>
             </DialogContent>
           </Dialog>
-        ))}
+          );
+        })}
       </div>
 
       {filteredImages.length === 0 && (
