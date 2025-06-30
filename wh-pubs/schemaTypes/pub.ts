@@ -48,6 +48,25 @@ export default defineType({
       group: 'basic',
       description: 'Link to the pub\'s own separate website, if it has one.',
     }),
+    defineField({
+      name: 'externalDomain',
+      title: 'External Domain',
+      type: 'string',
+      group: 'basic',
+      description: 'The full domain where this pub\'s website is hosted (e.g., www.thebullpub.com)',
+      validation: (Rule) => Rule.regex(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/, {
+        name: 'domain',
+        invert: false
+      }).error('Please enter a valid domain'),
+    }),
+    defineField({
+      name: 'featured',
+      title: 'Featured Pub',
+      type: 'boolean',
+      group: 'basic',
+      description: 'Show this pub prominently on the main WH Pubs site',
+      initialValue: false,
+    }),
 
     // --- Location & Hours Group ---
     defineField({
@@ -194,14 +213,64 @@ export default defineType({
               description: 'Important for SEO and accessibility',
               validation: (Rule) => Rule.required(),
             },
-            // Optional: Add caption if needed
-            // { name: 'caption', type: 'string', title: 'Caption' }
+            {
+              name: 'caption',
+              type: 'string',
+              title: 'Caption',
+              description: 'Optional caption to display with the image'
+            },
+            {
+              name: 'category',
+              type: 'string',
+              title: 'Category',
+              options: {
+                list: [
+                  { title: 'Interior', value: 'interior' },
+                  { title: 'Exterior', value: 'exterior' },
+                  { title: 'Food', value: 'food' },
+                  { title: 'Drinks', value: 'drinks' },
+                  { title: 'Events', value: 'events' },
+                  { title: 'Garden', value: 'garden' },
+                  { title: 'Private Dining', value: 'private-dining' }
+                ]
+              }
+            }
           ],
         },
       ],
       options: {
         layout: 'grid',
       },
+    }),
+    defineField({
+      name: 'menuPdfFiles',
+      title: 'Menu PDF Files',
+      type: 'array',
+      group: 'media',
+      description: 'Upload PDF menus (e.g., Main Menu, Wine List, Sunday Roast)',
+      of: [
+        {
+          type: 'file',
+          options: {
+            accept: '.pdf'
+          },
+          fields: [
+            {
+              name: 'title',
+              type: 'string',
+              title: 'Menu Title',
+              description: 'e.g., Main Menu, Wine List, Sunday Roast',
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: 'description',
+              type: 'string',
+              title: 'Description',
+              description: 'Brief description of this menu'
+            }
+          ]
+        }
+      ]
     }),
 
     // --- Features & Booking Group ---

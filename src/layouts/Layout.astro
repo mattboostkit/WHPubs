@@ -11,13 +11,16 @@ import { client as sanityClient } from '@/lib/sanity.js';
 interface Props {
 	title: string;
 	pub?: any; 
+	targetPub?: any; // For TARGET_PUB_SLUG builds
 	description?: string; 
+	ogImage?: string;
 }
 
-const { title, pub, description } = Astro.props;
+const { title, pub, targetPub, description, ogImage } = Astro.props;
+const activePub = pub || targetPub;
 
 // Determine if we are rendering for a specific pub or the main hub
-const isPubLayout = !!pub;
+const isPubLayout = !!activePub;
 
 // --- Fetch Main Site Data ---
 // Fetch data only if it's the main hub or needed as fallback
@@ -46,40 +49,50 @@ let footerSocialLinks = { facebook: "", instagram: "", twitter: "" };
 let footerDescription = "Traditional British pubs offering quality food, drink, and hospitality in the heart of South East England.";
 
 // Override with pub-specific data if available
-if (isPubLayout && pub) {
-	siteName = pub.name || siteName;
+if (isPubLayout && activePub) {
+	siteName = activePub.name || siteName;
 	// Use pub logo if available, otherwise keep the fetched main site logo (or null)
-	logoUrl = pub.logo?.asset?.url || logoUrl;
-	logoAlt = pub.logo?.alt || `${pub.name} Logo`;
+	logoUrl = activePub.logo?.asset?.url || logoUrl;
+	logoAlt = activePub.logo?.alt || `${activePub.name} Logo`;
 
 	 // Define the specific nav structure for individual pub sites
-	 headerLinks = [
-	   { title: "Home", url: "/", ariaLabel: "Home" }, 
-	   { title: "Menu", url: "/menu", ariaLabel: "Menu" }, 
-	   { title: "Blog", url: "/blog", ariaLabel: "Blog" }, 
-	   // Use reservationsUrl for the booking link, only show if available
-	   ...(pub.reservationsUrl ? [{ title: "Make A Booking", url: pub.reservationsUrl, ariaLabel: "Make a Booking" }] : []),
-	 ];
+	 // Check if pub has custom nav links
+	 if (activePub.headerNavLinks && activePub.headerNavLinks.length > 0) {
+	   headerLinks = activePub.headerNavLinks.map(link => ({ 
+	     title: link.title, 
+	     url: link.url, 
+	     ariaLabel: link.title 
+	   }));
+	 } else {
+	   // Default nav structure for individual pub sites
+	   headerLinks = [
+	     { title: "Home", url: "/", ariaLabel: "Home" }, 
+	     { title: "Menu", url: "/menu", ariaLabel: "Menu" }, 
+	     { title: "Events", url: "/events", ariaLabel: "Events" },
+	     { title: "Blog", url: "/blog", ariaLabel: "Blog" }, 
+	     // Use reservationsUrl for the booking link, only show if available
+	     ...(activePub.reservationsUrl ? [{ title: "Make A Booking", url: activePub.reservationsUrl, ariaLabel: "Make a Booking", external: true }] : []),
+	   ];
+	 }
 
 	// Use pub footer text if provided, otherwise construct from other fields or keep default
-	footerDescription = pub.footerText || pub.description || footerDescription;
-	footerContactLocation = pub.location || footerContactLocation;
-	footerContactHours = pub.openingHours || footerContactHours;
-	footerContactPhone = pub.contactPhone || footerContactPhone;
+	footerDescription = activePub.footerText || activePub.description || footerDescription;
+	footerContactLocation = activePub.locationName || activePub.location || `${activePub.addressLine1}, ${activePub.postcode}` || footerContactLocation;
+	footerContactHours = activePub.openingHours || footerContactHours;
+	footerContactPhone = activePub.contactPhone || footerContactPhone;
 	footerSocialLinks = {
-		facebook: pub.facebookUrl || footerSocialLinks.facebook,
-		instagram: pub.instagramUrl || footerSocialLinks.instagram,
-		twitter: pub.twitterUrl || footerSocialLinks.twitter,
+		facebook: activePub.facebookUrl || footerSocialLinks.facebook,
+		instagram: activePub.instagramUrl || footerSocialLinks.instagram,
+		twitter: activePub.twitterUrl || footerSocialLinks.twitter,
 	};
 } else {
 	 // Define default nav links for the main hub site
 	 headerLinks = [
 	   { title: "Our Pubs", url: "/#establishments", ariaLabel: "Our Pubs" },
-	   // Maybe remove hub /menus link or point it elsewhere? For now, keep it.
-	   { title: "Menus", url: "/menu", ariaLabel: "Menus" },
-	   { title: "Book", url: "/book", ariaLabel: "Book a Table" }, 
+	   { title: "Development Kitchen", url: "/development-kitchen", ariaLabel: "Development Kitchen" },
 	   { title: "Events", url: "/events", ariaLabel: "Events" }, 
 	   { title: "Blog", url: "/blog", ariaLabel: "Blog" }, 
+	   { title: "About", url: "/about", ariaLabel: "About Us" },
 	   { title: "Contact", url: "/contact", ariaLabel: "Contact Us" }, 
 	   { title: "Careers", url: "/careers", ariaLabel: "Careers" }, 
 	 ];
@@ -128,13 +141,13 @@ const metaDescription = description || footerDescription;
 		<meta property="og:description" content={metaDescription} />
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content={Astro.url} />
-		<meta property="og:image" content="/og-image.jpg" />
+		<meta property="og:image" content={ogImage || activePub?.ogImage?.asset?.url || "/og-image.jpg"} />
 		
 		<!-- Twitter Card -->
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={metaDescription} />
-		<meta name="twitter:image" content="/og-image.jpg" />
+		<meta name="twitter:image" content={ogImage || activePub?.ogImage?.asset?.url || "/og-image.jpg"} />
 		
 		<!-- Canonical Link -->
 		<link rel="canonical" href={Astro.url} />
@@ -160,7 +173,15 @@ const metaDescription = description || footerDescription;
 					<!-- Desktop Navigation -->
 					<div class="hidden md:flex space-x-8" role="navigation">
 						{headerLinks.map(link => (
-							<a href={link.url} class="text-lg text-[#B79C64] hover:text-[#B79C64]/80 transition-colors" aria-label={link.ariaLabel}>{link.title}</a>
+							<a 
+								href={link.url} 
+								class="text-lg text-[#B79C64] hover:text-[#B79C64]/80 transition-colors" 
+								aria-label={link.ariaLabel}
+								target={link.external ? "_blank" : undefined}
+								rel={link.external ? "noopener noreferrer" : undefined}
+							>
+								{link.title}
+							</a>
 						))}
 					</div>
 					<button 
@@ -193,7 +214,15 @@ const metaDescription = description || footerDescription;
 				<!-- Mobile Navigation -->
 				<div class="flex flex-col space-y-6 text-xl" role="navigation">
 					{headerLinks.map(link => (
-						<a href={link.url} class="text-lg text-[#B79C64] hover:text-[#B79C64]/80 transition-colors" aria-label={link.ariaLabel}>{link.title}</a>
+						<a 
+							href={link.url} 
+							class="text-lg text-[#B79C64] hover:text-[#B79C64]/80 transition-colors" 
+							aria-label={link.ariaLabel}
+							target={link.external ? "_blank" : undefined}
+							rel={link.external ? "noopener noreferrer" : undefined}
+						>
+							{link.title}
+						</a>
 					))}
 				</div>
 				<div class="mt-auto pt-8 border-t border-gold/20 space-y-4">

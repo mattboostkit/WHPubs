@@ -1,0 +1,285 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getDevelopmentKitchen, getPubBySlug } from '../lib/sanity';
+import SanityPortableText from '../components/SanityPortableText';
+import { Button } from '../components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
+import { Badge } from '../components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
+
+const targetPubSlug = import.meta.env.TARGET_PUB_SLUG;
+const targetPub = targetPubSlug ? await getPubBySlug(targetPubSlug) : null;
+const developmentKitchen = await getDevelopmentKitchen();
+
+if (!developmentKitchen) {
+  return Astro.redirect('/404');
+}
+
+const pageTitle = developmentKitchen.seo?.metaTitle || `${developmentKitchen.title} | WH Pubs`;
+const pageDescription = developmentKitchen.seo?.metaDescription || 'Discover the culinary innovation at the heart of WH Pubs. Our Development Kitchen creates seasonal menus using the finest local ingredients.';
+---
+
+<Layout 
+  title={pageTitle} 
+  description={pageDescription}
+  targetPub={targetPub}
+  ogImage={developmentKitchen.seo?.ogImage?.asset?.url}
+>
+  <!-- Hero Section -->
+  <section class="relative h-[70vh] min-h-[500px] overflow-hidden">
+    {developmentKitchen.heroImage && (
+      <img 
+        src={developmentKitchen.heroImage.asset.url} 
+        alt={developmentKitchen.heroImage.alt}
+        class="absolute inset-0 w-full h-full object-cover"
+      />
+    )}
+    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+    <div class="absolute inset-0 flex items-end">
+      <div class="container mx-auto px-4 pb-16">
+        <h1 class="text-5xl md:text-7xl font-bold text-white mb-4">{developmentKitchen.title}</h1>
+        {developmentKitchen.introText && (
+          <div class="text-white/90 text-lg md:text-xl max-w-3xl">
+            <SanityPortableText blocks={developmentKitchen.introText} />
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- Chef Profile Section -->
+  {developmentKitchen.chefProfile && (
+    <section class="py-16 bg-background">
+      <div class="container mx-auto px-4">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          {developmentKitchen.chefProfile.image && (
+            <div class="order-2 md:order-1">
+              <img 
+                src={developmentKitchen.chefProfile.image.asset.url} 
+                alt={developmentKitchen.chefProfile.image.alt}
+                class="rounded-lg shadow-xl w-full"
+              />
+            </div>
+          )}
+          <div class="order-1 md:order-2">
+            <h2 class="text-4xl font-bold mb-2">{developmentKitchen.chefProfile.name}</h2>
+            <p class="text-xl text-muted-foreground mb-6">{developmentKitchen.chefProfile.title}</p>
+            {developmentKitchen.chefProfile.bio && (
+              <div class="prose prose-lg">
+                <SanityPortableText blocks={developmentKitchen.chefProfile.bio} />
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Philosophy Section -->
+  {developmentKitchen.philosophy && (
+    <section class="py-16 bg-muted/50">
+      <div class="container mx-auto px-4">
+        <div class="max-w-3xl mx-auto text-center">
+          <h2 class="text-4xl font-bold mb-8">{developmentKitchen.philosophy.heading}</h2>
+          {developmentKitchen.philosophy.content && (
+            <div class="prose prose-lg mx-auto">
+              <SanityPortableText blocks={developmentKitchen.philosophy.content} />
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Development Process -->
+  {developmentKitchen.process && developmentKitchen.process.length > 0 && (
+    <section class="py-16 bg-background">
+      <div class="container mx-auto px-4">
+        <h2 class="text-4xl font-bold text-center mb-12">Our Development Process</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {developmentKitchen.process.sort((a, b) => a.stepNumber - b.stepNumber).map((step) => (
+            <Card key={step.stepNumber} class="overflow-hidden">
+              {step.image && (
+                <div class="aspect-video relative overflow-hidden">
+                  <img 
+                    src={step.image.asset.url} 
+                    alt={step.image.alt}
+                    class="w-full h-full object-cover"
+                  />
+                  <div class="absolute top-4 left-4 w-12 h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold text-lg">
+                    {step.stepNumber}
+                  </div>
+                </div>
+              )}
+              <CardHeader>
+                <CardTitle>{step.title}</CardTitle>
+              </CardHeader>
+              {step.description && (
+                <CardContent>
+                  <CardDescription>{step.description}</CardDescription>
+                </CardContent>
+              )}
+            </Card>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Recent Innovations -->
+  {developmentKitchen.innovations && developmentKitchen.innovations.length > 0 && (
+    <section class="py-16 bg-muted/50">
+      <div class="container mx-auto px-4">
+        <h2 class="text-4xl font-bold text-center mb-12">Recent Innovations</h2>
+        <Tabs defaultValue="0" className="w-full">
+          <TabsList className="grid grid-cols-3 md:grid-cols-5 w-full max-w-2xl mx-auto mb-8">
+            {developmentKitchen.innovations.slice(0, 5).map((dish, index) => (
+              <TabsTrigger key={index} value={index.toString()}>
+                {dish.dishName.split(' ').slice(0, 2).join(' ')}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+          {developmentKitchen.innovations.map((dish, index) => (
+            <TabsContent key={index} value={index.toString()}>
+              <div class="grid md:grid-cols-2 gap-8 items-center">
+                {dish.image && (
+                  <div class="aspect-[4/3] relative overflow-hidden rounded-lg">
+                    <img 
+                      src={dish.image.asset.url} 
+                      alt={dish.image.alt}
+                      class="w-full h-full object-cover"
+                    />
+                  </div>
+                )}
+                <div>
+                  <h3 class="text-3xl font-bold mb-2">{dish.dishName}</h3>
+                  {dish.season && (
+                    <Badge variant="secondary" className="mb-4">{dish.season}</Badge>
+                  )}
+                  <p class="text-lg text-muted-foreground mb-6">{dish.description}</p>
+                  {dish.availableAt && dish.availableAt.length > 0 && (
+                    <div>
+                      <p class="font-semibold mb-2">Available at:</p>
+                      <div class="flex flex-wrap gap-2">
+                        {dish.availableAt.map((pub) => (
+                          <a 
+                            key={pub.slug.current} 
+                            href={`/${pub.slug.current}`}
+                            class="text-primary hover:text-primary/80 underline"
+                          >
+                            {pub.name}
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </TabsContent>
+          ))}
+        </Tabs>
+      </div>
+    </section>
+  )}
+
+  <!-- Seasonal Focus -->
+  {developmentKitchen.seasonalFocus && (
+    <section class="py-16 bg-background">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+          <div class="text-center mb-8">
+            <Badge variant="outline" className="mb-4 text-lg px-4 py-2">
+              {developmentKitchen.seasonalFocus.season}
+            </Badge>
+            <h2 class="text-4xl font-bold mb-4">{developmentKitchen.seasonalFocus.theme}</h2>
+          </div>
+          {developmentKitchen.seasonalFocus.description && (
+            <div class="prose prose-lg mx-auto mb-8">
+              <SanityPortableText blocks={developmentKitchen.seasonalFocus.description} />
+            </div>
+          )}
+          {developmentKitchen.seasonalFocus.featuredIngredients && (
+            <div class="text-center">
+              <p class="font-semibold mb-4">Featured Ingredients:</p>
+              <div class="flex flex-wrap gap-2 justify-center">
+                {developmentKitchen.seasonalFocus.featuredIngredients.map((ingredient) => (
+                  <Badge key={ingredient} variant="secondary">{ingredient}</Badge>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Gallery -->
+  {developmentKitchen.gallery && developmentKitchen.gallery.length > 0 && (
+    <section class="py-16 bg-muted/50">
+      <div class="container mx-auto px-4">
+        <h2 class="text-4xl font-bold text-center mb-12">Behind the Scenes</h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {developmentKitchen.gallery.map((image, index) => (
+            <div key={index} class="relative group overflow-hidden rounded-lg aspect-square">
+              <img 
+                src={image.asset.url} 
+                alt={image.alt}
+                class="w-full h-full object-cover transition-transform group-hover:scale-110"
+              />
+              {image.caption && (
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                  <p class="text-white text-sm">{image.caption}</p>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Suppliers -->
+  {developmentKitchen.suppliers && developmentKitchen.suppliers.length > 0 && (
+    <section class="py-16 bg-background">
+      <div class="container mx-auto px-4">
+        <h2 class="text-4xl font-bold text-center mb-12">Our Trusted Suppliers</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {developmentKitchen.suppliers.map((supplier) => (
+            <Card key={supplier.name} class="overflow-hidden">
+              <CardHeader>
+                <div class="flex items-start justify-between">
+                  <div>
+                    <CardTitle>{supplier.name}</CardTitle>
+                    {supplier.location && (
+                      <p class="text-sm text-muted-foreground">{supplier.location}</p>
+                    )}
+                  </div>
+                  {supplier.logo && (
+                    <img 
+                      src={supplier.logo.asset.url} 
+                      alt={supplier.logo.alt}
+                      class="w-16 h-16 object-contain"
+                    />
+                  )}
+                </div>
+              </CardHeader>
+              <CardContent>
+                <CardDescription>{supplier.description}</CardDescription>
+                {supplier.website && (
+                  <a 
+                    href={supplier.website} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    class="text-primary hover:text-primary/80 text-sm mt-2 inline-block"
+                  >
+                    Visit Website →
+                  </a>
+                )}
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+</Layout>

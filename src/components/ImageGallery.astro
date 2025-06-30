@@ -1,0 +1,30 @@
+---
+import ImageGalleryReact from './ImageGallery.tsx';
+
+export interface Props {
+  images: Array<{
+    asset: {
+      url: string;
+      _id: string;
+    };
+    alt: string;
+    caption?: string;
+    category?: string;
+  }>;
+  title?: string;
+  showCategories?: boolean;
+  columns?: 2 | 3 | 4;
+  class?: string;
+}
+
+const { images, title, showCategories = true, columns = 3, class: className } = Astro.props;
+---
+
+<ImageGalleryReact 
+  client:load
+  images={images} 
+  title={title}
+  showCategories={showCategories}
+  columns={columns}
+  className={className}
+/>

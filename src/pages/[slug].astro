@@ -3,6 +3,7 @@ import Layout from '@/layouts/Layout.astro';
 import { getPubs, getPubBySlug, getPosts } from '@/lib/sanity'; // Import getPosts
 import { Button } from "@/components/ui/button";
 import { MapPin, Clock, Phone, UtensilsCrossed, CalendarDays, Image as ImageIcon } from 'lucide-react'; // Added more icons
+import ImageGallery from '@/components/ImageGallery.astro';
 
 // 1. Generate routes for all pubs
 // This page will exist in each deployment, but getStaticPaths ensures
@@ -201,6 +202,22 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
         <p class="text-primary/70 italic">Check back soon for upcoming events at {pub.name}!</p>
         <!-- Fetch and display event data specific to this pub here later -->
       </div>
+
+      <!-- Image Gallery -->
+      {pub.gallery && pub.gallery.length > 0 && (
+        <div class="mb-12">
+          <h2 class="text-3xl font-semibold text-primary mb-4 border-b pb-2 flex items-center">
+            <ImageIcon class="w-6 h-6 mr-3 text-primary/80" /> Gallery
+          </h2>
+          <div class="mt-6">
+            <ImageGallery 
+              images={pub.gallery} 
+              showCategories={true}
+              columns={3}
+            />
+          </div>
+        </div>
+      )}
 
 
       <!-- Related Blog Posts -->

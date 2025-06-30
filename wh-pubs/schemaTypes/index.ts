@@ -9,8 +9,9 @@ import menu from './menu'
 import career from './career'
 import homepage from './homepage'
 import event from './event'
+import developmentKitchen from './developmentKitchen'
 
-export const schemaTypes = [homepage, post, author, category, site, pub, menu, career, event, blockContent] // Added event
+export const schemaTypes = [homepage, post, author, category, site, pub, menu, career, event, developmentKitchen, blockContent]
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [homepage, post, author, category, site, pub, menu, career, event, blockContent], // Added event
+  types: [homepage, post, author, category, site, pub, menu, career, event, developmentKitchen, blockContent],
 }

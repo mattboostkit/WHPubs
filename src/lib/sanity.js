@@ -179,7 +179,17 @@ export async function getPubs(targetPubSlug = null) {
       name,
       slug,
       location,
+      locationName,
+      addressLine1,
+      postcode,
       image {
+        asset->{
+          _id,
+          url
+        },
+        alt
+      },
+      heroImage {
         asset->{
           _id,
           url
@@ -188,6 +198,9 @@ export async function getPubs(targetPubSlug = null) {
       },
       description,
       url,
+      externalDomain,
+      featured,
+      amenities,
       // Include other fields needed for listing or single page
       openingHours,
       contactPhone,
@@ -212,7 +225,7 @@ export async function getPubs(targetPubSlug = null) {
       instagramUrl,
       twitterUrl,
       colorScheme
-    } | order(name asc)
+    } | order(featured desc, name asc)
   `, params);
 }
 
@@ -285,4 +298,63 @@ export async function getEvents(targetPubSlug = null) {
     } | order(date asc) // Order by event date
   `, params);
 }
+// Helper function to get Development Kitchen data
+export async function getDevelopmentKitchen() {
+  return client.fetch(`
+    *[_type == "developmentKitchen"][0] {
+      title,
+      slug,
+      heroImage { asset->{ _id, url }, alt },
+      introText[]{ ..., asset-> },
+      chefProfile {
+        name,
+        title,
+        bio[]{ ..., asset-> },
+        image { asset->{ _id, url }, alt }
+      },
+      philosophy {
+        heading,
+        content[]{ ..., asset-> }
+      },
+      process[] {
+        stepNumber,
+        title,
+        description,
+        image { asset->{ _id, url }, alt }
+      },
+      innovations[] {
+        dishName,
+        description,
+        season,
+        image { asset->{ _id, url }, alt },
+        availableAt[]->{ name, slug }
+      },
+      gallery[] {
+        asset->{ _id, url },
+        alt,
+        caption,
+        category
+      },
+      suppliers[] {
+        name,
+        description,
+        location,
+        logo { asset->{ _id, url }, alt },
+        website
+      },
+      seasonalFocus {
+        season,
+        theme,
+        description[]{ ..., asset-> },
+        featuredIngredients
+      },
+      seo {
+        metaTitle,
+        metaDescription,
+        ogImage { asset->{ _id, url } }
+      }
+    }
+  `);
+}
+
 // Note: getPubBySlug remains useful for the dynamic page generation

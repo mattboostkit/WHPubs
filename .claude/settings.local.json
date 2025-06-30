@@ -14,7 +14,9 @@
       "Bash(npx @sanity/cli@3.78.1:*)",
       "Bash(npx create-og-image:*)",
       "Bash(cp:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(TARGET_PUB_SLUG=the-bull npm run build)",
+      "Bash(git add:*)"
     ],
     "deny": []
   }
