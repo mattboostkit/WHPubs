@@ -73,6 +73,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "canvas": "^3.1.2",
     "node-fetch": "^3.3.2"
   }
 }

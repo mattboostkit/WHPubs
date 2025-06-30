@@ -24,7 +24,10 @@
       "Bash(true)",
       "Bash(npx:*)",
       "Bash(npm audit:*)",
-      "Bash(timeout 10 npm run dev:*)"
+      "Bash(timeout 10 npm run dev:*)",
+      "Bash(npm run deploy:*)",
+      "Bash(sanity:*)",
+      "Bash(mv:*)"
     ],
     "deny": []
   }

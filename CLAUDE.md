@@ -93,3 +93,8 @@ Configured for Netlify deployment with:
   - `SANITY_PROJECT_ID` (set to: it7wwto3)
   - `SANITY_DATASET` (set to: production)
   - Optional: `SANITY_TOKEN`, `GA_MEASUREMENT_ID`
+
+### Sanity Studio Access
+- **Deployed Studio**: https://whpubs.sanity.studio
+- **Local Studio**: http://localhost:3333 (when running `npm run dev` in wh-pubs directory)
+- **Project Dashboard**: https://www.sanity.io/organizations/ou2Yw2hhu/project/it7wwto3
