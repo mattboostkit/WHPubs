@@ -27,79 +27,8 @@
   to = "/.netlify/functions/preview"
   status = 200
 
-# Redirect for individual pub sites (only applies if TARGET_PUB_SLUG is set)
-[context.production.redirects]
-  # If TARGET_PUB_SLUG is defined, redirect root to the specific pub page
-  # Note: Netlify build context might not directly support env var checks in 'from',
-  # so we rely on the fact that only the target pub page is useful at the root.
-  # A more robust way might involve build plugins or different build commands,
-  # but this redirect often works for simple cases.
-  # Let's try a simple redirect first. If this doesn't work, we might need
-  # to adjust the build process itself.
-
-  # Redirect / to /<slug>/ if TARGET_PUB_SLUG is set (this might need adjustment)
-  # A simpler approach might be needed if this doesn't work as expected in Netlify's context.
-
-# Let's try forcing the redirect based on the presence of the slug page
-# This assumes the hub site WON'T have these slug pages at the root.
-# This is fragile. A better way is needed if this fails.
-
-# --- Attempting a more direct redirect based on the slug ---
-# This requires knowing the slug at config time, which we don't easily.
-
-# --- Let's stick to the original plan and assume Astro build output ---
-# If TARGET_PUB_SLUG=the-little-brown-jug, the build should ONLY produce
-# /the-little-brown-jug/index.html (and other assets/blog pages).
-# It should NOT produce /index.html from src/pages/index.astro.
-# The fact that BOTH are being produced suggests an issue in the Astro build logic.
-
-# Re-evaluating src/pages/index.astro logic...
-# The conditional rendering prevents content, but the page *file* (index.html)
-# might still be generated.
-
-# --- Alternative Approach: Modify Build Command ---
-# We could modify the build command based on TARGET_PUB_SLUG.
-# e.g., in netlify.toml:
-# [context.production.environment]
-#   TARGET_PUB_SLUG = "the-little-brown-jug" # Set per site
-# [context.production]
-#   command = "if [ -z \"$TARGET_PUB_SLUG\" ]; then npm run build; else npm run build:pub; fi"
-# And add a script "build:pub": "astro build && rm dist/index.html" (or similar)
-# This is getting complex. Let's ensure the Astro logic is sound first.
-
-# --- Revisiting src/pages/[slug].astro getStaticPaths ---
-# The logic seems correct: if targetPubSlug exists, it maps only that pub.
-# Why is index.html still generated? Astro might always generate index.html
-# if src/pages/index.astro exists.
-
-# --- Simplest Fix Attempt: Netlify Redirect ---
-# If the slug page exists, serve it from the root.
-# This relies on the hub site *not* having /the-little-brown-jug/index.html
-[[redirects]]
-  from = "/"
-  to = "/:slug/"
-  status = 200 # Serve content directly (rewrite)
-  conditions = {TARGET_PUB_SLUG = ":slug"} # This condition syntax might not be valid
-  # Netlify conditions usually check headers, roles, geoip etc. Not env vars directly.
-
-# --- Let's try a specific redirect for the known slug ---
-# This isn't scalable but confirms the redirect mechanism.
-[[redirects]]
-  from = "/"
-  to = "/the-little-brown-jug/"
-  status = 200 # Rewrite
-  force = true # Force even if /index.html exists
-  # Condition needed: Only apply if TARGET_PUB_SLUG=the-little-brown-jug
-  # We cannot directly use env var in conditions.
-
-# --- Final Attempt: Rely on Astro Output ---
-# Let's assume the build *should* only output /the-little-brown-jug/index.html
-# when TARGET_PUB_SLUG is set. The fact it outputs /index.html too is the core issue.
-# We need to prevent src/pages/index.astro from generating output in pub builds.
-
-# Let's modify src/pages/index.astro to return null if not hub site.
-# (This requires going back to edit index.astro)
-# Removed specific redirect as build script now handles index.html
+# Note: Individual pub site redirects are handled by the build script
+# which moves the pub page to the root when TARGET_PUB_SLUG is set
 [[headers]]
   for = "/*"
   [headers.values]
