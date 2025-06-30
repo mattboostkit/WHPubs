@@ -76,8 +76,8 @@ export default defineType({
         name: 'heroButton1Link',
         title: 'Hero Button 1 Link',
         type: 'string',
-        description: 'Internal link for button 1 (e.g., "/#establishments")',
-        initialValue: '/#establishments',
+        description: 'Internal link for button 1 (e.g., "/#pubs")',
+        initialValue: '/#pubs',
     }),
      defineField({
         name: 'heroButton2Text',

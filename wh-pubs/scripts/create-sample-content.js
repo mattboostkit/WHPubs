@@ -747,7 +747,7 @@ const homepageContent = {
   heroTitle: 'Welcome to WH Pubs',
   heroSubtitle: 'Exceptional food, craft beverages, and warm hospitality across the South East',
   heroButton1Text: 'View Our Pubs',
-  heroButton1Link: '/#establishments',
+  heroButton1Link: '/#pubs',
   heroButton2Text: 'Book a Table',
   heroButton2Link: '/book'
 };
