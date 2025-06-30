@@ -88,7 +88,7 @@ if (isPubLayout && activePub) {
 } else {
 	 // Define default nav links for the main hub site
 	 headerLinks = [
-	   { title: "Our Pubs", url: "/#establishments", ariaLabel: "Our Pubs" },
+	   { title: "Our Pubs", url: "/#pubs", ariaLabel: "Our Pubs" },
 	   { title: "Development Kitchen", url: "/development-kitchen", ariaLabel: "Development Kitchen" },
 	   { title: "Events", url: "/events", ariaLabel: "Events" }, 
 	   { title: "Blog", url: "/blog", ariaLabel: "Blog" }, 
@@ -129,10 +129,13 @@ const metaDescription = description || footerDescription;
 		</noscript>
 		-->
 		
-		<!-- Font fallback - Updated to Lora -->
+		<!-- Font fallback - Generic serif fonts -->
 		<style>
 			.font-lora, .font-quattrocento, .font-alice {
-				font-family: 'Lora', Georgia, 'Times New Roman', serif;
+				font-family: Georgia, 'Times New Roman', serif;
+			}
+			body {
+				font-family: Georgia, 'Times New Roman', serif;
 			}
 		</style>
 		
@@ -157,13 +160,13 @@ const metaDescription = description || footerDescription;
 		
 		<title>{title}</title>
 	</head>
-	<body class:list={["font-lora bg-background text-foreground", pub?.colorScheme ? `theme-${pub.colorScheme}` : 'theme-default']}>
+	<body class:list={["bg-background text-foreground", pub?.colorScheme ? `theme-${pub.colorScheme}` : 'theme-default']}>
 		<header class="bg-primary fixed w-full z-50">
 			<AdminBadge />
 			<nav class="container mx-auto px-4 py-4" aria-label="Main navigation">
 				<div class="flex items-center justify-between">
 					<!-- Site Name / Logo -->
-					<a href="/" class="text-[#B79C64] font-lora" aria-label={`${siteName} Home`}>
+					<a href="/" class="text-[#B79C64]" aria-label={`${siteName} Home`}>
 						{logoUrl ? (
 							<img src={logoUrl} alt={logoAlt} class="h-14 max-w-[300px] object-contain" />
 						) : (
@@ -200,7 +203,7 @@ const metaDescription = description || footerDescription;
 			<div id="mobile-menu" class="fixed inset-0 bg-primary z-50 flex flex-col p-4 hidden" role="dialog" aria-modal="true" aria-label="Mobile navigation">
 				<div class="flex justify-between items-center mb-8">
 					<!-- Mobile Menu Header -->
-					<a href="/" class="text-[#B79C64] font-lora" aria-label={`${siteName} Home`}>
+					<a href="/" class="text-[#B79C64]" aria-label={`${siteName} Home`}>
 						{logoUrl ? (
 							<img src={logoUrl} alt={logoAlt} class="h-14 max-w-[300px] object-contain" />
 						) : (
@@ -254,7 +257,7 @@ const metaDescription = description || footerDescription;
 								<img src={logoUrl} alt={logoAlt} class="h-14 max-w-xs object-contain mb-4" />
 							</a>
 						) : (
-							<h3 class="text-2xl font-bold mb-4 font-lora">{siteName}</h3>
+							<h3 class="text-2xl font-bold mb-4" style="font-family: Georgia, 'Times New Roman', serif;">{siteName}</h3>
 						)}
 						<p class="text-white/80 mb-4">{footerDescription}</p>
 						<!-- Footer Social Links -->
@@ -352,7 +355,7 @@ const metaDescription = description || footerDescription;
 			// Scroll to pubs section
 			const scrollToPubsBtn = document.getElementById('scroll-to-pubs');
 			scrollToPubsBtn?.addEventListener('click', () => {
-				const pubsSection = document.getElementById('establishments');
+				const pubsSection = document.getElementById('pubs');
 				pubsSection?.scrollIntoView({ behavior: 'smooth' });
 			});
 		</script>

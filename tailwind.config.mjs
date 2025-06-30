@@ -4,11 +4,6 @@ export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   theme: {
     extend: {
-      fontFamily: {
-        'lora': ['Lora', 'serif'],
-        'quattrocento': ['Quattrocento', 'serif'],
-        'alice': ['Alice', 'serif'],
-      },
       colors: {
         primary: '#201D0F',
         secondary: '#E1D0B6',
@@ -69,13 +64,13 @@ export default {
             p: {
               marginTop: '1em',
               marginBottom: '1em',
-              fontFamily: 'Lora, serif',
+              fontFamily: 'Georgia, serif',
             },
             'h1, h2, h3, h4': {
               marginTop: '1.5em',
               marginBottom: '0.5em',
               fontWeight: '700',
-              fontFamily: 'Lora, serif',
+              fontFamily: 'Georgia, serif',
             },
             a: {
               color: '#050231',

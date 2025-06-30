@@ -74,32 +74,38 @@
   }
 
   .prose h1 {
-    @apply text-4xl font-bold text-primary mb-6 font-lora;
+    @apply text-4xl font-bold text-primary mb-6;
+    font-family: Georgia, 'Times New Roman', serif;
     font-weight: 700;
   }
 
   .prose h2 {
-    @apply text-2xl font-bold text-primary mb-4 mt-8 font-lora;
+    @apply text-2xl font-bold text-primary mb-4 mt-8;
+    font-family: Georgia, 'Times New Roman', serif;
     font-weight: 700;
   }
 
   .prose h3 {
-    @apply text-xl font-bold text-primary mb-3 mt-6 font-lora;
+    @apply text-xl font-bold text-primary mb-3 mt-6;
+    font-family: Georgia, 'Times New Roman', serif;
     font-weight: 600;
   }
 
   .prose p {
-    @apply text-primary/80 mb-4 leading-relaxed font-lora;
+    @apply text-primary/80 mb-4 leading-relaxed;
+    font-family: Georgia, 'Times New Roman', serif;
     font-weight: 400;
   }
 
   .prose ul {
-    @apply list-disc pl-6 mb-6 text-primary/80 space-y-2 font-lora;
+    @apply list-disc pl-6 mb-6 text-primary/80 space-y-2;
+    font-family: Georgia, 'Times New Roman', serif;
     font-weight: 400;
   }
 
   .prose a {
-    @apply text-primary hover:text-primary/80 transition-colors font-lora;
+    @apply text-primary hover:text-primary/80 transition-colors;
+    font-family: Georgia, 'Times New Roman', serif;
     font-weight: 400;
   }
 
