@@ -220,6 +220,51 @@ export default defineType({
       description: 'URL for the button overlaid on the hero (requires Text above).',
     }),
     defineField({
+      name: 'carouselImages',
+      title: 'Homepage Carousel Images',
+      type: 'array',
+      group: 'media',
+      description: 'Add up to 6 images for the homepage carousel. Images will rotate automatically. Recommended size: 1920x800px',
+      of: [
+        {
+          type: 'image',
+          title: 'Carousel Image',
+          options: { 
+            hotspot: true,
+            accept: 'image/*'
+          },
+          fields: [
+            {
+              name: 'alt',
+              type: 'string',
+              title: 'Alternative text',
+              description: 'Brief description of the image (required for accessibility)',
+              validation: (Rule) => Rule.required().error('Please add alt text'),
+            },
+            {
+              name: 'caption',
+              type: 'string',
+              title: 'Caption (Optional)',
+              description: 'Optional text overlay for this carousel image'
+            },
+            {
+              name: 'buttonText',
+              type: 'string',
+              title: 'Button Text (Optional)',
+              description: 'Text for an optional button on this slide'
+            },
+            {
+              name: 'buttonLink',
+              type: 'string',
+              title: 'Button Link (Optional)',
+              description: 'URL for the button (e.g., /menu, /book)'
+            }
+          ]
+        }
+      ],
+      validation: (Rule) => Rule.max(6).error('Maximum 6 images allowed'),
+    }),
+    defineField({
       name: 'gallery',
       title: 'Photo Gallery',
       type: 'array',

@@ -155,6 +155,13 @@ export async function getPubBySlug(slug) {
       heroOverlayText, // Fetch overlay text
       heroOverlayButtonText, // Fetch overlay button text
       heroOverlayButtonLink, // Fetch overlay button link
+      carouselImages[] {
+        asset->{ _id, url },
+        alt,
+        caption,
+        buttonText,
+        buttonLink
+      },
       // Layout fields
       logo { asset->{ _id, url }, alt },
       headerNavLinks[]{ title, url },

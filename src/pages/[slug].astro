@@ -4,6 +4,7 @@ import { getPubs, getPubBySlug, getPosts } from '@/lib/sanity'; // Import getPos
 import { Button } from "@/components/ui/button";
 import { MapPin, Clock, Phone, UtensilsCrossed, CalendarDays, Image as ImageIcon } from 'lucide-react'; // Added more icons
 import ImageGallery from '@/components/ImageGallery.astro';
+import { PubHeroCarousel } from '@/components/PubHeroCarousel';
 
 // 1. Generate routes for all pubs
 // This page will exist in each deployment, but getStaticPaths ensures
@@ -55,39 +56,42 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
 
 <Layout title={pageTitle} description={pageDescription} pub={pub}> {/* Pass pub data to Layout */}
   <main> {/* Remove container/padding from main, apply later */}
-    <!-- Hero Section -->
-    <section class="relative h-[60vh] md:h-[70vh] w-full"> {/* Adjust height as needed */}
-      <img
-        src={pub.heroImage?.asset?.url || '/images/hero-fallback.jpg'} // Use dedicated heroImage
-        alt={pub.heroImage?.alt || `Hero image for ${pub.name}`} // Use heroImage alt text
-        class="absolute inset-0 w-full h-full object-cover" // Cover the section
-        onerror="this.onerror=null; this.src='/images/hero-fallback.jpg';"
-      />
-      {/* Overlay */}
-      <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent"></div> {/* Gradient overlay */}
+    <!-- Hero Section with Carousel -->
+    {pub.carouselImages && pub.carouselImages.length > 0 ? (
+      <section class="relative h-[60vh] md:h-[70vh] w-full">
+        <PubHeroCarousel 
+          images={pub.carouselImages}
+          pubName={pub.name}
+          client:load
+        />
+      </section>
+    ) : (
+      <!-- Fallback to single hero image if no carousel images -->
+      <section class="relative h-[60vh] md:h-[70vh] w-full">
+        <img
+          src={pub.heroImage?.asset?.url || '/images/hero-fallback.jpg'}
+          alt={pub.heroImage?.alt || `Hero image for ${pub.name}`}
+          class="absolute inset-0 w-full h-full object-cover"
+          onerror="this.onerror=null; this.src='/images/hero-fallback.jpg';"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent"></div>
 
-      {/* Overlay Content (Text and Button) */}
-      <div class="relative z-10 h-full flex flex-col items-center justify-center text-center text-white px-6">
-        {pub.heroOverlayText && (
-          // Use prose classes for potential rich text formatting if overlay text becomes blockContent later
-          <div class="prose prose-invert prose-xl md:prose-2xl mb-6 text-shadow-md">
-             {/* For now, assuming plain text. If blockContent, use SanityPortableText */}
-             <p>{pub.heroOverlayText}</p>
-          </div>
-        )}
-        {pub.heroOverlayButtonText && pub.heroOverlayButtonLink && (
-          <a href={pub.heroOverlayButtonLink} target="_blank" rel="noopener noreferrer">
-             <Button variant="secondary" size="lg" class="bg-[#B79C64] hover:bg-[#B79C64]/90 text-primary font-semibold px-8 py-3 shadow-lg">
-               {pub.heroOverlayButtonText}
-             </Button>
-          </a>
-        )}
-      </div>
-      {/* Original H1 was here, moved below hero */}
-      {/* <div class="relative z-10 h-full flex items-center justify-center">
-        <h1 class="text-white text-4xl md:text-6xl font-bold text-center">{pub.name}</h1>
-      </div> */}
-    </section>
+        <div class="relative z-10 h-full flex flex-col items-center justify-center text-center text-white px-6">
+          {pub.heroOverlayText && (
+            <div class="prose prose-invert prose-xl md:prose-2xl mb-6 text-shadow-md">
+               <p>{pub.heroOverlayText}</p>
+            </div>
+          )}
+          {pub.heroOverlayButtonText && pub.heroOverlayButtonLink && (
+            <a href={pub.heroOverlayButtonLink} target="_blank" rel="noopener noreferrer">
+               <Button variant="secondary" size="lg" class="bg-[#B79C64] hover:bg-[#B79C64]/90 text-primary font-semibold px-8 py-3 shadow-lg">
+                 {pub.heroOverlayButtonText}
+               </Button>
+            </a>
+          )}
+        </div>
+      </section>
+    )}
 
     {/* Main Content Area */}
     <div class="container mx-auto px-4 py-12"> {/* Add container/padding here */}
