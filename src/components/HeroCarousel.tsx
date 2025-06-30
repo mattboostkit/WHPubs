@@ -31,32 +31,53 @@ export function HeroCarousel({
 }: HeroCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  // Debug logging
+  useEffect(() => {
+    const validImageCount = Array.isArray(images) ? images.filter(img => img?.asset?.url).length : 0;
+    console.log('HeroCarousel mounted with', validImageCount, 'valid images out of', images?.length || 0, 'total');
+    console.log('Raw images:', images);
+  }, [images]);
+
+  // Ensure images is always an array
+  const validImages = Array.isArray(images) ? images.filter(img => img?.asset?.url) : [];
+
   // Auto-advance carousel every 5 seconds
   useEffect(() => {
-    if (images.length <= 1) return;
+    if (!validImages || validImages.length <= 1) {
+      console.log('Auto-rotation disabled: only', validImages?.length || 0, 'image(s)');
+      return;
+    }
     
+    console.log('Starting auto-rotation for', validImages.length, 'images');
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+      setCurrentIndex((prevIndex) => {
+        const nextIndex = (prevIndex + 1) % validImages.length;
+        console.log('Rotating from index', prevIndex, 'to', nextIndex);
+        return nextIndex;
+      });
     }, 5000);
 
-    return () => clearInterval(interval);
-  }, [images.length]);
+    return () => {
+      console.log('Cleaning up auto-rotation interval');
+      clearInterval(interval);
+    };
+  }, [validImages.length]); // This will restart the interval if image count changes
 
   const goToPrevious = () => {
     setCurrentIndex((prevIndex) => 
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+      prevIndex === 0 ? validImages.length - 1 : prevIndex - 1
     );
   };
 
   const goToNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % validImages.length);
   };
 
   const goToSlide = (index: number) => {
     setCurrentIndex(index);
   };
 
-  if (!images || images.length === 0) {
+  if (validImages.length === 0) {
     // Fallback if no images
     return (
       <div className="relative h-[90vh]">
@@ -84,7 +105,7 @@ export function HeroCarousel({
     <div className="relative h-[90vh]">
       {/* Images */}
       <div className="absolute inset-0">
-        {images.map((image, index) => (
+        {validImages.map((image, index) => (
           <div
             key={image.asset._id}
             className={`absolute inset-0 transition-opacity duration-1000 ${
@@ -103,7 +124,7 @@ export function HeroCarousel({
       </div>
 
       {/* Navigation arrows (only show if more than 1 image) */}
-      {images.length > 1 && (
+      {validImages.length > 1 && (
         <>
           <button
             onClick={goToPrevious}
@@ -122,7 +143,7 @@ export function HeroCarousel({
 
           {/* Dots indicator */}
           <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
-            {images.map((_, index) => (
+            {validImages.map((_, index) => (
               <button
                 key={index}
                 onClick={() => goToSlide(index)}

@@ -23,7 +23,8 @@
       "Bash(pkill:*)",
       "Bash(true)",
       "Bash(npx:*)",
-      "Bash(npm audit:*)"
+      "Bash(npm audit:*)",
+      "Bash(timeout 10 npm run dev:*)"
     ],
     "deny": []
   }
