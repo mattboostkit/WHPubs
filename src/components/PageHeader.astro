@@ -1,0 +1,39 @@
+---
+export interface Props {
+  title: string;
+  subtitle?: string;
+  image?: {
+    src: string;
+    alt: string;
+  };
+}
+
+const { title, subtitle, image } = Astro.props;
+---
+
+<div class="relative">
+  {image ? (
+    <div class="relative h-[400px] overflow-hidden">
+      <img 
+        src={image.src} 
+        alt={image.alt}
+        class="w-full h-full object-cover"
+        onerror="this.onerror=null; this.src='/images/hero-fallback.jpg';"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+      <div class="absolute inset-0 flex items-center justify-center">
+        <div class="text-center text-white px-4">
+          <h1 class="text-4xl md:text-5xl font-bold mb-4 font-lora">{title}</h1>
+          {subtitle && <p class="text-xl md:text-2xl text-white/90 font-lora">{subtitle}</p>}
+        </div>
+      </div>
+    </div>
+  ) : (
+    <div class="py-16 bg-gradient-to-b from-primary/5 to-transparent">
+      <div class="text-center">
+        <h1 class="text-4xl md:text-5xl font-bold text-primary mb-4 font-lora">{title}</h1>
+        {subtitle && <p class="text-xl text-muted-foreground font-lora">{subtitle}</p>}
+      </div>
+    </div>
+  )}
+</div>

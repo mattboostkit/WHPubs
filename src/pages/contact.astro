@@ -1,39 +1,45 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 ---
 
 <Layout title="Contact - WH Pubs">
-	<main class="pt-24 pb-32 bg-secondary/10 min-h-screen">
-		<div class="container mx-auto px-4">
-			<h1 class="text-5xl font-bold text-center mb-4 text-primary">Contact Us</h1>
-			<p class="text-center text-lg text-primary/70 mb-12 max-w-2xl mx-auto">
-				Get in touch with us for bookings, enquiries, or feedback. We'd love to hear from you.
-			</p>
+	<main class="pt-24">
+		<PageHeader 
+			title="Contact Us"
+			subtitle="Get in touch with us for bookings, enquiries, or feedback"
+		/>
+		
+		<section class="py-16 bg-muted/50">
+			<div class="container mx-auto px-4">
 
 			<div class="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
 				<div>
 					<h2 class="text-2xl font-bold mb-6">Our Locations</h2>
 					
-					<div class="space-y-8">
-						<div class="bg-white p-6 rounded-lg shadow-lg">
-							<h3 class="text-xl font-bold mb-4">The Chaser Inn</h3>
-							<div class="space-y-4">
-								<div class="flex items-center gap-3 text-primary/80">
-									<MapPin class="w-5 h-5 text-primary/60" />
+					<div class="space-y-6">
+						<Card>
+							<CardHeader>
+								<CardTitle>The Chaser Inn</CardTitle>
+							</CardHeader>
+							<CardContent className="space-y-3">
+								<div class="flex items-center gap-3 text-muted-foreground">
+									<MapPin class="w-5 h-5" />
 									<p>Shipbourne, Kent</p>
 								</div>
-								<div class="flex items-center gap-3 text-primary/80">
-									<Phone class="w-5 h-5 text-primary/60" />
+								<div class="flex items-center gap-3 text-muted-foreground">
+									<Phone class="w-5 h-5" />
 									<p>01732 810 360</p>
 								</div>
-								<div class="flex items-center gap-3 text-primary/80">
-									<Mail class="w-5 h-5 text-primary/60" />
+								<div class="flex items-center gap-3 text-muted-foreground">
+									<Mail class="w-5 h-5" />
 									<p>info@thechaser.co.uk</p>
 								</div>
-							</div>
-						</div>
+							</CardContent>
+						</Card>
 
 						<div class="bg-white p-6 rounded-lg shadow-lg">
 							<h3 class="text-xl font-bold mb-4">The Little Brown Jug</h3>
@@ -182,6 +188,7 @@ import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 					</div>
 				</div>
 			</div>
-		</div>
+			</div>
+		</section>
 	</main>
 </Layout>

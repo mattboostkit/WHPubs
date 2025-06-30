@@ -1,6 +1,10 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Calendar, Clock } from 'lucide-react';
 import { getPosts, getPubBySlug } from '../../lib/sanity'; // Use getPosts and getPubBySlug
 
 // Determine the target pub for this build/request

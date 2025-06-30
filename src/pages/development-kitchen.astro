@@ -11,36 +11,55 @@ const targetPubSlug = import.meta.env.TARGET_PUB_SLUG;
 const targetPub = targetPubSlug ? await getPubBySlug(targetPubSlug) : null;
 const developmentKitchen = await getDevelopmentKitchen();
 
-if (!developmentKitchen) {
-  return Astro.redirect('/404');
-}
+// Default content if no data exists in Sanity yet
+const defaultContent = {
+  title: 'Development Kitchen',
+  introText: [{
+    _type: 'block',
+    children: [{
+      _type: 'span',
+      text: 'Welcome to the WH Pubs Development Kitchen, where culinary innovation meets traditional British hospitality. Our dedicated team of chefs works tirelessly to create seasonal menus that showcase the finest local ingredients.'
+    }]
+  }],
+  philosophy: {
+    heading: 'Our Philosophy',
+    content: [{
+      _type: 'block',
+      children: [{
+        _type: 'span',
+        text: 'We believe in celebrating the best of British produce while embracing modern culinary techniques. Every dish is crafted with care, ensuring our guests enjoy memorable dining experiences across all WH Pubs locations.'
+      }]
+    }]
+  }
+};
 
-const pageTitle = developmentKitchen.seo?.metaTitle || `${developmentKitchen.title} | WH Pubs`;
-const pageDescription = developmentKitchen.seo?.metaDescription || 'Discover the culinary innovation at the heart of WH Pubs. Our Development Kitchen creates seasonal menus using the finest local ingredients.';
+const content = developmentKitchen || defaultContent;
+const pageTitle = content.seo?.metaTitle || `${content.title} | WH Pubs`;
+const pageDescription = content.seo?.metaDescription || 'Discover the culinary innovation at the heart of WH Pubs. Our Development Kitchen creates seasonal menus using the finest local ingredients.';
 ---
 
 <Layout 
   title={pageTitle} 
   description={pageDescription}
   targetPub={targetPub}
-  ogImage={developmentKitchen.seo?.ogImage?.asset?.url}
+  ogImage={content.seo?.ogImage?.asset?.url}
 >
   <!-- Hero Section -->
   <section class="relative h-[70vh] min-h-[500px] overflow-hidden">
-    {developmentKitchen.heroImage && (
+    {content.heroImage && (
       <img 
-        src={developmentKitchen.heroImage.asset.url} 
-        alt={developmentKitchen.heroImage.alt}
+        src={content.heroImage.asset.url} 
+        alt={content.heroImage.alt}
         class="absolute inset-0 w-full h-full object-cover"
       />
     )}
     <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
     <div class="absolute inset-0 flex items-end">
       <div class="container mx-auto px-4 pb-16">
-        <h1 class="text-5xl md:text-7xl font-bold text-white mb-4">{developmentKitchen.title}</h1>
-        {developmentKitchen.introText && (
+        <h1 class="text-5xl md:text-7xl font-bold text-white mb-4">{content.title}</h1>
+        {content.introText && (
           <div class="text-white/90 text-lg md:text-xl max-w-3xl">
-            <SanityPortableText blocks={developmentKitchen.introText} />
+            <SanityPortableText blocks={content.introText} />
           </div>
         )}
       </div>
@@ -48,25 +67,25 @@ const pageDescription = developmentKitchen.seo?.metaDescription || 'Discover the
   </section>
 
   <!-- Chef Profile Section -->
-  {developmentKitchen.chefProfile && (
+  {content.chefProfile && (
     <section class="py-16 bg-background">
       <div class="container mx-auto px-4">
         <div class="grid md:grid-cols-2 gap-12 items-center">
-          {developmentKitchen.chefProfile.image && (
+          {content.chefProfile.image && (
             <div class="order-2 md:order-1">
               <img 
-                src={developmentKitchen.chefProfile.image.asset.url} 
-                alt={developmentKitchen.chefProfile.image.alt}
+                src={content.chefProfile.image.asset.url} 
+                alt={content.chefProfile.image.alt}
                 class="rounded-lg shadow-xl w-full"
               />
             </div>
           )}
           <div class="order-1 md:order-2">
-            <h2 class="text-4xl font-bold mb-2">{developmentKitchen.chefProfile.name}</h2>
-            <p class="text-xl text-muted-foreground mb-6">{developmentKitchen.chefProfile.title}</p>
-            {developmentKitchen.chefProfile.bio && (
+            <h2 class="text-4xl font-bold mb-2">{content.chefProfile.name}</h2>
+            <p class="text-xl text-muted-foreground mb-6">{content.chefProfile.title}</p>
+            {content.chefProfile.bio && (
               <div class="prose prose-lg">
-                <SanityPortableText blocks={developmentKitchen.chefProfile.bio} />
+                <SanityPortableText blocks={content.chefProfile.bio} />
               </div>
             )}
           </div>
@@ -76,14 +95,14 @@ const pageDescription = developmentKitchen.seo?.metaDescription || 'Discover the
   )}
 
   <!-- Philosophy Section -->
-  {developmentKitchen.philosophy && (
+  {content.philosophy && (
     <section class="py-16 bg-muted/50">
       <div class="container mx-auto px-4">
         <div class="max-w-3xl mx-auto text-center">
-          <h2 class="text-4xl font-bold mb-8">{developmentKitchen.philosophy.heading}</h2>
-          {developmentKitchen.philosophy.content && (
+          <h2 class="text-4xl font-bold mb-8">{content.philosophy.heading}</h2>
+          {content.philosophy.content && (
             <div class="prose prose-lg mx-auto">
-              <SanityPortableText blocks={developmentKitchen.philosophy.content} />
+              <SanityPortableText blocks={content.philosophy.content} />
             </div>
           )}
         </div>
@@ -92,12 +111,12 @@ const pageDescription = developmentKitchen.seo?.metaDescription || 'Discover the
   )}
 
   <!-- Development Process -->
-  {developmentKitchen.process && developmentKitchen.process.length > 0 && (
+  {content.process && content.process.length > 0 && (
     <section class="py-16 bg-background">
       <div class="container mx-auto px-4">
         <h2 class="text-4xl font-bold text-center mb-12">Our Development Process</h2>
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {developmentKitchen.process.sort((a, b) => a.stepNumber - b.stepNumber).map((step) => (
+          {content.process.sort((a, b) => a.stepNumber - b.stepNumber).map((step) => (
             <Card key={step.stepNumber} class="overflow-hidden">
               {step.image && (
                 <div class="aspect-video relative overflow-hidden">
@@ -127,19 +146,19 @@ const pageDescription = developmentKitchen.seo?.metaDescription || 'Discover the
   )}
 
   <!-- Recent Innovations -->
-  {developmentKitchen.innovations && developmentKitchen.innovations.length > 0 && (
+  {content.innovations && content.innovations.length > 0 && (
     <section class="py-16 bg-muted/50">
       <div class="container mx-auto px-4">
         <h2 class="text-4xl font-bold text-center mb-12">Recent Innovations</h2>
         <Tabs defaultValue="0" className="w-full">
           <TabsList className="grid grid-cols-3 md:grid-cols-5 w-full max-w-2xl mx-auto mb-8">
-            {developmentKitchen.innovations.slice(0, 5).map((dish, index) => (
+            {content.innovations.slice(0, 5).map((dish, index) => (
               <TabsTrigger key={index} value={index.toString()}>
                 {dish.dishName.split(' ').slice(0, 2).join(' ')}
               </TabsTrigger>
             ))}
           </TabsList>
-          {developmentKitchen.innovations.map((dish, index) => (
+          {content.innovations.map((dish, index) => (
             <TabsContent key={index} value={index.toString()}>
               <div class="grid md:grid-cols-2 gap-8 items-center">
                 {dish.image && (
@@ -183,26 +202,26 @@ const pageDescription = developmentKitchen.seo?.metaDescription || 'Discover the
   )}
 
   <!-- Seasonal Focus -->
-  {developmentKitchen.seasonalFocus && (
+  {content.seasonalFocus && (
     <section class="py-16 bg-background">
       <div class="container mx-auto px-4">
         <div class="max-w-4xl mx-auto">
           <div class="text-center mb-8">
             <Badge variant="outline" className="mb-4 text-lg px-4 py-2">
-              {developmentKitchen.seasonalFocus.season}
+              {content.seasonalFocus.season}
             </Badge>
-            <h2 class="text-4xl font-bold mb-4">{developmentKitchen.seasonalFocus.theme}</h2>
+            <h2 class="text-4xl font-bold mb-4">{content.seasonalFocus.theme}</h2>
           </div>
-          {developmentKitchen.seasonalFocus.description && (
+          {content.seasonalFocus.description && (
             <div class="prose prose-lg mx-auto mb-8">
-              <SanityPortableText blocks={developmentKitchen.seasonalFocus.description} />
+              <SanityPortableText blocks={content.seasonalFocus.description} />
             </div>
           )}
-          {developmentKitchen.seasonalFocus.featuredIngredients && (
+          {content.seasonalFocus.featuredIngredients && (
             <div class="text-center">
               <p class="font-semibold mb-4">Featured Ingredients:</p>
               <div class="flex flex-wrap gap-2 justify-center">
-                {developmentKitchen.seasonalFocus.featuredIngredients.map((ingredient) => (
+                {content.seasonalFocus.featuredIngredients.map((ingredient) => (
                   <Badge key={ingredient} variant="secondary">{ingredient}</Badge>
                 ))}
               </div>
@@ -214,12 +233,12 @@ const pageDescription = developmentKitchen.seo?.metaDescription || 'Discover the
   )}
 
   <!-- Gallery -->
-  {developmentKitchen.gallery && developmentKitchen.gallery.length > 0 && (
+  {content.gallery && content.gallery.length > 0 && (
     <section class="py-16 bg-muted/50">
       <div class="container mx-auto px-4">
         <h2 class="text-4xl font-bold text-center mb-12">Behind the Scenes</h2>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {developmentKitchen.gallery.map((image, index) => (
+          {content.gallery.map((image, index) => (
             <div key={index} class="relative group overflow-hidden rounded-lg aspect-square">
               <img 
                 src={image.asset.url} 
@@ -239,12 +258,12 @@ const pageDescription = developmentKitchen.seo?.metaDescription || 'Discover the
   )}
 
   <!-- Suppliers -->
-  {developmentKitchen.suppliers && developmentKitchen.suppliers.length > 0 && (
+  {content.suppliers && content.suppliers.length > 0 && (
     <section class="py-16 bg-background">
       <div class="container mx-auto px-4">
         <h2 class="text-4xl font-bold text-center mb-12">Our Trusted Suppliers</h2>
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {developmentKitchen.suppliers.map((supplier) => (
+          {content.suppliers.map((supplier) => (
             <Card key={supplier.name} class="overflow-hidden">
               <CardHeader>
                 <div class="flex items-start justify-between">

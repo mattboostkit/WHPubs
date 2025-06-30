@@ -5,6 +5,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
+        'lora': ['Lora', 'serif'],
         'quattrocento': ['Quattrocento', 'serif'],
         'alice': ['Alice', 'serif'],
       },
@@ -68,13 +69,13 @@ export default {
             p: {
               marginTop: '1em',
               marginBottom: '1em',
-              fontFamily: 'Alice, serif',
+              fontFamily: 'Lora, serif',
             },
             'h1, h2, h3, h4': {
               marginTop: '1.5em',
               marginBottom: '0.5em',
               fontWeight: '700',
-              fontFamily: 'Quattrocento, serif',
+              fontFamily: 'Lora, serif',
             },
             a: {
               color: '#050231',

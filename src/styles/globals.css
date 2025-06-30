@@ -74,32 +74,32 @@
   }
 
   .prose h1 {
-    @apply text-4xl font-bold text-primary mb-6 font-quattrocento;
+    @apply text-4xl font-bold text-primary mb-6 font-lora;
     font-weight: 700;
   }
 
   .prose h2 {
-    @apply text-2xl font-bold text-primary mb-4 mt-8 font-quattrocento;
+    @apply text-2xl font-bold text-primary mb-4 mt-8 font-lora;
     font-weight: 700;
   }
 
   .prose h3 {
-    @apply text-xl font-bold text-primary mb-3 mt-6 font-quattrocento;
+    @apply text-xl font-bold text-primary mb-3 mt-6 font-lora;
     font-weight: 600;
   }
 
   .prose p {
-    @apply text-primary/80 mb-4 leading-relaxed font-alice;
+    @apply text-primary/80 mb-4 leading-relaxed font-lora;
     font-weight: 400;
   }
 
   .prose ul {
-    @apply list-disc pl-6 mb-6 text-primary/80 space-y-2 font-alice;
+    @apply list-disc pl-6 mb-6 text-primary/80 space-y-2 font-lora;
     font-weight: 400;
   }
 
   .prose a {
-    @apply text-primary hover:text-primary/80 transition-colors font-alice;
+    @apply text-primary hover:text-primary/80 transition-colors font-lora;
     font-weight: 400;
   }
 

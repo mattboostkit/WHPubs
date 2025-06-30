@@ -16,7 +16,9 @@
       "Bash(cp:*)",
       "Bash(npm install:*)",
       "Bash(TARGET_PUB_SLUG=the-bull npm run build)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git push:*)",
+      "Bash(npm run dev:*)"
     ],
     "deny": []
   }

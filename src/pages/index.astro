@@ -11,7 +11,12 @@ import { getPosts, getPubs, getHomepageData, getDevelopmentKitchen } from '../li
 const posts = await getPosts(); // Fetches general posts (no pub associated)
 const pubs = await getPubs(); // Fetches all pubs
 const homepageData = await getHomepageData(); // Fetch homepage content
-const developmentKitchen = await getDevelopmentKitchen(); // Fetch development kitchen data
+let developmentKitchen = null;
+try {
+  developmentKitchen = await getDevelopmentKitchen(); // Fetch development kitchen data
+} catch (error) {
+  // Development Kitchen data not available yet
+}
 
 // Separate featured pubs from regular pubs
 const featuredPubs = pubs.filter(pub => pub.featured);

@@ -131,7 +131,7 @@ const metaDescription = description || footerDescription;
 		
 		<!-- Font fallback - Updated to Lora -->
 		<style>
-			.font-quattrocento, .font-alice {
+			.font-lora, .font-quattrocento, .font-alice {
 				font-family: 'Lora', Georgia, 'Times New Roman', serif;
 			}
 		</style>
@@ -163,7 +163,7 @@ const metaDescription = description || footerDescription;
 			<nav class="container mx-auto px-4 py-4" aria-label="Main navigation">
 				<div class="flex items-center justify-between">
 					<!-- Site Name / Logo -->
-					<a href="/" class="text-[#B79C64] font-quattrocento" aria-label={`${siteName} Home`}>
+					<a href="/" class="text-[#B79C64] font-lora" aria-label={`${siteName} Home`}>
 						{logoUrl ? (
 							<img src={logoUrl} alt={logoAlt} class="h-14 max-w-[300px] object-contain" />
 						) : (
@@ -200,7 +200,7 @@ const metaDescription = description || footerDescription;
 			<div id="mobile-menu" class="fixed inset-0 bg-primary z-50 flex flex-col p-4 hidden" role="dialog" aria-modal="true" aria-label="Mobile navigation">
 				<div class="flex justify-between items-center mb-8">
 					<!-- Mobile Menu Header -->
-					<a href="/" class="text-[#B79C64] font-quattrocento" aria-label={`${siteName} Home`}>
+					<a href="/" class="text-[#B79C64] font-lora" aria-label={`${siteName} Home`}>
 						{logoUrl ? (
 							<img src={logoUrl} alt={logoAlt} class="h-14 max-w-[300px] object-contain" />
 						) : (
@@ -254,7 +254,7 @@ const metaDescription = description || footerDescription;
 								<img src={logoUrl} alt={logoAlt} class="h-14 max-w-xs object-contain mb-4" />
 							</a>
 						) : (
-							<h3 class="text-2xl font-bold mb-4 font-quattrocento">{siteName}</h3>
+							<h3 class="text-2xl font-bold mb-4 font-lora">{siteName}</h3>
 						)}
 						<p class="text-white/80 mb-4">{footerDescription}</p>
 						<!-- Footer Social Links -->
