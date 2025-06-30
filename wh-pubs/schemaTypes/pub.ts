@@ -3,15 +3,16 @@ import { HomeIcon, ImageIcon, LinkIcon, PinIcon, StarIcon, UserIcon } from '@san
 
 export default defineType({
   name: 'pub',
-  title: 'Pub',
+  title: 'Pubs',
   type: 'document',
+  description: 'Manage your pub locations, including details, images, menus, and customization options',
   groups: [
-    { name: 'basic', title: 'Basic Info', default: true, icon: HomeIcon },
-    { name: 'location', title: 'Location & Hours', icon: PinIcon },
-    { name: 'media', title: 'Media', icon: ImageIcon },
-    { name: 'features', title: 'Features & Booking', icon: StarIcon },
-    { name: 'layout', title: 'Layout & Links', icon: LinkIcon },
-    { name: 'content', title: 'Content & SEO', icon: UserIcon },
+    { name: 'basic', title: '1. Basic Info', default: true, icon: HomeIcon },
+    { name: 'location', title: '2. Location & Hours', icon: PinIcon },
+    { name: 'media', title: '3. Images & Media', icon: ImageIcon },
+    { name: 'features', title: '4. Features & Booking', icon: StarIcon },
+    { name: 'layout', title: '5. Website & Social', icon: LinkIcon },
+    { name: 'content', title: '6. Content & SEO', icon: UserIcon },
   ],
   fields: [
     // --- Basic Info Group ---
@@ -148,6 +149,7 @@ export default defineType({
       title: 'Main Listing Image',
       type: 'image',
       group: 'media',
+      description: 'This image appears on the main website pub listings. Recommended size: 800x600px',
       options: {
         hotspot: true,
       },
@@ -156,23 +158,29 @@ export default defineType({
           name: 'alt',
           type: 'string',
           title: 'Alternative text',
-          description: 'Important for SEO and accessibility',
+          description: 'Describe the image for screen readers and SEO (e.g., "The Bull pub exterior on a sunny day")',
           validation: (Rule) => Rule.required(),
         }
       ],
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => Rule.required().error('Please upload a main listing image'),
     }),
     defineField({
       name: 'heroImage',
-      title: 'Hero Image',
+      title: 'Hero Banner Image',
       type: 'image',
       group: 'media',
-      description: 'Large banner image for the top of the pub\'s page.',
+      description: 'Large banner image for the top of your pub\'s page. Recommended size: 1920x800px. This is the first thing visitors see!',
       options: { hotspot: true },
       fields: [
-        { name: 'alt', type: 'string', title: 'Alternative text', validation: Rule => Rule.required() }
+        { 
+          name: 'alt', 
+          type: 'string', 
+          title: 'Alternative text',
+          description: 'Describe this hero image',
+          validation: Rule => Rule.required() 
+        }
       ],
-      validation: Rule => Rule.required()
+      validation: Rule => Rule.required().error('Please upload a hero banner image')
     }),
     defineField({
       name: 'heroOverlayText',
@@ -198,31 +206,37 @@ export default defineType({
     }),
     defineField({
       name: 'gallery',
-      title: 'Image Gallery',
+      title: 'Photo Gallery',
       type: 'array',
       group: 'media',
+      description: 'Add multiple photos to showcase your pub. Drag to reorder. Recommended size: 1200x800px',
       of: [
         {
           type: 'image',
-          options: { hotspot: true },
+          title: 'Gallery Image',
+          options: { 
+            hotspot: true,
+            accept: 'image/*'
+          },
           fields: [
             {
               name: 'alt',
               type: 'string',
               title: 'Alternative text',
-              description: 'Important for SEO and accessibility',
-              validation: (Rule) => Rule.required(),
+              description: 'Brief description of the image (required for accessibility)',
+              validation: (Rule) => Rule.required().error('Please add alt text'),
             },
             {
               name: 'caption',
               type: 'string',
               title: 'Caption',
-              description: 'Optional caption to display with the image'
+              description: 'Optional text shown below the image'
             },
             {
               name: 'category',
               type: 'string',
               title: 'Category',
+              description: 'Helps visitors filter images by type',
               options: {
                 list: [
                   { title: 'Interior', value: 'interior' },
@@ -233,7 +247,8 @@ export default defineType({
                   { title: 'Garden', value: 'garden' },
                   { title: 'Private Dining', value: 'private-dining' }
                 ]
-              }
+              },
+              initialValue: 'interior'
             }
           ],
         },

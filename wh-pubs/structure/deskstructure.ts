@@ -4,17 +4,17 @@ import { CutleryIcon, HomeIcon } from '@sanity/icons'
 
 export const structure = (S: StructureBuilder) =>
   S.list()
-    .title('Content')
+    .title('Content Management')
     .items([
       S.listItem()
-        .title('Homepage')
+        .title('🏠 Homepage Settings')
         .icon(HomeIcon)
         .child(
           S.documentTypeList('homepage')
             .title('Homepage Settings')
         ),
       S.listItem()
-        .title('Development Kitchen')
+        .title('🍴 Development Kitchen')
         .icon(CutleryIcon)
         .child(
           S.documentTypeList('developmentKitchen')
@@ -22,35 +22,44 @@ export const structure = (S: StructureBuilder) =>
         ),
       S.divider(),
       S.listItem()
-        .title('Pubs')
+        .title('🍺 Pubs')
         .child(
           S.documentTypeList('pub')
-            .title('All Pubs')
+            .title('Manage Your Pubs')
+            .child(pubId =>
+              S.document()
+                .schemaType('pub')
+                .documentId(pubId)
+                .views([
+                  S.view.form().title('Edit'),
+                ])
+            )
         ),
+      S.divider(),
       S.listItem()
-        .title('Blog Posts')
+        .title('📝 Blog Posts')
         .icon(FiFileText)
         .child(
           S.documentTypeList('post')
-            .title('All Posts')
+            .title('All Blog Posts')
         ),
       S.listItem()
-        .title('Events')
+        .title('📅 Events')
         .child(
           S.documentTypeList('event')
             .title('All Events')
         ),
       S.listItem()
-        .title('Menus')
+        .title('🍽️ Menus')
         .child(
           S.documentTypeList('menu')
             .title('All Menus')
         ),
       S.listItem()
-        .title('Careers')
+        .title('💼 Careers')
         .child(
           S.documentTypeList('career')
-            .title('All Careers')
+            .title('Job Listings')
         ),
       S.divider(),
       S.listItem()

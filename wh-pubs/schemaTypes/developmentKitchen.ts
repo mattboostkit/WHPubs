@@ -6,11 +6,13 @@ export default defineType({
   title: 'Development Kitchen',
   type: 'document',
   icon: CutleryIcon,
+  description: 'Manage the Development Kitchen page content, including chef profiles, innovations, and supplier information',
   fields: [
     defineField({
       name: 'title',
-      title: 'Title',
+      title: 'Page Title',
       type: 'string',
+      description: 'Main title for the Development Kitchen page',
       validation: (Rule) => Rule.required(),
       initialValue: 'Development Kitchen'
     }),
