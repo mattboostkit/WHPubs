@@ -25,6 +25,33 @@ const pageDescription = "Join the team at WH Pubs. Explore current job opportuni
       We're passionate about great food, drink, and hospitality. If you share our passion, explore the opportunities to join the WH Pubs family below.
     </p>
 
+    <div class="bg-secondary/10 p-8 rounded-lg mb-12 max-w-4xl mx-auto">
+      <h2 class="text-2xl font-bold mb-6 text-center">Why Work at WH Pubs?</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="text-center">
+          <div class="bg-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
+            <span class="text-2xl">🎯</span>
+          </div>
+          <h3 class="font-bold mb-2">Career Growth</h3>
+          <p class="text-sm text-muted-foreground">Clear progression paths and ongoing training opportunities</p>
+        </div>
+        <div class="text-center">
+          <div class="bg-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
+            <span class="text-2xl">💰</span>
+          </div>
+          <h3 class="font-bold mb-2">Great Benefits</h3>
+          <p class="text-sm text-muted-foreground">Competitive pay, staff discounts, and flexible schedules</p>
+        </div>
+        <div class="text-center">
+          <div class="bg-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
+            <span class="text-2xl">👥</span>
+          </div>
+          <h3 class="font-bold mb-2">Amazing Team</h3>
+          <p class="text-sm text-muted-foreground">Work with passionate people who love what they do</p>
+        </div>
+      </div>
+    </div>
+
     {careers && careers.length > 0 ? (
       <div class="space-y-8 max-w-4xl mx-auto">
         {careers.map(job => (

@@ -10,7 +10,8 @@
     "build": "sanity build",
     "deploy": "sanity deploy",
     "deploy-graphql": "sanity graphql deploy",
-    "create-sample-posts": "node scripts/create-sample-posts.js"
+    "create-sample-posts": "node scripts/create-sample-posts.js",
+    "create-sample-content": "node scripts/create-sample-content.js"
   },
   "keywords": [
     "sanity"
