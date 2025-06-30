@@ -5,7 +5,7 @@ import SanityPortableText from '../components/SanityPortableText';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
+import InnovationsTabs from '../components/InnovationsTabs';
 
 const targetPubSlug = import.meta.env.TARGET_PUB_SLUG;
 const targetPub = targetPubSlug ? await getPubBySlug(targetPubSlug) : null;
@@ -150,53 +150,7 @@ const pageDescription = content.seo?.metaDescription || 'Discover the culinary i
     <section class="py-16 bg-muted/50">
       <div class="container mx-auto px-4">
         <h2 class="text-4xl font-bold text-center mb-12">Recent Innovations</h2>
-        <Tabs defaultValue="0" className="w-full">
-          <TabsList className="grid grid-cols-3 md:grid-cols-5 w-full max-w-2xl mx-auto mb-8">
-            {content.innovations.slice(0, 5).map((dish, index) => (
-              <TabsTrigger key={index} value={index.toString()}>
-                {dish.dishName.split(' ').slice(0, 2).join(' ')}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-          {content.innovations.map((dish, index) => (
-            <TabsContent key={index} value={index.toString()}>
-              <div class="grid md:grid-cols-2 gap-8 items-center">
-                {dish.image && (
-                  <div class="aspect-[4/3] relative overflow-hidden rounded-lg">
-                    <img 
-                      src={dish.image.asset.url} 
-                      alt={dish.image.alt}
-                      class="w-full h-full object-cover"
-                    />
-                  </div>
-                )}
-                <div>
-                  <h3 class="text-3xl font-bold mb-2">{dish.dishName}</h3>
-                  {dish.season && (
-                    <Badge variant="secondary" className="mb-4">{dish.season}</Badge>
-                  )}
-                  <p class="text-lg text-muted-foreground mb-6">{dish.description}</p>
-                  {dish.availableAt && dish.availableAt.length > 0 && (
-                    <div>
-                      <p class="font-semibold mb-2">Available at:</p>
-                      <div class="flex flex-wrap gap-2">
-                        {dish.availableAt.map((pub) => (
-                          <a 
-                            key={pub.slug.current} 
-                            href={`/${pub.slug.current}`}
-                            class="text-primary hover:text-primary/80 underline"
-                          >
-                            {pub.name}
-                          </a>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </TabsContent>
-          ))}
-        </Tabs>
+        <InnovationsTabs innovations={content.innovations} client:load />
       </div>
     </section>
   )}

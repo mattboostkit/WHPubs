@@ -50,6 +50,7 @@ export default defineType({
       name: 'image',
       title: 'Event Image',
       type: 'image',
+      description: '🖼️ Ideal size: 1200x800px (3:2 ratio) - Promotional image for the event',
       options: {hotspot: true},
        fields: [
         defineField({ name: 'alt', type: 'string', title: 'Alternative Text', validation: Rule => Rule.required() })

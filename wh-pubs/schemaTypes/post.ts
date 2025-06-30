@@ -40,6 +40,7 @@ export default defineType({
       name: 'mainImage',
       title: 'Main image',
       type: 'image',
+      description: '🖼️ Ideal size: 1200x800px (3:2 ratio) - Featured image for the blog post',
       options: {
         hotspot: true
       }

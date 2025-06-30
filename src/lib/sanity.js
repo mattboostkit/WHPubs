@@ -169,7 +169,8 @@ export async function getPubBySlug(slug) {
       facebookUrl,
       instagramUrl,
       twitterUrl,
-      colorScheme
+      colorScheme,
+      googleMapEmbed->{ iframe }
     }
   `, { slug });
 }

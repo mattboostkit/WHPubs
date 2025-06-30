@@ -30,6 +30,7 @@ export default defineType({
       name: 'heroImage',
       title: 'Hero Image',
       type: 'image',
+      description: '🖼️ Ideal size: 1920x800px (2.4:1 ratio) - Large banner image for page hero',
       options: { hotspot: true },
       fields: [
         {
@@ -74,6 +75,7 @@ export default defineType({
           name: 'image',
           title: 'Chef Image',
           type: 'image',
+          description: '🖼️ Ideal size: 600x600px (1:1 ratio) - Square portrait photo',
           options: { hotspot: true },
           fields: [
             {
@@ -134,6 +136,7 @@ export default defineType({
               name: 'image',
               title: 'Step Image',
               type: 'image',
+              description: '🖼️ Ideal size: 800x600px (4:3 ratio) - Shows process step',
               options: { hotspot: true },
               fields: [
                 {
@@ -191,6 +194,7 @@ export default defineType({
               name: 'image',
               title: 'Dish Image',
               type: 'image',
+              description: '🖼️ Ideal size: 1200x800px (3:2 ratio) - High-quality food photography',
               options: { hotspot: true },
               fields: [
                 {
@@ -223,7 +227,7 @@ export default defineType({
       name: 'gallery',
       title: 'Kitchen Gallery',
       type: 'array',
-      description: 'Images showcasing the development kitchen, team, and processes',
+      description: 'Images showcasing the development kitchen, team, and processes. 🖼️ Ideal size: 1200x800px (3:2 ratio)',
       of: [
         {
           type: 'image',
@@ -294,6 +298,7 @@ export default defineType({
               name: 'logo',
               title: 'Supplier Logo',
               type: 'image',
+              description: '🖼️ Ideal size: 400x200px (2:1 ratio) - Logo on white/transparent background',
               options: { hotspot: true },
               fields: [
                 {
@@ -382,7 +387,7 @@ export default defineType({
           name: 'ogImage',
           title: 'Social Share Image',
           type: 'image',
-          description: 'Recommended: 1200x630px',
+          description: '🖼️ Ideal size: 1200x630px (1.91:1 ratio) - For social media sharing',
           options: { hotspot: true },
         }),
       ]

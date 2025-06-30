@@ -157,6 +157,14 @@ export default defineType({
       group: 'location',
       description: 'e.g., Lunch: Mon-Sat 12pm-3pm, Dinner: Mon-Sat 6pm-9pm, Sun: 12pm-8pm',
     }),
+    defineField({
+      name: 'googleMapEmbed',
+      title: 'Google Map Embed',
+      type: 'reference',
+      to: [{ type: 'googleMapEmbed' }],
+      group: 'location',
+      description: 'Embed a Google Business Profile map for this pub.'
+    }),
 
     // --- Media Group ---
     defineField({
@@ -164,7 +172,7 @@ export default defineType({
       title: 'Main Listing Image',
       type: 'image',
       group: 'media',
-      description: 'This image appears on the main website pub listings. Recommended size: 800x600px',
+      description: 'This image appears on the main website pub listings. 🖼️ Ideal size: 800x600px (4:3 ratio)',
       options: {
         hotspot: true,
       },
@@ -184,7 +192,7 @@ export default defineType({
       title: 'Hero Banner Image',
       type: 'image',
       group: 'media',
-      description: 'Large banner image for the top of your pub\'s page. Recommended size: 1920x800px. This is the first thing visitors see!',
+      description: 'Large banner image for the top of your pub\'s page. 🖼️ Ideal size: 1920x800px (2.4:1 ratio) - This is the first thing visitors see!',
       options: { hotspot: true },
       fields: [
         { 
@@ -224,7 +232,7 @@ export default defineType({
       title: 'Homepage Carousel Images',
       type: 'array',
       group: 'media',
-      description: 'Add up to 6 images for the homepage carousel. Images will rotate automatically. Recommended size: 1920x800px',
+      description: 'Add up to 6 images for the homepage carousel. Images will rotate automatically. 🖼️ Ideal size: 1920x800px (2.4:1 ratio)',
       of: [
         {
           type: 'image',
@@ -269,7 +277,7 @@ export default defineType({
       title: 'Photo Gallery',
       type: 'array',
       group: 'media',
-      description: 'Add multiple photos to showcase your pub. Drag to reorder. Recommended size: 1200x800px',
+      description: 'Add multiple photos to showcase your pub. Drag to reorder. 🖼️ Ideal size: 1200x800px (3:2 ratio)',
       of: [
         {
           type: 'image',
@@ -389,7 +397,7 @@ export default defineType({
       title: 'Pub Logo (Optional Header Override)',
       type: 'image',
       group: 'layout',
-      description: 'Specific logo for this pub. If empty, the main site logo might be used.',
+      description: 'Specific logo for this pub. If empty, the main site logo might be used. 🖼️ Ideal size: 400x120px (3.3:1 ratio) - Logo with transparent background',
       options: { hotspot: true },
       fields: [
         { name: 'alt', type: 'string', title: 'Alternative text' }
@@ -471,6 +479,7 @@ export default defineType({
       title: 'Bio Image (Optional)',
       type: 'image',
       group: 'content',
+      description: '🖼️ Ideal size: 600x600px (1:1 ratio) - Square portrait photo',
       options: { hotspot: true },
       fields: [
         { name: 'alt', type: 'string', title: 'Alternative text', validation: Rule => Rule.required() }
@@ -513,7 +522,7 @@ export default defineType({
       title: 'Social Share Image (og:image)',
       type: 'image',
       group: 'content',
-      description: 'Recommended size: 1200x630 pixels. Overrides default image for social sharing.',
+      description: '🖼️ Ideal size: 1200x630px (1.91:1 ratio) - For social media sharing. Overrides default image.',
       options: { hotspot: true },
       fields: [
         { name: 'alt', type: 'string', title: 'Alt Text (Important!)', validation: Rule => Rule.required() }

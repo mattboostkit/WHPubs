@@ -10,8 +10,9 @@ import career from './career'
 import homepage from './homepage'
 import event from './event'
 import developmentKitchen from './developmentKitchen'
+import googleMapEmbed from './googleMapEmbed'
 
-export const schemaTypes = [homepage, post, author, category, site, pub, menu, career, event, developmentKitchen, blockContent]
+export const schemaTypes = [homepage, post, author, category, site, pub, menu, career, event, developmentKitchen, blockContent, googleMapEmbed]
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [homepage, post, author, category, site, pub, menu, career, event, developmentKitchen, blockContent],
+  types: [homepage, post, author, category, site, pub, menu, career, event, developmentKitchen, blockContent, googleMapEmbed],
 }

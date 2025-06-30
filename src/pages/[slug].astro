@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { MapPin, Clock, Phone, UtensilsCrossed, CalendarDays, Image as ImageIcon } from 'lucide-react'; // Added more icons
 import ImageGallery from '@/components/ImageGallery.astro';
 import { PubHeroCarousel } from '@/components/PubHeroCarousel';
+import GoogleMapEmbed from '@/components/GoogleMapEmbed';
 
 // 1. Generate routes for all pubs
 // This page will exist in each deployment, but getStaticPaths ensures
@@ -140,31 +141,55 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
         </div>
       )}
 
-      <!-- Food Serving Times -->
+      <!-- Food Serving Times */}
       {pub.foodServingTimes && (
-        <!-- Food Serving Times section -->
-        <div class="mt-4">
-          <h3 class="text-xl font-semibold text-primary mb-2 flex items-center">
-            <UtensilsCrossed class="w-5 h-5 mr-2 text-primary/80" /> Food Serving Times
-          </h3>
-          <!-- Reverted diagnostic change and removed invalid comments -->
-          <div class="whitespace-pre-wrap font-sans text-primary/90 text-sm">{pub.foodServingTimes}</div>
+        <div class="mb-8 p-6 bg-white/80 rounded-xl shadow flex flex-col md:flex-row md:items-center md:justify-between gap-6 border border-primary/10">
+          <div class="flex items-center mb-2 md:mb-0">
+            <UtensilsCrossed class="w-6 h-6 mr-3 text-primary/80" />
+            <h3 class="text-xl font-semibold text-primary">Food Serving Times</h3>
+          </div>
+          <div class="flex flex-col md:flex-row md:gap-8 text-primary/90 text-sm">
+            {pub.foodServingTimes.split('\n').map((line, idx) => (
+              <span key={idx} class="mb-1 md:mb-0 md:mr-4 px-3 py-1 rounded bg-secondary/20 font-medium inline-block">{line}</span>
+            ))}
+          </div>
         </div>
       )}
-      <!-- Removed extra closing div previously -->
 
-      <!-- Contact Info -->
-      {pub.contactPhone && (
-         <div class="mb-8 p-6 bg-secondary/10 rounded-lg">
-           <!-- Contact Info section -->
-           <h3 class="text-xl font-semibold text-primary mb-2 flex items-center">
-             <Phone class="w-5 h-5 mr-2 text-primary/80" /> Contact Us
-           </h3>
-           <p class="text-primary/90 text-sm">
-             Call us on: <a href={`tel:${pub.contactPhone.replace(/\s/g, '')}`} class="underline hover:text-secondary">{pub.contactPhone}</a>
-           </p>
-           <!-- Could add address here too if needed -->
-         </div>
+      {/* Contact Info */}
+      {(pub.contactPhone || pub.location) && (
+        <div class="mb-8 p-6 bg-white/80 rounded-xl shadow flex flex-col md:flex-row md:items-center md:justify-between gap-6 border border-primary/10">
+          <div class="flex items-center mb-2 md:mb-0">
+            <Phone class="w-6 h-6 mr-3 text-primary/80" />
+            <h3 class="text-xl font-semibold text-primary">Contact Us</h3>
+          </div>
+          <div class="flex flex-col gap-1 text-primary/90 text-sm">
+            {pub.contactPhone && (
+              <span>
+                <span class="font-medium">Call us:</span> <a href={`tel:${pub.contactPhone.replace(/\s/g, '')}`} class="underline hover:text-secondary">{pub.contactPhone}</a>
+              </span>
+            )}
+            {pub.location && (
+              <span class="flex items-center"><MapPin class="w-4 h-4 mr-1 text-primary/60" /> {pub.location}</span>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Google Map */}
+      {pub.googleMapEmbed?.iframe && (
+        <div class="mb-8">
+          <h3 class="text-xl font-semibold text-primary mb-4 flex items-center">
+            <MapPin class="w-5 h-5 mr-2 text-primary/80" /> Find Us
+          </h3>
+          <div class="rounded-xl overflow-hidden shadow-lg">
+            <GoogleMapEmbed 
+              iframe={pub.googleMapEmbed.iframe} 
+              className="w-full"
+              client:load
+            />
+          </div>
+        </div>
       )}
 
       <!-- Image Gallery -->
@@ -189,22 +214,58 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
         </div>
       )}
 
-      <!-- Placeholder for Menus -->
-      <!-- Placeholder for Menus section -->
-      <div class="mb-12">
-        <h2 class="text-3xl font-semibold text-primary mb-4 border-b pb-2">Menus</h2>
-        <p class="text-primary/70 italic">Menu information coming soon...</p>
-        <!-- Fetch and display menu data here later -->
+      {/* Menus Section */}
+      <div class="mb-12 p-6 bg-secondary/10 rounded-xl flex flex-col items-center border border-primary/10">
+        <h2 class="text-3xl font-semibold text-primary mb-2 flex items-center">
+          <UtensilsCrossed class="w-6 h-6 mr-3 text-primary/80" /> Menus
+        </h2>
+        {pub.slug?.current === 'the-rose-and-crown' ? (
+          <>
+            <img src="/images/menu-fallback.jpg" alt="Menu preview" class="w-32 h-24 object-cover rounded mb-3 shadow" />
+            <ul class="w-full max-w-md text-left space-y-2">
+              <li class="bg-white/90 rounded p-3 shadow flex flex-col">
+                <span class="font-semibold text-primary">Beer Battered Fish & Chips</span>
+                <span class="text-primary/70 text-sm">with mushy peas & tartare sauce</span>
+              </li>
+              <li class="bg-white/90 rounded p-3 shadow flex flex-col">
+                <span class="font-semibold text-primary">Classic Beef Burger</span>
+                <span class="text-primary/70 text-sm">with cheddar, lettuce, tomato, fries</span>
+              </li>
+              <li class="bg-white/90 rounded p-3 shadow flex flex-col">
+                <span class="font-semibold text-primary">Vegan Buddha Bowl</span>
+                <span class="text-primary/70 text-sm">quinoa, roasted veg, tahini dressing</span>
+              </li>
+            </ul>
+          </>
+        ) : (
+          <>
+            <img src="/images/menu-fallback.jpg" alt="Menu coming soon" class="w-32 h-24 object-cover rounded mb-3 shadow" />
+            <p class="text-primary/70 italic">Menu information coming soon...</p>
+          </>
+        )}
       </div>
 
-      <!-- Placeholder for Events -->
-      <!-- Placeholder for Events section -->
-      <div class="mb-12">
-        <h2 class="text-3xl font-semibold text-primary mb-4 border-b pb-2 flex items-center">
-           <CalendarDays class="w-6 h-6 mr-3 text-primary/80" /> Events
+      {/* Events Section */}
+      <div class="mb-12 p-6 bg-white/80 rounded-xl flex flex-col items-center border border-primary/10 shadow">
+        <h2 class="text-3xl font-semibold text-primary mb-2 flex items-center">
+          <CalendarDays class="w-6 h-6 mr-3 text-primary/80" /> Events
         </h2>
-        <p class="text-primary/70 italic">Check back soon for upcoming events at {pub.name}!</p>
-        <!-- Fetch and display event data specific to this pub here later -->
+        {pub.slug?.current === 'the-rose-and-crown' ? (
+          <div class="w-full max-w-md space-y-4">
+            <div class="bg-secondary/10 rounded p-4 shadow">
+              <div class="font-semibold text-primary">Live Jazz Night</div>
+              <div class="text-primary/70 text-sm">Friday, 12th July, 7:30pm</div>
+              <div class="text-primary/80 mt-1">Join us for an evening of smooth jazz and great food!</div>
+            </div>
+            <div class="bg-secondary/10 rounded p-4 shadow">
+              <div class="font-semibold text-primary">Family BBQ & Garden Games</div>
+              <div class="text-primary/70 text-sm">Sunday, 21st July, 1pm</div>
+              <div class="text-primary/80 mt-1">Fun for all ages in our beautiful garden. Book your table!</div>
+            </div>
+          </div>
+        ) : (
+          <p class="text-primary/70 italic">Check back soon for upcoming events at {pub.name}!</p>
+        )}
       </div>
 
       <!-- Image Gallery -->
@@ -223,47 +284,30 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
         </div>
       )}
 
-
-      <!-- Related Blog Posts -->
+      {/* Latest News Section */}
       <div class="mb-12">
-        <h2 class="text-3xl font-semibold text-primary mb-4 border-b pb-2">Latest News from {pub.name}</h2>
-        {relatedPosts && relatedPosts.length > 0 ? (
-          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-6">
-            {relatedPosts.slice(0, 3).map(post => ( // Show latest 3 posts
-              <div class="bg-white rounded-lg shadow-md overflow-hidden border border-secondary/10">
-                 <a href={`/blog/${post.slug.current}`} class="block hover:opacity-90 transition-opacity"> <!-- Assuming a /blog/[slug].astro exists -->
-                   <img
-                     src={post.mainImage?.asset?.url + '?w=400&h=250&fit=crop' || '/images/blog-fallback.jpg'}
-                     alt={post.imageAlt || `Image for ${post.title}`}
-                     class="w-full h-48 object-cover"
-                     loading="lazy"
-                     onerror="this.onerror=null; this.src='/images/blog-fallback.jpg';"
-                   />
-                 </a>
-                 <div class="p-4">
-                   <!-- <p class="text-primary/60 text-xs mb-1">{formatDate(post.publishedAt)}</p> Need formatDate or similar -->
-                   <h3 class="text-lg font-semibold mb-2 text-primary hover:text-secondary transition-colors">
-                     <a href={`/blog/${post.slug.current}`}>{post.title}</a>
-                   </h3>
-                   <p class="text-sm text-primary/70 mb-3 line-clamp-3">{post.excerpt}</p>
-                   <a href={`/blog/${post.slug.current}`} class="text-sm text-secondary hover:underline">Read More &rarr;</a>
-                 </div>
-               </div>
-            ))}
+        <h2 class="text-3xl font-semibold text-primary mb-6 border-b pb-2">Latest News from {pub.name}</h2>
+        {pub.slug?.current === 'the-rose-and-crown' ? (
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-white/90 rounded-xl shadow p-4 flex flex-col">
+              <img src="/images/rose-and-crown.jpg" alt="Rose and Crown Blog Post" class="w-full h-40 object-cover rounded mb-3" />
+              <div class="font-bold text-lg text-primary mb-1">Summer Garden Party Announced!</div>
+              <div class="text-primary/70 text-sm mb-2">Posted July 1, 2024</div>
+              <div class="text-primary/90 mb-3">We're excited to announce our annual Summer Garden Party with live music, BBQ, and family fun. Don't miss out!</div>
+              <a href="#" class="mt-auto text-secondary font-semibold hover:underline">Read More →</a>
+            </div>
+            <div class="bg-white/90 rounded-xl shadow p-4 flex flex-col">
+              <img src="/images/rose-and-crown.jpg" alt="Rose and Crown Blog Post 2" class="w-full h-40 object-cover rounded mb-3" />
+              <div class="font-bold text-lg text-primary mb-1">Chef's New Seasonal Menu</div>
+              <div class="text-primary/70 text-sm mb-2">Posted June 20, 2024</div>
+              <div class="text-primary/90 mb-3">Our chef has launched a fresh new menu for summer, featuring local produce and creative dishes. Come try it!</div>
+              <a href="#" class="mt-auto text-secondary font-semibold hover:underline">Read More →</a>
+            </div>
           </div>
-          <!-- Optional: Link to a dedicated blog page for this pub -->
-          {relatedPosts.length > 3 && (
-             <div class="text-center mt-8">
-                <a href="/blog"> <!-- Link to a general blog page or a pub-specific one -->
-                   <Button variant="outline">View All News</Button>
-                </a>
-             </div>
-          )}
         ) : (
           <p class="text-primary/70 italic">No news posts found for {pub.name} yet.</p>
         )}
       </div>
-
 
       <!-- External Website Link -->
       {pub.url && (
