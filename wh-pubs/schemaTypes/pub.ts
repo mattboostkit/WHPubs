@@ -71,8 +71,16 @@ export default defineType({
 
     // --- Location & Hours Group ---
     defineField({
+      name: 'location',
+      title: 'Location',
+      type: 'string',
+      group: 'location',
+      description: 'e.g., Chiddingstone Causeway, Kent. Used for display and filtering.',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: 'locationName',
-      title: 'Location Name',
+      title: 'Location Name (Area)',
       type: 'string',
       group: 'location',
       description: 'e.g., Town, Village, or Area name. Used for filtering/display.',
@@ -119,8 +127,15 @@ export default defineType({
       description: 'Direct link to the Google Maps location for an embed or link.',
     }),
     defineField({
+      name: 'openingHours',
+      title: 'Opening Hours (Simple)',
+      type: 'string',
+      group: 'location',
+      description: 'e.g., Mon-Fri: 12pm - 11pm, Sat: 12pm - 12am, Sun: 12pm - 10pm',
+    }),
+    defineField({
       name: 'openingHoursStructured',
-      title: 'Opening Hours',
+      title: 'Opening Hours (Detailed)',
       type: 'object',
       group: 'location',
       description: 'Enter opening and closing times for each day. Leave blank if closed.',
@@ -458,6 +473,184 @@ export default defineType({
       fields: [
         { name: 'alt', type: 'string', title: 'Alt Text (Important!)', validation: Rule => Rule.required() }
       ]
+    }),
+
+    // --- Additional Features Group ---
+    defineField({
+      name: 'specialFeatures',
+      title: 'Special Features',
+      type: 'array',
+      group: 'features',
+      of: [{
+        type: 'object',
+        fields: [
+          { name: 'title', type: 'string', title: 'Feature Title', description: 'e.g., Private Dining Room' },
+          { name: 'description', type: 'text', title: 'Description', rows: 3 },
+          { name: 'capacity', type: 'number', title: 'Capacity (if applicable)' },
+          { name: 'image', type: 'image', title: 'Feature Image', options: { hotspot: true } }
+        ]
+      }],
+      description: 'Add special features like function rooms, beer gardens, play areas, etc.'
+    }),
+    defineField({
+      name: 'accessibilityInfo',
+      title: 'Accessibility Information',
+      type: 'text',
+      group: 'features',
+      rows: 4,
+      description: 'Details about wheelchair access, disabled facilities, etc.'
+    }),
+    defineField({
+      name: 'parkingInfo',
+      title: 'Parking Information',
+      type: 'text',
+      group: 'features',
+      rows: 3,
+      description: 'Details about on-site parking, nearby parking options, etc.'
+    }),
+    defineField({
+      name: 'paymentMethods',
+      title: 'Accepted Payment Methods',
+      type: 'array',
+      group: 'features',
+      of: [{ type: 'string' }],
+      options: {
+        list: [
+          { title: 'Cash', value: 'cash' },
+          { title: 'Credit/Debit Cards', value: 'cards' },
+          { title: 'Contactless', value: 'contactless' },
+          { title: 'Apple Pay', value: 'applepay' },
+          { title: 'Google Pay', value: 'googlepay' },
+          { title: 'Gift Vouchers', value: 'vouchers' }
+        ]
+      }
+    }),
+
+    // --- History & Story ---
+    defineField({
+      name: 'history',
+      title: 'Pub History',
+      type: 'object',
+      group: 'content',
+      fields: [
+        { name: 'established', type: 'string', title: 'Established Date', description: 'e.g., 1834 or 18th Century' },
+        { name: 'story', type: 'blockContent', title: 'Historical Story' },
+        { name: 'historicalImages', type: 'array', of: [{ type: 'image', options: { hotspot: true } }], title: 'Historical Photos' }
+      ],
+      description: 'Add the pub\'s history and heritage story'
+    }),
+
+    // --- Special Offers & Promotions ---
+    defineField({
+      name: 'currentOffers',
+      title: 'Current Offers & Promotions',
+      type: 'array',
+      group: 'content',
+      of: [{
+        type: 'object',
+        fields: [
+          { name: 'title', type: 'string', title: 'Offer Title', validation: Rule => Rule.required() },
+          { name: 'description', type: 'text', title: 'Offer Description', rows: 3 },
+          { name: 'validFrom', type: 'date', title: 'Valid From' },
+          { name: 'validUntil', type: 'date', title: 'Valid Until' },
+          { name: 'termsConditions', type: 'text', title: 'Terms & Conditions', rows: 2 },
+          { name: 'offerImage', type: 'image', title: 'Offer Image', options: { hotspot: true } }
+        ],
+        preview: {
+          select: {
+            title: 'title',
+            subtitle: 'validUntil',
+            media: 'offerImage'
+          },
+          prepare(selection) {
+            const { title, subtitle } = selection;
+            return {
+              ...selection,
+              subtitle: subtitle ? `Valid until ${subtitle}` : 'Ongoing'
+            }
+          }
+        }
+      }],
+      description: 'Add special offers, happy hour details, loyalty programs, etc.'
+    }),
+
+    // --- Reviews & Awards ---
+    defineField({
+      name: 'awards',
+      title: 'Awards & Accolades',
+      type: 'array',
+      group: 'content',
+      of: [{
+        type: 'object',
+        fields: [
+          { name: 'title', type: 'string', title: 'Award Title' },
+          { name: 'organization', type: 'string', title: 'Awarding Organization' },
+          { name: 'year', type: 'string', title: 'Year' },
+          { name: 'logo', type: 'image', title: 'Award Logo/Badge', options: { hotspot: true } }
+        ]
+      }]
+    }),
+    defineField({
+      name: 'reviewLinks',
+      title: 'Review Platform Links',
+      type: 'object',
+      group: 'layout',
+      fields: [
+        { name: 'tripadvisor', type: 'url', title: 'TripAdvisor URL' },
+        { name: 'google', type: 'url', title: 'Google Business URL' },
+        { name: 'yelp', type: 'url', title: 'Yelp URL' },
+        { name: 'opentable', type: 'url', title: 'OpenTable URL' }
+      ]
+    }),
+
+    // --- Dietary & Allergen Info ---
+    defineField({
+      name: 'dietaryOptions',
+      title: 'Dietary Options Available',
+      type: 'array',
+      group: 'features',
+      of: [{ type: 'string' }],
+      options: {
+        list: [
+          { title: 'Vegetarian Options', value: 'vegetarian' },
+          { title: 'Vegan Options', value: 'vegan' },
+          { title: 'Gluten-Free Options', value: 'glutenfree' },
+          { title: 'Dairy-Free Options', value: 'dairyfree' },
+          { title: 'Halal Options', value: 'halal' },
+          { title: 'Kids Menu', value: 'kids' }
+        ]
+      }
+    }),
+    defineField({
+      name: 'allergenInfo',
+      title: 'Allergen Information',
+      type: 'text',
+      group: 'features',
+      rows: 3,
+      description: 'General statement about allergen handling and where to find detailed information'
+    }),
+
+    // --- Contact Preferences ---
+    defineField({
+      name: 'preferredContactMethod',
+      title: 'Preferred Contact Method',
+      type: 'string',
+      group: 'location',
+      options: {
+        list: [
+          { title: 'Phone', value: 'phone' },
+          { title: 'Email', value: 'email' },
+          { title: 'Online Booking', value: 'booking' },
+          { title: 'Social Media', value: 'social' }
+        ]
+      }
+    }),
+    defineField({
+      name: 'whatsappNumber',
+      title: 'WhatsApp Number',
+      type: 'string',
+      group: 'location',
+      description: 'WhatsApp number for reservations (if different from main phone)'
     }),
   ],
   preview: {
