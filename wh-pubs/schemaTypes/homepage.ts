@@ -17,21 +17,39 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'heroImages',
+      title: 'Hero Carousel Images',
+      type: 'array',
+      description: 'Add up to 4 images for the homepage carousel. Images will auto-rotate. Recommended size: 1920x1080px',
+      of: [{
+        type: 'image',
+        options: {hotspot: true},
+        fields: [
+          defineField({ 
+            name: 'alt', 
+            type: 'string', 
+            title: 'Alternative Text',
+            description: 'Describe the image for screen readers',
+            validation: Rule => Rule.required().error('Alt text is required for accessibility') 
+          })
+        ]
+      }],
+      validation: (Rule) => Rule.required().min(1).max(4).error('Please upload 1-4 hero images'),
+    }),
+    // Keep old single image for backwards compatibility
+    defineField({
       name: 'heroImage',
-      title: 'Hero Background Image',
+      title: 'Hero Background Image (Legacy - Use Hero Carousel Images instead)',
       type: 'image',
-      description: 'Large background image for the homepage hero section. Recommended size: 1920x1080px',
+      hidden: true,
       options: {hotspot: true},
       fields: [
         defineField({ 
           name: 'alt', 
           type: 'string', 
           title: 'Alternative Text',
-          description: 'Describe the image for screen readers',
-          validation: Rule => Rule.required().error('Alt text is required for accessibility') 
         })
       ],
-      validation: (Rule) => Rule.required().error('Please upload a hero image'),
     }),
     defineField({
       name: 'heroTitle',

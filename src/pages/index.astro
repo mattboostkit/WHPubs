@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { MapPin, Clock, Phone, Music, ChefHat, Beer, ExternalLink, Star, Utensils } from 'lucide-react';
 import { getPosts, getPubs, getHomepageData, getDevelopmentKitchen } from '../lib/sanity';
+import { HeroCarousel } from '@/components/HeroCarousel';
 // This page always renders the main hub content.
 
 // Fetch data needed for the hub page
@@ -35,57 +36,17 @@ const formatDate = (dateString) => {
 {/* Use homepage title from Sanity if available */}
 <Layout title={homepageData?.title || "WH Pubs - Traditional British Pubs"}>
   <main>
-    {/* Hero Section */}
-    <div class="relative h-[90vh]">
-      <div class="absolute inset-0">
-        {/* Use Hero Image from Sanity */}
-        <img
-          src={homepageData?.heroImage?.asset?.url || '/images/hero-fallback.jpg'}
-          alt={homepageData?.heroImage?.alt || 'WH Pubs Hero Image'}
-          class="w-full h-full object-cover"
-          onerror="this.onerror=null; this.src='/images/hero-fallback.jpg';"
-          loading="eager" {/* Load hero image eagerly */}
-        />
-        <div class="absolute inset-0 bg-black/50"></div>
-      </div>
-      <div class="relative h-full flex items-center justify-center">
-        <div class="text-center text-[#B79C64] px-4">
-          {/* Use Hero Title/Subtitle from Sanity */}
-          <h1 class="text-5xl md:text-7xl font-bold mb-6">{homepageData?.heroTitle || 'Traditional British Hospitality in the South East of England'}</h1>
-          <p class="text-xl md:text-2xl mb-8 text-secondary">{homepageData?.heroSubtitle || 'Traditional British Hospitality...'}</p>
-          <div class="flex gap-4 justify-center">
-            {/* Use Button Text/Links from Sanity */}
-            {homepageData?.heroButton1Text && homepageData?.heroButton1Link && (
-              <Button
-                variant="default"
-                size="lg"
-                class="bg-secondary hover:bg-secondary/90 text-primary font-semibold"
-                id={homepageData.heroButton1Link.startsWith('/#') ? 'scroll-to-pubs' : undefined} /* Keep scroll ID only if it's an anchor link */
-                onclick={homepageData.heroButton1Link.startsWith('/#') ? undefined : `window.location.href='${homepageData.heroButton1Link}'`} /* Handle navigation */
-              >
-                {homepageData.heroButton1Text}
-              </Button>
-            )}
-             {homepageData?.heroButton2Text && homepageData?.heroButton2Link && (
-               <a href={homepageData.heroButton2Link}>
-                 <Button variant="outline" size="lg" class="bg-transparent text-[#B79C64] border-[#B79C64] hover:bg-[#B79C64] hover:text-primary">
-                   {homepageData.heroButton2Text}
-                 </Button>
-               </a>
-             )}
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <script is:inline>
-      document.getElementById('scroll-to-pubs')?.addEventListener('click', () => {
-        const section = document.getElementById('establishments');
-        if (section) {
-          section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      });
-    </script>
+    {/* Hero Section with Carousel */}
+    <HeroCarousel 
+      images={homepageData?.heroImages || (homepageData?.heroImage ? [homepageData.heroImage] : [])}
+      heroTitle={homepageData?.heroTitle || 'Traditional British Hospitality in the South East of England'}
+      heroSubtitle={homepageData?.heroSubtitle || 'Traditional British Hospitality...'}
+      heroButton1Text={homepageData?.heroButton1Text}
+      heroButton1Link={homepageData?.heroButton1Link}
+      heroButton2Text={homepageData?.heroButton2Text}
+      heroButton2Link={homepageData?.heroButton2Link}
+      client:load
+    />
 
     {/* Featured Pubs Section */}
     {featuredPubs.length > 0 && (

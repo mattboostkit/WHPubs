@@ -1,6 +1,6 @@
 import { StructureBuilder } from 'sanity/desk'
 import { FiHome, FiFileText, FiTag, FiUser, FiGlobe } from 'react-icons/fi'
-import { CutleryIcon, HomeIcon } from '@sanity/icons'
+import { LemonIcon, HomeIcon } from '@sanity/icons'
 
 export const structure = (S: StructureBuilder) =>
   S.list()
@@ -15,7 +15,7 @@ export const structure = (S: StructureBuilder) =>
         ),
       S.listItem()
         .title('🍴 Development Kitchen')
-        .icon(CutleryIcon)
+        .icon(LemonIcon)
         .child(
           S.documentTypeList('developmentKitchen')
             .title('Development Kitchen')

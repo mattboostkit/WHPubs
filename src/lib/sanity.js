@@ -261,6 +261,7 @@ export async function getHomepageData() {
   return client.fetch(`
     *[_type == "homepage"][0] {
       title,
+      heroImages[] { asset->{ _id, url }, alt },
       heroImage { asset->{ _id, url }, alt },
       heroTitle,
       heroSubtitle,

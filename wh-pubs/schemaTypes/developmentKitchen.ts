@@ -1,11 +1,11 @@
 import { defineField, defineType } from 'sanity'
-import { CutleryIcon } from '@sanity/icons'
+import { LemonIcon } from '@sanity/icons'
 
 export default defineType({
   name: 'developmentKitchen',
   title: 'Development Kitchen',
   type: 'document',
-  icon: CutleryIcon,
+  icon: LemonIcon,
   description: 'Manage the Development Kitchen page content, including chef profiles, innovations, and supplier information',
   fields: [
     defineField({
