@@ -102,26 +102,52 @@ async function fixDevelopmentKitchenKeys() {
       patch.set({ suppliers: fixedSuppliers });
     }
 
-    // Fix seasonalFocus description blocks
-    if (doc.seasonalFocus?.description && Array.isArray(doc.seasonalFocus.description)) {
-      const fixedDescription = doc.seasonalFocus.description.map(block => ({
-        ...block,
-        _key: block._key || generateKey(),
-        children: block.children?.map(child => ({
-          ...child,
-          _key: child._key || generateKey()
-        })) || []
-      }));
-      patch.set({ 'seasonalFocus.description': fixedDescription });
+    // Update seasonal focus to Summer and fix keys
+    if (doc.seasonalFocus) {
+      const summerDescription = [
+        {
+          _type: 'block',
+          _key: generateKey(),
+          style: 'normal',
+          children: [
+            {
+              _type: 'span',
+              _key: generateKey(),
+              text: 'Our summer menu celebrates the abundance of British produce at its peak. From heritage tomatoes and fresh herbs to summer berries and stone fruits, we\'re showcasing the vibrant flavours of the season.'
+            }
+          ]
+        },
+        {
+          _type: 'block',
+          _key: generateKey(),
+          style: 'normal',
+          children: [
+            {
+              _type: 'span',
+              _key: generateKey(),
+              text: 'Enjoy lighter dishes perfect for warm evenings in our beer gardens, featuring locally sourced salads, grilled meats, and refreshing desserts that capture the essence of a British summer.'
+            }
+          ]
+        }
+      ];
+      
+      patch.set({ 
+        'seasonalFocus.season': 'Summer 2025',
+        'seasonalFocus.theme': 'Fresh Summer Flavours',
+        'seasonalFocus.description': summerDescription
+      });
     }
 
-    // Fix featuredIngredients array
-    if (doc.seasonalFocus?.featuredIngredients && Array.isArray(doc.seasonalFocus.featuredIngredients)) {
-      const fixedIngredients = doc.seasonalFocus.featuredIngredients.map(item => 
-        typeof item === 'string' ? item : { ...item, _key: item._key || generateKey() }
-      );
-      patch.set({ 'seasonalFocus.featuredIngredients': fixedIngredients });
-    }
+    // Update featured ingredients to summer items
+    const summerIngredients = [
+      'Heritage Tomatoes',
+      'British Strawberries',
+      'Fresh Basil & Herbs',
+      'Summer Courgettes',
+      'English Asparagus',
+      'New Potatoes'
+    ];
+    patch.set({ 'seasonalFocus.featuredIngredients': summerIngredients });
 
     // Commit the patch
     const result = await patch.commit();
