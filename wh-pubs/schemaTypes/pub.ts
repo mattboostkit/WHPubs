@@ -172,7 +172,7 @@ export default defineType({
       title: 'Main Listing Image',
       type: 'image',
       group: 'media',
-      description: 'This image appears on the main website pub listings. 🖼️ Ideal size: 800x600px (4:3 ratio)',
+      description: 'Homepage thumbnail image. 🖼️ REQUIRED SIZE: 828x605px EXACTLY',
       options: {
         hotspot: true,
       },
@@ -192,7 +192,7 @@ export default defineType({
       title: 'Hero Banner Image',
       type: 'image',
       group: 'media',
-      description: 'Large banner image for the top of your pub\'s page. 🖼️ Ideal size: 1920x800px (2.4:1 ratio) - This is the first thing visitors see!',
+      description: 'Main pub page hero banner. 🖼️ REQUIRED SIZE: 1920x800px EXACTLY',
       options: { hotspot: true },
       fields: [
         { 
@@ -277,7 +277,7 @@ export default defineType({
       title: 'Photo Gallery',
       type: 'array',
       group: 'media',
-      description: 'Add multiple photos to showcase your pub. Drag to reorder. 🖼️ Ideal size: 1200x800px (3:2 ratio)',
+      description: 'Gallery photos of your pub. 🖼️ REQUIRED SIZE: 1000x1000px SQUARE',
       of: [
         {
           type: 'image',

@@ -30,7 +30,7 @@ export default defineType({
       name: 'heroImage',
       title: 'Hero Image',
       type: 'image',
-      description: '🖼️ Ideal size: 1920x800px (2.4:1 ratio) - Large banner image for page hero',
+      description: '🖼️ REQUIRED SIZE: 1920x800px EXACTLY',
       options: { hotspot: true },
       fields: [
         {
@@ -75,7 +75,7 @@ export default defineType({
           name: 'image',
           title: 'Chef Image',
           type: 'image',
-          description: '🖼️ Ideal size: 600x600px (1:1 ratio) - Square portrait photo',
+          description: '🖼️ REQUIRED SIZE: 800x1000px PORTRAIT - Frame from chest up with space above head',
           options: { hotspot: true },
           fields: [
             {

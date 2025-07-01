@@ -30,7 +30,7 @@ export default defineType({
       name: 'heroImage',
       title: 'Hero Image',
       type: 'image',
-      description: '🖼️ Ideal size: 1920x600px (3.2:1 ratio) - Hero banner for the top of the page',
+      description: '🖼️ REQUIRED SIZE: 1920x768px EXACTLY - Hero banner displays at 40% viewport height',
       options: { hotspot: true },
       fields: [
         {
