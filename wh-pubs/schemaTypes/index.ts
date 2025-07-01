@@ -11,8 +11,9 @@ import homepage from './homepage'
 import event from './event'
 import developmentKitchen from './developmentKitchen'
 import googleMapEmbed from './googleMapEmbed'
+import pageSettings from './pageSettings'
 
-export const schemaTypes = [homepage, post, author, category, site, pub, menu, career, event, developmentKitchen, blockContent, googleMapEmbed]
+export const schemaTypes = [homepage, post, author, category, site, pub, menu, career, event, developmentKitchen, blockContent, googleMapEmbed, pageSettings]
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [homepage, post, author, category, site, pub, menu, career, event, developmentKitchen, blockContent, googleMapEmbed],
+  types: [homepage, post, author, category, site, pub, menu, career, event, developmentKitchen, blockContent, googleMapEmbed, pageSettings],
 }

@@ -1,17 +1,35 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageHeader from '../components/PageHeader.astro';
+import PageHero from '../components/PageHero.astro';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
+import { getPageSettings } from '../lib/sanity';
+
+// Fetch page settings for hero image
+const pageSettings = await getPageSettings('contact');
 ---
 
 <Layout title="Contact - WH Pubs">
-	<main class="pt-24">
-		<PageHeader 
-			title="Contact Us"
-			subtitle="Get in touch with us for bookings, enquiries, or feedback"
+	{/* Hero Section */}
+	{pageSettings ? (
+		<PageHero 
+			image={pageSettings.heroImage}
+			title={pageSettings.heroTitle || 'Contact Us'}
+			subtitle={pageSettings.heroSubtitle || 'Get in touch with us for bookings, enquiries, or feedback'}
+			fallbackImage="/images/contact-hero.jpg"
 		/>
+	) : (
+		<main class="pt-24">
+			<PageHeader 
+				title="Contact Us"
+				subtitle="Get in touch with us for bookings, enquiries, or feedback"
+			/>
+		</main>
+	)}
+	
+	<main>
 		
 		<section class="py-16 bg-muted/50">
 			<div class="container mx-auto px-4">

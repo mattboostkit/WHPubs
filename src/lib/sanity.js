@@ -366,4 +366,16 @@ export async function getDevelopmentKitchen() {
   `);
 }
 
+// Helper function to get page settings
+export async function getPageSettings(pageName) {
+  return client.fetch(`
+    *[_type == "pageSettings" && pageName == $pageName][0] {
+      pageName,
+      heroImage { asset->{ _id, url }, alt },
+      heroTitle,
+      heroSubtitle
+    }
+  `, { pageName });
+}
+
 // Note: getPubBySlug remains useful for the dynamic page generation

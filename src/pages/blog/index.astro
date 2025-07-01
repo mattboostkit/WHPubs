@@ -1,11 +1,12 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import PageHeader from '../../components/PageHeader.astro';
+import PageHero from '../../components/PageHero.astro';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Calendar, Clock } from 'lucide-react';
-import { getPosts, getPubBySlug } from '../../lib/sanity'; // Use getPosts and getPubBySlug
+import { getPosts, getPubBySlug, getPageSettings } from '../../lib/sanity'; // Use getPosts and getPubBySlug
 
 // Determine the target pub for this build/request
 const targetPubSlug = import.meta.env.TARGET_PUB_SLUG;
@@ -16,6 +17,9 @@ const pubData = targetPubSlug ? await getPubBySlug(targetPubSlug) : null;
 // Fetch posts: only for the target pub if specified, otherwise only general posts
 const posts = await getPosts(targetPubSlug);
 
+// Fetch page settings for hero image
+const pageSettings = await getPageSettings('blog');
+
 // Determine page title
 const pageTitle = pubData ? `${pubData.name} - Blog` : "Blog - WH Pubs";
 const pageDescription = pubData ? `Latest news from ${pubData.name}.` : "Latest news from WH Pubs.";
@@ -25,7 +29,17 @@ const blogFallbackImage = '/images/blog-fallback.jpg';
 ---
 
 <Layout title={pageTitle} description={pageDescription} pub={pubData}>
-	<main class="pt-24 bg-secondary/10 min-h-screen">
+	{/* Hero Section */}
+	{pageSettings && (
+		<PageHero 
+			image={pageSettings.heroImage}
+			title={pageSettings.heroTitle || (pubData ? `Latest News from ${pubData.name}` : 'Latest News & Updates')}
+			subtitle={pageSettings.heroSubtitle}
+			fallbackImage="/images/blog-hero.jpg"
+		/>
+	)}
+	
+	<main class="bg-secondary/10 min-h-screen py-12">
 		<!-- Image fallback script -->
 		<script is:inline>
 			document.addEventListener('DOMContentLoaded', function() {
@@ -50,9 +64,11 @@ const blogFallbackImage = '/images/blog-fallback.jpg';
 		</script>
 		
 		<div class="container mx-auto px-4">
-			<h1 class="text-5xl font-bold text-center mb-12 text-primary">
-				{pubData ? `Latest News from ${pubData.name}` : 'Latest News & Updates'}
-			</h1>
+			{!pageSettings && (
+				<h1 class="text-5xl font-bold text-center mb-12 text-primary">
+					{pubData ? `Latest News from ${pubData.name}` : 'Latest News & Updates'}
+				</h1>
+			)}
 			
 			<div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
 				{posts && posts.length > 0 ? (

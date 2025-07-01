@@ -30,7 +30,10 @@
       "Bash(mv:*)",
       "Bash(claude mcp add:*)",
       "Bash(claude mcp:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "WebFetch(domain:docs.anthropic.com)",
+      "Bash(npm run sanity:query:*)",
+      "Bash(touch:*)"
     ],
     "deny": []
   }

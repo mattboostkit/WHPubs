@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { MapPin, Clock, Phone, Music, ChefHat, Beer, ExternalLink, Star, Utensils } from 'lucide-react';
+import { MapPin, Clock, Phone, Music, ChefHat, Beer, ExternalLink, Star, Utensils, Dog, TreePine, Wheat } from 'lucide-react';
 import { getPosts, getPubs, getHomepageData, getDevelopmentKitchen } from '../lib/sanity';
 import { HeroCarousel } from '@/components/HeroCarousel';
 import { getPubUrl, isExternalUrl } from '@/lib/pub-urls';
@@ -21,9 +21,8 @@ try {
 }
 
 
-// Separate featured pubs from regular pubs
-const featuredPubs = pubs.filter(pub => pub.featured);
-const regularPubs = pubs.filter(pub => !pub.featured);
+// All pubs are equal - no featured pubs
+const allPubs = pubs;
 
 // Format the date for display
 const formatDate = (dateString) => {
@@ -50,93 +49,24 @@ const formatDate = (dateString) => {
       client:load
     />
 
-    {/* Featured Pubs Section */}
-    {featuredPubs.length > 0 && (
-      <section class="py-20 bg-gradient-to-b from-secondary/20 to-secondary/5">
-        <div class="container mx-auto px-4">
-          <div class="text-center mb-12">
-            <Badge variant="outline" className="mb-4">Featured</Badge>
-            <h2 class="text-4xl font-bold text-primary">Signature Destinations</h2>
-            <p class="text-lg text-muted-foreground mt-4 max-w-2xl mx-auto">
-              Experience the finest in traditional British hospitality at our flagship establishments
-            </p>
-          </div>
-          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredPubs.map(pub => (
-              <Card key={pub.slug.current} className="overflow-hidden hover:shadow-xl transition-shadow">
-                <div class="relative h-64 overflow-hidden">
-                  <img
-                    src={pub.heroImage?.asset?.url || pub.image?.asset?.url || '/images/hero-fallback.jpg'}
-                    alt={pub.heroImage?.alt || pub.image?.alt || `Image of ${pub.name}`}
-                    class="w-full h-full object-cover transition-transform hover:scale-105"
-                    onerror="this.onerror=null; this.src='/images/hero-fallback.jpg';"
-                  />
-                  <div class="absolute top-4 right-4">
-                    <Badge className="bg-primary/90 text-secondary">
-                      <Star className="w-3 h-3 mr-1" />
-                      Featured
-                    </Badge>
-                  </div>
-                </div>
-                <CardHeader>
-                  <CardTitle className="text-2xl">{pub.name}</CardTitle>
-                  <div class="flex items-center text-muted-foreground">
-                    <MapPin className="w-4 h-4 mr-2" />
-                    <span>{pub.locationName || pub.location}</span>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="mb-4">{pub.description}</CardDescription>
-                  {pub.amenities && pub.amenities.length > 0 && (
-                    <div class="flex flex-wrap gap-2 mb-4">
-                      {pub.amenities.slice(0, 3).map(amenity => (
-                        <Badge key={amenity} variant="secondary" className="text-xs">
-                          {amenity}
-                        </Badge>
-                      ))}
-                    </div>
-                  )}
-                  <div class="flex gap-2">
-                    {pub.externalDomain ? (
-                      <a href={`https://${pub.externalDomain}`} target="_blank" rel="noopener noreferrer" class="flex-1">
-                        <Button className="w-full bg-primary hover:bg-primary/90">
-                          Visit Website
-                          <ExternalLink className="w-4 h-4 ml-2" />
-                        </Button>
-                      </a>
-                    ) : (
-                      <a href={`/${pub.slug.current}`} class="flex-1">
-                        <Button className="w-full bg-primary hover:bg-primary/90">
-                          View Details
-                        </Button>
-                      </a>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-    )}
 
     {/* All Pubs Section */}
     <section id="pubs" class="py-20 bg-background">
       <div class="container mx-auto px-4">
         <h2 class="text-4xl font-bold text-center mb-12 text-primary">
-          {featuredPubs.length > 0 ? 'All Our Pubs' : 'Our Pubs'}
+          Our Pubs
         </h2>
         <div class="space-y-6">
-          {regularPubs.length > 0 ? (
+          {allPubs.length > 0 ? (
             <>
               {/* First row - 3 pubs */}
               <div class="grid md:grid-cols-3 gap-6">
-                {regularPubs.slice(0, 3).map(pub => (
+                {allPubs.slice(0, 3).map(pub => (
                   <Card key={pub.slug.current} className="overflow-hidden hover:shadow-lg transition-shadow">
-                <div class="relative h-48 overflow-hidden">
+                <div class="relative h-64 overflow-hidden">
                   <img
-                    src={pub.image?.asset?.url || '/images/hero-fallback.jpg'}
-                    alt={pub.image?.alt || `Image of ${pub.name}`}
+                    src={pub.heroImage?.asset?.url || pub.image?.asset?.url || '/images/hero-fallback.jpg'}
+                    alt={pub.heroImage?.alt || pub.image?.alt || `Image of ${pub.name}`}
                     class="w-full h-full object-cover transition-transform hover:scale-105"
                     onerror="this.onerror=null; this.src='/images/hero-fallback.jpg';"
                   />
@@ -150,12 +80,41 @@ const formatDate = (dateString) => {
                 </CardHeader>
                 <CardContent>
                   <CardDescription className="text-sm mb-4 line-clamp-2">{pub.description}</CardDescription>
+                  
+                  {/* Amenity badges */}
+                  <div class="flex flex-wrap gap-2 mb-4">
+                    {pub.amenities?.includes('dogFriendly') && (
+                      <Badge variant="secondary" className="text-xs flex items-center gap-1">
+                        <Dog className="w-3 h-3" />
+                        Dog Friendly
+                      </Badge>
+                    )}
+                    {pub.amenities?.includes('garden') && (
+                      <Badge variant="secondary" className="text-xs flex items-center gap-1">
+                        <TreePine className="w-3 h-3" />
+                        Garden
+                      </Badge>
+                    )}
+                    {pub.amenities?.includes('localAles') && (
+                      <Badge variant="secondary" className="text-xs flex items-center gap-1">
+                        <Beer className="w-3 h-3" />
+                        Local Ales
+                      </Badge>
+                    )}
+                    {pub.amenities?.includes('food') && (
+                      <Badge variant="secondary" className="text-xs flex items-center gap-1">
+                        <Utensils className="w-3 h-3" />
+                        Food
+                      </Badge>
+                    )}
+                  </div>
+                  
                   {(() => {
                     const pubUrl = getPubUrl(pub);
                     const isExt = isExternalUrl(pubUrl);
                     return (
                       <a href={pubUrl} target={isExt ? "_blank" : undefined} rel={isExt ? "noopener noreferrer" : undefined} class="block">
-                        <Button variant="outline" size="sm" className="w-full">
+                        <Button variant={isExt ? "default" : "outline"} size="sm" className={isExt ? "w-full bg-primary text-white hover:bg-primary/90" : "w-full"}>
                           {isExt ? 'Visit Website' : 'View Details'}
                           {isExt && <ExternalLink className="w-3 h-3 ml-2" />}
                         </Button>
@@ -167,15 +126,15 @@ const formatDate = (dateString) => {
                 ))}
               </div>
               
-              {/* Second row - 2 pubs */}
-              {regularPubs.length > 3 && (
-                <div class="grid md:grid-cols-2 gap-6">
-                  {regularPubs.slice(3, 5).map(pub => (
+              {/* Second row - 2 pubs centered */}
+              {allPubs.length > 3 && (
+                <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                  {allPubs.slice(3, 5).map(pub => (
                     <Card key={pub.slug.current} className="overflow-hidden hover:shadow-lg transition-shadow">
-                      <div class="relative h-48 overflow-hidden">
+                      <div class="relative h-64 overflow-hidden">
                         <img
-                          src={pub.image?.asset?.url || '/images/hero-fallback.jpg'}
-                          alt={pub.image?.alt || `Image of ${pub.name}`}
+                          src={pub.heroImage?.asset?.url || pub.image?.asset?.url || '/images/hero-fallback.jpg'}
+                          alt={pub.heroImage?.alt || pub.image?.alt || `Image of ${pub.name}`}
                           class="w-full h-full object-cover transition-transform hover:scale-105"
                           onerror="this.onerror=null; this.src='/images/hero-fallback.jpg';"
                         />
@@ -189,13 +148,42 @@ const formatDate = (dateString) => {
                       </CardHeader>
                       <CardContent>
                         <CardDescription className="text-sm mb-4 line-clamp-2">{pub.description}</CardDescription>
+                        
+                        {/* Amenity badges */}
+                        <div class="flex flex-wrap gap-2 mb-4">
+                          {pub.amenities?.includes('dogFriendly') && (
+                            <Badge variant="secondary" className="text-xs flex items-center gap-1">
+                              <Dog className="w-3 h-3" />
+                              Dog Friendly
+                            </Badge>
+                          )}
+                          {pub.amenities?.includes('garden') && (
+                            <Badge variant="secondary" className="text-xs flex items-center gap-1">
+                              <TreePine className="w-3 h-3" />
+                              Garden
+                            </Badge>
+                          )}
+                          {pub.amenities?.includes('localAles') && (
+                            <Badge variant="secondary" className="text-xs flex items-center gap-1">
+                              <Beer className="w-3 h-3" />
+                              Local Ales
+                            </Badge>
+                          )}
+                          {pub.amenities?.includes('food') && (
+                            <Badge variant="secondary" className="text-xs flex items-center gap-1">
+                              <Utensils className="w-3 h-3" />
+                              Food
+                            </Badge>
+                          )}
+                        </div>
+                        
                         {
                           (() => {
                             const pubUrl = getPubUrl(pub);
                             const isExt = isExternalUrl(pubUrl);
                             return (
                               <a href={pubUrl} target={isExt ? "_blank" : undefined} rel={isExt ? "noopener noreferrer" : undefined} class="block">
-                                <Button variant="outline" size="sm" className="w-full">
+                                <Button variant={isExt ? "default" : "outline"} size="sm" className={isExt ? "w-full bg-primary text-white hover:bg-primary/90" : "w-full"}>
                                   {isExt ? 'Visit Website' : 'View Details'}
                                   {isExt && <ExternalLink className="w-3 h-3 ml-2" />}
                                 </Button>
@@ -211,7 +199,7 @@ const formatDate = (dateString) => {
             </>
           ) : (
             <p class="text-center text-muted-foreground">
-              {featuredPubs.length > 0 ? 'All pubs are currently featured above.' : 'No pubs found.'}
+              No pubs found.
             </p>
           )}
         </div>

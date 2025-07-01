@@ -1,0 +1,36 @@
+---
+export interface Props {
+  image?: {
+    asset?: {
+      url: string;
+    };
+    alt?: string;
+  };
+  title: string;
+  subtitle?: string;
+  fallbackImage?: string;
+}
+
+const { image, title, subtitle, fallbackImage = '/images/hero-fallback.jpg' } = Astro.props;
+---
+
+<section class="relative h-[40vh] min-h-[400px] flex items-center justify-center overflow-hidden">
+  <!-- Background Image -->
+  <img
+    src={image?.asset?.url || fallbackImage}
+    alt={image?.alt || `Hero image for ${title}`}
+    class="absolute inset-0 w-full h-full object-cover"
+    onerror={`this.onerror=null; this.src='${fallbackImage}';`}
+  />
+  
+  <!-- Gradient Overlay -->
+  <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-black/30"></div>
+  
+  <!-- Content -->
+  <div class="relative z-10 text-center text-white px-6 max-w-4xl mx-auto">
+    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">{title}</h1>
+    {subtitle && (
+      <p class="text-lg md:text-xl text-white/90 max-w-2xl mx-auto">{subtitle}</p>
+    )}
+  </div>
+</section>

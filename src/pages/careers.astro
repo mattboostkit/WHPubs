@@ -1,13 +1,17 @@
 ---
 // src/pages/careers.astro
 import Layout from '@/layouts/Layout.astro';
-import { getAllCareers } from '@/lib/sanity';
+import PageHero from '@/components/PageHero.astro';
+import { getAllCareers, getPageSettings } from '@/lib/sanity';
 import { Button } from "@/components/ui/button";
 import SanityPortableText from '@/components/SanityPortableText.jsx';
 import { MapPin, WalletMinimalIcon, FileTextIcon } from 'lucide-react'; // Example icons
 
 // Fetch all career opportunities
 const careers = await getAllCareers();
+
+// Fetch page settings for hero image
+const pageSettings = await getPageSettings('careers');
 
 const pageTitle = "Careers - WH Pubs";
 const pageDescription = "Join the team at WH Pubs. Explore current job opportunities across our locations.";
@@ -17,13 +21,27 @@ const pageDescription = "Join the team at WH Pubs. Explore current job opportuni
 ---
 
 <Layout title={pageTitle} description={pageDescription}>
-  <main class="container mx-auto px-4 py-12 pt-24"> {/* Added padding-top */}
-    <h1 class="text-4xl md:text-5xl font-bold text-primary mb-6 text-center">
-      Work With Us
-    </h1>
-    <p class="text-lg text-center text-primary/80 mb-12 max-w-2xl mx-auto">
-      We're passionate about great food, drink, and hospitality. If you share our passion, explore the opportunities to join the WH Pubs family below.
-    </p>
+  {/* Hero Section */}
+  {pageSettings && (
+    <PageHero 
+      image={pageSettings.heroImage}
+      title={pageSettings.heroTitle || 'Work With Us'}
+      subtitle={pageSettings.heroSubtitle || "We're passionate about great food, drink, and hospitality. If you share our passion, explore the opportunities to join the WH Pubs family below."}
+      fallbackImage="/images/careers-hero.jpg"
+    />
+  )}
+  
+  <main class="container mx-auto px-4 py-12">
+    {!pageSettings && (
+      <>
+        <h1 class="text-4xl md:text-5xl font-bold text-primary mb-6 text-center">
+          Work With Us
+        </h1>
+        <p class="text-lg text-center text-primary/80 mb-12 max-w-2xl mx-auto">
+          We're passionate about great food, drink, and hospitality. If you share our passion, explore the opportunities to join the WH Pubs family below.
+        </p>
+      </>
+    )}
 
     <div class="bg-secondary/10 p-8 rounded-lg mb-12 max-w-4xl mx-auto">
       <h2 class="text-2xl font-bold mb-6 text-center">Why Work at WH Pubs?</h2>
