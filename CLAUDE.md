@@ -98,3 +98,41 @@ Configured for Netlify deployment with:
 - **Deployed Studio**: https://whpubs.sanity.studio
 - **Local Studio**: http://localhost:3333 (when running `npm run dev` in wh-pubs directory)
 - **Project Dashboard**: https://www.sanity.io/organizations/ou2Yw2hhu/project/it7wwto3
+
+## CRITICAL: Git Workflow
+**ALWAYS COMMIT AND PUSH AFTER MAKING CHANGES**
+- Commit changes immediately after making them
+- Push to GitHub so Netlify can deploy
+- User cannot see changes until they are deployed
+- Use descriptive commit messages
+- Push with: `git push origin main`
+
+## Sanity Image Specifications (EXACT SIZES REQUIRED)
+
+### 1. PAGE HERO IMAGES (About, Events, Blog, Contact, Careers)
+- **SIZE:** 1920 x 768 pixels
+- **LOCATION:** Page Settings > [Page Name] > Hero Image
+
+### 2. PUB HERO IMAGES
+- **SIZE:** 1920 x 800 pixels  
+- **LOCATION:** Pubs > [Pub Name] > Hero Image
+
+### 3. PUB CARD IMAGES (Homepage thumbnails)
+- **SIZE:** 828 x 605 pixels
+- **LOCATION:** Pubs > [Pub Name] > Image
+
+### 4. CHEF PHOTO (Development Kitchen)
+- **SIZE:** 800 x 1000 pixels (Portrait)
+- **LOCATION:** Development Kitchen > Chef Profile > Image
+
+### 5. EVENT IMAGES
+- **SIZE:** 1200 x 800 pixels
+- **LOCATION:** Events > [Event Name] > Event Image
+
+### 6. BLOG POST IMAGES  
+- **SIZE:** 1200 x 630 pixels
+- **LOCATION:** Posts > [Post Title] > Main Image
+
+### 7. GALLERY IMAGES
+- **SIZE:** 1000 x 1000 pixels (Square)
+- **LOCATION:** Various > Gallery fields
