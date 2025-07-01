@@ -28,7 +28,7 @@ export default defineType({
     }),
     defineField({
       name: 'heroImage',
-      title: 'Hero Image',
+      title: 'Hero Image (1920x768px)',
       type: 'image',
       description: '🖼️ REQUIRED SIZE: 1920x768px EXACTLY - Hero banner displays at 40% viewport height',
       options: { hotspot: true },

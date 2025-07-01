@@ -38,7 +38,7 @@ export default defineType({
     }),
     defineField({
       name: 'mainImage',
-      title: 'Main image',
+      title: 'Main image (1200x630px)',
       type: 'image',
       description: '🖼️ REQUIRED SIZE: 1200x630px EXACTLY - Featured image for blog post',
       options: {

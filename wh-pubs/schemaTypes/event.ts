@@ -48,7 +48,7 @@ export default defineType({
     }),
     defineField({
       name: 'image',
-      title: 'Event Image',
+      title: 'Event Image (1200x800px)',
       type: 'image',
       description: '🖼️ REQUIRED SIZE: 1200x800px EXACTLY',
       options: {hotspot: true},

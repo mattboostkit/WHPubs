@@ -169,7 +169,7 @@ export default defineType({
     // --- Media Group ---
     defineField({
       name: 'image',
-      title: 'Main Listing Image',
+      title: 'Main Listing Image (828x605px)',
       type: 'image',
       group: 'media',
       description: 'Homepage thumbnail image. 🖼️ REQUIRED SIZE: 828x605px EXACTLY',
@@ -189,7 +189,7 @@ export default defineType({
     }),
     defineField({
       name: 'heroImage',
-      title: 'Hero Banner Image',
+      title: 'Hero Banner Image (1920x800px)',
       type: 'image',
       group: 'media',
       description: 'Main pub page hero banner. 🖼️ REQUIRED SIZE: 1920x800px EXACTLY',
@@ -274,7 +274,7 @@ export default defineType({
     }),
     defineField({
       name: 'gallery',
-      title: 'Photo Gallery',
+      title: 'Photo Gallery (1000x1000px Square)',
       type: 'array',
       group: 'media',
       description: 'Gallery photos of your pub. 🖼️ REQUIRED SIZE: 1000x1000px SQUARE',

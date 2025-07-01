@@ -28,7 +28,7 @@ export default defineType({
     }),
     defineField({
       name: 'heroImage',
-      title: 'Hero Image',
+      title: 'Hero Image (1920x800px)',
       type: 'image',
       description: '🖼️ REQUIRED SIZE: 1920x800px EXACTLY',
       options: { hotspot: true },
@@ -73,7 +73,7 @@ export default defineType({
         }),
         defineField({
           name: 'image',
-          title: 'Chef Image',
+          title: 'Chef Image (800x1000px Portrait)',
           type: 'image',
           description: '🖼️ REQUIRED SIZE: 800x1000px PORTRAIT - Frame from chest up with space above head',
           options: { hotspot: true },
@@ -225,9 +225,9 @@ export default defineType({
     }),
     defineField({
       name: 'gallery',
-      title: 'Kitchen Gallery',
+      title: 'Kitchen Gallery (1000x1000px Square)',
       type: 'array',
-      description: 'Images showcasing the development kitchen, team, and processes. 🖼️ Ideal size: 1200x800px (3:2 ratio)',
+      description: 'Images showcasing the development kitchen, team, and processes. 🖼️ REQUIRED SIZE: 1000x1000px SQUARE',
       of: [
         {
           type: 'image',

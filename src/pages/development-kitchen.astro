@@ -6,6 +6,7 @@ import { Button } from '../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
 import InnovationsTabs from '../components/InnovationsTabs';
+import { ImageGalleryModal } from '../components/ImageGalleryModal';
 
 const targetPubSlug = import.meta.env.TARGET_PUB_SLUG;
 const targetPub = targetPubSlug ? await getPubBySlug(targetPubSlug) : null;
@@ -193,22 +194,7 @@ const pageDescription = content.seo?.metaDescription || 'Discover the culinary i
     <section class="py-16 bg-muted/50">
       <div class="container mx-auto px-4">
         <h2 class="text-4xl font-bold text-center mb-12 text-primary">Behind the Scenes</h2>
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {content.gallery.map((image, index) => (
-            <div key={index} class="relative group overflow-hidden rounded-lg aspect-square">
-              <img 
-                src={image.asset.url} 
-                alt={image.alt}
-                class="w-full h-full object-cover transition-transform group-hover:scale-110"
-              />
-              {image.caption && (
-                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                  <p class="text-white text-sm">{image.caption}</p>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+        <ImageGalleryModal images={content.gallery} client:load />
       </div>
     </section>
   )}
