@@ -263,7 +263,7 @@ export async function getAllCareers() {
   `);
 }
 
-// Helper function to get the single homepage document
+// Helper function to get the single homepage document (now Main Site Settings)
 export async function getHomepageData() {
   // Fetches the first document of type 'homepage'. Assumes only one exists.
   return client.fetch(`
@@ -276,8 +276,35 @@ export async function getHomepageData() {
       heroButton1Text,
       heroButton1Link,
       heroButton2Text,
-      heroButton2Link
-      // Add other fields here if added to the schema
+      heroButton2Link,
+      // Page hero settings
+      pageHeroSettings {
+        eventsHero { heroImage { asset->{ _id, url }, alt }, heroTitle, heroSubtitle },
+        blogHero { heroImage { asset->{ _id, url }, alt }, heroTitle, heroSubtitle },
+        aboutHero { heroImage { asset->{ _id, url }, alt }, heroTitle, heroSubtitle },
+        contactHero { heroImage { asset->{ _id, url }, alt }, heroTitle, heroSubtitle },
+        careersHero { heroImage { asset->{ _id, url }, alt }, heroTitle, heroSubtitle }
+      },
+      // Development Kitchen
+      developmentKitchen {
+        heroImage { asset->{ _id, url }, alt },
+        introText[]{ ..., asset-> },
+        chefProfile {
+          name,
+          title,
+          bio[]{ ..., asset-> },
+          image { asset->{ _id, url }, alt }
+        },
+        philosophy {
+          heading,
+          content[]{ ..., asset-> }
+        },
+        gallery[] {
+          asset->{ _id, url },
+          alt,
+          caption
+        }
+      }
     }
   `);
 }
@@ -307,75 +334,57 @@ export async function getEvents(targetPubSlug = null) {
     } | order(date asc) // Order by event date
   `, params);
 }
-// Helper function to get Development Kitchen data
+// Helper function to get Development Kitchen data (now from Main Site Settings)
 export async function getDevelopmentKitchen() {
   return client.fetch(`
-    *[_type == "developmentKitchen"][0] {
-      title,
-      slug,
-      heroImage { asset->{ _id, url }, alt },
-      introText[]{ ..., asset-> },
-      chefProfile {
-        name,
-        title,
-        bio[]{ ..., asset-> },
-        image { asset->{ _id, url }, alt }
-      },
-      philosophy {
-        heading,
-        content[]{ ..., asset-> }
-      },
-      process[] {
-        stepNumber,
-        title,
-        description,
-        image { asset->{ _id, url }, alt }
-      },
-      innovations[] {
-        dishName,
-        description,
-        season,
-        image { asset->{ _id, url }, alt },
-        availableAt[]->{ name, slug }
-      },
-      gallery[] {
-        asset->{ _id, url },
-        alt,
-        caption,
-        category
-      },
-      suppliers[] {
-        name,
-        description,
-        location,
-        logo { asset->{ _id, url }, alt },
-        website
-      },
-      seasonalFocus {
-        season,
-        theme,
-        description[]{ ..., asset-> },
-        featuredIngredients
-      },
-      seo {
-        metaTitle,
-        metaDescription,
-        ogImage { asset->{ _id, url } }
+    *[_type == "homepage"][0] {
+      developmentKitchen {
+        heroImage { asset->{ _id, url }, alt },
+        introText[]{ ..., asset-> },
+        chefProfile {
+          name,
+          title,
+          bio[]{ ..., asset-> },
+          image { asset->{ _id, url }, alt }
+        },
+        philosophy {
+          heading,
+          content[]{ ..., asset-> }
+        },
+        gallery[] {
+          asset->{ _id, url },
+          alt,
+          caption
+        }
+      }
+    }
+  `).then(data => data?.developmentKitchen || null);
+}
+
+// Helper function to get page settings (now from Main Site Settings)
+export async function getPageSettings(pageName) {
+  const data = await client.fetch(`
+    *[_type == "homepage"][0] {
+      pageHeroSettings {
+        eventsHero { heroImage { asset->{ _id, url }, alt }, heroTitle, heroSubtitle },
+        blogHero { heroImage { asset->{ _id, url }, alt }, heroTitle, heroSubtitle },
+        aboutHero { heroImage { asset->{ _id, url }, alt }, heroTitle, heroSubtitle },
+        contactHero { heroImage { asset->{ _id, url }, alt }, heroTitle, heroSubtitle },
+        careersHero { heroImage { asset->{ _id, url }, alt }, heroTitle, heroSubtitle }
       }
     }
   `);
-}
-
-// Helper function to get page settings
-export async function getPageSettings(pageName) {
-  return client.fetch(`
-    *[_type == "pageSettings" && pageName == $pageName][0] {
-      pageName,
-      heroImage { asset->{ _id, url }, alt },
-      heroTitle,
-      heroSubtitle
-    }
-  `, { pageName });
+  
+  // Map the page name to the corresponding hero settings
+  const pageMap = {
+    'events': data?.pageHeroSettings?.eventsHero,
+    'blog': data?.pageHeroSettings?.blogHero,
+    'about': data?.pageHeroSettings?.aboutHero,
+    'contact': data?.pageHeroSettings?.contactHero,
+    'careers': data?.pageHeroSettings?.careersHero
+  };
+  
+  return pageMap[pageName] || null;
 }
 
 // Note: getPubBySlug remains useful for the dynamic page generation

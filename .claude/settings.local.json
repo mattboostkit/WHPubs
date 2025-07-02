@@ -33,7 +33,10 @@
       "Bash(cat:*)",
       "WebFetch(domain:docs.anthropic.com)",
       "Bash(npm run sanity:query:*)",
-      "Bash(touch:*)"
+      "Bash(touch:*)",
+      "mcp__sanity__get_initial_context",
+      "mcp__sanity__get_schema",
+      "mcp__sanity__query_documents"
     ],
     "deny": []
   }

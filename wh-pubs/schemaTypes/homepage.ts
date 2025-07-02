@@ -1,13 +1,14 @@
 import {defineField, defineType} from 'sanity'
-import {HomeIcon} from 'lucide-react' // Example Icon
+import {CogIcon} from '@sanity/icons'
 
 export default defineType({
   name: 'homepage',
-  title: 'Homepage Settings',
+  title: 'WH Pubs Main Site Settings',
   type: 'document',
-  icon: HomeIcon,
-  // Uncomment below to make this a singleton document
-  // __experimental_actions: [/*'create',*/ 'update', /*'delete',*/ 'publish'],
+  icon: CogIcon,
+  description: 'Global settings for the WH Pubs main site including homepage, page heroes, and development kitchen',
+  // Singleton document - only one allowed
+  __experimental_actions: ['update', 'publish'],
   fields: [
     defineField({
       name: 'title',
@@ -93,7 +94,312 @@ export default defineType({
         description: 'Internal link for button 2 (e.g., "/book")',
         initialValue: '/book',
     }),
-    // Add fields for other sections if needed (Features, Newsletter)
+    // Page Hero Settings Section
+    defineField({
+      name: 'pageHeroSettings',
+      title: 'Page Hero Settings',
+      type: 'object',
+      description: 'Configure hero images for individual pages',
+      options: {
+        collapsible: true,
+        collapsed: false,
+      },
+      fields: [
+        defineField({
+          name: 'eventsHero',
+          title: 'Events Page Hero',
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'heroImage',
+              title: 'Hero Image (1920x768px)',
+              type: 'image',
+              description: '🖼️ REQUIRED SIZE: 1920x768px EXACTLY',
+              options: { hotspot: true },
+              fields: [
+                {
+                  name: 'alt',
+                  type: 'string',
+                  title: 'Alternative text',
+                  validation: (Rule) => Rule.required(),
+                }
+              ],
+            }),
+            defineField({
+              name: 'heroTitle',
+              title: 'Hero Title',
+              type: 'string',
+              initialValue: 'Upcoming Events',
+            }),
+            defineField({
+              name: 'heroSubtitle',
+              title: 'Hero Subtitle',
+              type: 'text',
+              rows: 2,
+              initialValue: 'Join us for unforgettable experiences',
+            }),
+          ]
+        }),
+        defineField({
+          name: 'blogHero',
+          title: 'Blog Page Hero',
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'heroImage',
+              title: 'Hero Image (1920x768px)',
+              type: 'image',
+              description: '🖼️ REQUIRED SIZE: 1920x768px EXACTLY',
+              options: { hotspot: true },
+              fields: [
+                {
+                  name: 'alt',
+                  type: 'string',
+                  title: 'Alternative text',
+                  validation: (Rule) => Rule.required(),
+                }
+              ],
+            }),
+            defineField({
+              name: 'heroTitle',
+              title: 'Hero Title',
+              type: 'string',
+              initialValue: 'Latest News & Updates',
+            }),
+            defineField({
+              name: 'heroSubtitle',
+              title: 'Hero Subtitle',
+              type: 'text',
+              rows: 2,
+              initialValue: 'Stay informed about what\'s happening at WH Pubs',
+            }),
+          ]
+        }),
+        defineField({
+          name: 'aboutHero',
+          title: 'About Page Hero',
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'heroImage',
+              title: 'Hero Image (1920x768px)',
+              type: 'image',
+              description: '🖼️ REQUIRED SIZE: 1920x768px EXACTLY',
+              options: { hotspot: true },
+              fields: [
+                {
+                  name: 'alt',
+                  type: 'string',
+                  title: 'Alternative text',
+                  validation: (Rule) => Rule.required(),
+                }
+              ],
+            }),
+            defineField({
+              name: 'heroTitle',
+              title: 'Hero Title',
+              type: 'string',
+              initialValue: 'About WH Pubs',
+            }),
+            defineField({
+              name: 'heroSubtitle',
+              title: 'Hero Subtitle',
+              type: 'text',
+              rows: 2,
+              initialValue: 'Continuing a tradition of hospitality since 1985',
+            }),
+          ]
+        }),
+        defineField({
+          name: 'contactHero',
+          title: 'Contact Page Hero',
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'heroImage',
+              title: 'Hero Image (1920x768px)',
+              type: 'image',
+              description: '🖼️ REQUIRED SIZE: 1920x768px EXACTLY',
+              options: { hotspot: true },
+              fields: [
+                {
+                  name: 'alt',
+                  type: 'string',
+                  title: 'Alternative text',
+                  validation: (Rule) => Rule.required(),
+                }
+              ],
+            }),
+            defineField({
+              name: 'heroTitle',
+              title: 'Hero Title',
+              type: 'string',
+              initialValue: 'Get in Touch',
+            }),
+            defineField({
+              name: 'heroSubtitle',
+              title: 'Hero Subtitle',
+              type: 'text',
+              rows: 2,
+              initialValue: 'We\'d love to hear from you',
+            }),
+          ]
+        }),
+        defineField({
+          name: 'careersHero',
+          title: 'Careers Page Hero',
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'heroImage',
+              title: 'Hero Image (1920x768px)',
+              type: 'image',
+              description: '🖼️ REQUIRED SIZE: 1920x768px EXACTLY',
+              options: { hotspot: true },
+              fields: [
+                {
+                  name: 'alt',
+                  type: 'string',
+                  title: 'Alternative text',
+                  validation: (Rule) => Rule.required(),
+                }
+              ],
+            }),
+            defineField({
+              name: 'heroTitle',
+              title: 'Hero Title',
+              type: 'string',
+              initialValue: 'Join Our Team',
+            }),
+            defineField({
+              name: 'heroSubtitle',
+              title: 'Hero Subtitle',
+              type: 'text',
+              rows: 2,
+              initialValue: 'Discover exciting opportunities at WH Pubs',
+            }),
+          ]
+        }),
+      ]
+    }),
+    // Development Kitchen Section (moved from separate schema)
+    defineField({
+      name: 'developmentKitchen',
+      title: 'Development Kitchen',
+      type: 'object',
+      description: 'Content for the Development Kitchen page',
+      options: {
+        collapsible: true,
+        collapsed: true,
+      },
+      fields: [
+        defineField({
+          name: 'heroImage',
+          title: 'Hero Image (1920x800px)',
+          type: 'image',
+          description: '🖼️ REQUIRED SIZE: 1920x800px EXACTLY',
+          options: { hotspot: true },
+          fields: [
+            {
+              name: 'alt',
+              type: 'string',
+              title: 'Alternative text',
+              validation: (Rule) => Rule.required(),
+            }
+          ],
+        }),
+        defineField({
+          name: 'introText',
+          title: 'Introduction Text',
+          type: 'blockContent',
+          description: 'Introduction to the Development Kitchen concept',
+        }),
+        defineField({
+          name: 'chefProfile',
+          title: 'Head Chef Profile',
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'name',
+              title: 'Chef Name',
+              type: 'string',
+            }),
+            defineField({
+              name: 'title',
+              title: 'Title',
+              type: 'string',
+              description: 'e.g., Executive Chef, Head of Development',
+            }),
+            defineField({
+              name: 'bio',
+              title: 'Biography',
+              type: 'blockContent',
+            }),
+            defineField({
+              name: 'image',
+              title: 'Chef Image (800x1000px Portrait)',
+              type: 'image',
+              description: '🖼️ REQUIRED SIZE: 800x1000px PORTRAIT',
+              options: { hotspot: true },
+              fields: [
+                {
+                  name: 'alt',
+                  type: 'string',
+                  title: 'Alternative text',
+                  validation: (Rule) => Rule.required(),
+                }
+              ],
+            }),
+          ]
+        }),
+        defineField({
+          name: 'philosophy',
+          title: 'Our Philosophy',
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'heading',
+              title: 'Section Heading',
+              type: 'string',
+              initialValue: 'Our Philosophy'
+            }),
+            defineField({
+              name: 'content',
+              title: 'Content',
+              type: 'blockContent',
+            }),
+          ]
+        }),
+        defineField({
+          name: 'gallery',
+          title: 'Kitchen Gallery (1000x1000px Square)',
+          type: 'array',
+          description: '🖼️ REQUIRED SIZE: 1000x1000px SQUARE',
+          of: [
+            {
+              type: 'image',
+              options: { hotspot: true },
+              fields: [
+                {
+                  name: 'alt',
+                  type: 'string',
+                  title: 'Alternative text',
+                  validation: (Rule) => Rule.required(),
+                },
+                {
+                  name: 'caption',
+                  type: 'string',
+                  title: 'Caption',
+                },
+              ]
+            }
+          ],
+          options: {
+            layout: 'grid'
+          }
+        }),
+      ]
+    }),
   ],
   preview: {
     select: {
@@ -101,7 +407,7 @@ export default defineType({
       media: 'heroImage',
     },
      prepare(selection) {
-       return { ...selection, subtitle: 'Homepage Content' }
+       return { ...selection, subtitle: 'Main Site Settings' }
      }
   }
 })
