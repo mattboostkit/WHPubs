@@ -38,7 +38,8 @@
       "mcp__sanity__get_schema",
       "mcp__sanity__query_documents",
       "mcp__sanity__patch_document",
-      "mcp__sanity__create_document"
+      "mcp__sanity__create_document",
+      "mcp__sanity__update_document"
     ],
     "deny": []
   }

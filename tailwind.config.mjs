@@ -60,7 +60,7 @@ export default {
         DEFAULT: {
           css: {
             maxWidth: '100%',
-            color: '#050231',
+            color: '#000000',
             p: {
               marginTop: '1em',
               marginBottom: '1em',
@@ -73,10 +73,10 @@ export default {
               fontFamily: 'Georgia, serif',
             },
             a: {
-              color: '#050231',
+              color: '#000000',
               textDecoration: 'underline',
               '&:hover': {
-                color: '#050231',
+                color: '#000000',
                 opacity: 0.8,
               },
             },
