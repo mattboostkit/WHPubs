@@ -3,7 +3,7 @@ import {BriefcaseBusinessIcon} from 'lucide-react' // Example Icon
 
 export default defineType({
   name: 'career',
-  title: 'Career Opportunity',
+  title: 'Join Our Crew',
   type: 'document',
   icon: BriefcaseBusinessIcon,
   fields: [

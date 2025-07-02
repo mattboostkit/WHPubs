@@ -364,6 +364,35 @@ export async function getDevelopmentKitchen() {
   `);
 }
 
+// Helper function to get things to do, optionally filtered by pub slug
+export async function getThingsToDo(targetPubSlug = null) {
+  let filter = '';
+  if (targetPubSlug) {
+    // Fetch activities matching the specific pub slug
+    filter = `&& associatedPub->slug.current == $targetPubSlug`;
+  } else {
+    // Fetch activities with NO pub reference (general activities)
+    filter = `&& !defined(associatedPub)`;
+  }
+  const params = targetPubSlug ? { targetPubSlug } : {};
+
+  return client.fetch(`
+    *[_type == "thingsToDo" ${filter}] {
+      title,
+      slug,
+      category,
+      locationDetails,
+      duration,
+      distance,
+      difficulty,
+      description[]{ ..., asset-> },
+      image { asset->{ _id, url }, alt },
+      externalLink,
+      associatedPub->{ name, slug }
+    } | order(order asc, title asc)
+  `, params);
+}
+
 // Helper function to get page settings
 export async function getPageSettings(pageName) {
   return client.fetch(`

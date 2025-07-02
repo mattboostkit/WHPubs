@@ -63,12 +63,20 @@ export const structure = (S: StructureBuilder) =>
                     .documentId('contactPageSettings')
                 ),
               S.listItem()
-                .title('💼 Careers Page')
+                .title('💼 Join Our Crew Page')
                 .icon(FiBriefcase)
                 .child(
                   S.document()
                     .schemaType('careersPageSettings')
                     .documentId('careersPageSettings')
+                ),
+              S.listItem()
+                .title('🎯 Things To Do Page')
+                .icon(FiCalendar)
+                .child(
+                  S.document()
+                    .schemaType('thingsToDoPageSettings')
+                    .documentId('thingsToDoPageSettings')
                 ),
             ])
         ),
@@ -108,7 +116,13 @@ export const structure = (S: StructureBuilder) =>
             .title('All Menus')
         ),
       S.listItem()
-        .title('💼 Careers')
+        .title('🎯 Things To Do')
+        .child(
+          S.documentTypeList('thingsToDo')
+            .title('All Activities')
+        ),
+      S.listItem()
+        .title('💼 Join Our Crew')
         .child(
           S.documentTypeList('career')
             .title('Job Listings')
@@ -146,5 +160,5 @@ export const structure = (S: StructureBuilder) =>
         ),
       S.divider(),
       ...S.documentTypeListItems()
-        .filter(listItem => !['site', 'homepage', 'developmentKitchen', 'eventsPageSettings', 'blogPageSettings', 'aboutPageSettings', 'contactPageSettings', 'careersPageSettings', 'pub', 'post', 'event', 'menu', 'career'].includes(listItem.getId()))
+        .filter(listItem => !['site', 'homepage', 'developmentKitchen', 'eventsPageSettings', 'blogPageSettings', 'aboutPageSettings', 'contactPageSettings', 'careersPageSettings', 'thingsToDoPageSettings', 'pub', 'post', 'event', 'menu', 'career', 'thingsToDo'].includes(listItem.getId()))
     ])

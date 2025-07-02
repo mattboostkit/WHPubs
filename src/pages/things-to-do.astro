@@ -1,0 +1,153 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import { getThingsToDo, getPageSettings, getPubs } from '../lib/sanity';
+import SanityPortableText from '../components/SanityPortableText.astro';
+import { CalendarIcon, MapPin, Clock, Footprints, ExternalLink } from 'lucide-react';
+
+// Check for pub-specific build
+const targetPubSlug = import.meta.env.TARGET_PUB_SLUG;
+const activities = await getThingsToDo(targetPubSlug);
+const pageSettings = await getPageSettings('thingsToDo');
+
+// Get pub data if this is a pub-specific page
+let activePub = null;
+if (targetPubSlug) {
+  const allPubs = await getPubs(targetPubSlug);
+  activePub = allPubs.find(pub => pub.slug?.current === targetPubSlug);
+}
+
+// Dynamic page title and description
+const pageTitle = targetPubSlug && activePub 
+  ? `Things To Do near ${activePub.name}` 
+  : "Things To Do";
+const pageDescription = targetPubSlug && activePub
+  ? `Discover local activities, walks, and attractions near ${activePub.name}`
+  : "Explore walks, markets, and local attractions across South East England";
+
+// Group activities by category
+const groupedActivities = activities.reduce((acc, activity) => {
+  const category = activity.category || 'other';
+  if (!acc[category]) acc[category] = [];
+  acc[category].push(activity);
+  return acc;
+}, {});
+
+const categoryTitles = {
+  walks: 'Countryside Walks',
+  markets: 'Local Markets',
+  attractions: 'Local Attractions',
+  family: 'Family Activities',
+  seasonal: 'Seasonal Events',
+  other: 'Other Activities'
+};
+
+const difficultyColors = {
+  easy: 'text-green-600',
+  moderate: 'text-yellow-600',
+  challenging: 'text-red-600'
+};
+---
+
+<Layout title={`${pageTitle} | WH Pubs`} description={pageDescription}>
+  <PageHero
+    title={pageSettings?.heroTitle || pageTitle}
+    subtitle={pageSettings?.heroSubtitle || pageDescription}
+    image={pageSettings?.heroImage?.asset?.url || '/images/things-to-do-hero.jpg'}
+    imageAlt={pageSettings?.heroImage?.alt || 'Things to do in the countryside'}
+  />
+
+  <div class="container mx-auto px-4 py-12">
+    {activities.length === 0 ? (
+      <div class="text-center py-16">
+        <p class="text-gray-600 text-lg">
+          {targetPubSlug && activePub
+            ? `No activities currently listed for ${activePub.name}. Check back soon!`
+            : "No activities currently listed. Check back soon for updates!"}
+        </p>
+      </div>
+    ) : (
+      Object.entries(groupedActivities).map(([category, categoryActivities]) => (
+        <div class="mb-12">
+          <h2 class="text-3xl font-bold mb-6 text-black">{categoryTitles[category]}</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {categoryActivities.map((activity) => (
+              <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                {activity.image && (
+                  <img
+                    src={activity.image.asset.url}
+                    alt={activity.image.alt || activity.title}
+                    class="w-full h-48 object-cover"
+                    onerror="this.onerror=null; this.src='/images/activity-fallback.jpg';"
+                  />
+                )}
+                {!activity.image && (
+                  <img
+                    src="/images/activity-fallback.jpg"
+                    alt={activity.title}
+                    class="w-full h-48 object-cover"
+                  />
+                )}
+                <div class="p-6">
+                  <h3 class="text-xl font-bold mb-2 text-black">{activity.title}</h3>
+                  
+                  <div class="space-y-2 mb-4 text-sm text-gray-600">
+                    {activity.locationDetails && (
+                      <div class="flex items-start gap-2">
+                        <MapPin class="w-4 h-4 mt-0.5 text-gold" />
+                        <span>{activity.locationDetails}</span>
+                      </div>
+                    )}
+                    {activity.duration && (
+                      <div class="flex items-center gap-2">
+                        <Clock class="w-4 h-4 text-gold" />
+                        <span>{activity.duration}</span>
+                      </div>
+                    )}
+                    {activity.distance && (
+                      <div class="flex items-center gap-2">
+                        <Footprints class="w-4 h-4 text-gold" />
+                        <span>{activity.distance}</span>
+                      </div>
+                    )}
+                    {activity.difficulty && (
+                      <div class="flex items-center gap-2">
+                        <span class={`font-semibold ${difficultyColors[activity.difficulty]}`}>
+                          {activity.difficulty.charAt(0).toUpperCase() + activity.difficulty.slice(1)}
+                        </span>
+                      </div>
+                    )}
+                    {activity.associatedPub && !targetPubSlug && (
+                      <div class="flex items-center gap-2">
+                        <MapPin class="w-4 h-4 text-gold" />
+                        <a href={`/${activity.associatedPub.slug.current}`} class="text-gold hover:underline">
+                          {activity.associatedPub.name}
+                        </a>
+                      </div>
+                    )}
+                  </div>
+
+                  <div class="prose prose-sm max-w-none mb-4 text-gray-700">
+                    <SanityPortableText blocks={activity.description} />
+                  </div>
+
+                  {activity.externalLink && (
+                    <a
+                      href={activity.externalLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="inline-flex items-center gap-2 text-gold hover:text-gold-dark font-semibold"
+                    >
+                      More Info
+                      <ExternalLink class="w-4 h-4" />
+                    </a>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))
+    )}
+  </div>
+</Layout>

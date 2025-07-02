@@ -13,7 +13,7 @@ const careers = await getAllCareers();
 // Fetch page settings for hero image
 const pageSettings = await getPageSettings('careers');
 
-const pageTitle = "Careers - WH Pubs";
+const pageTitle = "Join Our Crew - WH Pubs";
 const pageDescription = "Join the team at WH Pubs. Explore current job opportunities across our locations.";
 
 // Note: This page currently assumes it's part of the main hub site.
@@ -25,7 +25,7 @@ const pageDescription = "Join the team at WH Pubs. Explore current job opportuni
   {pageSettings && (
     <PageHero 
       image={pageSettings.heroImage}
-      title={pageSettings.heroTitle || 'Work With Us'}
+      title={pageSettings.heroTitle || 'Join Our Crew'}
       subtitle={pageSettings.heroSubtitle || "We're passionate about great food, drink, and hospitality. If you share our passion, explore the opportunities to join the WH Pubs family below."}
       fallbackImage="/images/careers-hero.jpg"
     />
@@ -35,7 +35,7 @@ const pageDescription = "Join the team at WH Pubs. Explore current job opportuni
     {!pageSettings && (
       <>
         <h1 class="text-4xl md:text-5xl font-bold text-primary mb-6 text-center">
-          Work With Us
+          Join Our Crew
         </h1>
         <p class="text-lg text-center text-primary/80 mb-12 max-w-2xl mx-auto">
           We're passionate about great food, drink, and hospitality. If you share our passion, explore the opportunities to join the WH Pubs family below.

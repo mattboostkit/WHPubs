@@ -69,4 +69,5 @@ export const eventsPageSettings = createPageSettingsType('events', 'Events');
 export const blogPageSettings = createPageSettingsType('blog', 'Blog');
 export const aboutPageSettings = createPageSettingsType('about', 'About');
 export const contactPageSettings = createPageSettingsType('contact', 'Contact');
-export const careersPageSettings = createPageSettingsType('careers', 'Careers');
+export const careersPageSettings = createPageSettingsType('careers', 'Join Our Crew');
+export const thingsToDoPageSettings = createPageSettingsType('thingsToDo', 'Things To Do');
