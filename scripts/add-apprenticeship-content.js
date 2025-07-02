@@ -1,9 +1,9 @@
 // Script to add Apprenticeship Scheme content to Sanity
 // Run this after logging into Sanity
 
-const sanityClient = require('@sanity/client');
+import { createClient } from '@sanity/client';
 
-const client = sanityClient({
+const client = createClient({
   projectId: 'it7wwto3',
   dataset: 'production',
   apiVersion: '2024-01-01',

@@ -1,9 +1,9 @@
 // Script to add Things To Do content to Sanity
 // Run this after the new schema has been deployed to Sanity
 
-const sanityClient = require('@sanity/client');
+import { createClient } from '@sanity/client';
 
-const client = sanityClient({
+const client = createClient({
   projectId: 'it7wwto3',
   dataset: 'production',
   apiVersion: '2024-01-01',

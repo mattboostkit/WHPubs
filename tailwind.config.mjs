@@ -54,7 +54,10 @@ export default {
           4: 'hsl(var(--chart-4))',
           5: 'hsl(var(--chart-5))',
         },
-        gold: '#B79C64',
+        gold: {
+          DEFAULT: '#B79C64',
+          dark: '#9B8254',
+        },
       },
       typography: {
         DEFAULT: {
