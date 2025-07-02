@@ -19,6 +19,16 @@ export default defineType({
       initialValue: 'Development Kitchen'
     }),
     defineField({
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      options: {
+        source: 'title',
+        maxLength: 96,
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: 'heroImage',
       title: 'Hero Image (1920x800px)',
       type: 'image',
