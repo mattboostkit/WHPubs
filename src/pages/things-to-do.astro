@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/PageHero.astro';
 import { getThingsToDo, getPageSettings, getPubs } from '../lib/sanity';
-import SanityPortableText from '../components/SanityPortableText.astro';
+import SanityPortableText from '../components/SanityPortableText.jsx';
 import { CalendarIcon, MapPin, Clock, Footprints, ExternalLink } from 'lucide-react';
 
 // Check for pub-specific build
@@ -128,7 +128,7 @@ const difficultyColors = {
                   </div>
 
                   <div class="prose prose-sm max-w-none mb-4 text-gray-700">
-                    <SanityPortableText blocks={activity.description} />
+                    <SanityPortableText value={activity.description} client:load />
                   </div>
 
                   {activity.externalLink && (
