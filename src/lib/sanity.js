@@ -367,14 +367,14 @@ export async function getDevelopmentKitchen() {
 // Helper function to get things to do, optionally filtered by pub slug
 export async function getThingsToDo(targetPubSlug = null) {
   let filter = '';
+  const params = {};
+  
   if (targetPubSlug) {
     // Fetch activities matching the specific pub slug
     filter = `&& associatedPub->slug.current == $targetPubSlug`;
-  } else {
-    // Fetch activities with NO pub reference (general activities)
-    filter = `&& !defined(associatedPub)`;
+    params.targetPubSlug = targetPubSlug;
   }
-  const params = targetPubSlug ? { targetPubSlug } : {};
+  // If no targetPubSlug, fetch ALL activities (not just those without pub reference)
 
   return client.fetch(`
     *[_type == "thingsToDo" ${filter}] {
