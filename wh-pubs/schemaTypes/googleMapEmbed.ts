@@ -21,5 +21,24 @@ export default defineType({
       validation: (Rule) => Rule.required(),
       description: 'Paste the full Google Maps embed iframe code here.'
     })
-  ]
+  ],
+  preview: {
+    select: {
+      pubName: 'pub.name',
+      iframe: 'iframe'
+    },
+    prepare({ pubName, iframe }) {
+      // Extract location from iframe URL if possible
+      let location = 'Google Map';
+      const match = iframe?.match(/!1m2!1s[^!]+!2s([^!]+)/);
+      if (match && match[1]) {
+        location = decodeURIComponent(match[1].replace(/\+/g, ' '));
+      }
+      
+      return {
+        title: pubName || 'No pub selected',
+        subtitle: location
+      }
+    }
+  }
 }); 

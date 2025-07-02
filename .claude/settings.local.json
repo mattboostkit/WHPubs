@@ -36,7 +36,9 @@
       "Bash(touch:*)",
       "mcp__sanity__get_initial_context",
       "mcp__sanity__get_schema",
-      "mcp__sanity__query_documents"
+      "mcp__sanity__query_documents",
+      "mcp__sanity__patch_document",
+      "mcp__sanity__create_document"
     ],
     "deny": []
   }
