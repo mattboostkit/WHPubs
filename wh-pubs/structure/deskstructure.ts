@@ -7,18 +7,11 @@ export const structure = (S: StructureBuilder) =>
     .title('Content Management')
     .items([
       S.listItem()
-        .title('🏠 Homepage Settings')
+        .title('⚙️ WH Pubs Main Site Settings')
         .icon(HomeIcon)
         .child(
           S.documentTypeList('homepage')
-            .title('Homepage Settings')
-        ),
-      S.listItem()
-        .title('🍴 Development Kitchen')
-        .icon(LemonIcon)
-        .child(
-          S.documentTypeList('developmentKitchen')
-            .title('Development Kitchen')
+            .title('WH Pubs Main Site Settings')
         ),
       S.divider(),
       S.listItem()
@@ -94,5 +87,5 @@ export const structure = (S: StructureBuilder) =>
         ),
       S.divider(),
       ...S.documentTypeListItems()
-        .filter(listItem => !['site', 'homepage', 'developmentKitchen', 'pub', 'post', 'event', 'menu', 'career'].includes(listItem.getId()))
+        .filter(listItem => !['site', 'homepage', 'pub', 'post', 'event', 'menu', 'career'].includes(listItem.getId()))
     ])
