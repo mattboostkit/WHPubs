@@ -5,10 +5,26 @@ import PageHero from '../components/PageHero.astro';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
-import { getPageSettings } from '../lib/sanity';
+import { getPageSettings, getPubs } from '../lib/sanity';
+import GoogleMapEmbed from '@/components/GoogleMapEmbed';
 
 // Fetch page settings for hero image
 const pageSettings = await getPageSettings('contact');
+
+// Fetch all pubs for their details
+const allPubs = await getPubs();
+
+// Temporary iframe template (using Little Brown Jug's as template)
+const tempIframe = '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2500.154703105503!2d0.173989!3d51.197801!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47df501777eaf4f9%3A0x5eae38e6d7d85e0!2sThe%20Little%20Brown%20Jug!5e0!3m2!1sen!2suk!4v1751487395862!5m2!1sen!2suk" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>';
+
+// Map pub slugs to their Google Map iframes (temporarily using same iframe for all)
+const pubMaps = {
+  'the-little-brown-jug': '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2500.154703105503!2d0.173989!3d51.197801!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47df501777eaf4f9%3A0x5eae38e6d7d85e0!2sThe%20Little%20Brown%20Jug!5e0!3m2!1sen!2suk!4v1751487395862!5m2!1sen!2suk" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>',
+  'the-chaser-inn': tempIframe,
+  'the-cricketers-inn': tempIframe,
+  'the-rose-and-crown': tempIframe,
+  'the-bull': tempIframe
+};
 ---
 
 <Layout title="Contact - WH Pubs">
@@ -232,6 +248,46 @@ const pageSettings = await getPageSettings('contact');
 					</div>
 				</div>
 			</div>
+			</div>
+		</section>
+
+		{/* New Section: Pub Location Maps */}
+		<section class="py-16 bg-white">
+			<div class="container mx-auto px-4">
+				<h2 class="text-3xl font-bold text-center mb-12">Find Our Pubs</h2>
+				
+				<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+					{allPubs.map((pub) => (
+						<div class="space-y-4">
+							<h3 class="text-xl font-bold text-black">{pub.name}</h3>
+							<div class="rounded-lg overflow-hidden shadow-lg">
+								<GoogleMapEmbed 
+									iframe={pubMaps[pub.slug?.current] || tempIframe}
+									className="w-full h-[300px]"
+									client:load
+								/>
+							</div>
+							<div class="space-y-2 text-sm">
+								<p class="flex items-center gap-2">
+									<MapPin class="w-4 h-4 text-gold" />
+									{pub.location}
+								</p>
+								{pub.contactPhone && (
+									<p class="flex items-center gap-2">
+										<Phone class="w-4 h-4 text-gold" />
+										{pub.contactPhone}
+									</p>
+								)}
+								<a 
+									href={`/${pub.slug?.current}`} 
+									class="inline-flex items-center text-gold hover:text-gold-dark font-semibold mt-2"
+								>
+									View Pub Details →
+								</a>
+							</div>
+						</div>
+					))}
+				</div>
 			</div>
 		</section>
 	</main>
