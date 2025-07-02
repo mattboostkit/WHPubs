@@ -28,10 +28,9 @@ export async function getStaticPaths() {
        throw new Error(`Pub not found for slug: ${targetPubSlug}`);
     }
   } else {
-    // If building the main hub site, fetch and build all pub pages
-    // Fetching all pubs for hub site
-    // If building the main hub site, fetch and build all pub pages
-    pubsToBuild = await getPubs();
+    // If building the main hub site, don't build any pub pages
+    // They are hosted on separate domains
+    pubsToBuild = [];
   }
 
   return pubsToBuild.map((pub) => ({
