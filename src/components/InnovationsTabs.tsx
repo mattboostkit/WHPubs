@@ -40,11 +40,11 @@ export default function InnovationsTabs({ innovations }: InnovationsTabsProps) {
       {innovations.map((dish, index) => (
         <TabsContent key={index} value={index.toString()}>
           <div className="grid md:grid-cols-2 gap-8 items-center">
-            {dish.image && (
+            {dish.image && dish.image.asset && (
               <div className="aspect-[4/3] relative overflow-hidden rounded-lg">
                 <img 
                   src={dish.image.asset.url} 
-                  alt={dish.image.alt}
+                  alt={dish.image.alt || dish.dishName}
                   className="w-full h-full object-cover"
                 />
               </div>
