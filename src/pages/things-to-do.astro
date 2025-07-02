@@ -4,6 +4,7 @@ import PageHero from '../components/PageHero.astro';
 import { getThingsToDo, getPageSettings, getPubs } from '../lib/sanity';
 import SanityPortableText from '../components/SanityPortableText.jsx';
 import { CalendarIcon, MapPin, Clock, Footprints, ExternalLink } from 'lucide-react';
+import { getPubUrl } from '../lib/pub-urls';
 
 // Check for pub-specific build
 const targetPubSlug = import.meta.env.TARGET_PUB_SLUG;
@@ -120,7 +121,12 @@ const difficultyColors = {
                     {activity.associatedPub && !targetPubSlug && (
                       <div class="flex items-center gap-2">
                         <MapPin class="w-4 h-4 text-gold" />
-                        <a href={`/${activity.associatedPub.slug.current}`} class="text-gold hover:underline">
+                        <a 
+                          href={getPubUrl(activity.associatedPub)} 
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="text-gold hover:underline"
+                        >
                           {activity.associatedPub.name}
                         </a>
                       </div>

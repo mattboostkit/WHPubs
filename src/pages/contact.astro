@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { getPageSettings, getPubs } from '../lib/sanity';
 import GoogleMapEmbed from '@/components/GoogleMapEmbed';
+import { getPubUrl } from '../lib/pub-urls';
 
 // Fetch page settings for hero image
 const pageSettings = await getPageSettings('contact');
@@ -279,10 +280,12 @@ const pubMaps = {
 									</p>
 								)}
 								<a 
-									href={`/${pub.slug?.current}`} 
+									href={getPubUrl(pub)} 
+									target="_blank"
+									rel="noopener noreferrer"
 									class="inline-flex items-center text-gold hover:text-gold-dark font-semibold mt-2"
 								>
-									View Pub Details →
+									Visit Pub Website →
 								</a>
 							</div>
 						</div>
