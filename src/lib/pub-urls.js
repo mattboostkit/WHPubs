@@ -14,6 +14,11 @@ export const pubUrls = {
 export function getPubUrl(pub) {
   // If pub has a custom domain set in Sanity, use that
   if (pub.externalDomain) {
+    // Check if the domain already includes protocol
+    if (pub.externalDomain.startsWith('http://') || pub.externalDomain.startsWith('https://')) {
+      return pub.externalDomain;
+    }
+    // If no protocol, add https://
     return `https://${pub.externalDomain}`;
   }
   

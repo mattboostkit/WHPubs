@@ -54,7 +54,7 @@ export default defineType({
       title: 'External Domain',
       type: 'string',
       group: 'basic',
-      description: 'The full domain where this pub\'s website is hosted (e.g., www.thebullpub.com)',
+      description: 'The domain where this pub\'s website is hosted. Can be entered with or without https:// (e.g., www.thebullpub.com or https://www.thebullpub.com)',
       validation: (Rule) => Rule.regex(/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/, {
         name: 'domain',
         invert: false
