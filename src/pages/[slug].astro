@@ -8,7 +8,7 @@ import { MapPin, Clock, Phone, UtensilsCrossed, CalendarDays, Image as ImageIcon
 import ImageGallery from '@/components/ImageGallery';
 import { PubHeroCarousel } from '@/components/PubHeroCarousel';
 import GoogleMapEmbed from '@/components/GoogleMapEmbed';
-import SanityPortableText from '@/components/SanityPortableText.astro';
+import SanityPortableText from '@/components/SanityPortableText.jsx';
 import BlogCard from '@/components/BlogCard.astro';
 
 // 1. Generate routes for all pubs
@@ -260,7 +260,7 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
                 <CardContent>
                   {menu.menuContent && (
                     <div class="prose prose-sm max-w-none">
-                      <SanityPortableText blocks={menu.menuContent} />
+                      <SanityPortableText value={menu.menuContent} />
                     </div>
                   )}
                 </CardContent>
@@ -313,7 +313,7 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
                 <CardContent>
                   {event.description && (
                     <div class="prose prose-sm max-w-none mb-4">
-                      <SanityPortableText blocks={event.description} />
+                      <SanityPortableText value={event.description} />
                     </div>
                   )}
                   {event.bookingUrl && (
