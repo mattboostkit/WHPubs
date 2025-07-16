@@ -116,4 +116,87 @@
   .prose .bg-primary\/5 {
     @apply p-3 rounded-full flex items-center justify-center;
   }
+  
+  /* Ensure minimum touch target size for mobile */
+  button, a[role="button"], [role="button"], .btn {
+    @apply min-h-[44px];
+  }
+  
+  /* Ensure clickable icons and links have proper touch targets */
+  a:has(svg), button:has(svg) {
+    @apply p-2;
+  }
+  
+  /* Exception for inline text links */
+  p a, li a, .prose a, .text-sm a {
+    @apply min-h-0;
+  }
+  
+  /* Micro-animations and transitions */
+  a, button, input, textarea, select, .card {
+    @apply transition-all duration-200 ease-in-out;
+  }
+  
+  /* Enhanced focus states */
+  :focus-visible {
+    @apply outline-none ring-2 ring-gold ring-offset-2;
+  }
+  
+  /* Button hover effects */
+  button:hover:not(:disabled) {
+    @apply transform -translate-y-0.5;
+  }
+  
+  /* Link hover underline animation */
+  a:not(.no-underline) {
+    @apply relative;
+  }
+  
+  a:not(.no-underline)::after {
+    @apply absolute bottom-0 left-0 w-0 h-0.5 bg-gold transition-all duration-300;
+    content: '';
+  }
+  
+  a:not(.no-underline):hover::after {
+    @apply w-full;
+  }
+  
+  /* Card hover elevation */
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+  }
+  
+  /* Image hover zoom */
+  .img-hover-zoom {
+    @apply overflow-hidden;
+  }
+  
+  .img-hover-zoom img {
+    @apply transition-transform duration-500 ease-out;
+  }
+  
+  .img-hover-zoom:hover img {
+    @apply scale-110;
+  }
+  
+  /* Smooth scroll behavior */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Loading animation */
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+  
+  .skeleton-shimmer {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
 }

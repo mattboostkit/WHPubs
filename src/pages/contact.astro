@@ -179,30 +179,41 @@ const pubMaps = {
 
 					<h2 class="text-2xl font-bold mb-6">Send us a Message</h2>
 					
-					<form class="bg-white p-8 rounded-lg shadow-lg">
-						<div class="space-y-4">
+					<form class="bg-white p-6 sm:p-8 rounded-lg shadow-lg">
+						<div class="space-y-5">
 							<div>
-								<label class="block text-sm font-medium mb-2 text-primary/80">Name</label>
+								<label for="contact-name" class="block text-sm font-medium mb-2 text-primary/80">Name</label>
 								<input
+									id="contact-name"
+									name="name"
 									type="text"
-									class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-white"
+									autocomplete="name"
+									class="w-full p-4 text-base border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-white transition-all"
+									placeholder="Your full name"
 									required
 								/>
 							</div>
 							
 							<div>
-								<label class="block text-sm font-medium mb-2 text-primary/80">Email</label>
+								<label for="contact-email" class="block text-sm font-medium mb-2 text-primary/80">Email</label>
 								<input
+									id="contact-email"
+									name="email"
 									type="email"
-									class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-white"
+									autocomplete="email"
+									inputmode="email"
+									class="w-full p-4 text-base border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-white transition-all"
+									placeholder="your@email.com"
 									required
 								/>
 							</div>
 							
 							<div>
-								<label class="block text-sm font-medium mb-2 text-primary/80">Subject</label>
+								<label for="contact-subject" class="block text-sm font-medium mb-2 text-primary/80">Subject</label>
 								<select
-									class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-white"
+									id="contact-subject"
+									name="subject"
+									class="w-full p-4 text-base border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-white transition-all appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3csvg%20xmlns%3d%22http%3a%2f%2fwww.w3.org%2f2000%2fsvg%22%20width%3d%2212%22%20height%3d%2212%22%20viewBox%3d%220%200%2012%2012%22%3e%3ctitle%3edown-arrow%3c%2ftitle%3e%3cg%20fill%3d%22%23000000%22%3e%3cpath%20d%3d%22M10.293%2c3.293%2c6%2c7.586%2c1.707%2c3.293A1%2c1%2c0%2c0%2c0%2c.293%2c4.707l5%2c5a1%2c1%2c0%2c0%2c0%2c1.414%2c0l5-5a1%2c1%2c0%2c1%2c0-1.414-1.414Z%22%20fill%3d%22%23000000%22%3e%3c%2fpath%3e%3c%2fg%3e%3c%2fsvg%3e')] bg-[length:12px] bg-[right_1rem_center] bg-no-repeat pr-10"
 									required
 								>
 									<option value="">Select a subject</option>
@@ -214,15 +225,18 @@ const pubMaps = {
 							</div>
 							
 							<div>
-								<label class="block text-sm font-medium mb-2 text-primary/80">Message</label>
+								<label for="contact-message" class="block text-sm font-medium mb-2 text-primary/80">Message</label>
 								<textarea
-									class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-white"
-									rows="4"
+									id="contact-message"
+									name="message"
+									class="w-full p-4 text-base border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-white transition-all resize-y min-h-[120px]"
+									rows="5"
+									placeholder="Tell us how we can help..."
 									required
 								></textarea>
 							</div>
 							
-							<Button type="submit" class="w-full bg-primary text-white hover:bg-primary/90 py-6">
+							<Button type="submit" class="w-full bg-primary text-white hover:bg-primary/90 min-h-[56px] text-base font-medium">
 								Send Message
 							</Button>
 						</div>

@@ -1,0 +1,89 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  class?: string;
+  loading?: 'lazy' | 'eager';
+  sizes?: string;
+  fetchpriority?: 'high' | 'low' | 'auto';
+}
+
+const { 
+  src, 
+  alt, 
+  width, 
+  height, 
+  class: className = '', 
+  loading = 'lazy',
+  sizes,
+  fetchpriority = 'auto'
+} = Astro.props;
+
+// Generate WebP version URL if it's a local image
+const isLocalImage = src.startsWith('/') && !src.startsWith('//');
+const webpSrc = isLocalImage && src.match(/\.(jpg|jpeg|png)$/i) 
+  ? src.replace(/\.(jpg|jpeg|png)$/i, '.webp')
+  : null;
+
+// Generate srcset for responsive images
+const generateSrcSet = (baseSrc: string, ext: string) => {
+  if (!width || !isLocalImage) return '';
+  
+  const widths = [320, 640, 768, 1024, 1280, 1536, 1920];
+  const validWidths = widths.filter(w => w <= width);
+  
+  return validWidths
+    .map(w => {
+      const scaledSrc = baseSrc.replace(/(\.[^.]+)$/, `-${w}w$1`);
+      return `${scaledSrc} ${w}w`;
+    })
+    .join(', ');
+};
+---
+
+<picture>
+  {webpSrc && (
+    <>
+      <source
+        type="image/webp"
+        srcset={generateSrcSet(webpSrc, 'webp') || webpSrc}
+        sizes={sizes}
+      />
+    </>
+  )}
+  <source
+    srcset={generateSrcSet(src, src.split('.').pop() || '') || src}
+    sizes={sizes}
+  />
+  <img
+    src={src}
+    alt={alt}
+    width={width}
+    height={height}
+    class={className}
+    loading={loading}
+    fetchpriority={fetchpriority}
+    decoding="async"
+  />
+</picture>
+
+<script>
+  // Fallback for WebP images that fail to load
+  document.addEventListener('DOMContentLoaded', () => {
+    const pictures = document.querySelectorAll('picture');
+    
+    pictures.forEach(picture => {
+      const sources = picture.querySelectorAll('source[type="image/webp"]');
+      const img = picture.querySelector('img');
+      
+      if (img && sources.length > 0) {
+        img.addEventListener('error', () => {
+          // Remove WebP sources on error
+          sources.forEach(source => source.remove());
+        });
+      }
+    });
+  });
+</script>

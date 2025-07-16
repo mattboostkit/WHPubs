@@ -6,6 +6,7 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { useCarouselTouch } from '@/hooks/use-carousel-touch';
 
 type CarouselApi = UseEmblaCarouselType[1];
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
@@ -152,12 +153,32 @@ const CarouselContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
-  const { carouselRef, orientation } = useCarousel();
+  const { carouselRef, orientation, scrollNext, scrollPrev } = useCarousel();
+  const contentRef = React.useRef<HTMLDivElement>(null);
+
+  // Add touch gesture support
+  useCarouselTouch(
+    contentRef,
+    scrollNext, // swipe left goes to next
+    scrollPrev  // swipe right goes to previous
+  );
 
   return (
     <div ref={carouselRef} className="overflow-hidden">
       <div
-        ref={ref}
+        ref={(node) => {
+          // Handle both refs
+          if (ref) {
+            if (typeof ref === 'function') {
+              ref(node);
+            } else {
+              ref.current = node;
+            }
+          }
+          if (contentRef.current !== node) {
+            contentRef.current = node;
+          }
+        }}
         className={cn(
           'flex',
           orientation === 'horizontal' ? '-ml-4' : '-mt-4 flex-col',

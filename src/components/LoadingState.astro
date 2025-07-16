@@ -1,0 +1,54 @@
+---
+import { SkeletonPubCard, SkeletonEventCard, SkeletonBlogCard, SkeletonHero, SkeletonMenuSection, SkeletonGalleryGrid } from './ui/skeleton-loader';
+
+interface Props {
+  type: 'pub-card' | 'event-card' | 'blog-card' | 'hero' | 'menu' | 'gallery';
+  count?: number;
+}
+
+const { type, count = 1 } = Astro.props;
+---
+
+<div class="loading-container">
+  {type === 'pub-card' && (
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {[...Array(count)].map((_, i) => (
+        <SkeletonPubCard key={i} client:visible />
+      ))}
+    </div>
+  )}
+  
+  {type === 'event-card' && (
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {[...Array(count)].map((_, i) => (
+        <SkeletonEventCard key={i} client:visible />
+      ))}
+    </div>
+  )}
+  
+  {type === 'blog-card' && (
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {[...Array(count)].map((_, i) => (
+        <SkeletonBlogCard key={i} client:visible />
+      ))}
+    </div>
+  )}
+  
+  {type === 'hero' && <SkeletonHero client:visible />}
+  
+  {type === 'menu' && (
+    <div class="space-y-8">
+      {[...Array(count)].map((_, i) => (
+        <SkeletonMenuSection key={i} client:visible />
+      ))}
+    </div>
+  )}
+  
+  {type === 'gallery' && <SkeletonGalleryGrid client:visible />}
+</div>
+
+<style>
+  .loading-container {
+    @apply animate-pulse;
+  }
+</style>

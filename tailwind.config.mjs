@@ -4,16 +4,27 @@ export default {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
   theme: {
     extend: {
-      colors: {
-        primary: '#201D0F',
-        secondary: '#E1D0B6',
-      },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
       colors: {
+        // Brand colors
+        primary: {
+          DEFAULT: '#1A1A1A', // WH Pubs black
+          foreground: 'hsl(var(--primary-foreground))',
+        },
+        secondary: {
+          DEFAULT: '#B79C64', // WH Pubs gold
+          foreground: 'hsl(var(--secondary-foreground))',
+        },
+        gold: {
+          DEFAULT: '#B79C64',
+          dark: '#9B8254',
+          light: '#E1D0B6',
+        },
+        // System colors
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
@@ -23,14 +34,6 @@ export default {
         popover: {
           DEFAULT: 'hsl(var(--popover))',
           foreground: 'hsl(var(--popover-foreground))',
-        },
-        primary: {
-          DEFAULT: '#000000',
-          foreground: 'hsl(var(--primary-foreground))',
-        },
-        secondary: {
-          DEFAULT: 'hsl(var(--secondary))',
-          foreground: 'hsl(var(--secondary-foreground))',
         },
         muted: {
           DEFAULT: 'hsl(var(--muted))',
@@ -54,16 +57,12 @@ export default {
           4: 'hsl(var(--chart-4))',
           5: 'hsl(var(--chart-5))',
         },
-        gold: {
-          DEFAULT: '#B79C64',
-          dark: '#9B8254',
-        },
       },
       typography: {
         DEFAULT: {
           css: {
             maxWidth: '100%',
-            color: '#000000',
+            color: '#1A1A1A',
             p: {
               marginTop: '1em',
               marginBottom: '1em',
@@ -76,11 +75,11 @@ export default {
               fontFamily: 'Georgia, serif',
             },
             a: {
-              color: '#000000',
+              color: '#1A1A1A',
               textDecoration: 'underline',
               '&:hover': {
-                color: '#000000',
-                opacity: 0.8,
+                color: '#B79C64',
+                opacity: 1,
               },
             },
           },

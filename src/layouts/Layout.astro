@@ -19,6 +19,9 @@ interface Props {
 const { title, pub, targetPub, description, ogImage } = Astro.props;
 const activePub = pub || targetPub;
 
+// Get current pathname for active state
+const currentPath = Astro.url.pathname;
+
 // Determine if we are rendering for a specific pub or the main hub
 const isPubLayout = !!activePub;
 
@@ -176,17 +179,27 @@ const metaDescription = description || footerDescription;
 					</a>
 					<!-- Desktop Navigation -->
 					<div class="hidden md:flex space-x-8" role="navigation">
-						{headerLinks.map(link => (
-							<a 
-								href={link.url} 
-								class="text-lg text-[#B79C64] hover:text-[#B79C64]/80 transition-colors" 
-								aria-label={link.ariaLabel}
-								target={link.external ? "_blank" : undefined}
-								rel={link.external ? "noopener noreferrer" : undefined}
-							>
-								{link.title}
-							</a>
-						))}
+						{headerLinks.map(link => {
+							const isActive = currentPath === link.url || 
+								(link.url !== '/' && currentPath.startsWith(link.url)) ||
+								(link.url.includes('#') && currentPath === '/' && link.url.startsWith('/#'));
+							return (
+								<a 
+									href={link.url} 
+									class={`text-lg transition-colors relative ${
+										isActive 
+											? 'text-[#B79C64] font-semibold after:absolute after:bottom-[-4px] after:left-0 after:right-0 after:h-[2px] after:bg-[#B79C64]' 
+											: 'text-[#B79C64] hover:text-[#B79C64]/80'
+									}`}
+									aria-label={link.ariaLabel}
+									aria-current={isActive ? "page" : undefined}
+									target={link.external ? "_blank" : undefined}
+									rel={link.external ? "noopener noreferrer" : undefined}
+								>
+									{link.title}
+								</a>
+							);
+						})}
 					</div>
 					<button 
 						id="menu-toggle"
@@ -217,17 +230,27 @@ const metaDescription = description || footerDescription;
 				</div>
 				<!-- Mobile Navigation -->
 				<div class="flex flex-col space-y-6 text-xl" role="navigation">
-					{headerLinks.map(link => (
-						<a 
-							href={link.url} 
-							class="text-lg text-[#B79C64] hover:text-[#B79C64]/80 transition-colors" 
-							aria-label={link.ariaLabel}
-							target={link.external ? "_blank" : undefined}
-							rel={link.external ? "noopener noreferrer" : undefined}
-						>
-							{link.title}
-						</a>
-					))}
+					{headerLinks.map(link => {
+						const isActive = currentPath === link.url || 
+							(link.url !== '/' && currentPath.startsWith(link.url)) ||
+							(link.url.includes('#') && currentPath === '/' && link.url.startsWith('/#'));
+						return (
+							<a 
+								href={link.url} 
+								class={`text-lg transition-colors pl-4 border-l-4 ${
+									isActive 
+										? 'text-[#B79C64] font-semibold border-[#B79C64]' 
+										: 'text-[#B79C64] hover:text-[#B79C64]/80 border-transparent'
+								}`}
+								aria-label={link.ariaLabel}
+								aria-current={isActive ? "page" : undefined}
+								target={link.external ? "_blank" : undefined}
+								rel={link.external ? "noopener noreferrer" : undefined}
+							>
+								{link.title}
+							</a>
+						);
+					})}
 				</div>
 				<div class="mt-auto pt-8 border-t border-gold/20 space-y-4">
 					<div class="flex items-center text-white/80">
