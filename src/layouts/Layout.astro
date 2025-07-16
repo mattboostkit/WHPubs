@@ -1,6 +1,5 @@
 ---
 import '../styles/globals.css'
-import '../styles/fonts-optimized.css'
 import { Menu as MenuIcon, MapPin, Clock, Phone } from 'lucide-react';
 import { X } from 'lucide-react';
 import AdminBadge from '@/components/AdminBadge.astro';
@@ -140,12 +139,12 @@ const metaDescription = description || footerDescription;
 		</noscript>
 		-->
 		
-		<!-- Optimized Font Loading -->
-		<script src="/js/font-loader.js" async></script>
-		
-		<!-- Critical CSS for font loading -->
+		<!-- Font fallback - Generic serif fonts -->
 		<style>
-			html:not(.fonts-loaded) body {
+			.font-lora, .font-quattrocento, .font-alice {
+				font-family: Georgia, 'Times New Roman', serif;
+			}
+			body {
 				font-family: Georgia, 'Times New Roman', serif;
 			}
 		</style>
