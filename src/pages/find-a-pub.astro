@@ -1,0 +1,78 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import PageHero from '@/components/PageHero.astro';
+import PubFinderMap from '@/components/PubFinderMap';
+import { getPubs } from '@/lib/sanity';
+
+// Fetch all pubs
+const pubs = await getPubs();
+
+const title = "Find a Pub - WH Pubs";
+const description = "Discover your nearest WH Pub with our interactive map. Find locations, opening hours, and contact details for all our traditional British pubs.";
+---
+
+<Layout title={title} description={description}>
+  <PageHero
+    title="Find Your Local"
+    subtitle="Discover the perfect pub near you"
+    image={{
+      asset: { url: '/images/hero-fallback.jpg' },
+      alt: 'WH Pubs locations'
+    }}
+  />
+
+  <section class="py-12 md:py-16">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-8">
+        <h2 class="text-3xl font-bold mb-4">Interactive Pub Finder</h2>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+          Use our map to explore all WH Pubs locations across South East England. 
+          Search by name or location, or use your current location to find the nearest pub.
+        </p>
+      </div>
+
+      <PubFinderMap 
+        pubs={pubs} 
+        client:load 
+      />
+    </div>
+  </section>
+
+  <!-- Additional Info Section -->
+  <section class="py-12 bg-gray-50">
+    <div class="container mx-auto px-4">
+      <div class="grid md:grid-cols-3 gap-8 text-center">
+        <div>
+          <div class="w-16 h-16 bg-secondary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="text-2xl font-bold text-secondary">{pubs.length}</span>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">Locations</h3>
+          <p class="text-gray-600">Traditional pubs across Kent and surrounding areas</p>
+        </div>
+        
+        <div>
+          <div class="w-16 h-16 bg-secondary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="text-2xl">🍺</span>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">Quality Drinks</h3>
+          <p class="text-gray-600">Carefully selected ales, wines, and spirits</p>
+        </div>
+        
+        <div>
+          <div class="w-16 h-16 bg-secondary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span class="text-2xl">🍽️</span>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">Great Food</h3>
+          <p class="text-gray-600">Fresh, locally sourced British cuisine</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* Ensure proper map container sizing */
+  #pub-map {
+    min-height: 400px;
+  }
+</style>

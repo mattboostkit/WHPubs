@@ -5,7 +5,9 @@ import { Menu as MenuIcon, MapPin, Clock, Phone } from 'lucide-react';
 import { X } from 'lucide-react';
 import AdminBadge from '@/components/AdminBadge.astro';
 import SchemaOrg from '@/components/SchemaOrg.astro';
-import { client as sanityClient } from '@/lib/sanity.js'; 
+import SiteSearch from '@/components/SiteSearch';
+import { client as sanityClient } from '@/lib/sanity.js';
+import { generateSearchData } from '@/lib/search-data.js'; 
 // Import the Pub type if you have it defined, otherwise use 'any'
 // import type { Pub } from '@/types'; 
 
@@ -25,6 +27,9 @@ const currentPath = Astro.url.pathname;
 
 // Determine if we are rendering for a specific pub or the main hub
 const isPubLayout = !!activePub;
+
+// Generate search data for the hub site
+const searchData = !isPubLayout ? await generateSearchData() : [];
 
 // --- Fetch Main Site Data ---
 // Fetch data only if it's the main hub or needed as fallback
@@ -93,6 +98,7 @@ if (isPubLayout && activePub) {
 	 // Define default nav links for the main hub site
 	 headerLinks = [
 	   { title: "Our Pubs", url: "/#pubs", ariaLabel: "Our Pubs" },
+	   { title: "Find a Pub", url: "/find-a-pub", ariaLabel: "Find a Pub" },
 	   { title: "Development Kitchen", url: "/development-kitchen", ariaLabel: "Development Kitchen" },
 	   { title: "Events", url: "/events", ariaLabel: "Events" }, 
 	   { title: "Blog", url: "/blog", ariaLabel: "Blog" }, 
@@ -207,15 +213,20 @@ const metaDescription = description || footerDescription;
 							);
 						})}
 					</div>
-					<button 
-						id="menu-toggle"
-						class="md:hidden text-[#B79C64]/80 hover:text-[#B79C64]"
-						aria-label="Toggle menu"
-						aria-expanded="false"
-						aria-controls="mobile-menu"
-					>
-						<MenuIcon class="w-8 h-8" aria-hidden="true" />
-					</button>
+					<div class="flex items-center gap-4">
+						{!isPubLayout && searchData.length > 0 && (
+							<SiteSearch searchData={searchData} client:load className="hidden md:flex text-[#B79C64]" />
+						)}
+						<button 
+							id="menu-toggle"
+							class="md:hidden text-[#B79C64]/80 hover:text-[#B79C64]"
+							aria-label="Toggle menu"
+							aria-expanded="false"
+							aria-controls="mobile-menu"
+						>
+							<MenuIcon class="w-8 h-8" aria-hidden="true" />
+						</button>
+					</div>
 				</div>
 			</nav>
 			
