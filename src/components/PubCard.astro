@@ -53,6 +53,8 @@ const isOpenNow = todayHours && todayHours !== 'Closed';
         src={imageUrl}
         alt={imageAlt}
         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+        loading="lazy"
+        decoding="async"
         onerror="this.onerror=null; this.src='/images/hero-fallback.jpg';"
       />
       {pub.featured && (
@@ -145,6 +147,8 @@ const isOpenNow = todayHours && todayHours !== 'Closed';
           src={imageUrl}
           alt={imageAlt}
           class="w-full h-full object-cover"
+          loading="lazy"
+          decoding="async"
           onerror="this.onerror=null; this.src='/images/hero-fallback.jpg';"
         />
       </div>
@@ -175,6 +179,8 @@ const isOpenNow = todayHours && todayHours !== 'Closed';
         src={imageUrl}
         alt={imageAlt}
         class="w-full h-full object-cover transition-transform hover:scale-105"
+        loading="lazy"
+        decoding="async"
         onerror="this.onerror=null; this.src='/images/hero-fallback.jpg';"
       />
       {isOpenNow && (

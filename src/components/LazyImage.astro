@@ -1,0 +1,109 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  class?: string;
+  width?: number;
+  height?: number;
+  loading?: 'lazy' | 'eager';
+  fetchpriority?: 'high' | 'low' | 'auto';
+  fallbackSrc?: string;
+  sizes?: string;
+  srcset?: string;
+}
+
+const { 
+  src, 
+  alt, 
+  class: className = '',
+  width,
+  height,
+  loading = 'lazy',
+  fetchpriority = 'auto',
+  fallbackSrc = '/images/placeholder.svg',
+  sizes,
+  srcset
+} = Astro.props;
+---
+
+<img
+  data-src={src}
+  src={loading === 'lazy' ? fallbackSrc : src}
+  alt={alt}
+  class={`lazyload ${className}`}
+  width={width}
+  height={height}
+  loading={loading}
+  fetchpriority={fetchpriority}
+  sizes={sizes}
+  srcset={srcset}
+  decoding="async"
+/>
+
+<script>
+  // Intersection Observer for lazy loading
+  if ('IntersectionObserver' in window) {
+    const lazyImages = document.querySelectorAll('img.lazyload');
+    
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const img = entry.target as HTMLImageElement;
+          const src = img.getAttribute('data-src');
+          
+          if (src) {
+            // Create a new image to preload
+            const newImg = new Image();
+            
+            newImg.onload = () => {
+              img.src = src;
+              img.classList.add('loaded');
+              img.classList.remove('lazyload');
+            };
+            
+            newImg.onerror = () => {
+              // Fallback handling
+              const fallback = img.getAttribute('data-fallback') || '/images/placeholder.svg';
+              img.src = fallback;
+              img.classList.add('error');
+            };
+            
+            newImg.src = src;
+            observer.unobserve(img);
+          }
+        }
+      });
+    }, {
+      rootMargin: '50px 0px', // Start loading 50px before entering viewport
+      threshold: 0.01
+    });
+    
+    lazyImages.forEach(img => imageObserver.observe(img));
+  } else {
+    // Fallback for browsers without Intersection Observer
+    const lazyImages = document.querySelectorAll('img.lazyload');
+    lazyImages.forEach((img: Element) => {
+      const htmlImg = img as HTMLImageElement;
+      const src = htmlImg.getAttribute('data-src');
+      if (src) {
+        htmlImg.src = src;
+      }
+    });
+  }
+</script>
+
+<style>
+  img.lazyload {
+    filter: blur(5px);
+    transition: filter 0.3s ease-out;
+  }
+  
+  img.loaded {
+    filter: blur(0);
+  }
+  
+  img.error {
+    filter: blur(0);
+    opacity: 0.5;
+  }
+</style>

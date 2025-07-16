@@ -1,5 +1,6 @@
 ---
 import '../styles/globals.css'
+import '../styles/fonts-optimized.css'
 import { Menu as MenuIcon, MapPin, Clock, Phone } from 'lucide-react';
 import { X } from 'lucide-react';
 import AdminBadge from '@/components/AdminBadge.astro';
@@ -133,12 +134,12 @@ const metaDescription = description || footerDescription;
 		</noscript>
 		-->
 		
-		<!-- Font fallback - Generic serif fonts -->
+		<!-- Optimized Font Loading -->
+		<script src="/js/font-loader.js" async></script>
+		
+		<!-- Critical CSS for font loading -->
 		<style>
-			.font-lora, .font-quattrocento, .font-alice {
-				font-family: Georgia, 'Times New Roman', serif;
-			}
-			body {
+			html:not(.fonts-loaded) body {
 				font-family: Georgia, 'Times New Roman', serif;
 			}
 		</style>
@@ -165,6 +166,11 @@ const metaDescription = description || footerDescription;
 		<title>{title}</title>
 	</head>
 	<body class:list={["bg-background text-foreground", pub?.colorScheme ? `theme-${pub.colorScheme}` : 'theme-default']}>
+		<!-- Skip to content link for accessibility -->
+		<a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary text-white px-4 py-2 rounded-md z-[100] focus:outline-none focus:ring-2 focus:ring-gold">
+			Skip to main content
+		</a>
+		
 		<header class="bg-primary fixed w-full z-50">
 			<AdminBadge />
 			<nav class="container mx-auto px-4 py-4" aria-label="Main navigation">
@@ -269,7 +275,9 @@ const metaDescription = description || footerDescription;
 			</div>
 		</header>
 		
-		<slot />
+		<main id="main-content" class="pt-20">
+			<slot />
+		</main>
 		
 		<footer class="bg-primary text-gold py-12">
 			<div class="container mx-auto px-4">

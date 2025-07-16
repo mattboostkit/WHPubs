@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
 import { ChevronLeft, ChevronRight, X, ZoomIn, Grid3X3, Maximize2 } from 'lucide-react';
+import { useCarouselTouch } from '@/hooks/use-carousel-touch';
 
 interface GalleryImage {
   asset: {
@@ -45,6 +46,8 @@ export default function ImageGallery({
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const lightboxRef = React.useRef<HTMLDivElement>(null);
 
   // Filter images by category and ensure they have valid assets
   const filteredImages = images
@@ -57,20 +60,31 @@ export default function ImageGallery({
   );
 
   const handlePrevious = () => {
-    if (selectedImageIndex !== null) {
-      setSelectedImageIndex(
-        selectedImageIndex === 0 ? filteredImages.length - 1 : selectedImageIndex - 1
-      );
+    if (selectedImageIndex !== null && !isTransitioning) {
+      setIsTransitioning(true);
+      setTimeout(() => {
+        setSelectedImageIndex(
+          selectedImageIndex === 0 ? filteredImages.length - 1 : selectedImageIndex - 1
+        );
+        setIsTransitioning(false);
+      }, 100);
     }
   };
 
   const handleNext = () => {
-    if (selectedImageIndex !== null) {
-      setSelectedImageIndex(
-        selectedImageIndex === filteredImages.length - 1 ? 0 : selectedImageIndex + 1
-      );
+    if (selectedImageIndex !== null && !isTransitioning) {
+      setIsTransitioning(true);
+      setTimeout(() => {
+        setSelectedImageIndex(
+          selectedImageIndex === filteredImages.length - 1 ? 0 : selectedImageIndex + 1
+        );
+        setIsTransitioning(false);
+      }, 100);
     }
   };
+
+  // Add touch support for lightbox
+  useCarouselTouch(lightboxRef, handleNext, handlePrevious);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (selectedImageIndex === null) return;
@@ -169,11 +183,11 @@ export default function ImageGallery({
                 )}
                 onKeyDown={handleKeyDown}
               >
-              <div className="relative w-full h-full flex items-center justify-center bg-black">
+              <div ref={lightboxRef} className="relative w-full h-full flex items-center justify-center bg-black">
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="absolute top-4 right-4 text-white hover:bg-white/20 z-50"
+                  className="absolute top-4 right-4 text-white hover:bg-white/20 z-50 transition-all"
                   onClick={() => {
                     setSelectedImageIndex(null);
                     setIsFullscreen(false);
@@ -213,12 +227,15 @@ export default function ImageGallery({
                 )}
 
                 {selectedImageIndex !== null && filteredImages[selectedImageIndex]?.asset?.url && (
-                  <div className="relative max-h-full max-w-full flex flex-col items-center">
+                  <div className={cn(
+                    "relative max-h-full max-w-full flex flex-col items-center transition-opacity duration-300",
+                    isTransitioning ? "opacity-0" : "opacity-100"
+                  )}>
                     <img
                       src={filteredImages[selectedImageIndex].asset.url}
                       alt={filteredImages[selectedImageIndex].alt || 'Gallery image'}
                       className={cn(
-                        "object-contain",
+                        "object-contain transition-transform duration-300",
                         isFullscreen ? "w-screen h-screen" : "max-h-[90vh] max-w-[90vw]"
                       )}
                     />
