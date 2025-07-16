@@ -46,9 +46,9 @@ let siteName = mainSiteData?.title || "Traditional British hospitality in South 
 let logoUrl = mainSiteData?.logoUrl || null;
 let logoAlt = mainSiteData?.logoAlt || "WH Pubs Logo";
 let headerLinks = []; 
-let footerContactLocation = "South East England";
-let footerContactHours = "Opening hours vary by location"; 
-let footerContactPhone = "Contact individual pubs";
+let footerContactLocation = "Chiddingstone Causeway, Kent";
+let footerContactHours = "Mon-Sun: 11am-11pm"; 
+let footerContactPhone = "01892 870 369";
 let footerSocialLinks = { facebook: "", instagram: "", twitter: "" }; 
 let footerDescription = "Traditional British pubs offering quality food, drink, and hospitality in the heart of South East England.";
 
@@ -281,7 +281,7 @@ const metaDescription = description || footerDescription;
 					<div>
 						<!-- Footer Branding -->
 						{logoUrl ? (
-							<a href="/" aria-label={`${siteName} Home`}>
+							<a href="/" aria-label={`${siteName} Home`} class="no-underline inline-block">
 								<img src={logoUrl} alt={logoAlt} class="h-14 max-w-xs object-contain mb-4" />
 							</a>
 						) : (

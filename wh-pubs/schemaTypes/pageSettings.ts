@@ -71,3 +71,4 @@ export const aboutPageSettings = createPageSettingsType('about', 'About');
 export const contactPageSettings = createPageSettingsType('contact', 'Contact');
 export const careersPageSettings = createPageSettingsType('careers', 'Join Our Crew');
 export const thingsToDoPageSettings = createPageSettingsType('thingsToDo', 'Things To Do');
+export const pubFinderPageSettings = createPageSettingsType('pubFinder', 'Our Pubs');

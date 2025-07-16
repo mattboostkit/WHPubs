@@ -1,21 +1,25 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import PageHero from '@/components/PageHero.astro';
-import PubFinderMapSimple from '@/components/PubFinderMapSimple';
-import { getPubs } from '@/lib/sanity';
+import PubCard from '@/components/PubCard.astro';
+import { getPubs, getPageSettings } from '@/lib/sanity';
 
 // Fetch all pubs
 const pubs = await getPubs();
 
-const title = "Find a Pub - WH Pubs";
-const description = "Discover your nearest WH Pub with our interactive map. Find locations, opening hours, and contact details for all our traditional British pubs.";
+// Fetch page settings for hero image
+const pageSettings = await getPageSettings();
+const pageHero = pageSettings?.pubFinder || {};
+
+const title = "Our Pubs - WH Pubs";
+const description = "Explore all WH Pubs locations across South East England. Find opening hours, menus, and contact details for our traditional British pubs.";
 ---
 
 <Layout title={title} description={description}>
   <PageHero
-    title="Find Your Local"
-    subtitle="Discover the perfect pub near you"
-    image={{
+    title={pageHero.heroTitle || "Our Pubs"}
+    subtitle={pageHero.heroSubtitle || "Discover the perfect pub near you"}
+    image={pageHero.heroImage || {
       asset: { url: '/images/hero-fallback.jpg' },
       alt: 'WH Pubs locations'
     }}
@@ -24,17 +28,18 @@ const description = "Discover your nearest WH Pub with our interactive map. Find
   <section class="py-12 md:py-16">
     <div class="container mx-auto px-4">
       <div class="text-center mb-8">
-        <h2 class="text-3xl font-bold mb-4">Interactive Pub Finder</h2>
+        <h2 class="text-3xl font-bold mb-4">Our Pub Collection</h2>
         <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-          Use our map to explore all WH Pubs locations across South East England. 
-          Search by name or location, or use your current location to find the nearest pub.
+          Explore our collection of traditional British pubs across South East England. 
+          Each location offers its own unique character and charm.
         </p>
       </div>
 
-      <PubFinderMapSimple 
-        pubs={pubs} 
-        client:load 
-      />
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {pubs.map((pub) => (
+          <PubCard pub={pub} variant="default" />
+        ))}
+      </div>
     </div>
   </section>
 

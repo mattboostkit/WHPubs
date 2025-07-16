@@ -394,13 +394,63 @@ export async function getThingsToDo(targetPubSlug = null) {
 }
 
 // Helper function to get page settings
-export async function getPageSettings(pageName) {
+export async function getPageSettings(pageName = null) {
+  if (pageName) {
+    return client.fetch(`
+      *[_type == "${pageName}PageSettings"][0] {
+        title,
+        heroImage { asset->{ _id, url }, alt },
+        heroTitle,
+        heroSubtitle
+      }
+    `);
+  }
+  
+  // Fetch all page settings
   return client.fetch(`
-    *[_type == "${pageName}PageSettings"][0] {
-      title,
-      heroImage { asset->{ _id, url }, alt },
-      heroTitle,
-      heroSubtitle
+    {
+      "events": *[_type == "eventsPageSettings"][0] {
+        title,
+        heroImage { asset->{ _id, url }, alt },
+        heroTitle,
+        heroSubtitle
+      },
+      "blog": *[_type == "blogPageSettings"][0] {
+        title,
+        heroImage { asset->{ _id, url }, alt },
+        heroTitle,
+        heroSubtitle
+      },
+      "about": *[_type == "aboutPageSettings"][0] {
+        title,
+        heroImage { asset->{ _id, url }, alt },
+        heroTitle,
+        heroSubtitle
+      },
+      "contact": *[_type == "contactPageSettings"][0] {
+        title,
+        heroImage { asset->{ _id, url }, alt },
+        heroTitle,
+        heroSubtitle
+      },
+      "careers": *[_type == "careersPageSettings"][0] {
+        title,
+        heroImage { asset->{ _id, url }, alt },
+        heroTitle,
+        heroSubtitle
+      },
+      "thingsToDo": *[_type == "thingsToDoPageSettings"][0] {
+        title,
+        heroImage { asset->{ _id, url }, alt },
+        heroTitle,
+        heroSubtitle
+      },
+      "pubFinder": *[_type == "pubFinderPageSettings"][0] {
+        title,
+        heroImage { asset->{ _id, url }, alt },
+        heroTitle,
+        heroSubtitle
+      }
     }
   `);
 }

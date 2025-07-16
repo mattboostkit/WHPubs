@@ -12,7 +12,7 @@ import event from './event'
 import googleMapEmbed from './googleMapEmbed'
 import developmentKitchen from './developmentKitchen'
 import thingsToDo from './thingsToDo'
-import { eventsPageSettings, blogPageSettings, aboutPageSettings, contactPageSettings, careersPageSettings, thingsToDoPageSettings } from './pageSettings'
+import { eventsPageSettings, blogPageSettings, aboutPageSettings, contactPageSettings, careersPageSettings, thingsToDoPageSettings, pubFinderPageSettings } from './pageSettings'
 
 export const schemaTypes = [
   homepage, 
@@ -24,6 +24,7 @@ export const schemaTypes = [
   contactPageSettings,
   careersPageSettings,
   thingsToDoPageSettings,
+  pubFinderPageSettings,
   post, 
   author, 
   category, 
