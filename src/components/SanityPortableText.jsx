@@ -31,7 +31,7 @@ const components = {
     link: ({children, value}) => {
       const rel = value.href.startsWith('/') ? undefined : 'noreferrer noopener';
       return (
-        <a href={value.href} rel={rel} className="text-primary hover:underline" style={{fontFamily: "Georgia, 'Times New Roman', serif"}}>
+        <a href={value.href} rel={rel} className="text-primary hover:text-gold transition-colors" style={{fontFamily: "Georgia, 'Times New Roman', serif"}}>
           {children}
         </a>
       );
@@ -67,7 +67,7 @@ export default function SanityPortableText({value}) {
   }
   
   return (
-    <div className="prose prose-lg">
+    <div>
       <PortableText value={value} components={components} />
     </div>
   );

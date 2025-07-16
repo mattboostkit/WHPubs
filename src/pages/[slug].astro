@@ -273,7 +273,7 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
                 </CardHeader>
                 <CardContent>
                   {menu.menuContent && (
-                    <div class="prose prose-sm max-w-none">
+                    <div class="space-y-4">
                       <SanityPortableText value={menu.menuContent} />
                     </div>
                   )}
@@ -331,7 +331,7 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
                     </div>
                   )}
                   {event.bookingUrl && (
-                    <a href={event.bookingUrl} target="_blank" rel="noopener noreferrer" class="no-underline">
+                    <a href={event.bookingUrl} target="_blank" rel="noopener noreferrer" class="no-underline block">
                       <Button size="sm" className="w-full hover:shadow-md">
                         Book Now
                         <ExternalLink className="w-4 h-4 ml-2" />
@@ -378,7 +378,7 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
           </div>
           {relatedPosts.length > 3 && (
             <div class="text-center mt-8">
-              <a href="/blog" class="no-underline">
+              <a href="/blog" class="no-underline inline-block">
                 <Button variant="outline">View All News</Button>
               </a>
             </div>
@@ -391,11 +391,11 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
         </div>
       )}
 
-      <!-- External Website Link -->
-      {pub.url && (
+      <!-- External Website Link - Only show if not on pub's own site -->
+      {pub.url && !pub.externalDomain && (
         <div class="mt-12 text-center">
-          <a href={pub.url} target="_blank" rel="noopener noreferrer">
-            <Button variant="outline" size="lg" class="border-primary text-primary hover:bg-primary hover:text-secondary"> <!-- Changed variant -->
+          <a href={pub.url} target="_blank" rel="noopener noreferrer" class="no-underline">
+            <Button variant="outline" size="lg" class="border-primary text-primary hover:bg-primary hover:text-secondary">
               Visit {pub.name}'s Official Website
             </Button>
           </a>
@@ -403,9 +403,8 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
       )}
 
       <!-- Link back to homepage -->
-      <!-- Link back to homepage -->
       <div class="mt-16 text-center">
-        <a href="/" class="text-primary hover:underline">
+        <a href="/" class="text-primary hover:text-primary/80 no-underline">
           &larr; Back to All Establishments
         </a>
       </div>

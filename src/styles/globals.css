@@ -141,7 +141,7 @@
   }
 
   .prose a {
-    @apply text-primary hover:text-gold transition-colors underline underline-offset-2;
+    @apply text-primary hover:text-gold transition-colors;
     font-family: Georgia, 'Times New Roman', serif;
   }
   
@@ -205,19 +205,7 @@
     @apply transform -translate-y-0.5;
   }
   
-  /* Link hover underline animation */
-  a:not(.no-underline) {
-    @apply relative;
-  }
-  
-  a:not(.no-underline)::after {
-    @apply absolute bottom-0 left-0 w-0 h-0.5 bg-gold transition-all duration-300;
-    content: '';
-  }
-  
-  a:not(.no-underline):hover::after {
-    @apply w-full;
-  }
+  /* Remove underline animations as requested */
   
   /* Card hover elevation */
   .card-hover {
