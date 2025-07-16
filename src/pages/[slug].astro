@@ -1,11 +1,15 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import { getPubs, getPubBySlug, getPosts } from '@/lib/sanity'; // Import getPosts
+import { getPubs, getPubBySlug, getPosts, getMenusForPub, getEvents } from '@/lib/sanity';
 import { Button } from "@/components/ui/button";
-import { MapPin, Clock, Phone, UtensilsCrossed, CalendarDays, Image as ImageIcon } from 'lucide-react'; // Added more icons
-import ImageGallery from '@/components/ImageGallery.astro';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { MapPin, Clock, Phone, UtensilsCrossed, CalendarDays, Image as ImageIcon, ExternalLink, Calendar } from 'lucide-react';
+import ImageGallery from '@/components/ImageGallery';
 import { PubHeroCarousel } from '@/components/PubHeroCarousel';
 import GoogleMapEmbed from '@/components/GoogleMapEmbed';
+import SanityPortableText from '@/components/SanityPortableText.astro';
+import BlogCard from '@/components/BlogCard.astro';
 
 // 1. Generate routes for all pubs
 // This page will exist in each deployment, but getStaticPaths ensures
@@ -42,13 +46,17 @@ export async function getStaticPaths() {
 // 2. Get the specific pub data for this page
 const { pub } = Astro.props;
 
-// 3. Fetch posts related to this specific pub
-const relatedPosts = await getPosts(pub?.slug?.current);
-
 // Basic error handling if pub data isn't found for the slug
 if (!pub) {
   return Astro.redirect('/404');
 }
+
+// 3. Fetch all related data for this pub
+const [relatedPosts, pubMenus, pubEvents] = await Promise.all([
+  getPosts(pub.slug.current),
+  getMenusForPub(pub.slug.current),
+  getEvents(pub.slug.current)
+]);
 
 const pageTitle = `${pub.name} - WH Pubs`;
 const pageDescription = pub.description || `Learn more about ${pub.name}, one of our fine establishments.`;
@@ -58,7 +66,7 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
   <main> {/* Remove container/padding from main, apply later */}
     <!-- Hero Section with Carousel -->
     {pub.carouselImages && pub.carouselImages.length > 0 ? (
-      <section class="relative h-[60vh] md:h-[70vh] w-full">
+      <section class="relative h-[50vh] sm:h-[60vh] md:h-[70vh] lg:h-[75vh] w-full">
         <PubHeroCarousel 
           images={pub.carouselImages}
           pubName={pub.name}
@@ -67,7 +75,7 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
       </section>
     ) : (
       <!-- Fallback to single hero image if no carousel images -->
-      <section class="relative h-[60vh] md:h-[70vh] w-full">
+      <section class="relative h-[50vh] sm:h-[60vh] md:h-[70vh] lg:h-[75vh] w-full">
         <img
           src={pub.heroImage?.asset?.url || '/images/hero-fallback.jpg'}
           alt={pub.heroImage?.alt || `Hero image for ${pub.name}`}
@@ -94,12 +102,11 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
     )}
 
     {/* Main Content Area */}
-    <div class="container mx-auto px-4 py-12"> {/* Add container/padding here */}
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16">
       <article class="max-w-4xl mx-auto">
 
       <!-- Pub Name -->
-      <!-- Pub Name (moved below hero) -->
-      <h1 class="text-4xl md:text-5xl font-bold text-primary mb-4 text-center">{pub.name}</h1>
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-primary mb-4 text-center leading-tight">{pub.name}</h1>
 
       <!-- Location -->
       {pub.location && (
@@ -132,140 +139,203 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
 
       <!-- Opening Hours -->
       {pub.openingHours && (
-        <div class="mb-8 p-6 bg-secondary/10 rounded-lg">
-          <h3 class="text-xl font-semibold text-primary mb-2 flex items-center"> <!-- Changed to h3 -->
-            <Clock class="w-5 h-5 mr-2 text-primary/80" /> Opening Hours
-          </h3>
-          <pre class="whitespace-pre-wrap font-sans text-primary/90 text-sm">{pub.openingHours}</pre> <!-- Smaller text -->
-        </div>
+        <Card className="mb-8 hover:shadow-xl transition-all duration-300 card-hover">
+          <CardHeader>
+            <CardTitle className="flex items-center">
+              <Clock className="w-5 h-5 mr-2 text-primary/80" />
+              Opening Hours
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <pre class="whitespace-pre-wrap font-sans text-primary/90">{pub.openingHours}</pre>
+          </CardContent>
+        </Card>
       )}
 
-      <!-- Food Serving Times */}
+      <!-- Food Serving Times -->
       {pub.foodServingTimes && (
-        <div class="mb-8 p-6 bg-white/80 rounded-xl shadow flex flex-col md:flex-row md:items-center md:justify-between gap-6 border border-primary/10">
-          <div class="flex items-center mb-2 md:mb-0">
-            <UtensilsCrossed class="w-6 h-6 mr-3 text-primary/80" />
-            <h3 class="text-xl font-semibold text-primary">Food Serving Times</h3>
-          </div>
-          <div class="flex flex-col md:flex-row md:gap-8 text-primary/90 text-sm">
-            {pub.foodServingTimes.split('\n').map((line, idx) => (
-              <span key={idx} class="mb-1 md:mb-0 md:mr-4 px-3 py-1 rounded bg-secondary/20 font-medium inline-block">{line}</span>
-            ))}
-          </div>
-        </div>
+        <Card className="mb-8 hover:shadow-xl transition-all duration-300 card-hover bg-gradient-to-br from-white to-secondary/5">
+          <CardHeader>
+            <CardTitle className="flex items-center">
+              <UtensilsCrossed className="w-6 h-6 mr-3 text-primary/80" />
+              Food Serving Times
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div class="flex flex-col md:flex-row md:gap-8 text-primary/90">
+              {pub.foodServingTimes.split('\n').map((line, idx) => (
+                <span key={idx} class="mb-1 md:mb-0 md:mr-4 px-3 py-1 rounded bg-secondary/20 font-medium inline-block">{line}</span>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
       )}
 
       {/* Contact Info */}
-      {(pub.contactPhone || pub.location) && (
-        <div class="mb-8 p-6 bg-white/80 rounded-xl shadow flex flex-col md:flex-row md:items-center md:justify-between gap-6 border border-primary/10">
-          <div class="flex items-center mb-2 md:mb-0">
-            <Phone class="w-6 h-6 mr-3 text-primary/80" />
-            <h3 class="text-xl font-semibold text-primary">Contact Us</h3>
-          </div>
-          <div class="flex flex-col gap-1 text-primary/90 text-sm">
-            {pub.contactPhone && (
-              <span>
-                <span class="font-medium">Call us:</span> <a href={`tel:${pub.contactPhone.replace(/\s/g, '')}`} class="underline hover:text-secondary">{pub.contactPhone}</a>
-              </span>
-            )}
-            {pub.location && (
-              <span class="flex items-center"><MapPin class="w-4 h-4 mr-1 text-primary/60" /> {pub.location}</span>
-            )}
-          </div>
-        </div>
+      {(pub.contactPhone || pub.location || pub.addressLine1) && (
+        <Card className="mb-8 hover:shadow-xl transition-all duration-300 card-hover bg-gradient-to-br from-white to-primary/5">
+          <CardHeader>
+            <CardTitle className="flex items-center">
+              <Phone className="w-6 h-6 mr-3 text-primary/80" />
+              Contact Us
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div class="grid md:grid-cols-2 gap-4">
+              {pub.contactPhone && (
+                <div class="flex items-center">
+                  <Phone class="w-5 h-5 mr-3 text-primary/60" />
+                  <div>
+                    <p class="text-sm text-primary/70">Call us</p>
+                    <a href={`tel:${pub.contactPhone.replace(/\s/g, '')}`} class="text-lg font-medium text-primary hover:text-secondary transition-colors no-underline">
+                      {pub.contactPhone}
+                    </a>
+                  </div>
+                </div>
+              )}
+              {(pub.location || pub.addressLine1) && (
+                <div class="flex items-start">
+                  <MapPin class="w-5 h-5 mr-3 text-primary/60 mt-1" />
+                  <div>
+                    <p class="text-sm text-primary/70">Find us</p>
+                    <p class="font-medium text-primary">{pub.location}</p>
+                    {pub.addressLine1 && <p class="text-sm text-primary/80">{pub.addressLine1}</p>}
+                    {pub.postcode && <p class="text-sm text-primary/80">{pub.postcode}</p>}
+                  </div>
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
       )}
 
       {/* Google Map */}
       {pub.googleMapEmbed?.iframe && (
-        <div class="mb-8">
-          <h3 class="text-xl font-semibold text-primary mb-4 flex items-center">
-            <MapPin class="w-5 h-5 mr-2 text-primary/80" /> Find Us
-          </h3>
-          <div class="rounded-xl overflow-hidden shadow-lg">
+        <Card className="mb-12 hover:shadow-xl transition-all duration-300 card-hover overflow-hidden">
+          <CardHeader>
+            <CardTitle className="flex items-center">
+              <MapPin className="w-5 h-5 mr-2 text-primary/80" />
+              Find Us
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-0">
             <GoogleMapEmbed 
               iframe={pub.googleMapEmbed.iframe} 
               className="w-full"
               client:load
             />
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       )}
 
       <!-- Image Gallery -->
       {pub.gallery && pub.gallery.length > 0 && (
         <div class="mb-12">
-          <h2 class="text-3xl font-semibold text-primary mb-6 border-b pb-2 flex items-center">
+          <h2 class="text-3xl font-semibold text-primary mb-6 flex items-center">
              <ImageIcon class="w-6 h-6 mr-3 text-primary/80" /> Gallery
           </h2>
-          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {pub.gallery.map((image) => (
-              <a href={image.asset?.url} target="_blank" rel="noopener noreferrer" class="block overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-                <img
-                  src={image.asset?.url + '?w=400&h=300&fit=crop'} // Add query params for smaller thumbs
-                  alt={image.alt || `Gallery image for ${pub.name}`}
-                  class="w-full h-40 object-cover"
-                  loading="lazy"
-                  onerror="this.onerror=null; this.src='/images/content-fallback.jpg';"
-                />
-              </a>
-            ))}
+          <div class="mt-6">
+            <ImageGallery 
+              images={pub.gallery} 
+              showCategories={true}
+              columns={3}
+              className="gallery-enhanced"
+            />
           </div>
         </div>
       )}
 
       {/* Menus Section */}
-      <div class="mb-12 p-6 bg-secondary/10 rounded-xl flex flex-col items-center border border-primary/10">
-        <h2 class="text-3xl font-semibold text-primary mb-2 flex items-center">
-          <UtensilsCrossed class="w-6 h-6 mr-3 text-primary/80" /> Menus
-        </h2>
-        {pub.slug?.current === 'the-rose-and-crown' ? (
-          <>
-            <img src="/images/menu-fallback.jpg" alt="Menu preview" class="w-32 h-24 object-cover rounded mb-3 shadow" />
-            <ul class="w-full max-w-md text-left space-y-2">
-              <li class="bg-white/90 rounded p-3 shadow flex flex-col">
-                <span class="font-semibold text-primary">Beer Battered Fish & Chips</span>
-                <span class="text-primary/70 text-sm">with mushy peas & tartare sauce</span>
-              </li>
-              <li class="bg-white/90 rounded p-3 shadow flex flex-col">
-                <span class="font-semibold text-primary">Classic Beef Burger</span>
-                <span class="text-primary/70 text-sm">with cheddar, lettuce, tomato, fries</span>
-              </li>
-              <li class="bg-white/90 rounded p-3 shadow flex flex-col">
-                <span class="font-semibold text-primary">Vegan Buddha Bowl</span>
-                <span class="text-primary/70 text-sm">quinoa, roasted veg, tahini dressing</span>
-              </li>
-            </ul>
-          </>
-        ) : (
-          <>
-            <img src="/images/menu-fallback.jpg" alt="Menu coming soon" class="w-32 h-24 object-cover rounded mb-3 shadow" />
-            <p class="text-primary/70 italic">Menu information coming soon...</p>
-          </>
-        )}
-      </div>
+      {(pubMenus && pubMenus.length > 0) ? (
+        <div class="mb-12">
+          <h2 class="text-3xl font-semibold text-primary mb-6 flex items-center">
+            <UtensilsCrossed class="w-6 h-6 mr-3 text-primary/80" /> Our Menus
+          </h2>
+          <div class="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+            {pubMenus.map((menu) => (
+              <Card className="hover:shadow-xl transition-all duration-300 card-hover">
+                <CardHeader>
+                  <CardTitle>{menu.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {menu.menuContent && (
+                    <div class="prose prose-sm max-w-none">
+                      <SanityPortableText blocks={menu.menuContent} />
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div class="mb-12 p-8 bg-secondary/10 rounded-xl text-center">
+          <UtensilsCrossed class="w-12 h-12 mx-auto mb-4 text-primary/40" />
+          <h3 class="text-xl font-semibold text-primary mb-2">Menus Coming Soon</h3>
+          <p class="text-primary/70">We're currently updating our menu selection. Please check back soon!</p>
+        </div>
+      )}
 
       {/* Events Section */}
-      <div class="mb-12 p-6 bg-white/80 rounded-xl flex flex-col items-center border border-primary/10 shadow">
-        <h2 class="text-3xl font-semibold text-primary mb-2 flex items-center">
-          <CalendarDays class="w-6 h-6 mr-3 text-primary/80" /> Events
-        </h2>
-        {pub.slug?.current === 'the-rose-and-crown' ? (
-          <div class="w-full max-w-md space-y-4">
-            <div class="bg-secondary/10 rounded p-4 shadow">
-              <div class="font-semibold text-primary">Live Jazz Night</div>
-              <div class="text-primary/70 text-sm">Friday, 12th July, 7:30pm</div>
-              <div class="text-primary/80 mt-1">Join us for an evening of smooth jazz and great food!</div>
-            </div>
-            <div class="bg-secondary/10 rounded p-4 shadow">
-              <div class="font-semibold text-primary">Family BBQ & Garden Games</div>
-              <div class="text-primary/70 text-sm">Sunday, 21st July, 1pm</div>
-              <div class="text-primary/80 mt-1">Fun for all ages in our beautiful garden. Book your table!</div>
-            </div>
+      {(pubEvents && pubEvents.length > 0) ? (
+        <div class="mb-12">
+          <h2 class="text-3xl font-semibold text-primary mb-6 flex items-center">
+            <CalendarDays class="w-6 h-6 mr-3 text-primary/80" /> Upcoming Events
+          </h2>
+          <div class="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+            {pubEvents.map((event) => (
+              <Card className="hover:shadow-xl transition-all duration-300 card-hover overflow-hidden">
+                {event.image?.asset?.url && (
+                  <div class="h-48 overflow-hidden img-hover-zoom">
+                    <img
+                      src={event.image.asset.url}
+                      alt={event.image.alt || event.title}
+                      class="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                )}
+                <CardHeader>
+                  <div class="flex items-start justify-between">
+                    <CardTitle className="text-lg">{event.title}</CardTitle>
+                    {event.date && (
+                      <Badge variant="secondary" className="ml-2">
+                        <Calendar className="w-3 h-3 mr-1" />
+                        {new Date(event.date).toLocaleDateString('en-GB', { 
+                          day: 'numeric',
+                          month: 'short',
+                          year: 'numeric'
+                        })}
+                      </Badge>
+                    )}
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  {event.description && (
+                    <div class="prose prose-sm max-w-none mb-4">
+                      <SanityPortableText blocks={event.description} />
+                    </div>
+                  )}
+                  {event.bookingUrl && (
+                    <a href={event.bookingUrl} target="_blank" rel="noopener noreferrer" class="no-underline">
+                      <Button size="sm" className="w-full hover:shadow-md">
+                        Book Now
+                        <ExternalLink className="w-4 h-4 ml-2" />
+                      </Button>
+                    </a>
+                  )}
+                </CardContent>
+              </Card>
+            ))}
           </div>
-        ) : (
-          <p class="text-primary/70 italic">Check back soon for upcoming events at {pub.name}!</p>
-        )}
-      </div>
+        </div>
+      ) : (
+        <div class="mb-12 p-8 bg-white/80 rounded-xl text-center shadow-sm">
+          <CalendarDays class="w-12 h-12 mx-auto mb-4 text-primary/40" />
+          <h3 class="text-xl font-semibold text-primary mb-2">No Upcoming Events</h3>
+          <p class="text-primary/70">Check back soon for events at {pub.name}!</p>
+        </div>
+      )}
 
       <!-- Image Gallery -->
       {pub.gallery && pub.gallery.length > 0 && (
@@ -284,29 +354,28 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
       )}
 
       {/* Latest News Section */}
-      <div class="mb-12">
-        <h2 class="text-3xl font-semibold text-primary mb-6 border-b pb-2">Latest News from {pub.name}</h2>
-        {pub.slug?.current === 'the-rose-and-crown' ? (
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="bg-white/90 rounded-xl shadow p-4 flex flex-col">
-              <img src="/images/rose-and-crown.jpg" alt="Rose and Crown Blog Post" class="w-full h-40 object-cover rounded mb-3" />
-              <div class="font-bold text-lg text-primary mb-1">Summer Garden Party Announced!</div>
-              <div class="text-primary/70 text-sm mb-2">Posted July 1, 2024</div>
-              <div class="text-primary/90 mb-3">We're excited to announce our annual Summer Garden Party with live music, BBQ, and family fun. Don't miss out!</div>
-              <a href="#" class="mt-auto text-secondary font-semibold hover:underline">Read More →</a>
-            </div>
-            <div class="bg-white/90 rounded-xl shadow p-4 flex flex-col">
-              <img src="/images/rose-and-crown.jpg" alt="Rose and Crown Blog Post 2" class="w-full h-40 object-cover rounded mb-3" />
-              <div class="font-bold text-lg text-primary mb-1">Chef's New Seasonal Menu</div>
-              <div class="text-primary/70 text-sm mb-2">Posted June 20, 2024</div>
-              <div class="text-primary/90 mb-3">Our chef has launched a fresh new menu for summer, featuring local produce and creative dishes. Come try it!</div>
-              <a href="#" class="mt-auto text-secondary font-semibold hover:underline">Read More →</a>
-            </div>
+      {(relatedPosts && relatedPosts.length > 0) ? (
+        <div class="mb-12">
+          <h2 class="text-3xl font-semibold text-primary mb-6">Latest News from {pub.name}</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {relatedPosts.slice(0, 3).map((post) => (
+              <BlogCard post={post} />
+            ))}
           </div>
-        ) : (
-          <p class="text-primary/70 italic">No news posts found for {pub.name} yet.</p>
-        )}
-      </div>
+          {relatedPosts.length > 3 && (
+            <div class="text-center mt-8">
+              <a href="/blog" class="no-underline">
+                <Button variant="outline">View All News</Button>
+              </a>
+            </div>
+          )}
+        </div>
+      ) : (
+        <div class="mb-12 p-8 bg-gray-50 rounded-xl text-center">
+          <h3 class="text-xl font-semibold text-primary mb-2">Stay Tuned</h3>
+          <p class="text-primary/70">News and updates from {pub.name} coming soon!</p>
+        </div>
+      )}
 
       <!-- External Website Link -->
       {pub.url && (

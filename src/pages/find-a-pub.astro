@@ -1,7 +1,7 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import PageHero from '@/components/PageHero.astro';
-import PubFinderMap from '@/components/PubFinderMap';
+import PubFinderMapSimple from '@/components/PubFinderMapSimple';
 import { getPubs } from '@/lib/sanity';
 
 // Fetch all pubs
@@ -31,7 +31,7 @@ const description = "Discover your nearest WH Pub with our interactive map. Find
         </p>
       </div>
 
-      <PubFinderMap 
+      <PubFinderMapSimple 
         pubs={pubs} 
         client:load 
       />
