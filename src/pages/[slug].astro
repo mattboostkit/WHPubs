@@ -137,6 +137,20 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
         </div>
       )}
 
+      <!-- Amenities Pills -->
+      {pub.amenities && pub.amenities.length > 0 && (
+        <div class="mb-8 flex flex-wrap gap-2 justify-center">
+          {pub.amenities.map((amenity) => (
+            <Badge 
+              variant="secondary" 
+              className="px-4 py-2 text-sm font-medium bg-secondary/20 hover:bg-secondary/30 transition-colors"
+            >
+              {amenity}
+            </Badge>
+          ))}
+        </div>
+      )}
+
       <!-- Opening Hours -->
       {pub.openingHours && (
         <Card className="mb-8 hover:shadow-xl transition-all duration-300 card-hover">

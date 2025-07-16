@@ -4,9 +4,7 @@ import { Menu as MenuIcon, MapPin, Clock, Phone } from 'lucide-react';
 import { X } from 'lucide-react';
 import AdminBadge from '@/components/AdminBadge.astro';
 import SchemaOrg from '@/components/SchemaOrg.astro';
-import SiteSearch from '@/components/SiteSearch';
-import { client as sanityClient } from '@/lib/sanity.js';
-import { generateSearchData } from '@/lib/search-data.js'; 
+import { client as sanityClient } from '@/lib/sanity.js'; 
 // Import the Pub type if you have it defined, otherwise use 'any'
 // import type { Pub } from '@/types'; 
 
@@ -27,8 +25,6 @@ const currentPath = Astro.url.pathname;
 // Determine if we are rendering for a specific pub or the main hub
 const isPubLayout = !!activePub;
 
-// Generate search data for the hub site
-const searchData = !isPubLayout ? await generateSearchData() : [];
 
 // --- Fetch Main Site Data ---
 // Fetch data only if it's the main hub or needed as fallback
@@ -171,11 +167,6 @@ const metaDescription = description || footerDescription;
 		<title>{title}</title>
 	</head>
 	<body class:list={["bg-background text-foreground", pub?.colorScheme ? `theme-${pub.colorScheme}` : 'theme-default']}>
-		<!-- Skip to content link for accessibility -->
-		<a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary text-white px-4 py-2 rounded-md z-[100] focus:outline-none focus:ring-2 focus:ring-gold">
-			Skip to main content
-		</a>
-		
 		<header class="bg-primary fixed w-full z-50">
 			<AdminBadge />
 			<nav class="container mx-auto px-4 py-4" aria-label="Main navigation">
@@ -212,20 +203,15 @@ const metaDescription = description || footerDescription;
 							);
 						})}
 					</div>
-					<div class="flex items-center gap-4">
-						{!isPubLayout && searchData.length > 0 && (
-							<SiteSearch searchData={searchData} client:load className="hidden md:flex text-[#B79C64]" />
-						)}
-						<button 
-							id="menu-toggle"
-							class="md:hidden text-[#B79C64]/80 hover:text-[#B79C64]"
-							aria-label="Toggle menu"
-							aria-expanded="false"
-							aria-controls="mobile-menu"
-						>
-							<MenuIcon class="w-8 h-8" aria-hidden="true" />
-						</button>
-					</div>
+					<button 
+						id="menu-toggle"
+						class="md:hidden text-[#B79C64]/80 hover:text-[#B79C64]"
+						aria-label="Toggle menu"
+						aria-expanded="false"
+						aria-controls="mobile-menu"
+					>
+						<MenuIcon class="w-8 h-8" aria-hidden="true" />
+					</button>
 				</div>
 			</nav>
 			
@@ -285,7 +271,7 @@ const metaDescription = description || footerDescription;
 			</div>
 		</header>
 		
-		<main id="main-content" class="pt-20">
+		<main class="pt-20">
 			<slot />
 		</main>
 		
