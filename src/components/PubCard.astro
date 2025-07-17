@@ -48,7 +48,7 @@ const isOpenNow = todayHours && todayHours !== 'Closed';
 
 {variant === 'featured' ? (
   <Card className="overflow-hidden hover:shadow-2xl transition-all duration-300 group card-hover">
-    <div class="relative h-72 overflow-hidden img-hover-zoom">
+    <div class="relative aspect-square overflow-hidden img-hover-zoom">
       <img
         src={imageUrl}
         alt={imageAlt}
@@ -174,7 +174,7 @@ const isOpenNow = todayHours && todayHours !== 'Closed';
   </Card>
 ) : (
   <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 h-full flex flex-col card-hover">
-    <div class="relative h-48 overflow-hidden img-hover-zoom">
+    <div class="relative aspect-square overflow-hidden img-hover-zoom">
       <img
         src={imageUrl}
         alt={imageAlt}
