@@ -1,0 +1,62 @@
+---
+// Live region component for screen reader announcements
+export interface Props {
+  id?: string;
+  type?: 'polite' | 'assertive';
+  atomic?: boolean;
+  relevant?: string;
+}
+
+const { 
+  id = 'live-region', 
+  type = 'polite', 
+  atomic = true,
+  relevant = 'additions text'
+} = Astro.props;
+---
+
+<div
+  id={id}
+  aria-live={type}
+  aria-atomic={atomic}
+  aria-relevant={relevant}
+  class="sr-only"
+  role="status"
+>
+  <!-- Content will be dynamically added via JavaScript -->
+</div>
+
+<style>
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+</style>
+
+<script>
+  // Global function to announce messages to screen readers
+  window.announceToScreenReader = function(message, isAssertive = false) {
+    const regionId = isAssertive ? 'live-region-assertive' : 'live-region';
+    const region = document.getElementById(regionId);
+    
+    if (region) {
+      // Clear and set new message
+      region.textContent = '';
+      setTimeout(() => {
+        region.textContent = message;
+      }, 100);
+      
+      // Clear after announcement
+      setTimeout(() => {
+        region.textContent = '';
+      }, 1000);
+    }
+  };
+</script>

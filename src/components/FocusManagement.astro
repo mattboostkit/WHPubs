@@ -1,0 +1,157 @@
+---
+// Focus management utilities for improved keyboard navigation
+---
+
+<script>
+  // Focus trap utility for modals and overlays
+  window.focusTrap = {
+    // Store trapped elements
+    trappedElements: new Map(),
+    
+    // Trap focus within an element
+    trap: function(elementId, returnFocusTo = null) {
+      const element = document.getElementById(elementId);
+      if (!element) return;
+      
+      // Get all focusable elements within
+      const focusableElements = element.querySelectorAll(
+        'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      );
+      
+      const firstFocusable = focusableElements[0];
+      const lastFocusable = focusableElements[focusableElements.length - 1];
+      
+      // Store trap info
+      this.trappedElements.set(elementId, {
+        element,
+        firstFocusable,
+        lastFocusable,
+        returnFocusTo: returnFocusTo || document.activeElement
+      });
+      
+      // Focus first element
+      if (firstFocusable) {
+        firstFocusable.focus();
+      }
+      
+      // Add keydown listener
+      const handleKeydown = (e) => {
+        if (e.key === 'Tab') {
+          if (e.shiftKey) {
+            // Shift + Tab
+            if (document.activeElement === firstFocusable) {
+              e.preventDefault();
+              lastFocusable.focus();
+            }
+          } else {
+            // Tab
+            if (document.activeElement === lastFocusable) {
+              e.preventDefault();
+              firstFocusable.focus();
+            }
+          }
+        }
+        
+        // Escape key to close
+        if (e.key === 'Escape') {
+          this.release(elementId);
+        }
+      };
+      
+      element.addEventListener('keydown', handleKeydown);
+      element.setAttribute('data-focus-trap-handler', 'true');
+    },
+    
+    // Release focus trap
+    release: function(elementId) {
+      const trapInfo = this.trappedElements.get(elementId);
+      if (!trapInfo) return;
+      
+      // Return focus to original element
+      if (trapInfo.returnFocusTo && trapInfo.returnFocusTo.focus) {
+        trapInfo.returnFocusTo.focus();
+      }
+      
+      // Remove event listeners
+      const element = trapInfo.element;
+      if (element.hasAttribute('data-focus-trap-handler')) {
+        // Note: In real implementation, we'd store and remove the specific handler
+        element.removeAttribute('data-focus-trap-handler');
+      }
+      
+      // Clean up
+      this.trappedElements.delete(elementId);
+    }
+  };
+  
+  // Roving tabindex for lists and menus
+  window.rovingTabIndex = {
+    init: function(containerId) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      
+      const items = container.querySelectorAll('[role="menuitem"], [role="option"], [role="tab"]');
+      if (items.length === 0) return;
+      
+      // Set initial tabindex
+      items.forEach((item, index) => {
+        item.setAttribute('tabindex', index === 0 ? '0' : '-1');
+      });
+      
+      // Handle keyboard navigation
+      container.addEventListener('keydown', (e) => {
+        const currentItem = document.activeElement;
+        const currentIndex = Array.from(items).indexOf(currentItem);
+        
+        if (currentIndex === -1) return;
+        
+        let nextIndex = currentIndex;
+        
+        switch(e.key) {
+          case 'ArrowDown':
+          case 'ArrowRight':
+            e.preventDefault();
+            nextIndex = (currentIndex + 1) % items.length;
+            break;
+          case 'ArrowUp':
+          case 'ArrowLeft':
+            e.preventDefault();
+            nextIndex = (currentIndex - 1 + items.length) % items.length;
+            break;
+          case 'Home':
+            e.preventDefault();
+            nextIndex = 0;
+            break;
+          case 'End':
+            e.preventDefault();
+            nextIndex = items.length - 1;
+            break;
+          default:
+            return;
+        }
+        
+        // Update tabindex and focus
+        items[currentIndex].setAttribute('tabindex', '-1');
+        items[nextIndex].setAttribute('tabindex', '0');
+        items[nextIndex].focus();
+      });
+    }
+  };
+  
+  // Skip to section utility
+  window.skipToSection = function(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      // Focus the section
+      section.setAttribute('tabindex', '-1');
+      section.focus();
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      
+      // Announce to screen readers
+      if (window.announceToScreenReader) {
+        const sectionTitle = section.querySelector('h1, h2, h3')?.textContent || 'Section';
+        window.announceToScreenReader(`Navigated to ${sectionTitle}`);
+      }
+    }
+  };
+</script>

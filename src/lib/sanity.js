@@ -38,7 +38,7 @@ export async function getPosts(targetPubSlug = null) {
       ctaTitle,
       ctaDescription,
       ctaButton,
-      "categories": categories[]->title,
+      categories,
       pub->{ // Include basic pub info if needed
         name,
         slug
@@ -47,29 +47,6 @@ export async function getPosts(targetPubSlug = null) {
   `, params);
 }
 
-// Helper function to get posts for a specific site
-export async function getPostsForSite(siteSlug) {
-  return client.fetch(`
-    *[_type == "post" && references(*[_type == "site" && slug.current == $siteSlug]._id)] {
-      title,
-      slug,
-      mainImage {
-        asset->{
-          _id,
-          url
-        }
-      },
-      imageAlt,
-      publishedAt,
-      author,
-      authorTitle,
-      ctaTitle,
-      ctaDescription,
-      ctaButton,
-      "categories": categories[]->title
-    } | order(publishedAt desc)
-  `, { siteSlug });
-}
 
 // Helper function to get a single post by slug
 export async function getPost(slug) {
@@ -97,31 +74,9 @@ export async function getPost(slug) {
           asset->
         }
       },
-      "categories": categories[]->title,
-      "sites": sites[]->slug.current
+      "categories": categories[]->title
     }
   `, { slug });
-}
-
-// Helper function to get all sites
-export async function getAllSites() {
-  return client.fetch(`
-    *[_type == "site"] {
-      title,
-      slug,
-      description,
-      logo {
-        asset->{
-          _id,
-          url
-        }
-      },
-      address,
-      contactEmail,
-      contactPhone,
-      isMainSite
-    } | order(isMainSite desc)
-  `);
 }
 
 // Helper function to get a single pub by slug
@@ -277,6 +232,37 @@ export async function getHomepageData() {
       heroButton1Link,
       heroButton2Text,
       heroButton2Link
+    }
+  `);
+}
+
+// Helper function to get site settings
+export async function getSiteSettings() {
+  return client.fetch(`
+    *[_type == "siteSettings"][0] {
+      siteName,
+      siteTagline,
+      logo {
+        asset->{
+          _id,
+          url
+        },
+        alt
+      },
+      footerDescription,
+      defaultContactLocation,
+      defaultContactHours,
+      defaultContactPhone,
+      socialLinks,
+      seo {
+        metaDescription,
+        ogImage {
+          asset->{
+            _id,
+            url
+          }
+        }
+      }
     }
   `);
 }
@@ -456,3 +442,223 @@ export async function getPageSettings(pageName = null) {
 }
 
 // Note: getPubBySlug remains useful for the dynamic page generation
+
+// Helper function to get reviews, optionally filtered by pub slug
+export async function getReviews(targetPubSlug = null, featured = false) {
+  let filter = '';
+  const params = {};
+  
+  if (targetPubSlug) {
+    // Fetch reviews matching the specific pub slug
+    filter += `&& associatedPub->slug.current == $targetPubSlug`;
+    params.targetPubSlug = targetPubSlug;
+  } else {
+    // Fetch reviews with NO pub reference (general WH Pubs reviews)
+    filter += `&& !defined(associatedPub)`;
+  }
+  
+  if (featured) {
+    filter += ` && featured == true`;
+  }
+
+  return client.fetch(`
+    *[_type == "review" ${filter}] {
+      customerName,
+      rating,
+      reviewText,
+      date,
+      source,
+      featured,
+      verified,
+      associatedPub->{ name, slug }
+    } | order(featured desc, date desc)
+  `, params);
+}
+
+// Helper function to get offers, optionally filtered by pub slug
+export async function getOffers(targetPubSlug = null, activeOnly = true) {
+  let filter = '';
+  const params = {};
+  
+  if (targetPubSlug) {
+    // Fetch offers matching the specific pub slug or general offers
+    filter += `&& (associatedPub->slug.current == $targetPubSlug || !defined(associatedPub))`;
+    params.targetPubSlug = targetPubSlug;
+  } else {
+    // Fetch offers with NO pub reference (general WH Pubs offers)
+    filter += `&& !defined(associatedPub)`;
+  }
+  
+  if (activeOnly) {
+    filter += ` && active == true`;
+    // Only show offers that are currently valid
+    const today = new Date().toISOString().split('T')[0];
+    filter += ` && validFrom <= "${today}" && validUntil >= "${today}"`;
+  }
+
+  return client.fetch(`
+    *[_type == "offer" ${filter}] {
+      title,
+      slug,
+      description,
+      details[]{ ..., asset-> },
+      offerType,
+      discountValue,
+      validFrom,
+      validUntil,
+      daysOfWeek,
+      timeRestrictions,
+      image { asset->{ _id, url }, alt },
+      ctaText,
+      ctaLink,
+      featured,
+      active,
+      associatedPub->{ name, slug }
+    } | order(featured desc, order asc, validUntil asc)
+  `, params);
+}
+
+// Helper function to get gift card data
+export async function getGiftCardData() {
+  return client.fetch(`
+    *[_type == "giftCard"][0] {
+      title,
+      heroTitle,
+      heroSubtitle,
+      heroImage { asset->{ _id, url }, alt },
+      introText[]{ ..., asset-> },
+      denominations,
+      features[] {
+        title,
+        description,
+        icon
+      },
+      howItWorks[] {
+        stepNumber,
+        title,
+        description
+      },
+      termsAndConditions[]{ ..., asset-> },
+      purchaseUrl,
+      purchaseButtonText,
+      checkBalanceUrl,
+      faqs[] {
+        question,
+        answer
+      }
+    }
+  `);
+}
+
+// Helper function to get team members
+export async function getTeamMembers(targetPubSlug = null, department = null) {
+  let filter = '';
+  const params = {};
+  
+  if (targetPubSlug) {
+    filter += `&& associatedPub->slug.current == $targetPubSlug`;
+    params.targetPubSlug = targetPubSlug;
+  }
+  
+  if (department) {
+    filter += ` && department == $department`;
+    params.department = department;
+  }
+
+  return client.fetch(`
+    *[_type == "teamMember" ${filter}] {
+      name,
+      slug,
+      role,
+      department,
+      bio,
+      detailedBio[]{ ..., asset-> },
+      image { asset->{ _id, url }, alt },
+      yearsOfExperience,
+      specialties,
+      favoriteQuote,
+      funFact,
+      featured,
+      associatedPub->{ name, slug }
+    } | order(featured desc, order asc, name asc)
+  `, params);
+}
+
+// Helper function to get pub stories
+export async function getPubStories(targetPubSlug) {
+  if (!targetPubSlug) return [];
+  
+  return client.fetch(`
+    *[_type == "pubStory" && associatedPub->slug.current == $targetPubSlug] {
+      title,
+      slug,
+      storyType,
+      summary,
+      content[]{ ..., asset-> },
+      timeline[] {
+        year,
+        event,
+        image { asset->{ _id, url }, alt }
+      },
+      featuredImage { asset->{ _id, url }, alt, caption },
+      gallery[] {
+        asset->{ _id, url },
+        alt,
+        caption,
+        year
+      },
+      quotes[] {
+        quote,
+        author,
+        role
+      },
+      featured,
+      publishedAt
+    } | order(featured desc, publishedAt desc)
+  `, { targetPubSlug });
+}
+
+// Helper function to get loyalty program data
+export async function getLoyaltyProgramData() {
+  return client.fetch(`
+    *[_type == "loyaltyProgram"][0] {
+      title,
+      tagline,
+      heroImage { asset->{ _id, url }, alt },
+      description[]{ ..., asset-> },
+      howItWorks[] {
+        stepNumber,
+        title,
+        description,
+        icon
+      },
+      tiers[] {
+        name,
+        pointsRequired,
+        color,
+        benefits,
+        icon { asset->{ _id, url } }
+      },
+      earningRules[] {
+        action,
+        points,
+        category
+      },
+      rewards[] {
+        name,
+        pointsCost,
+        description,
+        category,
+        featured
+      },
+      faqs[] {
+        question,
+        answer
+      },
+      termsAndConditions[]{ ..., asset-> },
+      signUpUrl,
+      signUpButtonText,
+      loginUrl
+    }
+  `);
+}

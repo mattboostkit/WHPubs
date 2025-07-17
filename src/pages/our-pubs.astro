@@ -1,7 +1,7 @@
 ---
 import Layout from '@/layouts/Layout.astro';
 import PageHero from '@/components/PageHero.astro';
-import PubCard from '@/components/PubCard.astro';
+import InteractivePubFinder from '@/components/InteractivePubFinder';
 import { getPubs, getPageSettings } from '@/lib/sanity';
 
 // Fetch all pubs
@@ -25,23 +25,7 @@ const description = "Explore all WH Pubs locations across South East England. Fi
     }}
   />
 
-  <section class="py-12 md:py-16">
-    <div class="container mx-auto px-4">
-      <div class="text-center mb-8">
-        <h2 class="text-3xl font-bold mb-4">Our Pub Collection</h2>
-        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-          Explore our collection of traditional British pubs across South East England. 
-          Each location offers its own unique character and charm.
-        </p>
-      </div>
-
-      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {pubs.map((pub) => (
-          <PubCard pub={pub} variant="default" />
-        ))}
-      </div>
-    </div>
-  </section>
+  <InteractivePubFinder pubs={pubs} client:load />
 
   <!-- Additional Info Section -->
   <section class="py-12 bg-gray-50">

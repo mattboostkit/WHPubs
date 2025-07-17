@@ -1,0 +1,74 @@
+---
+// Accessible heading component that ensures proper hierarchy
+export interface Props {
+  level: 1 | 2 | 3 | 4 | 5 | 6;
+  text: string;
+  class?: string;
+  id?: string;
+  visualLevel?: 1 | 2 | 3 | 4 | 5 | 6; // For visual styling different from semantic level
+}
+
+const { 
+  level, 
+  text, 
+  class: className = '', 
+  id,
+  visualLevel
+} = Astro.props;
+
+const Tag = `h${level}` as any;
+const visualClass = visualLevel ? `text-h${visualLevel}` : `text-h${level}`;
+---
+
+<Tag 
+  class:list={[visualClass, className]}
+  id={id}
+>
+  {text}
+</Tag>
+
+<style>
+  /* Heading sizes with proper hierarchy */
+  .text-h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold;
+  }
+  
+  .text-h2 {
+    @apply text-3xl md:text-4xl font-bold;
+  }
+  
+  .text-h3 {
+    @apply text-2xl md:text-3xl font-semibold;
+  }
+  
+  .text-h4 {
+    @apply text-xl md:text-2xl font-semibold;
+  }
+  
+  .text-h5 {
+    @apply text-lg md:text-xl font-medium;
+  }
+  
+  .text-h6 {
+    @apply text-base md:text-lg font-medium;
+  }
+  
+  /* Ensure headings have proper spacing and are keyboard focusable when targeted */
+  h1, h2, h3, h4, h5, h6 {
+    @apply scroll-mt-24;
+  }
+  
+  h1:target, h2:target, h3:target, h4:target, h5:target, h6:target {
+    @apply outline-none;
+    animation: highlight 2s ease-out;
+  }
+  
+  @keyframes highlight {
+    0% {
+      background-color: rgb(181 156 100 / 0.3);
+    }
+    100% {
+      background-color: transparent;
+    }
+  }
+</style>

@@ -1,0 +1,188 @@
+---
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Clock, Calendar, Tag, ExternalLink } from 'lucide-react';
+
+export interface Props {
+  offers: Array<{
+    title: string;
+    slug?: { current: string };
+    description: string;
+    details?: any[];
+    offerType: string;
+    discountValue?: string;
+    validFrom: string;
+    validUntil: string;
+    daysOfWeek?: string[];
+    timeRestrictions?: string;
+    image?: {
+      asset: { url: string };
+      alt?: string;
+    };
+    ctaText?: string;
+    ctaLink?: string;
+    featured?: boolean;
+    associatedPub?: {
+      name: string;
+      slug: { current: string };
+    };
+  }>;
+  title?: string;
+  subtitle?: string;
+}
+
+const { offers, title = "Special Offers", subtitle = "Don't miss out on these great deals" } = Astro.props;
+
+const formatDate = (dateString) => {
+  if (!dateString) return '';
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric'
+  });
+};
+
+const getDaysDisplay = (days) => {
+  if (!days || days.length === 0) return 'Every day';
+  if (days.length === 7) return 'Every day';
+  if (days.length === 5 && !days.includes('saturday') && !days.includes('sunday')) return 'Weekdays';
+  if (days.length === 2 && days.includes('saturday') && days.includes('sunday')) return 'Weekends';
+  return days.map(d => d.charAt(0).toUpperCase() + d.slice(1)).join(', ');
+};
+
+const getOfferTypeBadge = (type) => {
+  const types = {
+    percentage: { label: 'Discount', color: 'bg-green-100 text-green-800' },
+    fixed: { label: 'Save', color: 'bg-blue-100 text-blue-800' },
+    bogo: { label: 'BOGO', color: 'bg-purple-100 text-purple-800' },
+    happyhour: { label: 'Happy Hour', color: 'bg-orange-100 text-orange-800' },
+    setmenu: { label: 'Set Menu', color: 'bg-indigo-100 text-indigo-800' },
+    earlybird: { label: 'Early Bird', color: 'bg-yellow-100 text-yellow-800' },
+    event: { label: 'Special Event', color: 'bg-pink-100 text-pink-800' },
+    other: { label: 'Special', color: 'bg-gray-100 text-gray-800' }
+  };
+  return types[type] || types.other;
+};
+
+const isOfferValidToday = (offer) => {
+  const today = new Date();
+  const validFrom = new Date(offer.validFrom);
+  const validUntil = new Date(offer.validUntil);
+  
+  if (today < validFrom || today > validUntil) return false;
+  
+  if (offer.daysOfWeek && offer.daysOfWeek.length > 0) {
+    const todayDay = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'][today.getDay()];
+    return offer.daysOfWeek.includes(todayDay);
+  }
+  
+  return true;
+};
+---
+
+{offers && offers.length > 0 && (
+  <section class="py-20 bg-gradient-to-br from-secondary/10 to-secondary/5">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">{title}</h2>
+        <p class="text-muted-foreground text-lg">{subtitle}</p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+        {offers.map((offer) => {
+          const offerType = getOfferTypeBadge(offer.offerType);
+          const validToday = isOfferValidToday(offer);
+          
+          return (
+            <Card class={`hover:shadow-xl transition-all duration-300 overflow-hidden ${offer.featured ? 'ring-2 ring-secondary' : ''} ${!validToday ? 'opacity-75' : ''}`}>
+              {offer.image?.asset?.url && (
+                <div class="relative h-48 overflow-hidden">
+                  <img
+                    src={offer.image.asset.url}
+                    alt={offer.image.alt || offer.title}
+                    class="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                  {offer.discountValue && (
+                    <div class="absolute bottom-4 left-4">
+                      <span class="text-3xl font-bold text-white drop-shadow-lg">
+                        {offer.discountValue}
+                      </span>
+                    </div>
+                  )}
+                  <div class="absolute top-4 right-4">
+                    <Badge variant="secondary" class={`${offerType.color}`}>
+                      {offerType.label}
+                    </Badge>
+                  </div>
+                </div>
+              )}
+              
+              <CardHeader>
+                <CardTitle class="text-xl flex items-start justify-between">
+                  <span>{offer.title}</span>
+                  {offer.featured && (
+                    <Tag class="w-5 h-5 text-secondary flex-shrink-0" />
+                  )}
+                </CardTitle>
+              </CardHeader>
+              
+              <CardContent class="space-y-4">
+                <p class="text-muted-foreground">{offer.description}</p>
+                
+                <div class="space-y-2 text-sm">
+                  <div class="flex items-center gap-2 text-muted-foreground">
+                    <Calendar class="w-4 h-4" />
+                    <span>Valid: {formatDate(offer.validFrom)} - {formatDate(offer.validUntil)}</span>
+                  </div>
+                  
+                  {offer.daysOfWeek && offer.daysOfWeek.length > 0 && offer.daysOfWeek.length < 7 && (
+                    <div class="flex items-center gap-2 text-muted-foreground">
+                      <Clock class="w-4 h-4" />
+                      <span>{getDaysDisplay(offer.daysOfWeek)}</span>
+                    </div>
+                  )}
+                  
+                  {offer.timeRestrictions && (
+                    <div class="flex items-center gap-2 text-muted-foreground">
+                      <Clock class="w-4 h-4" />
+                      <span>{offer.timeRestrictions}</span>
+                    </div>
+                  )}
+                  
+                  {offer.associatedPub && (
+                    <div class="flex items-center gap-2 text-muted-foreground">
+                      <Badge variant="outline" class="text-xs">
+                        {offer.associatedPub.name}
+                      </Badge>
+                    </div>
+                  )}
+                </div>
+                
+                {offer.ctaLink && (
+                  <a href={offer.ctaLink} target="_blank" rel="noopener noreferrer" class="block">
+                    <Button size="sm" class="w-full" variant={validToday ? "default" : "outline"}>
+                      {offer.ctaText || 'Learn More'}
+                      <ExternalLink class="w-4 h-4 ml-2" />
+                    </Button>
+                  </a>
+                )}
+              </CardContent>
+            </Card>
+          );
+        })}
+      </div>
+      
+      {offers.length >= 6 && (
+        <div class="text-center mt-8">
+          <a href="/offers" class="inline-flex items-center text-primary hover:text-primary/80 font-semibold">
+            View All Offers →
+          </a>
+        </div>
+      )}
+    </div>
+  </section>
+)}

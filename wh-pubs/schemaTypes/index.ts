@@ -1,9 +1,7 @@
 import { SchemaTypeDefinition } from 'sanity'
 import blockContent from './blockContent'
-import category from './category'
 import post from './post'
-import author from './author'
-import site from './site'
+import siteSettings from './siteSettings'
 import pub from './pub'
 import menu from './menu'
 import career from './career'
@@ -12,9 +10,16 @@ import event from './event'
 import googleMapEmbed from './googleMapEmbed'
 import developmentKitchen from './developmentKitchen'
 import thingsToDo from './thingsToDo'
+import review from './review'
+import offer from './offer'
+import giftCard from './giftCard'
+import teamMember from './teamMember'
+import pubStory from './pubStory'
+import loyaltyProgram from './loyaltyProgram'
 import { eventsPageSettings, blogPageSettings, aboutPageSettings, contactPageSettings, careersPageSettings, thingsToDoPageSettings, pubFinderPageSettings } from './pageSettings'
 
 export const schemaTypes = [
+  siteSettings,
   homepage, 
   developmentKitchen,
   thingsToDo,
@@ -26,13 +31,16 @@ export const schemaTypes = [
   thingsToDoPageSettings,
   pubFinderPageSettings,
   post, 
-  author, 
-  category, 
-  site, 
   pub, 
   menu, 
   career, 
-  event, 
+  event,
+  review,
+  offer,
+  giftCard,
+  teamMember,
+  pubStory,
+  loyaltyProgram,
   blockContent, 
   googleMapEmbed
 ]

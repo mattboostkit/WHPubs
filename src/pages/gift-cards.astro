@@ -1,0 +1,230 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Gift, Calendar, Heart, Star, Check, Clock, ExternalLink, CreditCard, HelpCircle, ChevronDown } from 'lucide-react';
+import { getGiftCardData } from '../lib/sanity';
+import SanityPortableText from '@/components/SanityPortableText';
+
+// Fetch gift card data
+const giftCardData = await getGiftCardData();
+
+// Icon mapping
+const iconMap = {
+  gift: Gift,
+  calendar: Calendar,
+  heart: Heart,
+  star: Star,
+  check: Check,
+  clock: Clock
+};
+
+const title = "Gift Cards - WH Pubs";
+const description = "Give the gift of great times at WH Pubs. Perfect for birthdays, celebrations, or just because.";
+---
+
+<Layout title={title} description={description}>
+  <PageHero
+    title={giftCardData?.heroTitle || "Gift Cards"}
+    subtitle={giftCardData?.heroSubtitle || "The perfect gift for any occasion"}
+    image={giftCardData?.heroImage || {
+      asset: { url: '/images/hero-fallback.jpg' },
+      alt: 'WH Pubs Gift Cards'
+    }}
+  />
+
+  <main>
+    {/* Introduction Section */}
+    <section class="py-16">
+      <div class="container mx-auto px-4">
+        <div class="max-w-3xl mx-auto text-center">
+          {giftCardData?.introText ? (
+            <div class="prose prose-lg max-w-none mb-8">
+              <SanityPortableText value={giftCardData.introText} />
+            </div>
+          ) : (
+            <p class="text-lg text-muted-foreground mb-8">
+              WH Pubs gift cards are the perfect way to treat family and friends to memorable moments at any of our traditional British pubs. 
+              Whether it's for a special meal, Sunday roast, or just drinks with friends, our gift cards offer flexibility and choice.
+            </p>
+          )}
+          
+          {giftCardData?.purchaseUrl && (
+            <a href={giftCardData.purchaseUrl} target="_blank" rel="noopener noreferrer" class="inline-block">
+              <Button size="lg" class="bg-primary hover:bg-primary/90">
+                <Gift class="w-5 h-5 mr-2" />
+                {giftCardData.purchaseButtonText || 'Buy Gift Cards'}
+                <ExternalLink class="w-4 h-4 ml-2" />
+              </Button>
+            </a>
+          )}
+        </div>
+      </div>
+    </section>
+
+    {/* Denominations Section */}
+    {giftCardData?.denominations && giftCardData.denominations.length > 0 && (
+      <section class="py-16 bg-muted/30">
+        <div class="container mx-auto px-4">
+          <h2 class="text-3xl font-bold text-center mb-12">Choose Your Amount</h2>
+          <div class="flex flex-wrap justify-center gap-4 max-w-4xl mx-auto">
+            {giftCardData.denominations.sort((a, b) => a - b).map((amount) => (
+              <Card class="hover:shadow-lg transition-shadow cursor-pointer hover:border-secondary">
+                <CardContent class="p-8 text-center">
+                  <p class="text-4xl font-bold text-primary">£{amount}</p>
+                </CardContent>
+              </Card>
+            ))}
+            <Card class="hover:shadow-lg transition-shadow cursor-pointer hover:border-secondary">
+              <CardContent class="p-8 text-center">
+                <p class="text-2xl font-semibold text-primary">Custom<br/>Amount</p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+    )}
+
+    {/* Features Section */}
+    {giftCardData?.features && giftCardData.features.length > 0 && (
+      <section class="py-16">
+        <div class="container mx-auto px-4">
+          <h2 class="text-3xl font-bold text-center mb-12">Why Choose WH Pubs Gift Cards?</h2>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {giftCardData.features.map((feature) => {
+              const Icon = iconMap[feature.icon] || Gift;
+              return (
+                <div class="text-center">
+                  <div class="bg-secondary/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Icon class="w-10 h-10 text-secondary" />
+                  </div>
+                  <h3 class="text-xl font-semibold mb-2">{feature.title}</h3>
+                  <p class="text-muted-foreground">{feature.description}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+    )}
+
+    {/* How It Works Section */}
+    {giftCardData?.howItWorks && giftCardData.howItWorks.length > 0 && (
+      <section class="py-16 bg-gradient-to-br from-primary/5 to-secondary/5">
+        <div class="container mx-auto px-4">
+          <h2 class="text-3xl font-bold text-center mb-12">How It Works</h2>
+          <div class="max-w-4xl mx-auto">
+            <div class="space-y-6">
+              {giftCardData.howItWorks.sort((a, b) => a.stepNumber - b.stepNumber).map((step, index) => (
+                <div class="flex gap-6 items-start">
+                  <div class="flex-shrink-0">
+                    <div class="w-12 h-12 bg-secondary text-white rounded-full flex items-center justify-center font-bold text-lg">
+                      {step.stepNumber}
+                    </div>
+                  </div>
+                  <div class="flex-1">
+                    <h3 class="text-xl font-semibold mb-2">{step.title}</h3>
+                    <p class="text-muted-foreground">{step.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    )}
+
+    {/* Check Balance CTA */}
+    {giftCardData?.checkBalanceUrl && (
+      <section class="py-12 bg-primary text-white">
+        <div class="container mx-auto px-4 text-center">
+          <div class="flex items-center justify-center gap-3 mb-4">
+            <CreditCard class="w-8 h-8" />
+            <h2 class="text-2xl font-bold">Already Have a Gift Card?</h2>
+          </div>
+          <p class="mb-6 text-white/80">Check your balance and transaction history online</p>
+          <a href={giftCardData.checkBalanceUrl} target="_blank" rel="noopener noreferrer">
+            <Button variant="secondary" size="lg">
+              Check Card Balance
+              <ExternalLink class="w-4 h-4 ml-2" />
+            </Button>
+          </a>
+        </div>
+      </section>
+    )}
+
+    {/* FAQs Section */}
+    {giftCardData?.faqs && giftCardData.faqs.length > 0 && (
+      <section class="py-16">
+        <div class="container mx-auto px-4">
+          <h2 class="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
+          <div class="max-w-3xl mx-auto space-y-4">
+            {giftCardData.faqs.map((faq, index) => (
+              <details class="group">
+                <summary class="flex items-center justify-between cursor-pointer p-4 bg-white rounded-lg border hover:border-secondary transition-colors">
+                  <div class="flex items-start gap-3">
+                    <HelpCircle class="w-5 h-5 text-secondary mt-0.5" />
+                    <span class="font-medium text-left">{faq.question}</span>
+                  </div>
+                  <ChevronDown class="w-5 h-5 text-muted-foreground transition-transform group-open:rotate-180" />
+                </summary>
+                <div class="p-4 pt-2 pl-12">
+                  <p class="text-muted-foreground">{faq.answer}</p>
+                </div>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    {/* Terms and Conditions */}
+    {giftCardData?.termsAndConditions && (
+      <section class="py-16 bg-muted/30">
+        <div class="container mx-auto px-4">
+          <div class="max-w-4xl mx-auto">
+            <h2 class="text-2xl font-bold mb-6 text-center">Terms & Conditions</h2>
+            <Card>
+              <CardContent class="p-6">
+                <div class="prose prose-sm max-w-none">
+                  <SanityPortableText value={giftCardData.termsAndConditions} />
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+    )}
+
+    {/* Final CTA */}
+    <section class="py-16">
+      <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl font-bold mb-4">Ready to Give the Perfect Gift?</h2>
+        <p class="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+          WH Pubs gift cards are available for immediate purchase and can be used at any of our locations.
+        </p>
+        {giftCardData?.purchaseUrl && (
+          <a href={giftCardData.purchaseUrl} target="_blank" rel="noopener noreferrer">
+            <Button size="lg" class="bg-primary hover:bg-primary/90">
+              <Gift class="w-5 h-5 mr-2" />
+              {giftCardData.purchaseButtonText || 'Buy Gift Cards Now'}
+              <ExternalLink class="w-4 h-4 ml-2" />
+            </Button>
+          </a>
+        )}
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  details summary::-webkit-details-marker {
+    display: none;
+  }
+  
+  details[open] summary {
+    border-color: var(--secondary);
+  }
+</style>

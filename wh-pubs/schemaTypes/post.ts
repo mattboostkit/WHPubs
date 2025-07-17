@@ -54,7 +54,11 @@ export default defineType({
       name: 'categories',
       title: 'Categories',
       type: 'array',
-      of: [{ type: 'reference', to: { type: 'category' } }]
+      of: [{ type: 'string' }],
+      description: 'Add tags/categories for this post',
+      options: {
+        layout: 'tags'
+      }
     }),
     defineField({
       name: 'publishedAt',

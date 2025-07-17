@@ -1,0 +1,123 @@
+---
+import { Star, Quote } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+
+export interface Props {
+  reviews: Array<{
+    customerName: string;
+    rating: number;
+    reviewText: string;
+    date: string;
+    source: string;
+    featured?: boolean;
+    verified?: boolean;
+    associatedPub?: {
+      name: string;
+      slug: { current: string };
+    };
+  }>;
+  title?: string;
+  subtitle?: string;
+}
+
+const { reviews, title = "What Our Customers Say", subtitle = "Real reviews from real people" } = Astro.props;
+
+const formatDate = (dateString) => {
+  if (!dateString) return '';
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-GB', {
+    month: 'short',
+    year: 'numeric'
+  });
+};
+
+const getSourceBadgeColor = (source) => {
+  const colors = {
+    google: 'bg-blue-100 text-blue-800',
+    tripadvisor: 'bg-green-100 text-green-800',
+    facebook: 'bg-indigo-100 text-indigo-800',
+    opentable: 'bg-red-100 text-red-800',
+    direct: 'bg-gray-100 text-gray-800'
+  };
+  return colors[source] || colors.direct;
+};
+
+const getSourceDisplayName = (source) => {
+  const names = {
+    google: 'Google',
+    tripadvisor: 'TripAdvisor',
+    facebook: 'Facebook',
+    opentable: 'OpenTable',
+    direct: 'Direct Review'
+  };
+  return names[source] || 'Review';
+};
+---
+
+{reviews && reviews.length > 0 && (
+  <section class="py-20 bg-muted/30">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">{title}</h2>
+        <p class="text-muted-foreground text-lg">{subtitle}</p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+        {reviews.map((review) => (
+          <Card class={`hover:shadow-lg transition-shadow ${review.featured ? 'ring-2 ring-secondary' : ''}`}>
+            <CardContent class="p-6">
+              <div class="flex items-start gap-3 mb-4">
+                <Quote class="w-8 h-8 text-secondary/20 flex-shrink-0 transform rotate-180" />
+                <div class="flex-1">
+                  <div class="flex items-center gap-1 mb-2">
+                    {[...Array(5)].map((_, i) => (
+                      <Star 
+                        class={`w-4 h-4 ${i < review.rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`} 
+                      />
+                    ))}
+                  </div>
+                  
+                  <p class="text-muted-foreground mb-4 italic">"{review.reviewText}"</p>
+                  
+                  <div class="space-y-2">
+                    <div class="flex items-center justify-between">
+                      <p class="font-semibold text-sm">{review.customerName}</p>
+                      <p class="text-xs text-muted-foreground">{formatDate(review.date)}</p>
+                    </div>
+                    
+                    <div class="flex items-center gap-2 flex-wrap">
+                      <Badge variant="secondary" class={`text-xs ${getSourceBadgeColor(review.source)}`}>
+                        {getSourceDisplayName(review.source)}
+                      </Badge>
+                      
+                      {review.verified && (
+                        <Badge variant="secondary" class="text-xs bg-green-100 text-green-800">
+                          Verified
+                        </Badge>
+                      )}
+                      
+                      {review.associatedPub && (
+                        <Badge variant="outline" class="text-xs">
+                          {review.associatedPub.name}
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+      
+      {reviews.length >= 6 && (
+        <div class="text-center mt-8">
+          <a href="/reviews" class="inline-flex items-center text-primary hover:text-primary/80 font-semibold">
+            Read More Reviews →
+          </a>
+        </div>
+      )}
+    </div>
+  </section>
+)}

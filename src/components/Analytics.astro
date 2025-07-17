@@ -1,0 +1,210 @@
+---
+// Analytics component for enhanced tracking
+const gaId = import.meta.env.GA_MEASUREMENT_ID;
+const isProd = import.meta.env.PROD;
+
+// Only load analytics in production with a valid ID
+const shouldLoadAnalytics = isProd && gaId;
+---
+
+{shouldLoadAnalytics && (
+  <>
+    <!-- Google Analytics 4 -->
+    <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
+    <script define:vars={{ gaId }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', gaId, {
+        page_path: window.location.pathname,
+        page_location: window.location.href,
+        page_title: document.title
+      });
+
+      // Enhanced event tracking functions
+      window.analytics = {
+        // Track page views
+        trackPageView: function(path, title) {
+          gtag('event', 'page_view', {
+            page_path: path || window.location.pathname,
+            page_location: window.location.href,
+            page_title: title || document.title
+          });
+        },
+
+        // Track custom events
+        trackEvent: function(category, action, label, value) {
+          gtag('event', action, {
+            event_category: category,
+            event_label: label,
+            value: value
+          });
+        },
+
+        // Track conversions
+        trackConversion: function(type, value, currency = 'GBP') {
+          gtag('event', 'conversion', {
+            send_to: gaId,
+            value: value,
+            currency: currency,
+            conversion_type: type
+          });
+        },
+
+        // Track form submissions
+        trackFormSubmit: function(formName, formType) {
+          gtag('event', 'form_submit', {
+            form_name: formName,
+            form_type: formType,
+            form_destination: window.location.pathname
+          });
+        },
+
+        // Track clicks
+        trackClick: function(elementType, elementName, destination) {
+          gtag('event', 'click', {
+            element_type: elementType,
+            element_name: elementName,
+            click_destination: destination,
+            click_source: window.location.pathname
+          });
+        },
+
+        // Track social shares
+        trackSocialShare: function(network, contentType, contentId) {
+          gtag('event', 'share', {
+            method: network,
+            content_type: contentType,
+            content_id: contentId
+          });
+        },
+
+        // Track search
+        trackSiteSearch: function(searchTerm, resultsCount) {
+          gtag('event', 'search', {
+            search_term: searchTerm,
+            results_count: resultsCount
+          });
+        },
+
+        // Track reservations
+        trackReservation: function(pubName, action) {
+          gtag('event', 'reservation_' + action, {
+            pub_name: pubName,
+            reservation_source: 'website'
+          });
+        },
+
+        // Track pub interactions
+        trackPubInteraction: function(pubName, interactionType) {
+          gtag('event', 'pub_interaction', {
+            pub_name: pubName,
+            interaction_type: interactionType // view_details, view_menu, get_directions, etc.
+          });
+        }
+      };
+
+      // Auto-track common interactions
+      document.addEventListener('DOMContentLoaded', function() {
+        // Track external links
+        document.querySelectorAll('a[href^="http"]:not([href*="' + window.location.hostname + '"])').forEach(link => {
+          link.addEventListener('click', function() {
+            window.analytics.trackClick('external_link', link.textContent || 'External Link', link.href);
+          });
+        });
+
+        // Track phone number clicks
+        document.querySelectorAll('a[href^="tel:"]').forEach(link => {
+          link.addEventListener('click', function() {
+            window.analytics.trackEvent('contact', 'phone_click', link.href.replace('tel:', ''));
+          });
+        });
+
+        // Track email clicks
+        document.querySelectorAll('a[href^="mailto:"]').forEach(link => {
+          link.addEventListener('click', function() {
+            window.analytics.trackEvent('contact', 'email_click', link.href.replace('mailto:', ''));
+          });
+        });
+
+        // Track form submissions
+        document.querySelectorAll('form[data-netlify="true"]').forEach(form => {
+          form.addEventListener('submit', function(e) {
+            const formName = form.getAttribute('name') || 'unknown';
+            window.analytics.trackFormSubmit(formName, 'netlify_form');
+          });
+        });
+
+        // Track reservation button clicks
+        document.querySelectorAll('a[href*="reservation"], a[href*="booking"], button:contains("Book")').forEach(link => {
+          link.addEventListener('click', function() {
+            const pubName = document.querySelector('h1')?.textContent || 'Unknown Pub';
+            window.analytics.trackReservation(pubName, 'click');
+          });
+        });
+
+        // Track social share button clicks
+        document.querySelectorAll('[data-social-share] a, [data-social-share] button').forEach(button => {
+          button.addEventListener('click', function() {
+            const network = button.getAttribute('aria-label') || 'unknown';
+            const contentType = 'page';
+            const contentId = window.location.pathname;
+            window.analytics.trackSocialShare(network, contentType, contentId);
+          });
+        });
+
+        // Track scroll depth
+        let scrollDepths = [25, 50, 75, 90];
+        let scrolledDepths = [];
+        
+        function checkScrollDepth() {
+          const scrollPercent = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight * 100;
+          
+          scrollDepths.forEach(depth => {
+            if (scrollPercent >= depth && !scrolledDepths.includes(depth)) {
+              scrolledDepths.push(depth);
+              window.analytics.trackEvent('engagement', 'scroll_depth', depth + '%', depth);
+            }
+          });
+        }
+        
+        window.addEventListener('scroll', throttle(checkScrollDepth, 1000));
+        
+        // Throttle function
+        function throttle(func, wait) {
+          let timeout;
+          return function executedFunction(...args) {
+            const later = () => {
+              clearTimeout(timeout);
+              func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+          };
+        }
+
+        // Track time on page
+        let startTime = Date.now();
+        window.addEventListener('beforeunload', function() {
+          const timeOnPage = Math.round((Date.now() - startTime) / 1000);
+          window.analytics.trackEvent('engagement', 'time_on_page', window.location.pathname, timeOnPage);
+        });
+      });
+    </script>
+
+    <!-- Structured data for Google -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "WH Pubs",
+        "url": "https://whpubs.com",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://whpubs.com/search?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
+  </>
+)}

@@ -4,6 +4,11 @@ import { Menu as MenuIcon, MapPin, Clock, Phone } from 'lucide-react';
 import { X } from 'lucide-react';
 import AdminBadge from '@/components/AdminBadge.astro';
 import SchemaOrg from '@/components/SchemaOrg.astro';
+import SEO from '@/components/SEO.astro';
+import Analytics from '@/components/Analytics.astro';
+import SkipLinks from '@/components/SkipLinks.astro';
+import LiveRegion from '@/components/LiveRegion.astro';
+import FocusManagement from '@/components/FocusManagement.astro';
 import { client as sanityClient } from '@/lib/sanity.js'; 
 // Import the Pub type if you have it defined, otherwise use 'any'
 // import type { Pub } from '@/types'; 
@@ -27,30 +32,37 @@ const isPubLayout = !!activePub;
 
 
 // --- Fetch Main Site Data ---
-// Fetch data only if it's the main hub or needed as fallback
-let mainSiteData: { title: string, logoUrl?: string, logoAlt?: string } | null = null;
+// Fetch site settings for the main hub
+let siteSettings: any = null;
 try {
-  mainSiteData = await sanityClient.fetch(`
-    *[_type == "site" && isMainSite == true][0]{
-      title,
+  siteSettings = await sanityClient.fetch(`
+    *[_type == "siteSettings"][0]{
+      siteName,
+      siteTagline,
       'logoUrl': logo.asset->url, 
-      'logoAlt': logo.alt         
+      'logoAlt': logo.alt,
+      footerDescription,
+      defaultContactLocation,
+      defaultContactHours,
+      defaultContactPhone,
+      socialLinks,
+      seo
     }
   `);
 } catch (error) {
-  // Failed to fetch main site data - using defaults
+  // Failed to fetch site settings - using defaults
 }
 
 // Define default/hub values (using fetched data if available)
-let siteName = mainSiteData?.title || "Traditional British hospitality in South East England";
-let logoUrl = mainSiteData?.logoUrl || null;
-let logoAlt = mainSiteData?.logoAlt || "WH Pubs Logo";
+let siteName = siteSettings?.siteName || "WH Pubs";
+let logoUrl = siteSettings?.logoUrl || null;
+let logoAlt = siteSettings?.logoAlt || "WH Pubs Logo";
 let headerLinks = []; 
-let footerContactLocation = "Chiddingstone Causeway, Kent";
-let footerContactHours = "Mon-Sun: 11am-11pm"; 
-let footerContactPhone = "01892 870 369";
-let footerSocialLinks = { facebook: "", instagram: "", twitter: "" }; 
-let footerDescription = "Traditional British pubs offering quality food, drink, and hospitality in the heart of South East England.";
+let footerContactLocation = siteSettings?.defaultContactLocation || "Chiddingstone Causeway, Kent";
+let footerContactHours = siteSettings?.defaultContactHours || "Mon-Sun: 11am-11pm"; 
+let footerContactPhone = siteSettings?.defaultContactPhone || "01892 870 369";
+let footerSocialLinks = siteSettings?.socialLinks || { facebook: "", instagram: "", twitter: "" }; 
+let footerDescription = siteSettings?.footerDescription || "Traditional British pubs offering quality food, drink, and hospitality in the heart of South East England.";
 
 // Override with pub-specific data if available
 if (isPubLayout && activePub) {
@@ -99,6 +111,8 @@ if (isPubLayout && activePub) {
 	   { title: "Blog", url: "/blog", ariaLabel: "Blog" }, 
 	   { title: "About", url: "/about", ariaLabel: "About Us" },
 	   { title: "Things To Do", url: "/things-to-do", ariaLabel: "Things To Do" },
+	   { title: "Gift Cards", url: "/gift-cards", ariaLabel: "Gift Cards" },
+	   { title: "Rewards", url: "/rewards", ariaLabel: "Rewards Program" },
 	   { title: "Contact", url: "/contact", ariaLabel: "Contact Us" }, 
 	   { title: "Join Our Crew", url: "/careers", ariaLabel: "Join Our Crew" }, 
 	 ];
@@ -174,9 +188,15 @@ const metaDescription = description || footerDescription;
 		<title>{title}</title>
 	</head>
 	<body class:list={["bg-background text-foreground", pub?.colorScheme ? `theme-${pub.colorScheme}` : 'theme-default']}>
+		<SkipLinks />
+		<!-- Live regions for screen reader announcements -->
+		<LiveRegion id="live-region" type="polite" />
+		<LiveRegion id="live-region-assertive" type="assertive" />
+		<!-- Focus management utilities -->
+		<FocusManagement />
 		<header class="bg-primary fixed w-full z-50">
 			<AdminBadge />
-			<nav class="container mx-auto px-4 py-4" aria-label="Main navigation">
+			<nav id="main-navigation" class="container mx-auto px-4 py-4" aria-label="Main navigation">
 				<div class="flex items-center justify-between">
 					<!-- Site Name / Logo -->
 					<a href="/" class="text-[#B79C64]" aria-label={`${siteName} Home`}>
@@ -278,11 +298,11 @@ const metaDescription = description || footerDescription;
 			</div>
 		</header>
 		
-		<main class="pt-20">
+		<main id="main-content" class="pt-20">
 			<slot />
 		</main>
 		
-		<footer class="bg-primary text-gold py-12">
+		<footer id="footer" class="bg-primary text-gold py-12">
 			<div class="container mx-auto px-4">
 				<div class="grid md:grid-cols-3 gap-8">
 					<div>
@@ -347,27 +367,8 @@ const metaDescription = description || footerDescription;
 			</div>
 		</footer>
 		
-		<!-- Google Analytics -->
-		{import.meta.env.GA_MEASUREMENT_ID && (
-			<>
-				<script async src={`https://www.googletagmanager.com/gtag/js?id=${import.meta.env.GA_MEASUREMENT_ID}`}></script>
-				<script>
-					window.dataLayer = window.dataLayer || [];
-					function gtag(){dataLayer.push(arguments);}
-					gtag('js', new Date());
-					gtag('config', import.meta.env.GA_MEASUREMENT_ID);
-					
-					// Custom event tracking helper
-					window.trackEvent = function(category, action, label, value) {
-						gtag('event', action, {
-							'event_category': category,
-							'event_label': label,
-							'value': value
-						});
-					};
-				</script>
-			</>
-		)}
+		<!-- Enhanced Analytics -->
+		<Analytics />
 		
 		<script is:inline>
 			// Wait for DOM to be ready
@@ -382,6 +383,14 @@ const metaDescription = description || footerDescription;
 						mobileMenu.classList.remove('hidden');
 						document.body.style.overflow = 'hidden';
 						menuToggle.setAttribute('aria-expanded', 'true');
+						// Trap focus in mobile menu
+						if (window.focusTrap) {
+							window.focusTrap.trap('mobile-menu', menuToggle);
+						}
+						// Announce to screen readers
+						if (window.announceToScreenReader) {
+							window.announceToScreenReader('Mobile menu opened');
+						}
 					});
 				}
 				
@@ -391,6 +400,14 @@ const metaDescription = description || footerDescription;
 						document.body.style.overflow = 'auto';
 						if (menuToggle) {
 							menuToggle.setAttribute('aria-expanded', 'false');
+						}
+						// Release focus trap
+						if (window.focusTrap) {
+							window.focusTrap.release('mobile-menu');
+						}
+						// Announce to screen readers
+						if (window.announceToScreenReader) {
+							window.announceToScreenReader('Mobile menu closed');
 						}
 					});
 				}

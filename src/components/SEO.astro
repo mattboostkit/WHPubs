@@ -1,0 +1,151 @@
+---
+export interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  canonical?: string;
+  type?: 'website' | 'article' | 'restaurant' | 'localbusiness';
+  publishDate?: string;
+  author?: string;
+  structuredData?: any;
+}
+
+const {
+  title,
+  description,
+  image = '/images/wh-pubs-og.jpg',
+  canonical,
+  type = 'website',
+  publishDate,
+  author,
+  structuredData
+} = Astro.props;
+
+const siteUrl = Astro.site || 'https://whpubs.com';
+const canonicalURL = canonical || new URL(Astro.url.pathname, siteUrl).href;
+const ogImage = new URL(image, siteUrl).href;
+
+// Base structured data for WH Pubs organization
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "WH Pubs",
+  "url": siteUrl,
+  "logo": `${siteUrl}/images/wh-pubs-logo.png`,
+  "description": "Traditional British pubs offering quality food, drink, and hospitality in South East England",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1 High Street",
+    "addressLocality": "Sevenoaks",
+    "addressRegion": "Kent",
+    "postalCode": "TN13 1AA",
+    "addressCountry": "GB"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+44-1732-456789",
+    "contactType": "customer service",
+    "areaServed": "GB",
+    "availableLanguage": "English"
+  },
+  "sameAs": [
+    "https://facebook.com/whpubs",
+    "https://instagram.com/whpubs",
+    "https://twitter.com/whpubs"
+  ]
+};
+
+// Breadcrumb structured data
+const breadcrumbItems = [];
+const pathSegments = Astro.url.pathname.split('/').filter(Boolean);
+
+if (pathSegments.length > 0) {
+  breadcrumbItems.push({
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Home",
+    "item": siteUrl
+  });
+
+  pathSegments.forEach((segment, index) => {
+    const url = `${siteUrl}/${pathSegments.slice(0, index + 1).join('/')}`;
+    const name = segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, ' ');
+    
+    breadcrumbItems.push({
+      "@type": "ListItem",
+      "position": index + 2,
+      "name": name,
+      "item": url
+    });
+  });
+}
+
+const breadcrumbSchema = breadcrumbItems.length > 1 ? {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": breadcrumbItems
+} : null;
+
+// Article schema for blog posts
+const articleSchema = type === 'article' && publishDate ? {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": title,
+  "description": description,
+  "image": ogImage,
+  "datePublished": publishDate,
+  "dateModified": publishDate,
+  "author": {
+    "@type": "Person",
+    "name": author || "WH Pubs"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "WH Pubs",
+    "logo": {
+      "@type": "ImageObject",
+      "url": `${siteUrl}/images/wh-pubs-logo.png`
+    }
+  }
+} : null;
+
+// Combine all structured data
+const allStructuredData = [
+  organizationSchema,
+  breadcrumbSchema,
+  articleSchema,
+  structuredData
+].filter(Boolean);
+---
+
+<!-- Basic Meta Tags -->
+<meta name="description" content={description} />
+<meta name="author" content="WH Pubs" />
+
+<!-- Open Graph Tags -->
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:site_name" content="WH Pubs" />
+<meta property="og:locale" content="en_GB" />
+
+<!-- Twitter Card Tags -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@whpubs" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+<!-- Canonical URL -->
+<link rel="canonical" href={canonicalURL} />
+
+<!-- Additional SEO Tags -->
+<meta name="robots" content="index, follow" />
+<meta name="googlebot" content="index, follow" />
+
+<!-- Structured Data -->
+{allStructuredData.map((schema) => (
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+))}

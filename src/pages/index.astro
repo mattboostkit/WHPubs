@@ -4,9 +4,12 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { MapPin, Clock, Phone, Music, ChefHat, Beer, ExternalLink, Star, Utensils, Dog, TreePine, Wheat } from 'lucide-react';
-import { getPosts, getPubs, getHomepageData, getDevelopmentKitchen } from '../lib/sanity';
+import { getPosts, getPubs, getHomepageData, getDevelopmentKitchen, getReviews, getOffers } from '../lib/sanity';
 import { HeroCarousel } from '@/components/HeroCarousel';
 import { getPubUrl, isExternalUrl } from '@/lib/pub-urls';
+import ReviewsSection from '@/components/ReviewsSection.astro';
+import OffersSection from '@/components/OffersSection.astro';
+import SocialMediaIntegration from '@/components/SocialMediaIntegration.astro';
 // This page always renders the main hub content.
 
 // Fetch data needed for the hub page
@@ -19,6 +22,12 @@ try {
 } catch (error) {
   // Development Kitchen data not available yet
 }
+
+// Fetch featured reviews for the homepage
+const featuredReviews = await getReviews(null, true); // Get featured general reviews
+
+// Fetch active offers for the homepage
+const activeOffers = await getOffers(null, true); // Get active general offers
 
 
 // All pubs are equal - no featured pubs
@@ -49,6 +58,10 @@ const formatDate = (dateString) => {
       client:load
     />
 
+    {/* Special Offers Section */}
+    {activeOffers && activeOffers.length > 0 && (
+      <OffersSection offers={activeOffers.slice(0, 6)} />
+    )}
 
     {/* All Pubs Section */}
     <section id="pubs" class="py-20 bg-background">
@@ -289,6 +302,31 @@ const formatDate = (dateString) => {
       </div>
     </section>
 
+    {/* Customer Reviews Section */}
+    <ReviewsSection reviews={featuredReviews.slice(0, 6)} />
+
+    {/* Gift Cards Section */}
+    <section class="py-16 bg-gradient-to-r from-secondary/10 to-secondary/5">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto text-center">
+          <div class="bg-secondary/10 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-12 h-12 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <h2 class="text-3xl font-bold mb-4">Give the Gift of Great Times</h2>
+          <p class="text-lg text-muted-foreground mb-8">
+            WH Pubs gift cards are perfect for any occasion. Treat your loved ones to memorable moments at any of our traditional British pubs.
+          </p>
+          <a href="/gift-cards">
+            <Button size="lg" variant="secondary" className="bg-secondary text-primary hover:bg-secondary/90">
+              Buy Gift Cards
+            </Button>
+          </a>
+        </div>
+      </div>
+    </section>
+
     {/* Latest News Section (Shows only general posts) */}
     <section class="py-20 bg-white text-primary">
       <div class="container mx-auto px-4">
@@ -325,15 +363,36 @@ const formatDate = (dateString) => {
       <div class="container mx-auto px-4 text-center">
         <h2 class="text-3xl font-bold text-secondary mb-4">Stay Updated</h2>
         <p class="text-secondary/80 mb-8">Subscribe to our newsletter for the latest news and special offers.</p>
-        <div class="max-w-md mx-auto flex gap-4">
+        <form 
+          name="newsletter" 
+          method="POST" 
+          action="/thank-you"
+          data-netlify="true" 
+          data-netlify-honeypot="bot-field"
+          class="max-w-md mx-auto flex gap-4"
+        >
+          <input type="hidden" name="form-name" value="newsletter" />
+          <p class="hidden">
+            <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+          </p>
           <input
             type="email"
+            name="email"
             placeholder="Enter your email"
+            required
             class="flex-1 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary bg-secondary/10 text-secondary placeholder:text-secondary/50 border border-secondary/20"
           />
-          <Button variant="secondary" class="bg-[#B79C64] text-primary hover:bg-[#B79C64]/90">Subscribe</Button>
-        </div>
+          <Button type="submit" variant="secondary" class="bg-[#B79C64] text-primary hover:bg-[#B79C64]/90">Subscribe</Button>
+        </form>
       </div>
     </section>
+
+    {/* Social Media Integration */}
+    <SocialMediaIntegration 
+      title="Connect With Us"
+      subtitle="Follow WH Pubs for the latest news, events, and special offers"
+      showFeed={true}
+      showFollowButtons={true}
+    />
   </main>
 </Layout>

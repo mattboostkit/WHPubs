@@ -1,6 +1,6 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import { getPubs, getPubBySlug, getPosts, getMenusForPub, getEvents } from '@/lib/sanity';
+import { getPubs, getPubBySlug, getPosts, getMenusForPub, getEvents, getReviews, getOffers, getPubStories, getTeamMembers } from '@/lib/sanity';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -10,6 +10,8 @@ import { PubHeroCarousel } from '@/components/PubHeroCarousel';
 import GoogleMapEmbed from '@/components/GoogleMapEmbed';
 import SanityPortableText from '@/components/SanityPortableText.jsx';
 import BlogCard from '@/components/BlogCard.astro';
+import ReviewsSection from '@/components/ReviewsSection.astro';
+import OffersSection from '@/components/OffersSection.astro';
 
 // 1. Generate routes for all pubs
 // This page will exist in each deployment, but getStaticPaths ensures
@@ -52,17 +54,52 @@ if (!pub) {
 }
 
 // 3. Fetch all related data for this pub
-const [relatedPosts, pubMenus, pubEvents] = await Promise.all([
+const [relatedPosts, pubMenus, pubEvents, pubReviews, pubOffers, pubStories, pubTeam] = await Promise.all([
   getPosts(pub.slug.current),
   getMenusForPub(pub.slug.current),
-  getEvents(pub.slug.current)
+  getEvents(pub.slug.current),
+  getReviews(pub.slug.current),
+  getOffers(pub.slug.current),
+  getPubStories(pub.slug.current),
+  getTeamMembers(pub.slug.current)
 ]);
 
 const pageTitle = `${pub.name} - WH Pubs`;
 const pageDescription = pub.description || `Learn more about ${pub.name}, one of our fine establishments.`;
+
+// Create structured data for this pub
+const pubStructuredData = {
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  "name": pub.name,
+  "image": pub.heroImage?.asset?.url || pub.image?.asset?.url,
+  "url": `https://whpubs.com/${pub.slug.current}`,
+  "telephone": pub.contactPhone,
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": pub.addressLine1 || pub.location,
+    "addressLocality": pub.locationName || pub.location,
+    "addressRegion": "Kent",
+    "postalCode": pub.postcode,
+    "addressCountry": "GB"
+  },
+  "servesCuisine": "British",
+  "priceRange": "££",
+  "openingHours": pub.openingHours ? pub.openingHours.split('\n').map(line => line.trim()).filter(Boolean) : [],
+  "menu": pub.menuUrl || `https://whpubs.com/${pub.slug.current}/menu`,
+  "acceptsReservations": !!pub.reservationsUrl,
+  "hasMenu": pubMenus && pubMenus.length > 0,
+  "aggregateRating": pubReviews && pubReviews.length > 0 ? {
+    "@type": "AggregateRating",
+    "ratingValue": pubReviews.reduce((sum, r) => sum + r.rating, 0) / pubReviews.length,
+    "reviewCount": pubReviews.length
+  } : undefined
+};
 ---
 
 <Layout title={pageTitle} description={pageDescription} pub={pub}> {/* Pass pub data to Layout */}
+  <!-- Add pub-specific structured data -->
+  <script type="application/ld+json" set:html={JSON.stringify(pubStructuredData)} />
   <main> {/* Remove container/padding from main, apply later */}
     <!-- Hero Section with Carousel -->
     {pub.carouselImages && pub.carouselImages.length > 0 ? (
@@ -119,7 +156,12 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
       {/* Book Table CTA (Moved near top) */}
       {pub.reservationsUrl && (
         <div class="text-center mb-10"> {/* Centered and added bottom margin */}
-          <a href={pub.reservationsUrl} target="_blank" rel="noopener noreferrer">
+          <a 
+            href={pub.reservationsUrl} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            onclick={`window.analytics && window.analytics.trackReservation('${pub.name}', 'click_main')`}
+          >
             <Button variant="default" size="lg" class="bg-green-600 hover:bg-green-700 text-white font-semibold px-8 py-3"> {/* Larger padding */}
               Book A Table
             </Button>
@@ -148,6 +190,95 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
               {amenity}
             </Badge>
           ))}
+        </div>
+      )}
+
+      {/* Our Story Section */}
+      {pubStories && pubStories.length > 0 && pubStories.some(story => story.featured) && (
+        <div class="mb-12">
+          {pubStories.filter(story => story.featured).map((story) => (
+            <Card class="overflow-hidden hover:shadow-xl transition-all duration-300">
+              <CardHeader>
+                <CardTitle class="text-2xl flex items-center gap-2">
+                  📚 {story.title}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                {story.featuredImage?.asset?.url && (
+                  <div class="mb-6 rounded-lg overflow-hidden">
+                    <img
+                      src={story.featuredImage.asset.url}
+                      alt={story.featuredImage.alt || story.title}
+                      class="w-full h-64 object-cover"
+                    />
+                    {story.featuredImage.caption && (
+                      <p class="text-sm text-muted-foreground mt-2 italic">{story.featuredImage.caption}</p>
+                    )}
+                  </div>
+                )}
+                <p class="text-muted-foreground mb-4">{story.summary}</p>
+                
+                {story.timeline && story.timeline.length > 0 && (
+                  <div class="mb-6">
+                    <h4 class="font-semibold mb-3">Historical Timeline</h4>
+                    <div class="space-y-3">
+                      {story.timeline.sort((a, b) => a.year.localeCompare(b.year)).map((event) => (
+                        <div class="flex gap-4 items-start">
+                          <span class="text-secondary font-bold min-w-[60px]">{event.year}</span>
+                          <p class="text-sm">{event.event}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                
+                <a href={`/stories/${story.slug.current}`} class="inline-flex items-center text-primary hover:text-primary/80 font-semibold">
+                  Read Full Story →
+                </a>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      )}
+
+      {/* Meet Our Team */}
+      {pubTeam && pubTeam.length > 0 && (
+        <div class="mb-12">
+          <h2 class="text-2xl font-semibold text-primary mb-6 text-center">Meet Our Team</h2>
+          <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {pubTeam.slice(0, 6).map((member) => (
+              <Card class="overflow-hidden hover:shadow-lg transition-shadow">
+                {member.image?.asset?.url && (
+                  <div class="aspect-[4/5] overflow-hidden">
+                    <img
+                      src={member.image.asset.url}
+                      alt={member.image.alt || member.name}
+                      class="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                )}
+                <CardContent class="p-4">
+                  <h4 class="text-lg font-semibold">{member.name}</h4>
+                  <p class="text-secondary text-sm mb-2">{member.role}</p>
+                  {member.bio && (
+                    <p class="text-sm text-muted-foreground">{member.bio}</p>
+                  )}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Special Offers Section */}
+      {pubOffers && pubOffers.length > 0 && (
+        <div class="mb-12 -mx-4 sm:-mx-6 lg:-mx-8">
+          <OffersSection 
+            offers={pubOffers.slice(0, 6)} 
+            title={`Special Offers at ${pub.name}`}
+            subtitle="Limited time offers and promotions"
+          />
         </div>
       )}
 
@@ -351,6 +482,16 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
         </div>
       )}
 
+      {/* Customer Reviews Section */}
+      {pubReviews && pubReviews.length > 0 && (
+        <div class="mb-12 -mx-4 sm:-mx-6 lg:-mx-8">
+          <ReviewsSection 
+            reviews={pubReviews.slice(0, 6)} 
+            title={`Reviews for ${pub.name}`}
+            subtitle="See what our customers are saying"
+          />
+        </div>
+      )}
 
       {/* Latest News Section */}
       {(relatedPosts && relatedPosts.length > 0) ? (

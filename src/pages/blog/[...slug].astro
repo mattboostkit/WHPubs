@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { ChefHat } from 'lucide-react';
 import { getPost, getPosts } from '../../lib/sanity'; // Use new function name
 import SanityPortableText from '../../components/SanityPortableText.jsx';
+import SocialShareButtons from '../../components/SocialShareButtons.astro';
 
 export async function getStaticPaths() {
   // Get all posts to generate static paths
@@ -29,9 +30,41 @@ const formattedDate = post?.publishedAt
 
 // Create fallback image paths
 const blogDetailFallbackImage = '/images/blog-detail-fallback.jpg';
+
+// Create structured data for blog post
+const articleStructuredData = post ? {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": post.title,
+  "description": post.excerpt || post.title,
+  "image": post.mainImage?.asset?.url || blogDetailFallbackImage,
+  "datePublished": post.publishedAt,
+  "dateModified": post.publishedAt,
+  "author": {
+    "@type": "Person",
+    "name": post.author || "WH Pubs",
+    "jobTitle": post.authorTitle
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "WH Pubs",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://whpubs.com/images/wh-pubs-logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": `https://whpubs.com/blog/${slug}`
+  }
+} : null;
 ---
 
-<Layout title={`${post?.title || 'Blog Post'} - WH Pubs`}>
+<Layout title={`${post?.title || 'Blog Post'} - WH Pubs`} description={post?.excerpt || post?.title}>
+	<!-- Add article structured data -->
+	{articleStructuredData && (
+		<script type="application/ld+json" set:html={JSON.stringify(articleStructuredData)} />
+	)}
 	<main class="pt-24">
 		<!-- Image fallback script -->
 		<script is:inline>
@@ -69,14 +102,21 @@ const blogDetailFallbackImage = '/images/blog-detail-fallback.jpg';
 					<p class="text-primary/60 text-sm mb-2">{formattedDate}</p>
 					<h1 class="text-3xl font-bold mb-4">{post?.title}</h1>
 					
-					<div class="flex items-center gap-4 mb-6">
-						<div class="bg-primary/5 p-3 rounded-full flex items-center justify-center">
-							<ChefHat class="w-6 h-6 text-primary" />
+					<div class="flex items-center justify-between mb-6 flex-wrap gap-4">
+						<div class="flex items-center gap-4">
+							<div class="bg-primary/5 p-3 rounded-full flex items-center justify-center">
+								<ChefHat class="w-6 h-6 text-primary" />
+							</div>
+							<div>
+								<p class="font-bold">{post?.author}</p>
+								<p class="text-sm text-primary/60">{post?.authorTitle}</p>
+							</div>
 						</div>
-						<div>
-							<p class="font-bold">{post?.author}</p>
-							<p class="text-sm text-primary/60">{post?.authorTitle}</p>
-						</div>
+						<SocialShareButtons 
+							url={Astro.url.href} 
+							title={post?.title || 'WH Pubs Blog Post'} 
+							description={post?.excerpt || ''}
+						/>
 					</div>
 
 					{post?.body && (

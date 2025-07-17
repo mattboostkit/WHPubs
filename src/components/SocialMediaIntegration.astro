@@ -1,0 +1,180 @@
+---
+import { Facebook, Instagram, Twitter, Share2, Heart, MessageCircle } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+
+export interface Props {
+  title?: string;
+  subtitle?: string;
+  facebookUrl?: string;
+  instagramUrl?: string;
+  twitterUrl?: string;
+  showFeed?: boolean;
+  showFollowButtons?: boolean;
+}
+
+const { 
+  title = "Follow Us", 
+  subtitle = "Stay connected with WH Pubs on social media",
+  facebookUrl = "https://facebook.com/whpubs",
+  instagramUrl = "https://instagram.com/whpubs", 
+  twitterUrl = "https://twitter.com/whpubs",
+  showFeed = true,
+  showFollowButtons = true
+} = Astro.props;
+
+// Mock social media posts (in production, these would come from social media APIs)
+const socialPosts = [
+  {
+    id: 1,
+    platform: 'instagram',
+    username: '@whpubs',
+    content: 'Sunday roast perfection at The Bull! 🍖 Who\'s joining us this weekend?',
+    image: '/images/hero-fallback.jpg',
+    likes: 234,
+    comments: 18,
+    timestamp: '2 hours ago'
+  },
+  {
+    id: 2,
+    platform: 'facebook',
+    username: 'WH Pubs',
+    content: 'New seasonal menu launches today! Come and try our chef\'s latest creations featuring the finest local ingredients.',
+    image: '/images/menu-fallback.jpg',
+    likes: 156,
+    comments: 23,
+    timestamp: '5 hours ago'
+  },
+  {
+    id: 3,
+    platform: 'twitter',
+    username: '@whpubs',
+    content: 'Quiz night tonight at The Little Brown Jug! 8pm start, great prizes to be won 🏆 #QuizNight #KentPubs',
+    likes: 89,
+    comments: 12,
+    timestamp: '1 day ago'
+  }
+];
+
+const getPlatformIcon = (platform: string) => {
+  switch(platform) {
+    case 'facebook': return Facebook;
+    case 'instagram': return Instagram;
+    case 'twitter': return Twitter;
+    default: return Share2;
+  }
+};
+
+const getPlatformColor = (platform: string) => {
+  switch(platform) {
+    case 'facebook': return 'text-blue-600';
+    case 'instagram': return 'text-pink-600';
+    case 'twitter': return 'text-blue-400';
+    default: return 'text-gray-600';
+  }
+};
+---
+
+<section class="py-16 bg-muted/30">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">{title}</h2>
+      <p class="text-muted-foreground text-lg">{subtitle}</p>
+    </div>
+
+    {/* Follow Buttons */}
+    {showFollowButtons && (
+      <div class="flex justify-center gap-4 mb-12">
+        {facebookUrl && (
+          <a href={facebookUrl} target="_blank" rel="noopener noreferrer" class="no-underline">
+            <Button variant="outline" size="lg" class="flex items-center gap-2 hover:border-blue-600 hover:text-blue-600">
+              <Facebook class="w-5 h-5" />
+              Follow on Facebook
+            </Button>
+          </a>
+        )}
+        {instagramUrl && (
+          <a href={instagramUrl} target="_blank" rel="noopener noreferrer" class="no-underline">
+            <Button variant="outline" size="lg" class="flex items-center gap-2 hover:border-pink-600 hover:text-pink-600">
+              <Instagram class="w-5 h-5" />
+              Follow on Instagram
+            </Button>
+          </a>
+        )}
+        {twitterUrl && (
+          <a href={twitterUrl} target="_blank" rel="noopener noreferrer" class="no-underline">
+            <Button variant="outline" size="lg" class="flex items-center gap-2 hover:border-blue-400 hover:text-blue-400">
+              <Twitter class="w-5 h-5" />
+              Follow on Twitter
+            </Button>
+          </a>
+        )}
+      </div>
+    )}
+
+    {/* Social Media Feed */}
+    {showFeed && (
+      <div class="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        {socialPosts.map((post) => {
+          const Icon = getPlatformIcon(post.platform);
+          const colorClass = getPlatformColor(post.platform);
+          
+          return (
+            <Card class="overflow-hidden hover:shadow-lg transition-shadow">
+              {post.image && (
+                <div class="relative h-48 overflow-hidden">
+                  <img
+                    src={post.image}
+                    alt="Social media post"
+                    class="w-full h-full object-cover"
+                    onerror="this.onerror=null; this.src='/images/hero-fallback.jpg';"
+                  />
+                </div>
+              )}
+              <CardContent class="p-4">
+                <div class="flex items-center gap-2 mb-3">
+                  <Icon class={`w-5 h-5 ${colorClass}`} />
+                  <span class="font-semibold text-sm">{post.username}</span>
+                  <span class="text-xs text-muted-foreground ml-auto">{post.timestamp}</span>
+                </div>
+                
+                <p class="text-sm mb-4 line-clamp-3">{post.content}</p>
+                
+                <div class="flex items-center gap-4 text-sm text-muted-foreground">
+                  <div class="flex items-center gap-1">
+                    <Heart class="w-4 h-4" />
+                    <span>{post.likes}</span>
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <MessageCircle class="w-4 h-4" />
+                    <span>{post.comments}</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          );
+        })}
+      </div>
+    )}
+
+    {/* Instagram Grid Preview */}
+    <div class="mt-12 text-center">
+      <h3 class="text-xl font-semibold mb-6">Latest from Instagram</h3>
+      <div class="grid grid-cols-3 md:grid-cols-6 gap-2 max-w-4xl mx-auto mb-6">
+        {[...Array(6)].map((_, i) => (
+          <div class="aspect-square bg-muted rounded-lg overflow-hidden">
+            <img
+              src={`/images/hero-fallback.jpg`}
+              alt={`Instagram post ${i + 1}`}
+              class="w-full h-full object-cover hover:scale-105 transition-transform cursor-pointer"
+              onerror="this.onerror=null; this.src='/images/hero-fallback.jpg';"
+            />
+          </div>
+        ))}
+      </div>
+      <a href={instagramUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-primary hover:text-primary/80 font-semibold">
+        View More on Instagram →
+      </a>
+    </div>
+  </div>
+</section>

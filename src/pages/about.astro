@@ -4,9 +4,13 @@ import PageHero from '../components/PageHero.astro';
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Users, Award, History, Heart } from 'lucide-react';
-import { getPageSettings } from '../lib/sanity';
+import { getPageSettings, getTeamMembers } from '../lib/sanity';
 
 const pageSettings = await getPageSettings('about');
+
+// Fetch featured team members
+const featuredTeamMembers = await getTeamMembers();
+const managementTeam = featuredTeamMembers.filter(member => member.department === 'management' || member.featured);
 ---
 
 <Layout title="About Us - WH Pubs">
@@ -52,6 +56,41 @@ const pageSettings = await getPageSettings('about');
 
 					<h2>The WH Pubs Family</h2>
 					<p>Behind every great pub is a great team. Our staff are the heart of WH Pubs, bringing personality, expertise, and genuine care to every interaction. Many have been with us for years, growing their careers and becoming integral parts of their pub's community.</p>
+
+					{/* Meet Our Leadership Team */}
+					{managementTeam && managementTeam.length > 0 && (
+						<div class="my-12">
+							<h3 class="text-2xl font-bold text-center mb-8">Meet Our Leadership</h3>
+							<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+								{managementTeam.slice(0, 6).map((member) => (
+									<Card class="overflow-hidden hover:shadow-lg transition-shadow">
+										{member.image?.asset?.url && (
+											<div class="aspect-[4/5] overflow-hidden">
+												<img
+													src={member.image.asset.url}
+													alt={member.image.alt || member.name}
+													class="w-full h-full object-cover"
+													loading="lazy"
+												/>
+											</div>
+										)}
+										<CardContent class="p-6">
+											<h4 class="text-xl font-semibold mb-1">{member.name}</h4>
+											<p class="text-secondary font-medium mb-3">{member.role}</p>
+											{member.bio && (
+												<p class="text-sm text-muted-foreground mb-3">{member.bio}</p>
+											)}
+											{member.favoriteQuote && (
+												<p class="text-sm italic text-muted-foreground">
+													"{member.favoriteQuote}"
+												</p>
+											)}
+										</CardContent>
+									</Card>
+								))}
+							</div>
+						</div>
+					)}
 
 					<div class="bg-secondary/10 p-8 rounded-lg my-12">
 						<h2 class="text-center mb-8">Our Commitments</h2>
