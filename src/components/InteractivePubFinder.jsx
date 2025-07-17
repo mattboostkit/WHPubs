@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { MapPin, Filter, X, Dog, TreePine, Beer, Utensils, Car, Music, Wifi, Baby } from 'lucide-react';
+import { MapPin, Filter, X, Dog, TreePine, Beer, Utensils, Car, Music, Wifi, Baby, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
