@@ -1,6 +1,6 @@
-/* Generic font fallback classes */
+/* Font classes using Lora for headers */
 .font-lora, .font-quattrocento, .font-alice {
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: 'Lora', Georgia, serif;
 }
 
 .font-quattrocento-normal, .font-alice-normal {
