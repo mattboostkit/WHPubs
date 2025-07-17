@@ -368,29 +368,52 @@ const metaDescription = description || footerDescription;
 			</>
 		)}
 		
-		<script>
-			// Mobile menu toggle
-			const menuToggle = document.getElementById('menu-toggle');
-			const closeMenu = document.getElementById('close-menu');
-			const mobileMenu = document.getElementById('mobile-menu');
-			
-			menuToggle?.addEventListener('click', () => {
-				mobileMenu?.classList.remove('hidden');
-				document.body.style.overflow = 'hidden';
-				menuToggle.setAttribute('aria-expanded', 'true');
-			});
-			
-			closeMenu?.addEventListener('click', () => {
-				mobileMenu?.classList.add('hidden');
-				document.body.style.overflow = 'auto';
-				menuToggle?.setAttribute('aria-expanded', 'false');
-			});
-			
-			// Scroll to pubs section
-			const scrollToPubsBtn = document.getElementById('scroll-to-pubs');
-			scrollToPubsBtn?.addEventListener('click', () => {
-				const pubsSection = document.getElementById('pubs');
-				pubsSection?.scrollIntoView({ behavior: 'smooth' });
+		<script is:inline>
+			// Wait for DOM to be ready
+			document.addEventListener('DOMContentLoaded', () => {
+				// Mobile menu toggle
+				const menuToggle = document.getElementById('menu-toggle');
+				const closeMenu = document.getElementById('close-menu');
+				const mobileMenu = document.getElementById('mobile-menu');
+				
+				if (menuToggle && mobileMenu) {
+					menuToggle.addEventListener('click', () => {
+						mobileMenu.classList.remove('hidden');
+						document.body.style.overflow = 'hidden';
+						menuToggle.setAttribute('aria-expanded', 'true');
+					});
+				}
+				
+				if (closeMenu && mobileMenu) {
+					closeMenu.addEventListener('click', () => {
+						mobileMenu.classList.add('hidden');
+						document.body.style.overflow = 'auto';
+						if (menuToggle) {
+							menuToggle.setAttribute('aria-expanded', 'false');
+						}
+					});
+				}
+				
+				// Close menu when clicking on a link
+				const mobileMenuLinks = mobileMenu?.querySelectorAll('a');
+				mobileMenuLinks?.forEach(link => {
+					link.addEventListener('click', () => {
+						mobileMenu.classList.add('hidden');
+						document.body.style.overflow = 'auto';
+						if (menuToggle) {
+							menuToggle.setAttribute('aria-expanded', 'false');
+						}
+					});
+				});
+				
+				// Scroll to pubs section
+				const scrollToPubsBtn = document.getElementById('scroll-to-pubs');
+				if (scrollToPubsBtn) {
+					scrollToPubsBtn.addEventListener('click', () => {
+						const pubsSection = document.getElementById('pubs');
+						pubsSection?.scrollIntoView({ behavior: 'smooth' });
+					});
+				}
 			});
 		</script>
 	</body>
