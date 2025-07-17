@@ -78,6 +78,14 @@ export const structure = (S: StructureBuilder) =>
                     .schemaType('thingsToDoPageSettings')
                     .documentId('thingsToDoPageSettings')
                 ),
+              S.listItem()
+                .title('🏠 Our Pubs Page')
+                .icon(FiHome)
+                .child(
+                  S.document()
+                    .schemaType('pubFinderPageSettings')
+                    .documentId('pubFinderPageSettings')
+                ),
             ])
         ),
       S.divider(),
@@ -160,5 +168,5 @@ export const structure = (S: StructureBuilder) =>
         ),
       S.divider(),
       ...S.documentTypeListItems()
-        .filter(listItem => !['site', 'homepage', 'developmentKitchen', 'eventsPageSettings', 'blogPageSettings', 'aboutPageSettings', 'contactPageSettings', 'careersPageSettings', 'thingsToDoPageSettings', 'pub', 'post', 'event', 'menu', 'career', 'thingsToDo'].includes(listItem.getId()))
+        .filter(listItem => !['site', 'homepage', 'developmentKitchen', 'eventsPageSettings', 'blogPageSettings', 'aboutPageSettings', 'contactPageSettings', 'careersPageSettings', 'thingsToDoPageSettings', 'pubFinderPageSettings', 'pub', 'post', 'event', 'menu', 'career', 'thingsToDo'].includes(listItem.getId()))
     ])
