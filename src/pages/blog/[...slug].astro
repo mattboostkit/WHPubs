@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
 import { ChefHat } from 'lucide-react';
 import { getPost, getPosts } from '../../lib/sanity'; // Use new function name
 import SanityPortableText from '../../components/SanityPortableText.jsx';
@@ -27,6 +28,11 @@ const formattedDate = post?.publishedAt
       day: 'numeric'
     })
   : '';
+
+// Capitalize categories
+const capitalizedCategories = post?.categories?.map(cat => 
+  cat.charAt(0).toUpperCase() + cat.slice(1).toLowerCase()
+) || [];
 
 // Create fallback image paths
 const blogDetailFallbackImage = '/images/blog-detail-fallback.jpg';
@@ -101,6 +107,16 @@ const articleStructuredData = post ? {
 				<div>
 					<p class="text-primary/60 text-sm mb-2">{formattedDate}</p>
 					<h1 class="text-3xl font-bold mb-4">{post?.title}</h1>
+					
+					{capitalizedCategories.length > 0 && (
+						<div class="flex flex-wrap gap-2 mb-4">
+							{capitalizedCategories.map((category) => (
+								<Badge variant="secondary" className="text-lg px-4 py-2">
+									{category}
+								</Badge>
+							))}
+						</div>
+					)}
 					
 					<div class="flex items-center justify-between mb-6 flex-wrap gap-4">
 						<div class="flex items-center gap-4">
