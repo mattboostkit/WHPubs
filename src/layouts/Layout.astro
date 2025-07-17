@@ -127,7 +127,7 @@ const metaDescription = description || footerDescription;
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content={metaDescription} />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -200,7 +200,7 @@ const metaDescription = description || footerDescription;
 					<!-- Site Name / Logo -->
 					<a href="/" class="text-[#B79C64]" aria-label={`${siteName} Home`}>
 						{logoUrl ? (
-							<img src={logoUrl} alt={logoAlt} class="h-14 max-w-[300px] object-contain" />
+							<img src={logoUrl} alt={logoAlt} class="h-14 max-w-[200px] sm:max-w-[300px] object-contain" />
 						) : (
 							<span class="text-4xl font-bold">{siteName}</span>
 						)}
@@ -247,7 +247,7 @@ const metaDescription = description || footerDescription;
 					<!-- Mobile Menu Header -->
 					<a href="/" class="text-[#B79C64]" aria-label={`${siteName} Home`}>
 						{logoUrl ? (
-							<img src={logoUrl} alt={logoAlt} class="h-14 max-w-[300px] object-contain" />
+							<img src={logoUrl} alt={logoAlt} class="h-14 max-w-[200px] sm:max-w-[300px] object-contain" />
 						) : (
 							<span class="text-4xl font-bold">{siteName}</span>
 						)}

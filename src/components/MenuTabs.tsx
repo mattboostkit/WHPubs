@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge"
 export default function MenuTabs() {
   return (
     <Tabs defaultValue="starters" className="max-w-4xl mx-auto">
-      <TabsList className="grid w-full grid-cols-4 mb-8">
+      <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 gap-2 mb-8">
         <TabsTrigger value="starters">Starters</TabsTrigger>
         <TabsTrigger value="mains">Mains</TabsTrigger>
         <TabsTrigger value="desserts">Desserts</TabsTrigger>
