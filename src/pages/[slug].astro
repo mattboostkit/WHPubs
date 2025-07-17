@@ -351,21 +351,6 @@ const pageDescription = pub.description || `Learn more about ${pub.name}, one of
         </div>
       )}
 
-      <!-- Image Gallery -->
-      {pub.gallery && pub.gallery.length > 0 && (
-        <div class="mb-12">
-          <h2 class="text-3xl font-semibold text-primary mb-4 border-b pb-2 flex items-center">
-            <ImageIcon class="w-6 h-6 mr-3 text-primary/80" /> Gallery
-          </h2>
-          <div class="mt-6">
-            <ImageGallery 
-              images={pub.gallery} 
-              showCategories={true}
-              columns={3}
-            />
-          </div>
-        </div>
-      )}
 
       {/* Latest News Section */}
       {(relatedPosts && relatedPosts.length > 0) ? (

@@ -1,0 +1,62 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import ImageGallery from '@/components/ImageGallery';
+import { getPubs } from '../lib/sanity';
+
+// Check for pub-specific build
+const targetPubSlug = import.meta.env.TARGET_PUB_SLUG;
+
+// Get pub data
+let pubData = null;
+if (targetPubSlug) {
+  const allPubs = await getPubs(targetPubSlug);
+  pubData = allPubs.find(pub => pub.slug?.current === targetPubSlug);
+}
+
+// Redirect to home if not a pub-specific build
+if (!targetPubSlug || !pubData) {
+  return Astro.redirect('/');
+}
+
+const pageTitle = `Gallery - ${pubData.name}`;
+const pageDescription = `View photos and images from ${pubData.name}`;
+---
+
+<Layout title={pageTitle} description={pageDescription} pub={pubData} targetPub={pubData}>
+  <PageHero
+    title="Gallery"
+    subtitle={`Explore ${pubData.name} through our photos`}
+    image={pubData.heroImage}
+    fallbackImage="/images/gallery-hero.jpg"
+  />
+
+  <section class="py-12 md:py-16">
+    <div class="container mx-auto px-4">
+      {pubData.gallery && pubData.gallery.length > 0 ? (
+        <div>
+          <div class="text-center mb-8">
+            <h2 class="text-3xl font-bold mb-4">Our Gallery</h2>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+              Take a virtual tour of {pubData.name}. Click on any image to view it in full size.
+            </p>
+          </div>
+          
+          <ImageGallery 
+            images={pubData.gallery} 
+            showCategories={false}
+            columns={3}
+            enableLightbox={true}
+            className="gallery-page"
+          />
+        </div>
+      ) : (
+        <div class="text-center py-16">
+          <p class="text-gray-600 text-lg">
+            Gallery coming soon. Check back later for photos of {pubData.name}.
+          </p>
+        </div>
+      )}
+    </div>
+  </section>
+</Layout>
