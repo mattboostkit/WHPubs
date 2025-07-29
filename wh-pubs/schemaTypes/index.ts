@@ -16,6 +16,7 @@ import giftCard from './giftCard'
 import teamMember from './teamMember'
 import pubStory from './pubStory'
 import loyaltyProgram from './loyaltyProgram'
+import aboutContent from './aboutContent'
 import { eventsPageSettings, blogPageSettings, aboutPageSettings, contactPageSettings, careersPageSettings, thingsToDoPageSettings, pubFinderPageSettings } from './pageSettings'
 
 export const schemaTypes = [
@@ -23,6 +24,7 @@ export const schemaTypes = [
   homepage, 
   developmentKitchen,
   thingsToDo,
+  aboutContent,
   eventsPageSettings,
   blogPageSettings,
   aboutPageSettings,

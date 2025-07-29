@@ -662,3 +662,22 @@ export async function getLoyaltyProgramData() {
     }
   `);
 }
+
+// Get about page content
+export async function getAboutContent() {
+  return await client.fetch(`
+    *[_type == "aboutContent"][0]{
+      mainTitle,
+      founderPhoto{
+        asset->{
+          url,
+          metadata
+        },
+        alt
+      },
+      storyContent,
+      showLeadershipSection,
+      showCommitmentsSection
+    }
+  `);
+}
