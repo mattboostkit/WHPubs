@@ -1,10 +1,10 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import { getPubs, getPubBySlug, getPosts, getMenusForPub, getEvents, getReviews, getOffers, getPubStories, getTeamMembers } from '@/lib/sanity';
+import { getPubs, getPubBySlug, getPosts, getMenusForPub, getEvents, getReviews, getOffers, getPubStories, getTeamMembers, getThingsToDo } from '@/lib/sanity';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { MapPin, Clock, Phone, UtensilsCrossed, CalendarDays, Image as ImageIcon, ExternalLink, Calendar } from 'lucide-react';
+import { MapPin, Clock, Phone, UtensilsCrossed, CalendarDays, Image as ImageIcon, ExternalLink, Calendar, Compass, Trees, FootprintsIcon } from 'lucide-react';
 import ImageGallery from '@/components/ImageGallery.astro';
 import { PubHeroCarousel } from '@/components/PubHeroCarousel';
 import GoogleMapEmbed from '@/components/GoogleMapEmbed';
@@ -54,14 +54,15 @@ if (!pub) {
 }
 
 // 3. Fetch all related data for this pub
-const [relatedPosts, pubMenus, pubEvents, pubReviews, pubOffers, pubStories, pubTeam] = await Promise.all([
+const [relatedPosts, pubMenus, pubEvents, pubReviews, pubOffers, pubStories, pubTeam, pubThingsToDo] = await Promise.all([
   getPosts(pub.slug.current),
   getMenusForPub(pub.slug.current),
   getEvents(pub.slug.current),
   getReviews(pub.slug.current),
   getOffers(pub.slug.current),
   getPubStories(pub.slug.current),
-  getTeamMembers(pub.slug.current)
+  getTeamMembers(pub.slug.current),
+  getThingsToDo(pub.slug.current)
 ]);
 
 const pageTitle = `${pub.name} - WH Pubs`;
@@ -481,6 +482,112 @@ const pubStructuredData = {
           <p class="text-primary/70">Check back soon for events at {pub.name}!</p>
         </div>
       )}
+
+      {/* Things To Do Section */}
+      {(pubThingsToDo && pubThingsToDo.length > 0) ? (
+        <div id="things-to-do" class="mb-12 scroll-mt-20">
+          <h2 class="text-3xl font-semibold text-primary mb-6 flex items-center">
+            <Compass class="w-6 h-6 mr-3 text-primary/80" /> Things To Do
+          </h2>
+          
+          {/* Group activities by category */}
+          {(() => {
+            const grouped = pubThingsToDo.reduce((acc, item) => {
+              const category = item.category || 'other';
+              if (!acc[category]) acc[category] = [];
+              acc[category].push(item);
+              return acc;
+            }, {});
+            
+            const categoryIcons = {
+              walks: Trees,
+              attractions: Compass,
+              family: FootprintsIcon,
+              seasonal: Calendar,
+              markets: UtensilsCrossed
+            };
+            
+            const categoryTitles = {
+              walks: 'Walks & Nature',
+              attractions: 'Local Attractions',
+              family: 'Family Activities',
+              seasonal: 'Seasonal Events',
+              markets: 'Markets'
+            };
+            
+            return Object.entries(grouped).map(([category, items]) => {
+              const Icon = categoryIcons[category] || Compass;
+              const title = categoryTitles[category] || 'Other Activities';
+              
+              return (
+                <div key={category} class="mb-8">
+                  <h3 class="text-xl font-semibold text-primary mb-4 flex items-center">
+                    <Icon className="w-5 h-5 mr-2 text-primary/70" />
+                    {title}
+                  </h3>
+                  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    {items.map((activity) => (
+                      <Card className="hover:shadow-lg transition-shadow overflow-hidden">
+                        {activity.image?.asset?.url && (
+                          <div class="h-48 overflow-hidden">
+                            <img
+                              src={activity.image.asset.url}
+                              alt={activity.image.alt || activity.title}
+                              class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                              loading="lazy"
+                            />
+                          </div>
+                        )}
+                        <CardContent class="p-4">
+                          <h4 class="text-lg font-semibold mb-2">{activity.title}</h4>
+                          
+                          <div class="space-y-1 text-sm text-muted-foreground mb-3">
+                            {activity.locationDetails && (
+                              <div class="flex items-center">
+                                <MapPin class="w-4 h-4 mr-1" />
+                                <span>{activity.locationDetails}</span>
+                              </div>
+                            )}
+                            {activity.distance && (
+                              <div>Distance: {activity.distance}</div>
+                            )}
+                            {activity.duration && (
+                              <div>Duration: {activity.duration}</div>
+                            )}
+                            {activity.difficulty && (
+                              <Badge variant="outline" className="text-xs">
+                                {activity.difficulty}
+                              </Badge>
+                            )}
+                          </div>
+                          
+                          {activity.description && (
+                            <div class="prose prose-sm max-w-none text-muted-foreground">
+                              <SanityPortableText value={activity.description} />
+                            </div>
+                          )}
+                          
+                          {activity.externalLink && (
+                            <a 
+                              href={activity.externalLink} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              class="inline-flex items-center text-primary hover:text-primary/80 font-medium mt-3 text-sm"
+                            >
+                              Learn More
+                              <ExternalLink class="w-3 h-3 ml-1" />
+                            </a>
+                          )}
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+              );
+            });
+          })()}
+        </div>
+      ) : null}
 
       {/* Customer Reviews Section */}
       {pubReviews && pubReviews.length > 0 && (
