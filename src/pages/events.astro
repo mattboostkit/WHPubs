@@ -77,7 +77,7 @@ const formatEventDate = (dateString) => {
                   <CalendarIcon class="w-4 h-4 mr-1.5" /> {formatEventDate(event.date)}
                 </span>
                  <span class="flex items-center">
-                  <MapPin class="w-4 h-4 mr-1.5" /> {event.locationOverride || pubData?.location || 'Location TBC'}
+                  <MapPin class="w-4 h-4 mr-1.5" /> {event.locationOverride || event.associatedPub?.name || pubData?.location || 'Location TBC'}
                 </span>
               </div>
 

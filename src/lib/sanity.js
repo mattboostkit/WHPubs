@@ -274,8 +274,8 @@ export async function getEvents(targetPubSlug = null) {
     // Fetch events matching the specific pub slug
     filter = `&& associatedPub->slug.current == $targetPubSlug`;
   } else {
-    // Fetch events with NO pub reference (general WH Pubs events)
-    filter = `&& !defined(associatedPub)`;
+    // Fetch ALL events from all pubs for the main hub
+    filter = '';
   }
   const params = targetPubSlug ? { targetPubSlug } : {};
 
