@@ -1,0 +1,144 @@
+---
+// src/pages/book-a-table.astro
+import Layout from '@/layouts/Layout.astro';
+import { getPubBySlug } from '@/lib/sanity';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Phone, MapPin, Clock } from 'lucide-react';
+import BookingWidget from '@/components/BookingWidget.astro';
+
+// Determine the target pub for this build/request
+const targetPubSlug = import.meta.env.TARGET_PUB_SLUG;
+
+// Fetch the specific pub's data
+const pubData = targetPubSlug ? await getPubBySlug(targetPubSlug) : null;
+
+// Only show page if we're on a pub site
+if (!pubData) {
+  return Astro.redirect('/404');
+}
+
+const pageTitle = `Book a Table - ${pubData.name}`;
+const pageDescription = `Make a reservation at ${pubData.name}. Book your table online for the best dining experience.`;
+---
+
+<Layout title={pageTitle} description={pageDescription} pub={pubData}>
+  <main class="container mx-auto px-4 py-12">
+    <div class="max-w-6xl mx-auto">
+      <h1 class="text-4xl md:text-5xl font-bold text-primary mb-4 text-center">
+        Book a Table at {pubData.name}
+      </h1>
+      <p class="text-lg text-primary/70 text-center mb-12">
+        Reserve your table online for the perfect dining experience
+      </p>
+
+      <div class="grid lg:grid-cols-3 gap-8">
+        {/* Booking Widget Column - Takes up 2 columns on large screens */}
+        <div class="lg:col-span-2">
+          {pubData.reservationsUrl ? (
+            <Card class="overflow-hidden shadow-lg">
+              <CardContent class="p-0">
+                <BookingWidget 
+                  reservationsUrl={pubData.reservationsUrl}
+                  pubName={pubData.name}
+                  height="800"
+                />
+              </CardContent>
+            </Card>
+          ) : (
+            <Card class="p-12 text-center">
+              <p class="text-lg text-primary/70 mb-4">
+                Online booking is not currently available for this location.
+              </p>
+              {pubData.contactPhone && (
+                <p class="text-lg">
+                  Please call us on <a href={`tel:${pubData.contactPhone.replace(/\s/g, '')}`} class="text-secondary font-semibold hover:underline">{pubData.contactPhone}</a> to make a reservation.
+                </p>
+              )}
+            </Card>
+          )}
+        </div>
+
+        {/* Information Column */}
+        <div class="space-y-6">
+          {/* Contact Information */}
+          <Card class="hover:shadow-lg transition-shadow">
+            <CardHeader>
+              <CardTitle class="text-xl">Contact Information</CardTitle>
+            </CardHeader>
+            <CardContent class="space-y-4">
+              {pubData.contactPhone && (
+                <div class="flex items-center">
+                  <Phone class="w-5 h-5 mr-3 text-primary/60" />
+                  <div>
+                    <p class="text-sm text-primary/70">Call us</p>
+                    <a href={`tel:${pubData.contactPhone.replace(/\s/g, '')}`} class="font-medium text-primary hover:text-secondary transition-colors">
+                      {pubData.contactPhone}
+                    </a>
+                  </div>
+                </div>
+              )}
+              
+              {(pubData.location || pubData.addressLine1) && (
+                <div class="flex items-start">
+                  <MapPin class="w-5 h-5 mr-3 text-primary/60 mt-1" />
+                  <div>
+                    <p class="text-sm text-primary/70">Find us</p>
+                    <p class="font-medium text-primary">{pubData.location}</p>
+                    {pubData.addressLine1 && <p class="text-sm text-primary/80">{pubData.addressLine1}</p>}
+                    {pubData.postcode && <p class="text-sm text-primary/80">{pubData.postcode}</p>}
+                  </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Opening Hours */}
+          {pubData.openingHours && (
+            <Card class="hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <CardTitle class="text-xl flex items-center">
+                  <Clock class="w-5 h-5 mr-2" />
+                  Opening Hours
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <pre class="whitespace-pre-wrap font-sans text-sm">{pubData.openingHours}</pre>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Booking Information */}
+          <Card class="bg-secondary/10 border-secondary/20">
+            <CardHeader>
+              <CardTitle class="text-xl">Booking Information</CardTitle>
+            </CardHeader>
+            <CardContent class="space-y-3 text-sm">
+              <p>• Tables are held for 15 minutes past booking time</p>
+              <p>• For groups larger than 8, please call us directly</p>
+              <p>• Special dietary requirements? Let us know when booking</p>
+              <p>• Cancellations can be made up to 2 hours before your booking</p>
+            </CardContent>
+          </Card>
+
+          {/* Special Requests */}
+          <Card class="border-primary/20">
+            <CardHeader>
+              <CardTitle class="text-xl">Special Occasions?</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p class="text-sm text-primary/80 mb-3">
+                Celebrating something special? Let us know! We can help with:
+              </p>
+              <ul class="space-y-1 text-sm text-primary/70">
+                <li>• Birthday celebrations</li>
+                <li>• Anniversary dinners</li>
+                <li>• Business meetings</li>
+                <li>• Private dining areas</li>
+              </ul>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>

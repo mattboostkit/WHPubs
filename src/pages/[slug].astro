@@ -157,9 +157,7 @@ const pubStructuredData = {
       {pub.reservationsUrl && (
         <div class="text-center mb-10"> {/* Centered and added bottom margin */}
           <a 
-            href={pub.reservationsUrl} 
-            target="_blank" 
-            rel="noopener noreferrer"
+            href="/book-a-table"
             onclick={`window.analytics && window.analytics.trackReservation('${pub.name}', 'click_main')`}
           >
             <Button variant="default" size="lg" class="bg-green-600 hover:bg-green-700 text-white font-semibold px-8 py-3"> {/* Larger padding */}

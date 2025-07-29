@@ -1,0 +1,82 @@
+---
+// src/components/BookingWidget.astro
+interface Props {
+  reservationsUrl: string;
+  pubName: string;
+  height?: string;
+}
+
+const { reservationsUrl, pubName, height = "800" } = Astro.props;
+
+// Determine the booking system type
+let bookingSystem = 'unknown';
+let widgetSrc = reservationsUrl;
+let needsSpecialHandling = false;
+
+if (reservationsUrl.includes('liveres.co.uk')) {
+  bookingSystem = 'liveres';
+} else if (reservationsUrl.includes('opentable.com')) {
+  bookingSystem = 'opentable';
+  // OpenTable might need restaurant ID extraction
+  needsSpecialHandling = true;
+} else if (reservationsUrl.includes('resdiary.com')) {
+  bookingSystem = 'resdiary';
+} else if (reservationsUrl.includes('sevenrooms.com')) {
+  bookingSystem = 'sevenrooms';
+  needsSpecialHandling = true;
+}
+
+// Handle special cases for different booking systems
+if (bookingSystem === 'opentable' && needsSpecialHandling) {
+  // Extract restaurant ID from OpenTable URL if needed
+  const match = reservationsUrl.match(/restaurant\/(\d+)/);
+  if (match) {
+    widgetSrc = `https://www.opentable.com/widget/reservation/loader?rid=${match[1]}&type=standard&theme=standard`;
+  }
+} else if (bookingSystem === 'sevenrooms' && needsSpecialHandling) {
+  // SevenRooms might need venue slug extraction
+  const match = reservationsUrl.match(/sevenrooms\.com\/([^\/]+)/);
+  if (match) {
+    widgetSrc = `https://www.sevenrooms.com/widget/embed/${match[1]}`;
+  }
+}
+---
+
+<div class="booking-widget-container">
+  {bookingSystem === 'unknown' ? (
+    <div class="text-center p-8 bg-gray-50 rounded-lg">
+      <p class="text-lg text-primary/70 mb-4">
+        This booking system cannot be embedded directly.
+      </p>
+      <a 
+        href={reservationsUrl} 
+        target="_blank" 
+        rel="noopener noreferrer"
+        class="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded-md transition-colors"
+      >
+        Book on External Site →
+      </a>
+    </div>
+  ) : (
+    <iframe
+      src={widgetSrc}
+      width="100%"
+      height={height}
+      frameborder="0"
+      class="w-full rounded-lg shadow-sm"
+      title={`Book a table at ${pubName}`}
+      loading="lazy"
+      sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+      allow="payment"
+    ></iframe>
+  )}
+</div>
+
+<style>
+  .booking-widget-container {
+    width: 100%;
+    background: white;
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+</style>
