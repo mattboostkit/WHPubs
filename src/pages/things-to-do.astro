@@ -1,0 +1,189 @@
+---
+// src/pages/things-to-do.astro
+import Layout from '@/layouts/Layout.astro';
+import { getThingsToDo, getPubBySlug, getPageSettings } from '@/lib/sanity';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import SanityPortableText from '@/components/SanityPortableText.jsx';
+import { MapPin, Clock, Footprints, Trees, Compass, Calendar, ShoppingBag, ExternalLink } from 'lucide-react';
+import PageHero from '@/components/PageHero.astro';
+
+// Determine the target pub for this build/request
+const targetPubSlug = import.meta.env.TARGET_PUB_SLUG;
+
+// Fetch the specific pub's data (needed for layout customization)
+const pubData = targetPubSlug ? await getPubBySlug(targetPubSlug) : null;
+
+// Fetch things to do: only for the target pub if specified, otherwise only general activities
+const thingsToDo = await getThingsToDo(targetPubSlug);
+
+// Fetch page settings for hero image
+const pageSettings = await getPageSettings('thingsToDo');
+
+// Determine page title
+const pageTitle = pubData ? `${pubData.name} - Things To Do` : "Things To Do - WH Pubs";
+const pageDescription = pubData ? `Discover activities and attractions near ${pubData.name}.` : "Discover activities and attractions near WH Pubs.";
+
+// Group activities by category
+const groupedActivities = thingsToDo.reduce((acc, item) => {
+  const category = item.category || 'other';
+  if (!acc[category]) acc[category] = [];
+  acc[category].push(item);
+  return acc;
+}, {});
+
+// Category configuration
+const categoryIcons = {
+  walks: Trees,
+  attractions: Compass,
+  family: Footprints,
+  seasonal: Calendar,
+  markets: ShoppingBag
+};
+
+const categoryTitles = {
+  walks: 'Walks & Nature',
+  attractions: 'Local Attractions',
+  family: 'Family Activities',
+  seasonal: 'Seasonal Events',
+  markets: 'Markets'
+};
+
+// Only show page if we're on a pub site
+if (!pubData) {
+  return Astro.redirect('/404');
+}
+---
+
+<Layout title={pageTitle} description={pageDescription} pub={pubData}>
+  {/* Hero Section */}
+  {pageSettings && (
+    <PageHero 
+      image={pageSettings.heroImage}
+      title={pageSettings.heroTitle || (pubData ? `Things To Do Near ${pubData.name}` : 'Things To Do')}
+      subtitle={pageSettings.heroSubtitle || 'Discover local attractions, walks, and activities'}
+      fallbackImage="/images/things-to-do-hero.jpg"
+    />
+  )}
+  
+  <main class="container mx-auto px-4 py-12">
+    {!pageSettings && (
+      <div class="text-center mb-12">
+        <h1 class="text-4xl md:text-5xl font-bold text-primary mb-4">
+          Things To Do Near {pubData.name}
+        </h1>
+        <p class="text-lg text-primary/70">Discover local attractions, walks, and activities</p>
+      </div>
+    )}
+
+    {thingsToDo && thingsToDo.length > 0 ? (
+      <div class="space-y-12 max-w-6xl mx-auto">
+        {Object.entries(groupedActivities).map(([category, items]) => {
+          const Icon = categoryIcons[category] || Compass;
+          const title = categoryTitles[category] || 'Other Activities';
+          
+          return (
+            <section key={category}>
+              <h2 class="text-2xl font-semibold text-primary mb-6 flex items-center">
+                <Icon className="w-6 h-6 mr-3 text-primary/70" />
+                {title}
+              </h2>
+              
+              <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {items.map((activity) => (
+                  <Card className="hover:shadow-lg transition-shadow overflow-hidden bg-white">
+                    {activity.image?.asset?.url && (
+                      <div class="h-48 overflow-hidden">
+                        <img
+                          src={activity.image.asset.url + '?w=400&h=300&fit=crop'}
+                          alt={activity.image.alt || activity.title}
+                          class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                          loading="lazy"
+                          onerror="this.onerror=null; this.src='/images/activity-fallback.jpg';"
+                        />
+                      </div>
+                    )}
+                    <CardContent class="p-6">
+                      <h3 class="text-xl font-semibold mb-3">{activity.title}</h3>
+                      
+                      <div class="space-y-2 text-sm text-primary/70 mb-4">
+                        {activity.locationDetails && (
+                          <div class="flex items-center">
+                            <MapPin class="w-4 h-4 mr-2 flex-shrink-0" />
+                            <span>{activity.locationDetails}</span>
+                          </div>
+                        )}
+                        
+                        <div class="flex flex-wrap gap-2">
+                          {activity.distance && (
+                            <Badge variant="outline" className="text-xs">
+                              <Footprints class="w-3 h-3 mr-1" />
+                              {activity.distance}
+                            </Badge>
+                          )}
+                          {activity.duration && (
+                            <Badge variant="outline" className="text-xs">
+                              <Clock class="w-3 h-3 mr-1" />
+                              {activity.duration}
+                            </Badge>
+                          )}
+                          {activity.difficulty && (
+                            <Badge 
+                              variant={activity.difficulty === 'easy' ? 'secondary' : activity.difficulty === 'moderate' ? 'default' : 'destructive'}
+                              className="text-xs"
+                            >
+                              {activity.difficulty.charAt(0).toUpperCase() + activity.difficulty.slice(1)}
+                            </Badge>
+                          )}
+                        </div>
+                      </div>
+                      
+                      {activity.description && (
+                        <div class="prose prose-sm max-w-none text-primary/80 mb-4">
+                          <SanityPortableText value={activity.description} client:load />
+                        </div>
+                      )}
+                      
+                      {activity.externalLink && (
+                        <a 
+                          href={activity.externalLink} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          class="inline-flex items-center text-primary hover:text-secondary font-medium text-sm transition-colors"
+                        >
+                          Learn More
+                          <ExternalLink class="w-3 h-3 ml-1" />
+                        </a>
+                      )}
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </section>
+          );
+        })}
+      </div>
+    ) : (
+      <div class="text-center py-16">
+        <Compass class="w-16 h-16 mx-auto mb-4 text-primary/30" />
+        <p class="text-lg text-primary/70">
+          No activities listed for {pubData.name} right now. Check back soon!
+        </p>
+      </div>
+    )}
+    
+    {/* Call to action */}
+    <div class="mt-16 text-center bg-secondary/10 rounded-lg p-8">
+      <h3 class="text-2xl font-semibold text-primary mb-4">Ready to Visit?</h3>
+      <p class="text-primary/70 mb-6">After exploring the area, stop by {pubData.name} for a well-deserved refreshment!</p>
+      {pubData.reservationsUrl && (
+        <a href={pubData.reservationsUrl} target="_blank" rel="noopener noreferrer">
+          <Button size="lg" className="bg-green-600 hover:bg-green-700">
+            Book a Table
+          </Button>
+        </a>
+      )}
+    </div>
+  </main>
+</Layout>
