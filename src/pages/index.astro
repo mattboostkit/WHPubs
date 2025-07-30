@@ -16,6 +16,7 @@ import SocialMediaIntegration from '@/components/SocialMediaIntegration.astro';
 const posts = await getPosts(); // Fetches general posts (no pub associated)
 const pubs = await getPubs(); // Fetches all pubs
 const homepageData = await getHomepageData(); // Fetch homepage content
+console.log('Homepage data:', homepageData); // Debug log
 let developmentKitchen = null;
 try {
   developmentKitchen = await getDevelopmentKitchen(); // Fetch development kitchen data

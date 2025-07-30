@@ -220,9 +220,9 @@ export async function getAllCareers() {
 
 // Helper function to get the single homepage document
 export async function getHomepageData() {
-  // Fetches the first document of type 'homepage'. Assumes only one exists.
+  // Fetches the homepage document by its specific ID
   return client.fetch(`
-    *[_type == "homepage"][0] {
+    *[_type == "homepage" && _id == "homepage"][0] {
       title,
       heroImages[] { asset->{ _id, url }, alt },
       heroImage { asset->{ _id, url }, alt },
