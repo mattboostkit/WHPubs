@@ -305,6 +305,10 @@ export async function getDevelopmentKitchen() {
         bio[]{ ..., asset-> },
         image { asset->{ _id, url }, alt }
       },
+      myJourney {
+        heading,
+        content[]{ ..., asset-> }
+      },
       philosophy {
         heading,
         content[]{ ..., asset-> }

@@ -91,6 +91,25 @@ export default defineType({
       ]
     }),
     defineField({
+      name: 'myJourney',
+      title: 'My Journey',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'heading',
+          title: 'Section Heading',
+          type: 'string',
+          initialValue: 'My Journey'
+        }),
+        defineField({
+          name: 'content',
+          title: 'Content',
+          type: 'blockContent',
+          description: 'Share your personal journey with WH Pubs'
+        }),
+      ]
+    }),
+    defineField({
       name: 'philosophy',
       title: 'Our Philosophy',
       type: 'object',
