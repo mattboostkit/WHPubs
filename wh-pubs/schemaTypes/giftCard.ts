@@ -1,11 +1,11 @@
 import {defineField, defineType} from 'sanity'
-import {GiftIcon} from '@sanity/icons'
+import {TokenIcon} from '@sanity/icons'
 
 export default defineType({
   name: 'giftCard',
   title: 'Gift Cards',
   type: 'document',
-  icon: GiftIcon,
+  icon: TokenIcon,
   fields: [
     defineField({
       name: 'title',
