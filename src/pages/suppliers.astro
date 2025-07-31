@@ -1,0 +1,215 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getPubBySlug } from '../lib/sanity';
+
+const targetPubSlug = import.meta.env.TARGET_PUB_SLUG;
+const targetPub = targetPubSlug ? await getPubBySlug(targetPubSlug) : null;
+
+// Define suppliers for each pub
+const pubSuppliers = {
+  'the-chaser-inn': [
+    'Bodium Meats',
+    'Chapmans Fish',
+    'Sankeys Fishmongers',
+    'FK Carter eggs',
+    'TH Brown Veg',
+    'Penshurst fine foods',
+    'Rusbridge Bakery',
+    'Salcombe Dairy Ice cream',
+    'Smokin Brothers Salmon',
+    'Tracklements Sauces',
+    'Wicks Bacon',
+    'Salty Dog nuts and crisps',
+    'Mr Fitz Aqua Spritz',
+    'Chapel Down',
+    'Fever Tree',
+    'Enotria Wine',
+    'LWC',
+    'Ninju Juices',
+    'Vimto Cordials'
+  ],
+  'the-cricketers-inn': [
+    'Bodium Meats',
+    'TH Brown Veg',
+    'Penshurst fine foods',
+    'Salcombe Dairy Ice cream',
+    'Smokin Brothers Salmon',
+    'Tracklements Sauces',
+    'Wicks Bacon',
+    'Longfield Bakery',
+    'Salty Dog nuts and crisps',
+    'Mr Fitz Aqua Spritz',
+    'Chapel Down',
+    'Fever Tree',
+    'Enotria Wine',
+    'LWC',
+    'Ninju Juices',
+    'Vimto Cordials'
+  ],
+  'the-rose-and-crown': [
+    'Bodium Meats',
+    'Chapmans Fish',
+    'FK Carter eggs',
+    'Harris Covent Garden Veg',
+    'Penshurst fine foods',
+    'Salcombe Dairy Ice cream',
+    'Smokin Brothers Salmon',
+    'Tracklements Sauces',
+    'Wicks Bacon',
+    'Salty Dog nuts and crisps',
+    'Mr Fitz Aqua Spritz',
+    'Chapel Down',
+    'Fever Tree',
+    'Enotria Wine',
+    'LWC',
+    'Ninju Juices',
+    'Vimto Cordials'
+  ],
+  'the-little-brown-jug': [
+    'Rusbridge Bakery',
+    'Bodium Meats',
+    'Chapmans Fish',
+    'FK Carter eggs',
+    'TH Brown Veg',
+    'Penshurst fine foods',
+    'Salcombe Dairy Ice cream',
+    'Smokin Brothers Salmon',
+    'Salty Dog nuts and crisps',
+    'Tracklements Sauces',
+    'Wicks Bacon',
+    'Mr Fitz Aqua Spritz',
+    'Chapel Down',
+    'Fever Tree',
+    'Enotria Wine',
+    'LWC',
+    'Ninju Juices',
+    'Vimto Cordials'
+  ],
+  'the-bull': [
+    'Rusbridge Bakery',
+    'Bodium Meats',
+    'Chapmans Fish',
+    'FK Carter eggs',
+    'TH Brown Veg',
+    'Penshurst fine foods',
+    'Salcombe Dairy Ice cream',
+    'Smokin Brothers Salmon',
+    'Tracklements Sauces',
+    'Wicks Bacon',
+    'Salty Dog nuts and crisps',
+    'Mr Fitz Aqua Spritz',
+    'Chapel Down',
+    'Fever Tree',
+    'Enotria Wine',
+    'LWC',
+    'Ninju Juices',
+    'Vimto Cordials'
+  ]
+};
+
+const suppliers = targetPub ? pubSuppliers[targetPub.slug.current] || [] : [];
+const pageTitle = targetPub ? `Our Suppliers | ${targetPub.name}` : 'Our Suppliers | WH Pubs';
+const pageDescription = targetPub ? `Discover the quality suppliers and local producers that help ${targetPub.name} deliver exceptional food and drink.` : 'Discover the quality suppliers and local producers that help WH Pubs deliver exceptional food and drink.';
+---
+
+<Layout 
+  title={pageTitle} 
+  description={pageDescription}
+  targetPub={targetPub}
+>
+  <!-- Hero Section -->
+  <section class="relative h-[50vh] min-h-[400px] overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-primary/90 to-primary/70"></div>
+    <div class="absolute inset-0 flex items-center">
+      <div class="container mx-auto px-4 text-center">
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
+          Our Suppliers
+        </h1>
+        <p class="text-white/90 text-lg md:text-xl max-w-3xl mx-auto">
+          We're proud to work with local producers and quality suppliers who share our commitment to excellence.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Suppliers Section -->
+  <section class="py-16 bg-background">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold mb-4 text-primary">
+            Quality Partners
+          </h2>
+          <p class="text-lg text-muted-foreground">
+            From local farms to artisan producers, our suppliers help us deliver the finest ingredients and products to our guests.
+          </p>
+        </div>
+
+        {suppliers.length > 0 ? (
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {suppliers.map((supplier) => (
+              <div class="bg-white rounded-lg shadow-md p-6 border border-gray-100 hover:shadow-lg transition-shadow">
+                <h3 class="text-xl font-semibold text-primary mb-2">{supplier}</h3>
+                <div class="h-1 w-12 bg-primary/20 rounded mb-4"></div>
+                <p class="text-muted-foreground text-sm">
+                  Trusted supplier providing quality products to enhance your dining experience.
+                </p>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div class="text-center py-12">
+            <p class="text-lg text-muted-foreground">
+              Supplier information will be available soon.
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- Commitment Section -->
+  <section class="py-16 bg-muted/50">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-3xl font-bold mb-6 text-primary">
+          Our Commitment to Quality
+        </h2>
+        <p class="text-lg text-muted-foreground mb-8">
+          We carefully select our suppliers based on their commitment to quality, sustainability, and local sourcing. 
+          By working with trusted partners, we ensure that every dish and drink we serve meets our high standards.
+        </p>
+        <div class="grid md:grid-cols-3 gap-8 mt-12">
+          <div class="text-center">
+            <div class="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold mb-2 text-primary">Local Sourcing</h3>
+            <p class="text-muted-foreground">Supporting local producers and reducing our environmental footprint.</p>
+          </div>
+          <div class="text-center">
+            <div class="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold mb-2 text-primary">Quality Assured</h3>
+            <p class="text-muted-foreground">Rigorous standards ensure the finest ingredients reach your table.</p>
+          </div>
+          <div class="text-center">
+            <div class="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-semibold mb-2 text-primary">Sustainable</h3>
+            <p class="text-muted-foreground">Partnering with suppliers who share our environmental values.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout> 

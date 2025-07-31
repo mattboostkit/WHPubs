@@ -4,16 +4,15 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { MapPin, Clock, Phone, Music, ChefHat, Beer, ExternalLink, Star, Utensils, Dog, TreePine, Wheat } from 'lucide-react';
-import { getPosts, getPubs, getHomepageData, getDevelopmentKitchen, getReviews, getOffers } from '../lib/sanity';
+import { getPubs, getHomepageData, getDevelopmentKitchen, getReviews, getOffers } from '../lib/sanity';
 import { HeroCarousel } from '@/components/HeroCarousel';
 import { getPubUrl, isExternalUrl } from '@/lib/pub-urls';
 import ReviewsSection from '@/components/ReviewsSection.astro';
 import OffersSection from '@/components/OffersSection.astro';
-import SocialMediaIntegration from '@/components/SocialMediaIntegration.astro';
+
 // This page always renders the main hub content.
 
 // Fetch data needed for the hub page
-const posts = await getPosts(); // Fetches general posts (no pub associated)
 const pubs = await getPubs(); // Fetches all pubs
 const homepageData = await getHomepageData(); // Fetch homepage content
 console.log('Homepage data:', homepageData); // Debug log
@@ -34,14 +33,7 @@ const activeOffers = await getOffers(null, true); // Get active general offers
 // All pubs are equal - no featured pubs
 const allPubs = pubs;
 
-// Format the date for display
-const formatDate = (dateString) => {
-  if (!dateString) return '';
-  const date = new Date(dateString);
-  return date.toLocaleDateString('en-GB', {
-    day: 'numeric', month: 'long', year: 'numeric'
-  });
-};
+
 ---
 
 {/* Use homepage title from Sanity if available */}
@@ -328,36 +320,7 @@ const formatDate = (dateString) => {
       </div>
     </section>
 
-    {/* Latest News Section (Shows only general posts) */}
-    <section class="py-20 bg-white text-primary">
-      <div class="container mx-auto px-4">
-        <h2 class="text-4xl font-bold text-center mb-12">Latest News</h2>
-        <div class="grid md:grid-cols-3 gap-8">
-          {posts && posts.length > 0 ? (
-             posts.slice(0, 3).map(post => (
-              <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                <img
-                  src={post.mainImage?.asset?.url || '/images/blog-fallback.jpg'}
-                  alt={post.imageAlt || 'Blog post image'}
-                  class="w-full h-48 object-cover"
-                  onerror="this.onerror=null; this.src='https:///images/blog-fallback.jpg';"
-                />
-                <div class="p-6">
-                  <p class="text-primary/60 text-sm mb-2">{formatDate(post.publishedAt)}</p>
-                  <h3 class="text-xl font-bold mb-2 text-[#B79C64]">{post.title}</h3>
-                  <p class="text-primary/70 mb-4">{post.excerpt}</p>
-                  <a href={`/blog/${post.slug.current}`} class="inline-block">
-                    <Button variant="link" class="p-0 text-primary hover:text-primary/80">Read More →</Button>
-                  </a>
-                </div>
-              </div>
-            ))
-          ) : (
-             <p class="col-span-full text-center text-primary/70">No general news posts found.</p>
-          )}
-        </div>
-      </div>
-    </section>
+
 
     {/* Newsletter Section */}
     <section class="bg-primary py-16">
@@ -388,12 +351,5 @@ const formatDate = (dateString) => {
       </div>
     </section>
 
-    {/* Social Media Integration */}
-    <SocialMediaIntegration 
-      title="Connect With Us"
-      subtitle="Follow WH Pubs for the latest news, events, and special offers"
-      showFeed={true}
-      showFollowButtons={true}
-    />
   </main>
 </Layout>

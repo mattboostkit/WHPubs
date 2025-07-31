@@ -1,96 +1,65 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { getDevelopmentKitchen, getPubBySlug } from '../lib/sanity';
-import SanityPortableText from '../components/SanityPortableText';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
-import InnovationsTabs from '../components/InnovationsTabs';
 import { ImageGalleryModal } from '../components/ImageGalleryModal';
 
 const targetPubSlug = import.meta.env.TARGET_PUB_SLUG;
 const targetPub = targetPubSlug ? await getPubBySlug(targetPubSlug) : null;
 const developmentKitchen = await getDevelopmentKitchen();
 
-// Default content if no data exists in Sanity yet
-const defaultContent = {
-  title: 'Development Kitchen',
-  introText: [{
-    _type: 'block',
-    children: [{
-      _type: 'span',
-      text: 'Welcome to the WH Pubs Development Kitchen, where culinary innovation meets traditional British hospitality. Our dedicated team of chefs works tirelessly to create seasonal menus that showcase the finest local ingredients.'
-    }]
-  }],
-  philosophy: {
-    heading: 'Our Philosophy',
-    content: [{
-      _type: 'block',
-      children: [{
-        _type: 'span',
-        text: 'We believe in celebrating the best of British produce while embracing modern culinary techniques. Every dish is crafted with care, ensuring our guests enjoy memorable dining experiences across all WH Pubs locations.'
-      }]
-    }]
-  }
-};
-
-const content = developmentKitchen || defaultContent;
-const pageTitle = content.seo?.metaTitle || `${content.title} | WH Pubs`;
-const pageDescription = content.seo?.metaDescription || 'Discover the culinary innovation at the heart of WH Pubs. Our Development Kitchen creates seasonal menus using the finest local ingredients.';
+const pageTitle = 'Development Kitchen | WH Pubs';
+const pageDescription = 'Discover the culinary innovation at the heart of WH Pubs. Our Development Kitchen creates seasonal menus using the finest local ingredients.';
 ---
 
 <Layout 
   title={pageTitle} 
   description={pageDescription}
   targetPub={targetPub}
-  ogImage={content.seo?.ogImage?.asset?.url}
+  ogImage={developmentKitchen?.seo?.ogImage?.asset?.url}
 >
   <!-- Hero Section -->
   <section class="relative h-[70vh] min-h-[500px] overflow-hidden">
-    {content.heroImage && (
+    {developmentKitchen?.heroImage && (
       <img 
-        src={content.heroImage.asset.url} 
-        alt={content.heroImage.alt}
+        src={developmentKitchen.heroImage.asset.url} 
+        alt={developmentKitchen.heroImage.alt}
         class="absolute inset-0 w-full h-full object-cover"
       />
     )}
     <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
     <div class="absolute inset-0 flex items-end">
       <div class="container mx-auto px-4 pb-16">
-        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">{content.title}</h1>
-        {content.introText && (
-          <div class="text-white/90 text-lg md:text-xl max-w-3xl">
-            <SanityPortableText blocks={content.introText} />
-          </div>
-        )}
+        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">Development Kitchen</h1>
+        <p class="text-white/90 text-lg md:text-xl max-w-3xl">
+          Where culinary innovation meets tradition. Our Development Kitchen is the creative heart of WH Pubs, 
+          crafting seasonal menus that celebrate the finest local ingredients.
+        </p>
       </div>
     </div>
   </section>
 
   <!-- Chef Profile Section -->
-  {content.chefProfile && (
+  {developmentKitchen?.chefProfile && (
     <section class="py-16 bg-background">
       <div class="container mx-auto px-4">
         <div class="grid md:grid-cols-2 gap-12 items-center">
-          {content.chefProfile.image && (
+          {developmentKitchen.chefProfile.image && (
             <div class="order-2 md:order-1">
               <div class="relative aspect-[4/5] overflow-hidden rounded-lg shadow-xl">
                 <img 
-                  src={content.chefProfile.image.asset.url} 
-                  alt={content.chefProfile.image.alt}
+                  src={developmentKitchen.chefProfile.image.asset.url} 
+                  alt={developmentKitchen.chefProfile.image.alt}
                   class="absolute inset-0 w-full h-full object-cover object-top"
                 />
               </div>
             </div>
           )}
           <div class="order-1 md:order-2">
-            <h2 class="text-4xl font-bold mb-2 text-primary">{content.chefProfile.name}</h2>
-            <p class="text-xl text-muted-foreground mb-6">{content.chefProfile.title}</p>
-            {content.chefProfile.bio && (
-              <div class="prose prose-lg">
-                <SanityPortableText blocks={content.chefProfile.bio} />
-              </div>
-            )}
+            <h2 class="text-4xl font-bold mb-2 text-primary">{developmentKitchen.chefProfile.name}</h2>
+            <p class="text-xl text-muted-foreground mb-6">{developmentKitchen.chefProfile.title}</p>
           </div>
         </div>
       </div>
@@ -98,165 +67,75 @@ const pageDescription = content.seo?.metaDescription || 'Discover the culinary i
   )}
 
   <!-- My Journey Section -->
-  {content.myJourney && (
-    <section class="py-16 bg-muted/50">
-      <div class="container mx-auto px-4">
-        <div class="max-w-3xl mx-auto">
-          <h2 class="text-4xl font-bold mb-8 text-primary text-center">{content.myJourney.heading || 'My Journey'}</h2>
-          {content.myJourney.content && (
-            <div class="prose prose-lg mx-auto">
-              <SanityPortableText blocks={content.myJourney.content} />
-            </div>
-          )}
+  <section class="py-16 bg-muted/50">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-4xl font-bold mb-8 text-primary text-center">My Journey with WH Pubs</h2>
+        <div class="prose prose-lg mx-auto text-center">
+          <p class="text-lg leading-relaxed mb-6">
+            I first met Brian in 1992 when we were both at Pubs Ltd (now Brunning and Price). After running my own pub with my wife Alison for 11 years, I joined WhPubs in 2016 as Head Roving Chef, then moved to the Development Kitchen as Sous Chef before stepping up to Head Chef.
+          </p>
+          <p class="text-lg leading-relaxed mb-6">
+            Our brilliant team includes Matt, our innovative Pastry Chef, and Andrea, our reliable kitchen assistant who returned part-time after having her baby in 2024—a very welcome return.
+          </p>
         </div>
       </div>
-    </section>
-  )}
+    </div>
+  </section>
 
-  <!-- Philosophy Section -->
-  {content.philosophy && (
-    <section class="py-16 bg-muted/50">
-      <div class="container mx-auto px-4">
-        <div class="max-w-3xl mx-auto text-center">
-          <h2 class="text-4xl font-bold mb-8 text-primary">{content.philosophy.heading}</h2>
-          {content.philosophy.content && (
-            <div class="prose prose-lg mx-auto">
-              <SanityPortableText blocks={content.philosophy.content} />
-            </div>
-          )}
+  <!-- What We Do Section -->
+  <section class="py-16 bg-background">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-4xl font-bold mb-8 text-primary text-center">What We Do</h2>
+        <div class="prose prose-lg mx-auto">
+          <p class="text-lg leading-relaxed mb-6">
+            The Development Kitchen supports our pub chefs by producing core desserts like Sticky Toffee Pudding, Double Chocolate Brownie, and gluten-free Baked Cheesecake. We also make savoury favourites including handmade shortcrust pastry pies, Salmon Fishcakes, and Traditional Stews.
+          </p>
+          <p class="text-lg leading-relaxed mb-6">
+            Our burger press machine was a game-changer—we now produce all company burgers in-house, improving consistency and saving pub chefs valuable time. We also use the smoker at Little Brown Jug for chickens, beef briskets, pork ribs, and hot-smoked salmon.
+          </p>
         </div>
       </div>
-    </section>
-  )}
+    </div>
+  </section>
 
-  <!-- Development Process -->
-  {content.process && content.process.length > 0 && (
-    <section class="py-16 bg-background">
-      <div class="container mx-auto px-4">
-        <h2 class="text-4xl font-bold text-center mb-12 text-primary">Our Development Process</h2>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {content.process.sort((a, b) => a.stepNumber - b.stepNumber).map((step) => (
-            <Card key={step.stepNumber} class="overflow-hidden">
-              {step.image && (
-                <div class="aspect-video relative overflow-hidden">
-                  <img 
-                    src={step.image.asset.url} 
-                    alt={step.image.alt}
-                    class="w-full h-full object-cover"
-                  />
-                  <div class="absolute top-4 left-4 w-12 h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-bold text-lg">
-                    {step.stepNumber}
-                  </div>
-                </div>
-              )}
-              <CardHeader>
-                <CardTitle>{step.title}</CardTitle>
-              </CardHeader>
-              {step.description && (
-                <CardContent>
-                  <CardDescription>{step.description}</CardDescription>
-                </CardContent>
-              )}
-            </Card>
-          ))}
+  <!-- Quality Sourcing Section -->
+  <section class="py-16 bg-muted/50">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-4xl font-bold mb-8 text-primary text-center">Quality Sourcing</h2>
+        <div class="prose prose-lg mx-auto">
+          <p class="text-lg leading-relaxed mb-6">
+            We bulk buy to secure the best quality at the best prices. Our British pork and dry-cured bacon comes from Wicks Manor Farm in Essex, award-winning smoked salmon from "Smokin' Brothers" in the Cotswolds, and fresh pasta from our newest partner, La Tua Pasta.
+          </p>
         </div>
       </div>
-    </section>
-  )}
+    </div>
+  </section>
 
-  <!-- Recent Innovations -->
-  {content.innovations && content.innovations.length > 0 && (
-    <section class="py-16 bg-muted/50">
-      <div class="container mx-auto px-4">
-        <h2 class="text-4xl font-bold text-center mb-12 text-primary">Recent Innovations</h2>
-        <InnovationsTabs innovations={content.innovations} client:load />
-      </div>
-    </section>
-  )}
-
-  <!-- Seasonal Focus -->
-  {content.seasonalFocus && (
-    <section class="py-16 bg-background">
-      <div class="container mx-auto px-4">
-        <div class="max-w-4xl mx-auto">
-          <div class="text-center mb-8">
-            <Badge variant="outline" className="mb-4 text-lg px-4 py-2">
-              {content.seasonalFocus.season}
-            </Badge>
-            <h2 class="text-4xl font-bold mb-4 text-primary">{content.seasonalFocus.theme}</h2>
-          </div>
-          {content.seasonalFocus.description && (
-            <div class="prose prose-lg mx-auto mb-8">
-              <SanityPortableText blocks={content.seasonalFocus.description} />
-            </div>
-          )}
-          {content.seasonalFocus.featuredIngredients && (
-            <div class="text-center">
-              <p class="font-semibold mb-4">Featured Ingredients:</p>
-              <div class="flex flex-wrap gap-2 justify-center">
-                {content.seasonalFocus.featuredIngredients.map((ingredient) => (
-                  <Badge key={ingredient} variant="secondary">{ingredient}</Badge>
-                ))}
-              </div>
-            </div>
-          )}
+  <!-- Christmas Special Section -->
+  <section class="py-16 bg-background">
+    <div class="container mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-4xl font-bold mb-8 text-primary text-center">Christmas Special</h2>
+        <div class="prose prose-lg mx-auto">
+          <p class="text-lg leading-relaxed mb-6">
+            We're especially proud of our homemade Christmas Pudding, made from a recipe passed down from my Head Chef's mum during my training—over 100 years of history in every rich, traditional bite.
+          </p>
         </div>
       </div>
-    </section>
-  )}
+    </div>
+  </section>
 
-  <!-- Gallery -->
-  {content.gallery && content.gallery.length > 0 && (
+  <!-- Gallery Section -->
+  {developmentKitchen?.gallery && developmentKitchen.gallery.length > 0 && (
     <section class="py-16 bg-muted/50">
       <div class="container mx-auto px-4">
         <h2 class="text-4xl font-bold text-center mb-12 text-primary">Behind the Scenes</h2>
-        <ImageGalleryModal images={content.gallery} client:load />
+        <ImageGalleryModal images={developmentKitchen.gallery} client:load />
       </div>
     </section>
   )}
 
-  <!-- Suppliers -->
-  {content.suppliers && content.suppliers.length > 0 && (
-    <section class="py-16 bg-background">
-      <div class="container mx-auto px-4">
-        <h2 class="text-4xl font-bold text-center mb-12 text-primary">Our Trusted Suppliers</h2>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {content.suppliers.map((supplier) => (
-            <Card key={supplier.name} class="overflow-hidden">
-              <CardHeader>
-                <div class="flex items-start justify-between">
-                  <div>
-                    <CardTitle>{supplier.name}</CardTitle>
-                    {supplier.location && (
-                      <p class="text-sm text-muted-foreground">{supplier.location}</p>
-                    )}
-                  </div>
-                  {supplier.logo && (
-                    <img 
-                      src={supplier.logo.asset.url} 
-                      alt={supplier.logo.alt}
-                      class="w-16 h-16 object-contain"
-                    />
-                  )}
-                </div>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>{supplier.description}</CardDescription>
-                {supplier.website && (
-                  <a 
-                    href={supplier.website} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    class="text-primary hover:text-primary/80 text-sm mt-2 inline-block"
-                  >
-                    Visit Website →
-                  </a>
-                )}
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
-    </section>
-  )}
 </Layout>
