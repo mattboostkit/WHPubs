@@ -9,6 +9,7 @@ import { HeroCarousel } from '@/components/HeroCarousel';
 import { getPubUrl, isExternalUrl } from '@/lib/pub-urls';
 import ReviewsSection from '@/components/ReviewsSection.astro';
 import OffersSection from '@/components/OffersSection.astro';
+import PubCardHover from '@/components/PubCardHover';
 
 // This page always renders the main hub content.
 
@@ -68,15 +69,8 @@ const allPubs = pubs;
               {/* First row - 3 pubs */}
               <div class="grid md:grid-cols-3 gap-6">
                 {allPubs.slice(0, 3).map(pub => (
-                  <Card key={pub.slug.current} className="overflow-hidden hover:shadow-lg transition-shadow">
-                <div class="relative h-64 overflow-hidden">
-                  <img
-                    src={pub.heroImage?.asset?.url || pub.image?.asset?.url || '/images/hero-fallback.jpg'}
-                    alt={pub.heroImage?.alt || pub.image?.alt || `Image of ${pub.name}`}
-                    class="w-full h-full object-cover transition-transform hover:scale-105"
-                    onerror="this.onerror=null; this.src='/images/hero-fallback.jpg';"
-                  />
-                </div>
+                  <PubCardHover pub={pub} client:load>
+                    <Card key={pub.slug.current} className="border-0 shadow-none">
                 <CardHeader>
                   <CardTitle className="text-lg">{pub.name}</CardTitle>
                   <div class="flex items-center text-sm text-muted-foreground">
@@ -128,7 +122,8 @@ const allPubs = pubs;
                     );
                   })()}
                 </CardContent>
-                  </Card>
+                    </Card>
+                  </PubCardHover>
                 ))}
               </div>
               
@@ -136,15 +131,8 @@ const allPubs = pubs;
               {allPubs.length > 3 && (
                 <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
                   {allPubs.slice(3, 5).map(pub => (
-                    <Card key={pub.slug.current} className="overflow-hidden hover:shadow-lg transition-shadow">
-                      <div class="relative h-64 overflow-hidden">
-                        <img
-                          src={pub.heroImage?.asset?.url || pub.image?.asset?.url || '/images/hero-fallback.jpg'}
-                          alt={pub.heroImage?.alt || pub.image?.alt || `Image of ${pub.name}`}
-                          class="w-full h-full object-cover transition-transform hover:scale-105"
-                          onerror="this.onerror=null; this.src='/images/hero-fallback.jpg';"
-                        />
-                      </div>
+                    <PubCardHover pub={pub} client:load>
+                      <Card key={pub.slug.current} className="border-0 shadow-none">
                       <CardHeader>
                         <CardTitle className="text-lg">{pub.name}</CardTitle>
                         <div class="flex items-center text-sm text-muted-foreground">
@@ -198,7 +186,8 @@ const allPubs = pubs;
                           })()
                         }
                       </CardContent>
-                    </Card>
+                      </Card>
+                    </PubCardHover>
                   ))}
                 </div>
               )}

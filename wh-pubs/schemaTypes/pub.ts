@@ -206,6 +206,44 @@ export default defineType({
       validation: Rule => Rule.required().error('Please upload a hero banner image')
     }),
     defineField({
+      name: 'exteriorImage',
+      title: 'Exterior Image (828x605px)',
+      type: 'image',
+      group: 'media',
+      description: 'Outside view of the pub for homepage hover effect. 🖼️ REQUIRED SIZE: 828x605px EXACTLY',
+      options: {
+        hotspot: true,
+      },
+      fields: [
+        {
+          name: 'alt',
+          type: 'string',
+          title: 'Alternative text',
+          description: 'Describe the exterior image (e.g., "The Bull pub exterior on a sunny day")',
+          validation: (Rule) => Rule.required(),
+        }
+      ],
+    }),
+    defineField({
+      name: 'interiorImage',
+      title: 'Interior/Bar Image (828x605px)',
+      type: 'image',
+      group: 'media',
+      description: 'Inside view of the pub/bar for homepage hover effect. 🖼️ REQUIRED SIZE: 828x605px EXACTLY',
+      options: {
+        hotspot: true,
+      },
+      fields: [
+        {
+          name: 'alt',
+          type: 'string',
+          title: 'Alternative text',
+          description: 'Describe the interior image (e.g., "The Bull pub bar interior with warm lighting")',
+          validation: (Rule) => Rule.required(),
+        }
+      ],
+    }),
+    defineField({
       name: 'heroOverlayText',
       title: 'Hero Overlay Text (Optional)',
       type: 'text',

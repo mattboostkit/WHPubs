@@ -159,6 +159,20 @@ export async function getPubs(targetPubSlug = null) {
         },
         alt
       },
+      exteriorImage {
+        asset->{
+          _id,
+          url
+        },
+        alt
+      },
+      interiorImage {
+        asset->{
+          _id,
+          url
+        },
+        alt
+      },
       description,
       url,
       externalDomain,
