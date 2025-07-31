@@ -5,111 +5,472 @@ import { getPubBySlug } from '../lib/sanity';
 const targetPubSlug = import.meta.env.TARGET_PUB_SLUG;
 const targetPub = targetPubSlug ? await getPubBySlug(targetPubSlug) : null;
 
-// Define suppliers for each pub
+// Define suppliers for each pub with real descriptions
 const pubSuppliers = {
   'the-chaser-inn': [
-    'Bodium Meats',
-    'Chapmans Fish',
-    'Sankeys Fishmongers',
-    'FK Carter eggs',
-    'TH Brown Veg',
-    'Penshurst fine foods',
-    'Rusbridge Bakery',
-    'Salcombe Dairy Ice cream',
-    'Smokin Brothers Salmon',
-    'Tracklements Sauces',
-    'Wicks Bacon',
-    'Salty Dog nuts and crisps',
-    'Mr Fitz Aqua Spritz',
-    'Chapel Down',
-    'Fever Tree',
-    'Enotria Wine',
-    'LWC',
-    'Ninju Juices',
-    'Vimto Cordials'
+    {
+      name: 'Bodium Meats',
+      description: 'This East Sussex family business has earned the trust of over 200 hospitality venues through 38 years of delivering bespoke-cut, FSA-certified meats daily from their purpose-built facilities.',
+      category: 'Meat & Fish'
+    },
+    {
+      name: 'Chapmans Fish',
+      description: 'WH Pubs choose Chapman\'s for their unmatched freshness guarantee of day boat fish delivered within 24 hours from their exclusive fleet of 13 boats working the Kent and Sussex coasts.',
+      category: 'Meat & Fish'
+    },
+    {
+      name: 'Sankeys Fishmongers',
+      description: 'This Tunbridge Wells family fishmonger attracts discerning WH Pubs with their live lobster tanks, premium Cornish crab dressed daily, and expert knowledge spanning generations.',
+      category: 'Meat & Fish'
+    },
+    {
+      name: 'FK Carter eggs',
+      description: 'Sussex WH Pubs rely on FK Carter for truly free-range eggs with "yolks like the rising sun" from a family operation that has prioritized hen welfare and exceptional freshness for over four decades.',
+      category: 'Produce'
+    },
+    {
+      name: 'TH Brown Veg',
+      description: 'Since 1938, this Kent supplier has been the seasonal produce expert for WH Pubs, with daily Covent Garden buying trips and bespoke growing arrangements ensuring peak-season British vegetables.',
+      category: 'Produce'
+    },
+    {
+      name: 'Penshurst fine foods',
+      description: 'This East Sussex distributor wins WH Pubs business through their unique no-minimum-order policy and 24-hour service, making quality local produce accessible to venues of all sizes.',
+      category: 'Specialty Foods'
+    },
+    {
+      name: 'Rusbridge Bakery',
+      description: 'This third-generation Kent artisan bakery attracts WH Pubs with their signature "Rusty Special" tomato bread and traditional craft methods maintained since 1973.',
+      category: 'Bakery & Dairy'
+    },
+    {
+      name: 'Salcombe Dairy Ice cream',
+      description: 'Gastropubs like Peach Pubs choose this Devon producer for their 60+ award-winning artisanal ice creams made with local cream and served at The Dorchester.',
+      category: 'Bakery & Dairy'
+    },
+    {
+      name: 'Smokin Brothers Salmon',
+      description: 'WH Pubs partner with this Cotswolds artisan smokehouse for their Michelin-starred chef collaborations and distinctive thick-cut salmon that brings Italian craftsmanship to traditional British smoking.',
+      category: 'Meat & Fish'
+    },
+    {
+      name: 'Tracklements Sauces',
+      description: 'Britain\'s most awarded condiment maker (180+ awards) appeals to WH Pubs through their traditional recipes discovered in 17th-century cookbooks and B Corp sustainability credentials.',
+      category: 'Specialty Foods'
+    },
+    {
+      name: 'Wicks Bacon',
+      description: 'This Essex family farm wins WH Pubs loyalty through their award-winning bacon traditionally smoked over beechwood, with complete farm-to-fork transparency from the grain they grow to feed their pigs.',
+      category: 'Meat & Fish'
+    },
+    {
+      name: 'Salty Dog nuts and crisps',
+      description: 'Born from a pub delivery driver\'s passion, these Buckinghamshire hand-cooked crisps are specifically crafted to pair perfectly with craft beers and ales.',
+      category: 'Specialty Foods'
+    },
+    {
+      name: 'Mr Fitz Aqua Spritz',
+      description: 'WH Pubs embrace this Yorkshire heritage cordial system for its 25+ botanical flavours and Victorian-era recipes that create sophisticated alcohol-free drinks with theatrical tableside preparation.',
+      category: 'Beverages'
+    },
+    {
+      name: 'Chapel Down',
+      description: 'As England\'s leading winery and official supplier to 10 Downing Street, Chapel Down brings prestige and authentic English sparkling wines to WH Pubs wine lists.',
+      category: 'Beverages'
+    },
+    {
+      name: 'Fever Tree',
+      description: 'The world\'s #1 premium mixer enhances WH Pubs spirits offerings through naturally sourced ingredients and the philosophy that if ¾ of your G&T is tonic, it should be the best.',
+      category: 'Beverages'
+    },
+    {
+      name: 'Enotria Wine',
+      description: 'The UK\'s leading wine distributor supports WH Pubs with 3,000+ wines, dedicated account management, and training that transforms wine service.',
+      category: 'Beverages'
+    },
+    {
+      name: 'LWC',
+      description: 'Britain\'s largest independent drinks wholesaler wins WH Pubs partnerships through same-day delivery, 8,000+ product lines, and the insider knowledge gained from operating their own 40+ pub estate.',
+      category: 'Beverages'
+    },
+    {
+      name: 'Ninju Juices',
+      description: 'Family-friendly WH Pubs choose these premium children\'s juices that cleverly hide vegetables among fruits, meeting parent demands for healthier kids\' options.',
+      category: 'Beverages'
+    },
+    {
+      name: 'Vimto Cordials',
+      description: 'This 1908 Manchester icon drives WH Pubs sales through nostalgic appeal and versatile serving options, from traditional hot winter warmers to modern cocktail mixers.',
+      category: 'Beverages'
+    }
   ],
   'the-cricketers-inn': [
-    'Bodium Meats',
-    'TH Brown Veg',
-    'Penshurst fine foods',
-    'Salcombe Dairy Ice cream',
-    'Smokin Brothers Salmon',
-    'Tracklements Sauces',
-    'Wicks Bacon',
-    'Longfield Bakery',
-    'Salty Dog nuts and crisps',
-    'Mr Fitz Aqua Spritz',
-    'Chapel Down',
-    'Fever Tree',
-    'Enotria Wine',
-    'LWC',
-    'Ninju Juices',
-    'Vimto Cordials'
+    {
+      name: 'Bodium Meats',
+      description: 'This East Sussex family business has earned the trust of over 200 hospitality venues through 38 years of delivering bespoke-cut, FSA-certified meats daily from their purpose-built facilities.',
+      category: 'Meat & Fish'
+    },
+    {
+      name: 'TH Brown Veg',
+      description: 'Since 1938, this Kent supplier has been the seasonal produce expert for WH Pubs, with daily Covent Garden buying trips and bespoke growing arrangements ensuring peak-season British vegetables.',
+      category: 'Produce'
+    },
+    {
+      name: 'Penshurst fine foods',
+      description: 'This East Sussex distributor wins WH Pubs business through their unique no-minimum-order policy and 24-hour service, making quality local produce accessible to venues of all sizes.',
+      category: 'Specialty Foods'
+    },
+    {
+      name: 'Salcombe Dairy Ice cream',
+      description: 'Gastropubs like Peach Pubs choose this Devon producer for their 60+ award-winning artisanal ice creams made with local cream and served at The Dorchester.',
+      category: 'Bakery & Dairy'
+    },
+    {
+      name: 'Smokin Brothers Salmon',
+      description: 'WH Pubs partner with this Cotswolds artisan smokehouse for their Michelin-starred chef collaborations and distinctive thick-cut salmon that brings Italian craftsmanship to traditional British smoking.',
+      category: 'Meat & Fish'
+    },
+    {
+      name: 'Tracklements Sauces',
+      description: 'Britain\'s most awarded condiment maker (180+ awards) appeals to WH Pubs through their traditional recipes discovered in 17th-century cookbooks and B Corp sustainability credentials.',
+      category: 'Specialty Foods'
+    },
+    {
+      name: 'Wicks Bacon',
+      description: 'This Essex family farm wins WH Pubs loyalty through their award-winning bacon traditionally smoked over beechwood, with complete farm-to-fork transparency from the grain they grow to feed their pigs.',
+      category: 'Meat & Fish'
+    },
+    {
+      name: 'Longfield Bakery',
+      description: 'A newly established Kent bakery bringing fresh artisanal breads and pastries to the local WH Pubs trade.',
+      category: 'Bakery & Dairy'
+    },
+    {
+      name: 'Salty Dog nuts and crisps',
+      description: 'Born from a pub delivery driver\'s passion, these Buckinghamshire hand-cooked crisps are specifically crafted to pair perfectly with craft beers and ales.',
+      category: 'Specialty Foods'
+    },
+    {
+      name: 'Mr Fitz Aqua Spritz',
+      description: 'WH Pubs embrace this Yorkshire heritage cordial system for its 25+ botanical flavours and Victorian-era recipes that create sophisticated alcohol-free drinks with theatrical tableside preparation.',
+      category: 'Beverages'
+    },
+    {
+      name: 'Chapel Down',
+      description: 'As England\'s leading winery and official supplier to 10 Downing Street, Chapel Down brings prestige and authentic English sparkling wines to WH Pubs wine lists.',
+      category: 'Beverages'
+    },
+    {
+      name: 'Fever Tree',
+      description: 'The world\'s #1 premium mixer enhances WH Pubs spirits offerings through naturally sourced ingredients and the philosophy that if ¾ of your G&T is tonic, it should be the best.',
+      category: 'Beverages'
+    },
+    {
+      name: 'Enotria Wine',
+      description: 'The UK\'s leading wine distributor supports WH Pubs with 3,000+ wines, dedicated account management, and training that transforms wine service.',
+      category: 'Beverages'
+    },
+    {
+      name: 'LWC',
+      description: 'Britain\'s largest independent drinks wholesaler wins WH Pubs partnerships through same-day delivery, 8,000+ product lines, and the insider knowledge gained from operating their own 40+ pub estate.',
+      category: 'Beverages'
+    },
+    {
+      name: 'Ninju Juices',
+      description: 'Family-friendly WH Pubs choose these premium children\'s juices that cleverly hide vegetables among fruits, meeting parent demands for healthier kids\' options.',
+      category: 'Beverages'
+    },
+    {
+      name: 'Vimto Cordials',
+      description: 'This 1908 Manchester icon drives WH Pubs sales through nostalgic appeal and versatile serving options, from traditional hot winter warmers to modern cocktail mixers.',
+      category: 'Beverages'
+    }
   ],
   'the-rose-and-crown': [
-    'Bodium Meats',
-    'Chapmans Fish',
-    'FK Carter eggs',
-    'Harris Covent Garden Veg',
-    'Penshurst fine foods',
-    'Salcombe Dairy Ice cream',
-    'Smokin Brothers Salmon',
-    'Tracklements Sauces',
-    'Wicks Bacon',
-    'Salty Dog nuts and crisps',
-    'Mr Fitz Aqua Spritz',
-    'Chapel Down',
-    'Fever Tree',
-    'Enotria Wine',
-    'LWC',
-    'Ninju Juices',
-    'Vimto Cordials'
+    {
+      name: 'Bodium Meats',
+      description: 'This East Sussex family business has earned the trust of over 200 hospitality venues through 38 years of delivering bespoke-cut, FSA-certified meats daily from their purpose-built facilities.',
+      category: 'Meat & Fish'
+    },
+    {
+      name: 'Chapmans Fish',
+      description: 'WH Pubs choose Chapman\'s for their unmatched freshness guarantee of day boat fish delivered within 24 hours from their exclusive fleet of 13 boats working the Kent and Sussex coasts.',
+      category: 'Meat & Fish'
+    },
+    {
+      name: 'FK Carter eggs',
+      description: 'Sussex WH Pubs rely on FK Carter for truly free-range eggs with "yolks like the rising sun" from a family operation that has prioritized hen welfare and exceptional freshness for over four decades.',
+      category: 'Produce'
+    },
+    {
+      name: 'Harris Covent Garden Veg',
+      description: 'WH Pubs value this 70-year-old family business for their prime New Covent Garden Market position and 24-hour operations that guarantee access to London\'s finest wholesale produce.',
+      category: 'Produce'
+    },
+    {
+      name: 'Penshurst fine foods',
+      description: 'This East Sussex distributor wins WH Pubs business through their unique no-minimum-order policy and 24-hour service, making quality local produce accessible to venues of all sizes.',
+      category: 'Specialty Foods'
+    },
+    {
+      name: 'Salcombe Dairy Ice cream',
+      description: 'Gastropubs like Peach Pubs choose this Devon producer for their 60+ award-winning artisanal ice creams made with local cream and served at The Dorchester.',
+      category: 'Bakery & Dairy'
+    },
+    {
+      name: 'Smokin Brothers Salmon',
+      description: 'WH Pubs partner with this Cotswolds artisan smokehouse for their Michelin-starred chef collaborations and distinctive thick-cut salmon that brings Italian craftsmanship to traditional British smoking.',
+      category: 'Meat & Fish'
+    },
+    {
+      name: 'Tracklements Sauces',
+      description: 'Britain\'s most awarded condiment maker (180+ awards) appeals to WH Pubs through their traditional recipes discovered in 17th-century cookbooks and B Corp sustainability credentials.',
+      category: 'Specialty Foods'
+    },
+    {
+      name: 'Wicks Bacon',
+      description: 'This Essex family farm wins WH Pubs loyalty through their award-winning bacon traditionally smoked over beechwood, with complete farm-to-fork transparency from the grain they grow to feed their pigs.',
+      category: 'Meat & Fish'
+    },
+    {
+      name: 'Salty Dog nuts and crisps',
+      description: 'Born from a pub delivery driver\'s passion, these Buckinghamshire hand-cooked crisps are specifically crafted to pair perfectly with craft beers and ales.',
+      category: 'Specialty Foods'
+    },
+    {
+      name: 'Mr Fitz Aqua Spritz',
+      description: 'WH Pubs embrace this Yorkshire heritage cordial system for its 25+ botanical flavours and Victorian-era recipes that create sophisticated alcohol-free drinks with theatrical tableside preparation.',
+      category: 'Beverages'
+    },
+    {
+      name: 'Chapel Down',
+      description: 'As England\'s leading winery and official supplier to 10 Downing Street, Chapel Down brings prestige and authentic English sparkling wines to WH Pubs wine lists.',
+      category: 'Beverages'
+    },
+    {
+      name: 'Fever Tree',
+      description: 'The world\'s #1 premium mixer enhances WH Pubs spirits offerings through naturally sourced ingredients and the philosophy that if ¾ of your G&T is tonic, it should be the best.',
+      category: 'Beverages'
+    },
+    {
+      name: 'Enotria Wine',
+      description: 'The UK\'s leading wine distributor supports WH Pubs with 3,000+ wines, dedicated account management, and training that transforms wine service.',
+      category: 'Beverages'
+    },
+    {
+      name: 'LWC',
+      description: 'Britain\'s largest independent drinks wholesaler wins WH Pubs partnerships through same-day delivery, 8,000+ product lines, and the insider knowledge gained from operating their own 40+ pub estate.',
+      category: 'Beverages'
+    },
+    {
+      name: 'Ninju Juices',
+      description: 'Family-friendly WH Pubs choose these premium children\'s juices that cleverly hide vegetables among fruits, meeting parent demands for healthier kids\' options.',
+      category: 'Beverages'
+    },
+    {
+      name: 'Vimto Cordials',
+      description: 'This 1908 Manchester icon drives WH Pubs sales through nostalgic appeal and versatile serving options, from traditional hot winter warmers to modern cocktail mixers.',
+      category: 'Beverages'
+    }
   ],
   'the-little-brown-jug': [
-    'Rusbridge Bakery',
-    'Bodium Meats',
-    'Chapmans Fish',
-    'FK Carter eggs',
-    'TH Brown Veg',
-    'Penshurst fine foods',
-    'Salcombe Dairy Ice cream',
-    'Smokin Brothers Salmon',
-    'Salty Dog nuts and crisps',
-    'Tracklements Sauces',
-    'Wicks Bacon',
-    'Mr Fitz Aqua Spritz',
-    'Chapel Down',
-    'Fever Tree',
-    'Enotria Wine',
-    'LWC',
-    'Ninju Juices',
-    'Vimto Cordials'
+    {
+      name: 'Rusbridge Bakery',
+      description: 'This third-generation Kent artisan bakery attracts WH Pubs with their signature "Rusty Special" tomato bread and traditional craft methods maintained since 1973.',
+      category: 'Bakery & Dairy'
+    },
+    {
+      name: 'Bodium Meats',
+      description: 'This East Sussex family business has earned the trust of over 200 hospitality venues through 38 years of delivering bespoke-cut, FSA-certified meats daily from their purpose-built facilities.',
+      category: 'Meat & Fish'
+    },
+    {
+      name: 'Chapmans Fish',
+      description: 'WH Pubs choose Chapman\'s for their unmatched freshness guarantee of day boat fish delivered within 24 hours from their exclusive fleet of 13 boats working the Kent and Sussex coasts.',
+      category: 'Meat & Fish'
+    },
+    {
+      name: 'FK Carter eggs',
+      description: 'Sussex WH Pubs rely on FK Carter for truly free-range eggs with "yolks like the rising sun" from a family operation that has prioritized hen welfare and exceptional freshness for over four decades.',
+      category: 'Produce'
+    },
+    {
+      name: 'TH Brown Veg',
+      description: 'Since 1938, this Kent supplier has been the seasonal produce expert for WH Pubs, with daily Covent Garden buying trips and bespoke growing arrangements ensuring peak-season British vegetables.',
+      category: 'Produce'
+    },
+    {
+      name: 'Penshurst fine foods',
+      description: 'This East Sussex distributor wins WH Pubs business through their unique no-minimum-order policy and 24-hour service, making quality local produce accessible to venues of all sizes.',
+      category: 'Specialty Foods'
+    },
+    {
+      name: 'Salcombe Dairy Ice cream',
+      description: 'Gastropubs like Peach Pubs choose this Devon producer for their 60+ award-winning artisanal ice creams made with local cream and served at The Dorchester.',
+      category: 'Bakery & Dairy'
+    },
+    {
+      name: 'Smokin Brothers Salmon',
+      description: 'WH Pubs partner with this Cotswolds artisan smokehouse for their Michelin-starred chef collaborations and distinctive thick-cut salmon that brings Italian craftsmanship to traditional British smoking.',
+      category: 'Meat & Fish'
+    },
+    {
+      name: 'Salty Dog nuts and crisps',
+      description: 'Born from a pub delivery driver\'s passion, these Buckinghamshire hand-cooked crisps are specifically crafted to pair perfectly with craft beers and ales.',
+      category: 'Specialty Foods'
+    },
+    {
+      name: 'Tracklements Sauces',
+      description: 'Britain\'s most awarded condiment maker (180+ awards) appeals to WH Pubs through their traditional recipes discovered in 17th-century cookbooks and B Corp sustainability credentials.',
+      category: 'Specialty Foods'
+    },
+    {
+      name: 'Wicks Bacon',
+      description: 'This Essex family farm wins WH Pubs loyalty through their award-winning bacon traditionally smoked over beechwood, with complete farm-to-fork transparency from the grain they grow to feed their pigs.',
+      category: 'Meat & Fish'
+    },
+    {
+      name: 'Mr Fitz Aqua Spritz',
+      description: 'WH Pubs embrace this Yorkshire heritage cordial system for its 25+ botanical flavours and Victorian-era recipes that create sophisticated alcohol-free drinks with theatrical tableside preparation.',
+      category: 'Beverages'
+    },
+    {
+      name: 'Chapel Down',
+      description: 'As England\'s leading winery and official supplier to 10 Downing Street, Chapel Down brings prestige and authentic English sparkling wines to WH Pubs wine lists.',
+      category: 'Beverages'
+    },
+    {
+      name: 'Fever Tree',
+      description: 'The world\'s #1 premium mixer enhances WH Pubs spirits offerings through naturally sourced ingredients and the philosophy that if ¾ of your G&T is tonic, it should be the best.',
+      category: 'Beverages'
+    },
+    {
+      name: 'Enotria Wine',
+      description: 'The UK\'s leading wine distributor supports WH Pubs with 3,000+ wines, dedicated account management, and training that transforms wine service.',
+      category: 'Beverages'
+    },
+    {
+      name: 'LWC',
+      description: 'Britain\'s largest independent drinks wholesaler wins WH Pubs partnerships through same-day delivery, 8,000+ product lines, and the insider knowledge gained from operating their own 40+ pub estate.',
+      category: 'Beverages'
+    },
+    {
+      name: 'Ninju Juices',
+      description: 'Family-friendly WH Pubs choose these premium children\'s juices that cleverly hide vegetables among fruits, meeting parent demands for healthier kids\' options.',
+      category: 'Beverages'
+    },
+    {
+      name: 'Vimto Cordials',
+      description: 'This 1908 Manchester icon drives WH Pubs sales through nostalgic appeal and versatile serving options, from traditional hot winter warmers to modern cocktail mixers.',
+      category: 'Beverages'
+    }
   ],
   'the-bull': [
-    'Rusbridge Bakery',
-    'Bodium Meats',
-    'Chapmans Fish',
-    'FK Carter eggs',
-    'TH Brown Veg',
-    'Penshurst fine foods',
-    'Salcombe Dairy Ice cream',
-    'Smokin Brothers Salmon',
-    'Tracklements Sauces',
-    'Wicks Bacon',
-    'Salty Dog nuts and crisps',
-    'Mr Fitz Aqua Spritz',
-    'Chapel Down',
-    'Fever Tree',
-    'Enotria Wine',
-    'LWC',
-    'Ninju Juices',
-    'Vimto Cordials'
+    {
+      name: 'Rusbridge Bakery',
+      description: 'This third-generation Kent artisan bakery attracts WH Pubs with their signature "Rusty Special" tomato bread and traditional craft methods maintained since 1973.',
+      category: 'Bakery & Dairy'
+    },
+    {
+      name: 'Bodium Meats',
+      description: 'This East Sussex family business has earned the trust of over 200 hospitality venues through 38 years of delivering bespoke-cut, FSA-certified meats daily from their purpose-built facilities.',
+      category: 'Meat & Fish'
+    },
+    {
+      name: 'Chapmans Fish',
+      description: 'WH Pubs choose Chapman\'s for their unmatched freshness guarantee of day boat fish delivered within 24 hours from their exclusive fleet of 13 boats working the Kent and Sussex coasts.',
+      category: 'Meat & Fish'
+    },
+    {
+      name: 'FK Carter eggs',
+      description: 'Sussex WH Pubs rely on FK Carter for truly free-range eggs with "yolks like the rising sun" from a family operation that has prioritized hen welfare and exceptional freshness for over four decades.',
+      category: 'Produce'
+    },
+    {
+      name: 'TH Brown Veg',
+      description: 'Since 1938, this Kent supplier has been the seasonal produce expert for WH Pubs, with daily Covent Garden buying trips and bespoke growing arrangements ensuring peak-season British vegetables.',
+      category: 'Produce'
+    },
+    {
+      name: 'Penshurst fine foods',
+      description: 'This East Sussex distributor wins WH Pubs business through their unique no-minimum-order policy and 24-hour service, making quality local produce accessible to venues of all sizes.',
+      category: 'Specialty Foods'
+    },
+    {
+      name: 'Salcombe Dairy Ice cream',
+      description: 'Gastropubs like Peach Pubs choose this Devon producer for their 60+ award-winning artisanal ice creams made with local cream and served at The Dorchester.',
+      category: 'Bakery & Dairy'
+    },
+    {
+      name: 'Smokin Brothers Salmon',
+      description: 'WH Pubs partner with this Cotswolds artisan smokehouse for their Michelin-starred chef collaborations and distinctive thick-cut salmon that brings Italian craftsmanship to traditional British smoking.',
+      category: 'Meat & Fish'
+    },
+    {
+      name: 'Tracklements Sauces',
+      description: 'Britain\'s most awarded condiment maker (180+ awards) appeals to WH Pubs through their traditional recipes discovered in 17th-century cookbooks and B Corp sustainability credentials.',
+      category: 'Specialty Foods'
+    },
+    {
+      name: 'Wicks Bacon',
+      description: 'This Essex family farm wins WH Pubs loyalty through their award-winning bacon traditionally smoked over beechwood, with complete farm-to-fork transparency from the grain they grow to feed their pigs.',
+      category: 'Meat & Fish'
+    },
+    {
+      name: 'Salty Dog nuts and crisps',
+      description: 'Born from a pub delivery driver\'s passion, these Buckinghamshire hand-cooked crisps are specifically crafted to pair perfectly with craft beers and ales.',
+      category: 'Specialty Foods'
+    },
+    {
+      name: 'Mr Fitz Aqua Spritz',
+      description: 'WH Pubs embrace this Yorkshire heritage cordial system for its 25+ botanical flavours and Victorian-era recipes that create sophisticated alcohol-free drinks with theatrical tableside preparation.',
+      category: 'Beverages'
+    },
+    {
+      name: 'Chapel Down',
+      description: 'As England\'s leading winery and official supplier to 10 Downing Street, Chapel Down brings prestige and authentic English sparkling wines to WH Pubs wine lists.',
+      category: 'Beverages'
+    },
+    {
+      name: 'Fever Tree',
+      description: 'The world\'s #1 premium mixer enhances WH Pubs spirits offerings through naturally sourced ingredients and the philosophy that if ¾ of your G&T is tonic, it should be the best.',
+      category: 'Beverages'
+    },
+    {
+      name: 'Enotria Wine',
+      description: 'The UK\'s leading wine distributor supports WH Pubs with 3,000+ wines, dedicated account management, and training that transforms wine service.',
+      category: 'Beverages'
+    },
+    {
+      name: 'LWC',
+      description: 'Britain\'s largest independent drinks wholesaler wins WH Pubs partnerships through same-day delivery, 8,000+ product lines, and the insider knowledge gained from operating their own 40+ pub estate.',
+      category: 'Beverages'
+    },
+    {
+      name: 'Ninju Juices',
+      description: 'Family-friendly WH Pubs choose these premium children\'s juices that cleverly hide vegetables among fruits, meeting parent demands for healthier kids\' options.',
+      category: 'Beverages'
+    },
+    {
+      name: 'Vimto Cordials',
+      description: 'This 1908 Manchester icon drives WH Pubs sales through nostalgic appeal and versatile serving options, from traditional hot winter warmers to modern cocktail mixers.',
+      category: 'Beverages'
+    }
   ]
 };
 
 const suppliers = targetPub ? pubSuppliers[targetPub.slug.current] || [] : [];
 const pageTitle = targetPub ? `Our Suppliers | ${targetPub.name}` : 'Our Suppliers | WH Pubs';
 const pageDescription = targetPub ? `Discover the quality suppliers and local producers that help ${targetPub.name} deliver exceptional food and drink.` : 'Discover the quality suppliers and local producers that help WH Pubs deliver exceptional food and drink.';
+
+// Group suppliers by category
+const groupedSuppliers = suppliers.reduce((acc, supplier) => {
+  if (!acc[supplier.category]) {
+    acc[supplier.category] = [];
+  }
+  acc[supplier.category].push(supplier);
+  return acc;
+}, {});
 ---
 
 <Layout 
@@ -135,7 +496,7 @@ const pageDescription = targetPub ? `Discover the quality suppliers and local pr
   <!-- Suppliers Section -->
   <section class="py-16 bg-background">
     <div class="container mx-auto px-4">
-      <div class="max-w-4xl mx-auto">
+      <div class="max-w-6xl mx-auto">
         <div class="text-center mb-12">
           <h2 class="text-3xl font-bold mb-4 text-primary">
             Quality Partners
@@ -146,14 +507,23 @@ const pageDescription = targetPub ? `Discover the quality suppliers and local pr
         </div>
 
         {suppliers.length > 0 ? (
-          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {suppliers.map((supplier) => (
-              <div class="bg-white rounded-lg shadow-md p-6 border border-gray-100 hover:shadow-lg transition-shadow">
-                <h3 class="text-xl font-semibold text-primary mb-2">{supplier}</h3>
-                <div class="h-1 w-12 bg-primary/20 rounded mb-4"></div>
-                <p class="text-muted-foreground text-sm">
-                  Trusted supplier providing quality products to enhance your dining experience.
-                </p>
+          <div class="space-y-12">
+            {Object.entries(groupedSuppliers).map(([category, categorySuppliers]) => (
+              <div class="mb-12">
+                <h3 class="text-2xl font-bold mb-6 text-primary border-b-2 border-primary/20 pb-2">
+                  {category}
+                </h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {categorySuppliers.map((supplier) => (
+                    <div class="bg-white rounded-lg shadow-md p-6 border border-gray-100 hover:shadow-lg transition-shadow">
+                      <h4 class="text-xl font-semibold text-primary mb-3">{supplier.name}</h4>
+                      <div class="h-1 w-12 bg-primary/20 rounded mb-4"></div>
+                      <p class="text-muted-foreground text-sm leading-relaxed">
+                        {supplier.description}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
