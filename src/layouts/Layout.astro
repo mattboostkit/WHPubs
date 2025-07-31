@@ -107,10 +107,10 @@ if (isPubLayout && activePub) {
 	 // Define default nav links for the main hub site
 	 headerLinks = [
 	   { title: "Our Pubs", url: "/our-pubs", ariaLabel: "Our Pubs" },
-	   { title: "About", url: "/about", ariaLabel: "About Us" },
-	   { title: "Kitchen", url: "/development-kitchen", ariaLabel: "Development Kitchen" },
+	   { title: "About Us", url: "/about", ariaLabel: "About Us" },
+	   { title: "Development Kitchen", url: "/development-kitchen", ariaLabel: "Development Kitchen" },
 	   { title: "Events", url: "/events", ariaLabel: "Events" }, 
-	   { title: "Gifts", url: "/gift-cards", ariaLabel: "Gift Cards" },
+	   { title: "Gift Cards", url: "/gift-cards", ariaLabel: "Gift Cards" },
 	   { title: "Contact", url: "/contact", ariaLabel: "Contact Us" }, 
 	   { title: "Careers", url: "/careers", ariaLabel: "Join Our Crew" }, 
 	 ];
@@ -213,10 +213,10 @@ const metaDescription = description || footerDescription;
 							return (
 								<a 
 									href={link.url} 
-									class={`text-lg transition-colors relative ${
+									class={`text-lg transition-all duration-300 relative group ${
 										isActive 
 											? 'text-[#B79C64] font-semibold after:absolute after:bottom-[-4px] after:left-0 after:right-0 after:h-[2px] after:bg-[#B79C64]' 
-											: 'text-[#B79C64] hover:text-[#B79C64]/80'
+											: 'text-[#B79C64] hover:text-[#B79C64]/90'
 									}`}
 									aria-label={link.ariaLabel}
 									aria-current={isActive ? "page" : undefined}
@@ -224,6 +224,9 @@ const metaDescription = description || footerDescription;
 									rel={link.external ? "noopener noreferrer" : undefined}
 								>
 									{link.title}
+									{!isActive && (
+										<span class="absolute bottom-[-4px] left-0 w-0 h-[2px] bg-[#B79C64] transition-all duration-300 group-hover:w-full"></span>
+									)}
 								</a>
 							);
 						})}
@@ -241,7 +244,7 @@ const metaDescription = description || footerDescription;
 			</nav>
 			
 			<!-- Mobile Menu -->
-			<div id="mobile-menu" class="fixed inset-0 bg-primary z-50 flex flex-col p-4 hidden" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+			<div id="mobile-menu" class="fixed inset-0 bg-primary z-50 flex flex-col p-4 transform translate-x-full transition-transform duration-300 ease-in-out" role="dialog" aria-modal="true" aria-label="Mobile navigation">
 				<div class="flex justify-between items-center mb-8">
 					<!-- Mobile Menu Header -->
 					<a href="/" class="text-[#B79C64]" aria-label={`${siteName} Home`}>
@@ -300,21 +303,21 @@ const metaDescription = description || footerDescription;
 			<slot />
 		</main>
 		
-		<footer id="footer" class="bg-primary text-gold py-12">
+		<footer id="footer" class="bg-primary text-gold py-16">
 			<div class="container mx-auto px-4">
-				<div class="grid md:grid-cols-3 gap-8">
-					<div>
+				<div class="grid md:grid-cols-4 gap-8 mb-8">
+					<div class="md:col-span-2">
 						<!-- Footer Branding -->
 						{logoUrl ? (
 							<a href="/" aria-label={`${siteName} Home`} class="no-underline inline-block">
-								<img src={logoUrl} alt={logoAlt} class="h-14 max-w-xs object-contain mb-4" />
+								<img src={logoUrl} alt={logoAlt} class="h-16 max-w-xs object-contain mb-6" />
 							</a>
 						) : (
-							<h3 class="text-2xl font-bold mb-4" style="font-family: Georgia, 'Times New Roman', serif;">{siteName}</h3>
+							<h3 class="text-3xl font-bold mb-6" style="font-family: Georgia, 'Times New Roman', serif;">{siteName}</h3>
 						)}
-						<p class="text-white/80 mb-4">{footerDescription}</p>
+						<p class="text-white/80 mb-6 max-w-md">{footerDescription}</p>
 						<!-- Footer Social Links -->
-						<div class="flex space-x-4" aria-label="Social media links">
+						<div class="flex space-x-4 mb-6" aria-label="Social media links">
 							{footerSocialLinks.facebook && (
 								<a href={footerSocialLinks.facebook} target="_blank" rel="noopener noreferrer" class="text-lg text-[#B79C64] hover:text-[#B79C64]/80" aria-label="Facebook">
 									<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd"></path></svg>
@@ -333,30 +336,29 @@ const metaDescription = description || footerDescription;
 						</div>
 					</div>
 					<div>
-						<h3 class="text-xl font-bold mb-4 font-quattrocento">Contact Us</h3>
-						<div class="space-y-3">
-							<div class="flex items-center">
-								<MapPin class="w-5 h-5 mr-2 text-white/80" aria-hidden="true" />
-								<span class="text-white/80">{footerContactLocation}</span>
-							</div>
-							<div class="flex items-center">
-								<Clock class="w-5 h-5 mr-2 text-white/80" aria-hidden="true" />
-								<span class="text-white/80">{footerContactHours}</span>
-							</div>
-							<div class="flex items-center">
-								<Phone class="w-5 h-5 mr-2 text-white/80" aria-hidden="true" />
-								<span class="text-white/80">{footerContactPhone}</span>
-							</div>
-						</div>
+						<h3 class="text-xl font-bold mb-4 text-secondary">Quick Links</h3>
+						<ul class="space-y-2" role="navigation" aria-label="Footer navigation">
+							{headerLinks.slice(0, 4).map(link => (
+								<li><a href={link.url} class="text-[#B79C64] hover:text-[#B79C64]/80 transition-colors" aria-label={link.ariaLabel}>{link.title}</a></li>
+							))}
+						</ul>
 					</div>
 					<div>
-						<h3 class="text-xl font-bold mb-4 font-quattrocento">Quick Links</h3>
-						<ul class="space-y-2" role="navigation" aria-label="Footer navigation">
-							{headerLinks.map(link => (
-								<li><a href={link.url} class="text-lg text-[#B79C64] hover:text-[#B79C64]/80" aria-label={link.ariaLabel}>{link.title}</a></li>
-							))}
-							<!-- Add other relevant footer links like Privacy Policy, Terms -->
-						</ul>
+						<h3 class="text-xl font-bold mb-4 text-secondary">Contact Us</h3>
+						<div class="space-y-3">
+							<div class="flex items-start">
+								<MapPin class="w-5 h-5 mr-3 text-secondary/80 flex-shrink-0 mt-1" aria-hidden="true" />
+								<span class="text-white/80">{footerContactLocation}</span>
+							</div>
+							<div class="flex items-start">
+								<Clock class="w-5 h-5 mr-3 text-secondary/80 flex-shrink-0 mt-1" aria-hidden="true" />
+								<span class="text-white/80">{footerContactHours}</span>
+							</div>
+							<div class="flex items-start">
+								<Phone class="w-5 h-5 mr-3 text-secondary/80 flex-shrink-0 mt-1" aria-hidden="true" />
+								<a href={`tel:${footerContactPhone.replace(/\s/g, '')}`} class="text-white/80 hover:text-secondary transition-colors">{footerContactPhone}</a>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="border-t border-[#B79C64]/20 mt-8 pt-8 text-center text-[#B79C64]/60">
@@ -378,7 +380,8 @@ const metaDescription = description || footerDescription;
 				
 				if (menuToggle && mobileMenu) {
 					menuToggle.addEventListener('click', () => {
-						mobileMenu.classList.remove('hidden');
+						mobileMenu.classList.remove('translate-x-full');
+						mobileMenu.classList.add('translate-x-0');
 						document.body.style.overflow = 'hidden';
 						menuToggle.setAttribute('aria-expanded', 'true');
 						// Trap focus in mobile menu
@@ -394,7 +397,8 @@ const metaDescription = description || footerDescription;
 				
 				if (closeMenu && mobileMenu) {
 					closeMenu.addEventListener('click', () => {
-						mobileMenu.classList.add('hidden');
+						mobileMenu.classList.remove('translate-x-0');
+						mobileMenu.classList.add('translate-x-full');
 						document.body.style.overflow = 'auto';
 						if (menuToggle) {
 							menuToggle.setAttribute('aria-expanded', 'false');
@@ -414,7 +418,8 @@ const metaDescription = description || footerDescription;
 				const mobileMenuLinks = mobileMenu?.querySelectorAll('a');
 				mobileMenuLinks?.forEach(link => {
 					link.addEventListener('click', () => {
-						mobileMenu.classList.add('hidden');
+						mobileMenu.classList.remove('translate-x-0');
+						mobileMenu.classList.add('translate-x-full');
 						document.body.style.overflow = 'auto';
 						if (menuToggle) {
 							menuToggle.setAttribute('aria-expanded', 'false');

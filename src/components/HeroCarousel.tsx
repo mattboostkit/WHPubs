@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface CarouselImage {
@@ -30,6 +30,7 @@ export function HeroCarousel({
   heroButton2Link
 }: HeroCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
 
   // Debug logging
   useEffect(() => {
@@ -43,8 +44,8 @@ export function HeroCarousel({
 
   // Auto-advance carousel every 5 seconds
   useEffect(() => {
-    if (!validImages || validImages.length <= 1) {
-      console.log('Auto-rotation disabled: only', validImages?.length || 0, 'image(s)');
+    if (!validImages || validImages.length <= 1 || isPaused) {
+      console.log('Auto-rotation disabled: only', validImages?.length || 0, 'image(s) or paused');
       return;
     }
     
@@ -61,16 +62,24 @@ export function HeroCarousel({
       console.log('Cleaning up auto-rotation interval');
       clearInterval(interval);
     };
-  }, [validImages.length]); // This will restart the interval if image count changes
+  }, [validImages.length, isPaused]); // This will restart the interval if image count changes or pause state changes
 
   const goToPrevious = () => {
-    setCurrentIndex((prevIndex) => 
-      prevIndex === 0 ? validImages.length - 1 : prevIndex - 1
-    );
+    console.log('Previous button clicked');
+    setCurrentIndex((prevIndex) => {
+      const newIndex = prevIndex === 0 ? validImages.length - 1 : prevIndex - 1;
+      console.log('Changing from index', prevIndex, 'to', newIndex);
+      return newIndex;
+    });
   };
 
   const goToNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % validImages.length);
+    console.log('Next button clicked');
+    setCurrentIndex((prevIndex) => {
+      const newIndex = (prevIndex + 1) % validImages.length;
+      console.log('Changing from index', prevIndex, 'to', newIndex);
+      return newIndex;
+    });
   };
 
   const goToSlide = (index: number) => {
@@ -141,20 +150,34 @@ export function HeroCarousel({
             <ChevronRight className="w-6 h-6" />
           </button>
 
-          {/* Dots indicator */}
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
-            {validImages.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => goToSlide(index)}
-                className={`w-2 h-2 rounded-full transition-all ${
-                  index === currentIndex 
-                    ? 'bg-[#B79C64] w-8' 
-                    : 'bg-white/50 hover:bg-white/70'
-                }`}
-                aria-label={`Go to slide ${index + 1}`}
-              />
-            ))}
+          {/* Dots indicator and pause button */}
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-4">
+            <div className="flex gap-3">
+              {validImages.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => goToSlide(index)}
+                  className={`transition-all rounded-full ${
+                    index === currentIndex 
+                      ? 'bg-[#B79C64] w-10 h-3' 
+                      : 'bg-white/60 hover:bg-white/80 w-3 h-3'
+                  }`}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
+            </div>
+            {/* Pause/Play button */}
+            <button
+              onClick={() => setIsPaused(!isPaused)}
+              className="bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors ml-2"
+              aria-label={isPaused ? "Play carousel" : "Pause carousel"}
+            >
+              {isPaused ? (
+                <Play className="w-4 h-4" />
+              ) : (
+                <Pause className="w-4 h-4" />
+              )}
+            </button>
           </div>
         </>
       )}
@@ -201,6 +224,9 @@ function HeroContent({
         </h1>
         <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-6 sm:mb-8 text-secondary leading-relaxed">
           {heroSubtitle || 'Traditional British Hospitality...'}
+        </p>
+        <p className="text-base sm:text-lg md:text-xl text-white/90 mb-6 italic font-medium">
+          Exceptional food, local ales, and warm welcomes across South East England
         </p>
         <div className="flex gap-4 justify-center">
           {heroButton1Text && heroButton1Link && (

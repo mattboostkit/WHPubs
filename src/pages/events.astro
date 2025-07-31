@@ -1,11 +1,12 @@
 ---
 // src/pages/events.astro
 import Layout from '@/layouts/Layout.astro';
-import { getEvents, getPubBySlug, getPageSettings } from '@/lib/sanity';
+import { getEvents, getPubBySlug, getPageSettings, getPubs } from '@/lib/sanity';
 import { Button } from "@/components/ui/button";
 import SanityPortableText from '@/components/SanityPortableText.jsx';
 import { CalendarIcon, MapPin } from 'lucide-react'; // Example icons
 import PageHero from '@/components/PageHero.astro';
+import EventsFilter from '@/components/EventsFilter';
 
 // Determine the target pub for this build/request
 const targetPubSlug = import.meta.env.TARGET_PUB_SLUG;
@@ -13,8 +14,12 @@ const targetPubSlug = import.meta.env.TARGET_PUB_SLUG;
 // Fetch the specific pub's data (needed for layout customization)
 const pubData = targetPubSlug ? await getPubBySlug(targetPubSlug) : null;
 
-// Fetch events: only for the target pub if specified, otherwise only general events
+// For the main hub, fetch ALL events from all pubs
+// For individual pub sites, fetch only that pub's events
 const events = await getEvents(targetPubSlug);
+
+// Fetch all pubs for the filter dropdown (only needed on main hub)
+const allPubs = !targetPubSlug ? await getPubs() : [];
 
 // Fetch page settings for hero image
 const pageSettings = await getPageSettings('events');
@@ -54,54 +59,63 @@ const formatEventDate = (dateString) => {
       </h1>
     )}
 
-    {events && events.length > 0 ? (
-      <div class="space-y-10 max-w-4xl mx-auto">
-        {events.map(event => (
-          <div class="flex flex-col md:flex-row gap-6 border border-secondary/20 rounded-lg p-6 shadow-sm bg-white overflow-hidden">
-            {event.image && (
-              <div class="md:w-1/3 flex-shrink-0">
-                <img
-                  src={event.image.asset?.url + '?w=400&h=400&fit=crop'}
-                  alt={event.image.alt || `Image for ${event.title}`}
-                  class="w-full h-48 md:h-full object-cover rounded"
-                  loading="lazy"
-                  onerror="this.onerror=null; this.src='/images/event-fallback.jpg';"
-                />
-              </div>
-            )}
-            <div class="flex-grow">
-              <h2 class="text-2xl font-semibold text-secondary mb-2">{event.title}</h2>
-
-              <div class="flex flex-wrap gap-x-4 gap-y-1 text-sm text-primary/70 mb-3">
-                <span class="flex items-center">
-                  <CalendarIcon class="w-4 h-4 mr-1.5" /> {formatEventDate(event.date)}
-                </span>
-                 <span class="flex items-center">
-                  <MapPin class="w-4 h-4 mr-1.5" /> {event.locationOverride || event.associatedPub?.name || pubData?.location || 'Location TBC'}
-                </span>
-              </div>
-
-              {event.description && (
-                <div class="prose prose-sm max-w-none mb-4">
-                  <SanityPortableText value={event.description} client:load />
+    {/* Use the filter component for main hub, regular display for individual pub sites */}
+    {!targetPubSlug ? (
+      <EventsFilter 
+        events={events} 
+        pubs={allPubs} 
+        client:load 
+      />
+    ) : (
+      events && events.length > 0 ? (
+        <div class="space-y-10 max-w-4xl mx-auto">
+          {events.map(event => (
+            <div class="flex flex-col md:flex-row gap-6 border border-secondary/20 rounded-lg p-6 shadow-sm bg-white overflow-hidden">
+              {event.image && (
+                <div class="md:w-1/3 flex-shrink-0">
+                  <img
+                    src={event.image.asset?.url + '?w=400&h=400&fit=crop'}
+                    alt={event.image.alt || `Image for ${event.title}`}
+                    class="w-full h-48 md:h-full object-cover rounded"
+                    loading="lazy"
+                    onerror="this.onerror=null; this.src='/images/event-fallback.jpg';"
+                  />
                 </div>
               )}
+              <div class="flex-grow">
+                <h2 class="text-2xl font-semibold text-secondary mb-2">{event.title}</h2>
 
-              {event.bookingUrl && (
-                <a href={event.bookingUrl} target="_blank" rel="noopener noreferrer">
-                  <Button variant="outline" size="sm">
-                    More Info / Book Now
-                  </Button>
-                </a>
-              )}
+                <div class="flex flex-wrap gap-x-4 gap-y-1 text-sm text-primary/70 mb-3">
+                  <span class="flex items-center">
+                    <CalendarIcon class="w-4 h-4 mr-1.5" /> {formatEventDate(event.date)}
+                  </span>
+                   <span class="flex items-center">
+                    <MapPin class="w-4 h-4 mr-1.5" /> {event.locationOverride || event.associatedPub?.name || pubData?.location || 'Location TBC'}
+                  </span>
+                </div>
+
+                {event.description && (
+                  <div class="prose prose-sm max-w-none mb-4">
+                    <SanityPortableText value={event.description} client:load />
+                  </div>
+                )}
+
+                {event.bookingUrl && (
+                  <a href={event.bookingUrl} target="_blank" rel="noopener noreferrer">
+                    <Button variant="outline" size="sm">
+                      More Info / Book Now
+                    </Button>
+                  </a>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
-    ) : (
-      <p class="text-center text-lg text-primary/80 mt-16">
-        {pubData ? `No upcoming events listed for ${pubData.name} right now.` : 'No general events listed currently. Check individual pub sites!'}
-      </p>
+          ))}
+        </div>
+      ) : (
+        <p class="text-center text-lg text-primary/80 mt-16">
+          {pubData ? `No upcoming events listed for ${pubData.name} right now.` : 'No general events listed currently. Check individual pub sites!'}
+        </p>
+      )
     )}
   </main>
 </Layout>

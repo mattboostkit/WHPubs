@@ -67,66 +67,112 @@ const pageDescription = 'Discover the culinary innovation at the heart of WH Pub
   )}
 
   <!-- My Journey Section -->
-  <section class="py-16 bg-muted/50">
-    <div class="container mx-auto px-4">
-      <div class="max-w-4xl mx-auto">
-        <h2 class="text-4xl font-bold mb-8 text-primary text-center">My Journey with WH Pubs</h2>
-        <div class="prose prose-lg mx-auto text-center">
-          <p class="text-lg leading-relaxed mb-6">
-            I first met Brian in 1992 when we were both at Pubs Ltd (now Brunning and Price). After running my own pub with my wife Alison for 11 years, I joined WhPubs in 2016 as Head Roving Chef, then moved to the Development Kitchen as Sous Chef before stepping up to Head Chef.
-          </p>
-          <p class="text-lg leading-relaxed mb-6">
-            Our brilliant team includes Matt, our innovative Pastry Chef, and Andrea, our reliable kitchen assistant who returned part-time after having her baby in 2024—a very welcome return.
-          </p>
+  {developmentKitchen?.myJourney && (
+    <section class="py-16 bg-muted/50">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+          <h2 class="text-4xl font-bold mb-8 text-primary text-center">{developmentKitchen.myJourney.heading}</h2>
+          <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="prose prose-lg">
+              {developmentKitchen.myJourney.content && (
+                <div set:html={developmentKitchen.myJourney.content} />
+              )}
+            </div>
+            {developmentKitchen.myJourney.image && (
+              <div class="relative aspect-[4/3] overflow-hidden rounded-lg shadow-xl">
+                <img 
+                  src={developmentKitchen.myJourney.image.asset.url} 
+                  alt={developmentKitchen.myJourney.image.alt}
+                  class="w-full h-full object-cover"
+                />
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  )}
 
   <!-- What We Do Section -->
-  <section class="py-16 bg-background">
-    <div class="container mx-auto px-4">
-      <div class="max-w-4xl mx-auto">
-        <h2 class="text-4xl font-bold mb-8 text-primary text-center">What We Do</h2>
-        <div class="prose prose-lg mx-auto">
-          <p class="text-lg leading-relaxed mb-6">
-            The Development Kitchen supports our pub chefs by producing core desserts like Sticky Toffee Pudding, Double Chocolate Brownie, and gluten-free Baked Cheesecake. We also make savoury favourites including handmade shortcrust pastry pies, Salmon Fishcakes, and Traditional Stews.
-          </p>
-          <p class="text-lg leading-relaxed mb-6">
-            Our burger press machine was a game-changer—we now produce all company burgers in-house, improving consistency and saving pub chefs valuable time. We also use the smoker at Little Brown Jug for chickens, beef briskets, pork ribs, and hot-smoked salmon.
-          </p>
+  {developmentKitchen?.whatWeDo && (
+    <section class="py-16 bg-background">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+          <h2 class="text-4xl font-bold mb-8 text-primary text-center">{developmentKitchen.whatWeDo.heading}</h2>
+          <div class="grid md:grid-cols-2 gap-12 items-center">
+            {developmentKitchen.whatWeDo.image && (
+              <div class="relative aspect-[4/3] overflow-hidden rounded-lg shadow-xl">
+                <img 
+                  src={developmentKitchen.whatWeDo.image.asset.url} 
+                  alt={developmentKitchen.whatWeDo.image.alt}
+                  class="w-full h-full object-cover"
+                />
+              </div>
+            )}
+            <div class="prose prose-lg">
+              {developmentKitchen.whatWeDo.content && (
+                <div set:html={developmentKitchen.whatWeDo.content} />
+              )}
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  )}
 
   <!-- Quality Sourcing Section -->
-  <section class="py-16 bg-muted/50">
-    <div class="container mx-auto px-4">
-      <div class="max-w-4xl mx-auto">
-        <h2 class="text-4xl font-bold mb-8 text-primary text-center">Quality Sourcing</h2>
-        <div class="prose prose-lg mx-auto">
-          <p class="text-lg leading-relaxed mb-6">
-            We bulk buy to secure the best quality at the best prices. Our British pork and dry-cured bacon comes from Wicks Manor Farm in Essex, award-winning smoked salmon from "Smokin' Brothers" in the Cotswolds, and fresh pasta from our newest partner, La Tua Pasta.
-          </p>
+  {developmentKitchen?.qualitySourcing && (
+    <section class="py-16 bg-muted/50">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+          <h2 class="text-4xl font-bold mb-8 text-primary text-center">{developmentKitchen.qualitySourcing.heading}</h2>
+          <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="prose prose-lg">
+              {developmentKitchen.qualitySourcing.content && (
+                <div set:html={developmentKitchen.qualitySourcing.content} />
+              )}
+            </div>
+            {developmentKitchen.qualitySourcing.image && (
+              <div class="relative aspect-[4/3] overflow-hidden rounded-lg shadow-xl">
+                <img 
+                  src={developmentKitchen.qualitySourcing.image.asset.url} 
+                  alt={developmentKitchen.qualitySourcing.image.alt}
+                  class="w-full h-full object-cover"
+                />
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  )}
 
   <!-- Christmas Special Section -->
-  <section class="py-16 bg-background">
-    <div class="container mx-auto px-4">
-      <div class="max-w-4xl mx-auto">
-        <h2 class="text-4xl font-bold mb-8 text-primary text-center">Christmas Special</h2>
-        <div class="prose prose-lg mx-auto">
-          <p class="text-lg leading-relaxed mb-6">
-            We're especially proud of our homemade Christmas Pudding, made from a recipe passed down from my Head Chef's mum during my training—over 100 years of history in every rich, traditional bite.
-          </p>
+  {developmentKitchen?.christmasSpecial && (
+    <section class="py-16 bg-background">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+          <h2 class="text-4xl font-bold mb-8 text-primary text-center">{developmentKitchen.christmasSpecial.heading}</h2>
+          <div class="grid md:grid-cols-2 gap-12 items-center">
+            {developmentKitchen.christmasSpecial.image && (
+              <div class="relative aspect-[4/3] overflow-hidden rounded-lg shadow-xl">
+                <img 
+                  src={developmentKitchen.christmasSpecial.image.asset.url} 
+                  alt={developmentKitchen.christmasSpecial.image.alt}
+                  class="w-full h-full object-cover"
+                />
+              </div>
+            )}
+            <div class="prose prose-lg">
+              {developmentKitchen.christmasSpecial.content && (
+                <div set:html={developmentKitchen.christmasSpecial.content} />
+              )}
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  )}
 
   <!-- Gallery Section -->
   {developmentKitchen?.gallery && developmentKitchen.gallery.length > 0 && (

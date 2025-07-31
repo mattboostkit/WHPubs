@@ -92,20 +92,69 @@ export default defineType({
     }),
     defineField({
       name: 'myJourney',
-      title: 'My Journey',
+      title: 'My Journey with WH Pubs',
       type: 'object',
       fields: [
         defineField({
           name: 'heading',
           title: 'Section Heading',
           type: 'string',
-          initialValue: 'My Journey'
+          initialValue: 'My Journey with WH Pubs'
         }),
         defineField({
           name: 'content',
           title: 'Content',
           type: 'blockContent',
           description: 'Share your personal journey with WH Pubs'
+        }),
+        defineField({
+          name: 'image',
+          title: 'Journey Image',
+          type: 'image',
+          description: '🖼️ Ideal size: 1200x800px - Image related to your journey',
+          options: { hotspot: true },
+          fields: [
+            {
+              name: 'alt',
+              type: 'string',
+              title: 'Alternative text',
+              validation: (Rule) => Rule.required(),
+            }
+          ],
+        }),
+      ]
+    }),
+    defineField({
+      name: 'whatWeDo',
+      title: 'What We Do',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'heading',
+          title: 'Section Heading',
+          type: 'string',
+          initialValue: 'What We Do'
+        }),
+        defineField({
+          name: 'content',
+          title: 'Content',
+          type: 'blockContent',
+          description: 'Describe what the Development Kitchen does'
+        }),
+        defineField({
+          name: 'image',
+          title: 'What We Do Image',
+          type: 'image',
+          description: '🖼️ Ideal size: 1200x800px - Image showing kitchen operations',
+          options: { hotspot: true },
+          fields: [
+            {
+              name: 'alt',
+              type: 'string',
+              title: 'Alternative text',
+              validation: (Rule) => Rule.required(),
+            }
+          ],
         }),
       ]
     }),
@@ -124,6 +173,74 @@ export default defineType({
           name: 'content',
           title: 'Content',
           type: 'blockContent',
+        }),
+      ]
+    }),
+    defineField({
+      name: 'qualitySourcing',
+      title: 'Quality Sourcing',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'heading',
+          title: 'Section Heading',
+          type: 'string',
+          initialValue: 'Quality Sourcing'
+        }),
+        defineField({
+          name: 'content',
+          title: 'Content',
+          type: 'blockContent',
+          description: 'Describe your quality sourcing practices'
+        }),
+        defineField({
+          name: 'image',
+          title: 'Quality Sourcing Image',
+          type: 'image',
+          description: '🖼️ Ideal size: 1200x800px - Image showing ingredients or suppliers',
+          options: { hotspot: true },
+          fields: [
+            {
+              name: 'alt',
+              type: 'string',
+              title: 'Alternative text',
+              validation: (Rule) => Rule.required(),
+            }
+          ],
+        }),
+      ]
+    }),
+    defineField({
+      name: 'christmasSpecial',
+      title: 'Christmas Special',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'heading',
+          title: 'Section Heading',
+          type: 'string',
+          initialValue: 'Christmas Special'
+        }),
+        defineField({
+          name: 'content',
+          title: 'Content',
+          type: 'blockContent',
+          description: 'Describe your Christmas pudding and special offerings'
+        }),
+        defineField({
+          name: 'image',
+          title: 'Christmas Special Image',
+          type: 'image',
+          description: '🖼️ Ideal size: 1200x800px - Image of Christmas pudding or festive items',
+          options: { hotspot: true },
+          fields: [
+            {
+              name: 'alt',
+              type: 'string',
+              title: 'Alternative text',
+              validation: (Rule) => Rule.required(),
+            }
+          ],
         }),
       ]
     }),

@@ -295,6 +295,7 @@ export async function getEvents(targetPubSlug = null) {
 
   return client.fetch(`
     *[_type == "event" ${filter}] {
+      _id,
       title,
       slug,
       date,
@@ -321,11 +322,27 @@ export async function getDevelopmentKitchen() {
       },
       myJourney {
         heading,
-        content[]{ ..., asset-> }
+        content[]{ ..., asset-> },
+        image { asset->{ _id, url }, alt }
+      },
+      whatWeDo {
+        heading,
+        content[]{ ..., asset-> },
+        image { asset->{ _id, url }, alt }
       },
       philosophy {
         heading,
         content[]{ ..., asset-> }
+      },
+      qualitySourcing {
+        heading,
+        content[]{ ..., asset-> },
+        image { asset->{ _id, url }, alt }
+      },
+      christmasSpecial {
+        heading,
+        content[]{ ..., asset-> },
+        image { asset->{ _id, url }, alt }
       },
       process[] {
         stepNumber,
