@@ -159,7 +159,7 @@ export function HeroCarousel({
                   onClick={() => goToSlide(index)}
                   className={`transition-all rounded-full ${
                     index === currentIndex 
-                      ? 'bg-[#B79C64] w-10 h-3' 
+                      ? 'bg-secondary w-10 h-3' 
                       : 'bg-white/60 hover:bg-white/80 w-3 h-3'
                   }`}
                   aria-label={`Go to slide ${index + 1}`}
@@ -218,7 +218,7 @@ function HeroContent({
 
   return (
     <div className="relative h-full flex items-center justify-center">
-      <div className="text-center text-[#B79C64] px-4">
+      <div className="text-center text-secondary px-4">
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
           {heroTitle || 'Traditional British Hospitality in the South East of England'}
         </h1>
@@ -244,7 +244,7 @@ function HeroContent({
               <Button 
                 variant="outline" 
                 size="lg" 
-                className="bg-transparent text-[#B79C64] border-[#B79C64] hover:bg-[#B79C64] hover:text-primary"
+                className="bg-transparent text-secondary border-secondary hover:bg-secondary hover:text-primary"
               >
                 {heroButton2Text}
               </Button>

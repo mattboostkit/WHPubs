@@ -31,6 +31,7 @@ npm run create-sample-posts  # Create sample blog posts
 1. **Frontend (Astro)**: Static site generator at root level
    - Pages in `src/pages/` - Dynamic routing with `[slug].astro` and `[...slug].astro`
    - Components in `src/components/` - React components with Tailwind/shadcn UI
+   - New components: `EventsFilter.tsx` for filtering events by pub
    - Sanity integration via `src/lib/sanity.js`
 
 2. **CMS (Sanity)**: Headless CMS in `wh-pubs/` directory
@@ -44,6 +45,11 @@ npm run create-sample-posts  # Create sample blog posts
 - **menu**: Menu content associated with pubs
 - **event**: Events associated with pubs or general
 - **homepage**: Configurable hero section for main hub
+- **developmentKitchen**: Content sections for Development Kitchen page (myJourney, whatWeDo, qualitySourcing, christmasSpecial)
+- **pageSettings**: Configurable settings for various pages
+- **career**: Job listings and career opportunities
+- **teamMember**: Team member profiles
+- **pubStory**: Individual pub stories and history
 - **site**: Legacy multi-site support structure
 
 ### Content Filtering Pattern
@@ -61,6 +67,7 @@ The Sanity client is configured in `src/lib/sanity.js` with helper functions for
 - `getMenusForPub(targetPubSlug)` - Fetches menus for a specific pub
 - `getEvents(targetPubSlug)` - Fetches events filtered by pub
 - `getPubBySlug(slug)` - Fetches single pub with all layout fields
+- `getDevelopmentKitchen()` - Fetches Development Kitchen content sections
 
 ## UI Components
 The project uses shadcn/ui components with a customized black (#1A1A1A) and gold (#B79C64) color scheme. All components are in `src/components/ui/` and use Tailwind CSS with the following custom theme variables:
@@ -106,6 +113,15 @@ Configured for Netlify deployment with:
 - User cannot see changes until they are deployed
 - Use descriptive commit messages
 - Push with: `git push origin main`
+
+## Recent Updates
+
+### New Features (January 2025)
+- **Development Kitchen CMS Integration**: Content for Development Kitchen page is now fully managed through Sanity CMS
+- **Events Filtering**: Added interactive filtering for events by pub location
+- **Enhanced Components**: New EventsFilter component for better user experience
+- **Content Management Scripts**: Added scripts for populating Development Kitchen content
+- **Documentation**: Added comprehensive Development Kitchen content guide
 
 ## Sanity Image Specifications (EXACT SIZES REQUIRED)
 

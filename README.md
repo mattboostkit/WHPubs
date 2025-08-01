@@ -13,6 +13,9 @@ A website for WH Pubs, featuring traditional British pubs in South East England 
 - Custom 404 error page
 - Google Analytics integration
 - Content Management System (Sanity Studio)
+- Interactive pub finder with filtering capabilities
+- Development Kitchen page with CMS-managed content
+- Events filtering by pub location
 
 ## Tech Stack
 
@@ -135,6 +138,7 @@ Additional documentation can be found in the `docs` directory:
 - [Performance Optimization](docs/performance-optimization.md)
 - [Responsive Design Recommendations](docs/responsive-design-recommendations.md)
 - [Implementation Summary](docs/implementation-summary.md)
+- [Development Kitchen Content Guide](docs/development-kitchen-content-guide.md) - Guide for managing Development Kitchen content through Sanity CMS
 
 ## Multi-Site Architecture
 

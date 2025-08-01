@@ -44,9 +44,11 @@ export default function PubCardHover({ pub, children }: PubCardHoverProps) {
 
   return (
     <div 
-      className="overflow-hidden hover:shadow-lg transition-shadow"
+      className="overflow-hidden hover:shadow-lg transition-shadow focus-within:shadow-lg"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onFocus={() => setIsHovered(true)}
+      onBlur={() => setIsHovered(false)}
     >
       <div className="relative h-64 overflow-hidden group">
         {/* Exterior Image (default) */}
@@ -82,8 +84,12 @@ export default function PubCardHover({ pub, children }: PubCardHoverProps) {
         />
         
         {/* Hover indicator - show on all cards */}
-        <div className="absolute bottom-2 right-2 bg-black/60 text-white px-2 py-1 rounded-md text-xs flex items-center gap-1 transition-opacity duration-300 opacity-100 group-hover:opacity-0">
-          <Eye className="w-3 h-3" />
+        <div 
+          className="absolute bottom-2 right-2 bg-black/60 text-white px-2 py-1 rounded-md text-xs flex items-center gap-1 transition-opacity duration-300 opacity-100 group-hover:opacity-0"
+          role="tooltip"
+          aria-label="Hover to see interior view"
+        >
+          <Eye className="w-3 h-3" aria-hidden="true" />
           <span>Hover for interior</span>
         </div>
       </div>

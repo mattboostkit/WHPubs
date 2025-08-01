@@ -6,16 +6,19 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { getPubUrl, isExternalUrl } from '@/lib/pub-urls';
+import PubCardHover from '@/components/PubCardHover';
 
 const amenityIcons = {
-  dogFriendly: { icon: Dog, label: 'Dog Friendly' },
-  garden: { icon: TreePine, label: 'Garden' },
-  localAles: { icon: Beer, label: 'Local Ales' },
-  food: { icon: Utensils, label: 'Food' },
-  parking: { icon: Car, label: 'Parking' },
-  liveMusic: { icon: Music, label: 'Live Music' },
-  wifi: { icon: Wifi, label: 'WiFi' },
-  familyFriendly: { icon: Baby, label: 'Family Friendly' }
+  'Dog Friendly': { icon: Dog, label: 'Dog Friendly' },
+  'Beer Garden': { icon: TreePine, label: 'Garden' },
+  'Garden': { icon: TreePine, label: 'Garden' },
+  'Local Ales': { icon: Beer, label: 'Local Ales' },
+  'Food': { icon: Utensils, label: 'Food' },
+  'Homemade Food': { icon: Utensils, label: 'Food' },
+  'Parking': { icon: Car, label: 'Parking' },
+  'Live Music': { icon: Music, label: 'Live Music' },
+  'Free Wi-Fi': { icon: Wifi, label: 'WiFi' },
+  'Family Friendly': { icon: Baby, label: 'Family Friendly' }
 };
 
 // Screen reader only class
@@ -244,60 +247,54 @@ export default function InteractivePubFinder({ pubs = [] }) {
               
               return (
                 <Card key={pub.slug?.current} className="overflow-hidden hover:shadow-lg transition-shadow" role="listitem">
-                  <div className="relative aspect-square overflow-hidden">
-                    <img
-                      src={pub.heroImage?.asset?.url || pub.image?.asset?.url || '/images/hero-fallback.jpg'}
-                      alt={pub.heroImage?.alt || pub.image?.alt || `Image of ${pub.name}`}
-                      className="w-full h-full object-cover transition-transform hover:scale-105"
-                      onError={(e) => { e.target.src = '/images/hero-fallback.jpg'; }}
-                    />
-                  </div>
-                  <CardHeader>
-                    <CardTitle className="text-lg">{pub.name}</CardTitle>
-                    <div className="flex items-center text-sm text-muted-foreground">
-                      <MapPin className="w-3 h-3 mr-1" />
-                      <span>{pub.locationName || pub.location}</span>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="text-sm mb-4 line-clamp-2">
-                      {pub.description}
-                    </CardDescription>
-                    
-                    {/* Amenity badges */}
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {pub.amenities?.map(amenity => {
-                        const amenityInfo = amenityIcons[amenity];
-                        if (!amenityInfo) return null;
-                        const Icon = amenityInfo.icon;
-                        
-                        return (
-                          <Badge key={amenity} variant="secondary" className="text-xs flex items-center gap-1">
-                            <Icon className="w-3 h-3" />
-                            {amenityInfo.label}
-                          </Badge>
-                        );
-                      })}
-                    </div>
-                    
-                    <a 
-                      href={pubUrl} 
-                      target={isExt ? "_blank" : undefined} 
-                      rel={isExt ? "noopener noreferrer" : undefined} 
-                      className="block"
-                      aria-label={`${isExt ? 'Visit website' : 'View details'} for ${pub.name}${isExt ? ' (opens in new tab)' : ''}`}
-                    >
-                      <Button 
-                        variant={isExt ? "default" : "outline"} 
-                        size="sm" 
-                        className={isExt ? "w-full bg-primary text-white hover:bg-primary/90" : "w-full"}
-                        tabIndex={-1}
+                  <PubCardHover pub={pub}>
+                    <CardHeader>
+                      <CardTitle className="text-lg">{pub.name}</CardTitle>
+                      <div className="flex items-center text-sm text-muted-foreground">
+                        <MapPin className="w-3 h-3 mr-1" />
+                        <span>{pub.locationName || pub.location}</span>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <CardDescription className="text-sm mb-4 line-clamp-2">
+                        {pub.description}
+                      </CardDescription>
+                      
+                      {/* Amenity badges */}
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {pub.amenities?.map(amenity => {
+                          const amenityInfo = amenityIcons[amenity];
+                          if (!amenityInfo) return null;
+                          const Icon = amenityInfo.icon;
+                          
+                          return (
+                            <Badge key={amenity} variant="secondary" className="text-xs flex items-center gap-1">
+                              <Icon className="w-3 h-3" />
+                              {amenityInfo.label}
+                            </Badge>
+                          );
+                        })}
+                      </div>
+                      
+                      <a 
+                        href={pubUrl} 
+                        target={isExt ? "_blank" : undefined} 
+                        rel={isExt ? "noopener noreferrer" : undefined} 
+                        className="block"
+                        aria-label={`${isExt ? 'Visit website' : 'View details'} for ${pub.name}${isExt ? ' (opens in new tab)' : ''}`}
                       >
-                        {isExt ? 'Visit Website' : 'View Details'}
-                        {isExt && <ExternalLink className="w-3 h-3 ml-2" aria-hidden="true" />}
-                      </Button>
-                    </a>
-                  </CardContent>
+                        <Button 
+                          variant={isExt ? "default" : "outline"} 
+                          size="sm" 
+                          className={isExt ? "w-full bg-primary text-white hover:bg-primary/90" : "w-full"}
+                          tabIndex={-1}
+                        >
+                          {isExt ? 'Visit Website' : 'View Details'}
+                          {isExt && <ExternalLink className="w-3 h-3 ml-2" aria-hidden="true" />}
+                        </Button>
+                      </a>
+                    </CardContent>
+                  </PubCardHover>
                 </Card>
               );
             })}

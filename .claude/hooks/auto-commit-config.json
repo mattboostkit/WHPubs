@@ -1,0 +1,28 @@
+{
+  "enabled": true,
+  "commit_options": {
+    "auto_push": false,
+    "commit_prefix": "[Auto-commit]",
+    "include_timestamp": true,
+    "group_delay_seconds": 30
+  },
+  "skip_patterns": [
+    ".git/",
+    ".env",
+    "node_modules/",
+    "dist/",
+    ".claude/settings",
+    "*.log",
+    "*.tmp",
+    "*.cache"
+  ],
+  "skip_tools": [
+    "Read",
+    "Grep", 
+    "Glob",
+    "LS",
+    "NotebookRead",
+    "WebFetch",
+    "WebSearch"
+  ]
+}

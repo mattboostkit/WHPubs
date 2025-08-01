@@ -136,37 +136,6 @@ export const structure = (S: StructureBuilder) =>
             .title('Job Listings')
         ),
       S.divider(),
-      S.listItem()
-        .title('Sites (Legacy)')
-        .icon(FiGlobe)
-        .child(
-          S.documentTypeList('site')
-            .title('Sites')
-            .child(siteId =>
-              S.list()
-                .title('Site Content')
-                .items([
-                  S.listItem()
-                    .title('Site Details')
-                    .icon(FiHome)
-                    .child(
-                      S.document()
-                        .schemaType('site')
-                        .documentId(siteId)
-                    ),
-                  S.listItem()
-                    .title('Blog Posts')
-                    .icon(FiFileText)
-                    .child(
-                      S.documentList()
-                        .title('Blog Posts')
-                        .filter('_type == "post" && $siteId in sites[]._ref')
-                        .params({ siteId })
-                    )
-                ])
-            )
-        ),
-      S.divider(),
       ...S.documentTypeListItems()
-        .filter(listItem => !['site', 'homepage', 'developmentKitchen', 'eventsPageSettings', 'blogPageSettings', 'aboutPageSettings', 'contactPageSettings', 'careersPageSettings', 'thingsToDoPageSettings', 'pubFinderPageSettings', 'pub', 'post', 'event', 'menu', 'career', 'thingsToDo'].includes(listItem.getId()))
+        .filter(listItem => !['homepage', 'developmentKitchen', 'eventsPageSettings', 'blogPageSettings', 'aboutPageSettings', 'contactPageSettings', 'careersPageSettings', 'thingsToDoPageSettings', 'pubFinderPageSettings', 'pub', 'post', 'event', 'menu', 'career', 'thingsToDo'].includes(listItem.getId()))
     ])

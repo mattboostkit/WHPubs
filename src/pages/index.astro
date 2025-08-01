@@ -155,25 +155,25 @@ const allPubs = pubs;
                         {/* Amenity badges */}
                         <div class="flex flex-wrap gap-2 mb-4">
                           {pub.amenities?.includes('dogFriendly') && (
-                            <Badge variant="secondary" className="text-xs flex items-center gap-1">
+                            <Badge variant="secondary" className="text-xs flex items-center gap-1 bg-secondary/20 text-primary border border-secondary/40">
                               <Dog className="w-3 h-3" />
                               Dog Friendly
                             </Badge>
                           )}
                           {pub.amenities?.includes('garden') && (
-                            <Badge variant="secondary" className="text-xs flex items-center gap-1">
+                            <Badge variant="secondary" className="text-xs flex items-center gap-1 bg-secondary/20 text-primary border border-secondary/40">
                               <TreePine className="w-3 h-3" />
                               Garden
                             </Badge>
                           )}
                           {pub.amenities?.includes('localAles') && (
-                            <Badge variant="secondary" className="text-xs flex items-center gap-1">
+                            <Badge variant="secondary" className="text-xs flex items-center gap-1 bg-secondary/20 text-primary border border-secondary/40">
                               <Beer className="w-3 h-3" />
                               Local Ales
                             </Badge>
                           )}
                           {pub.amenities?.includes('food') && (
-                            <Badge variant="secondary" className="text-xs flex items-center gap-1">
+                            <Badge variant="secondary" className="text-xs flex items-center gap-1 bg-secondary/20 text-primary border border-secondary/40">
                               <Utensils className="w-3 h-3" />
                               Food
                             </Badge>
@@ -351,7 +351,7 @@ const allPubs = pubs;
             aria-label="Email address for newsletter"
             class="flex-1 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary bg-secondary/10 text-secondary placeholder:text-secondary/50 border border-secondary/20"
           />
-          <Button type="submit" variant="secondary" class="bg-[#B79C64] text-primary hover:bg-[#B79C64]/90">Subscribe</Button>
+          <Button type="submit" variant="secondary" class="bg-secondary text-primary hover:bg-secondary/90">Subscribe</Button>
         </form>
         </div>
       </div>

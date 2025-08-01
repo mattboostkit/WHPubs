@@ -137,7 +137,7 @@ export function PubHeroCarousel({ images, pubName }: PubHeroCarouselProps) {
                 onClick={() => goToSlide(index)}
                 className={`w-2 h-2 rounded-full transition-all ${
                   index === currentIndex 
-                    ? 'bg-[#B79C64] w-8' 
+                    ? 'bg-secondary w-8' 
                     : 'bg-white/50 hover:bg-white/70'
                 }`}
                 aria-label={`Go to slide ${index + 1}`}
@@ -163,7 +163,7 @@ export function PubHeroCarousel({ images, pubName }: PubHeroCarouselProps) {
                 <Button 
                   variant="secondary" 
                   size="lg" 
-                  className="bg-[#B79C64] hover:bg-[#B79C64]/90 text-primary font-semibold px-8 py-4 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all"
+                  className="bg-secondary hover:bg-secondary/90 text-primary font-semibold px-8 py-4 shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all"
                 >
                   {currentImage.buttonText}
                 </Button>
