@@ -95,16 +95,16 @@ export default function PubsCarousel({ pubs }: PubsCarouselProps) {
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="text-center mb-12">
-          <p className="text-secondary uppercase tracking-widest text-sm font-semibold mb-4">Our Venues</p>
+          <p className="text-secondary uppercase tracking-widest text-sm font-semibold mb-4">Our Pubs</p>
           <h2 className="text-5xl font-bold text-primary mb-2">LET US TAKE</h2>
           <h2 className="text-5xl font-bold text-secondary">YOU SOMEWHERE</h2>
         </div>
 
-        {/* Discover All Venues Button */}
+        {/* Discover All Pubs Button */}
         <div className="text-center mb-12">
-          <a href="/#pubs">
+          <a href="/our-pubs">
             <Button variant="outline" size="lg" className="border-primary text-primary hover:bg-primary hover:text-white">
-              Discover All Venues
+              Discover All Pubs
             </Button>
           </a>
         </div>
