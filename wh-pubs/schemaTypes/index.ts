@@ -17,6 +17,8 @@ import teamMember from './teamMember'
 import pubStory from './pubStory'
 import loyaltyProgram from './loyaltyProgram'
 import aboutContent from './aboutContent'
+import pubFeatures from './pubFeatures'
+import privacyPolicy from './privacyPolicy'
 import { eventsPageSettings, blogPageSettings, aboutPageSettings, contactPageSettings, careersPageSettings, thingsToDoPageSettings, pubFinderPageSettings } from './pageSettings'
 
 export const schemaTypes = [
