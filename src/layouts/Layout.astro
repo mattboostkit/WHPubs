@@ -205,8 +205,8 @@ const metaDescription = description || footerDescription;
 						)}
 					</a>
 					<!-- Desktop Navigation -->
-					<div class="hidden md:flex space-x-8" role="navigation">
-						{headerLinks.map(link => {
+					<div class="hidden md:flex items-center space-x-8" role="navigation">
+						{headerLinks.filter(link => link.title !== "Make A Booking").map(link => {
 							const isActive = currentPath === link.url || 
 								(link.url !== '/' && currentPath.startsWith(link.url)) ||
 								(link.url.includes('#') && currentPath === '/' && link.url.startsWith('/#'));
@@ -230,6 +230,14 @@ const metaDescription = description || footerDescription;
 								</a>
 							);
 						})}
+						{/* Book a Table CTA Button - Always visible */}
+						<a 
+							href="/book-a-table" 
+							class="ml-4 px-6 py-2 bg-[#B79C64] text-primary font-semibold rounded-lg hover:bg-[#B79C64]/90 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+							aria-label="Book a table"
+						>
+							Book a Table
+						</a>
 					</div>
 					<button 
 						id="menu-toggle"
