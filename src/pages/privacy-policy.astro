@@ -2,12 +2,14 @@
 import Layout from '../layouts/Layout.astro';
 import { getPrivacyPolicy } from '../lib/sanity';
 import PrivacyPolicyContent from '../components/PrivacyPolicyContent';
+import { dummyPrivacyPolicy } from '../data/privacy-policy-dummy';
 
 // Get privacy policy for the main hub
-const privacyPolicy = await getPrivacyPolicy();
+let privacyPolicy = await getPrivacyPolicy();
 
+// Use dummy content if no privacy policy found in Sanity
 if (!privacyPolicy) {
-  return Astro.redirect('/404');
+  privacyPolicy = dummyPrivacyPolicy;
 }
 
 const lastUpdatedDate = privacyPolicy.lastUpdated 
