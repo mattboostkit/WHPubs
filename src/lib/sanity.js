@@ -716,3 +716,71 @@ export async function getAboutContent() {
     }
   `);
 }
+
+// Get pub features ("Come to us for" section)
+export async function getPubFeatures(pubSlug) {
+  if (!pubSlug) return null;
+  const params = { pubSlug };
+  return client.fetch(`
+    *[_type == "pubFeatures" && pub->slug.current == $pubSlug && active == true][0] {
+      title,
+      features[] {
+        title,
+        description,
+        image {
+          asset->{
+            _id,
+            url
+          },
+          alt
+        },
+        orderNumber
+      } | order(orderNumber asc)
+    }
+  `, params);
+}
+
+// Get privacy policy
+export async function getPrivacyPolicy(pubSlug = null) {
+  let filter = '';
+  if (pubSlug) {
+    filter = `&& associatedPub->slug.current == $pubSlug`;
+  } else {
+    filter = `&& !defined(associatedPub)`;
+  }
+  const params = pubSlug ? { pubSlug } : {};
+  
+  return client.fetch(`
+    *[_type == "privacyPolicy" ${filter} && active == true][0] {
+      title,
+      lastUpdated,
+      content,
+      slug
+    }
+  `, params);
+}
+
+// Get detailed menu with sections
+export async function getDetailedMenusForPub(targetPubSlug) {
+  if (!targetPubSlug) return [];
+  const params = { targetPubSlug };
+  return client.fetch(`
+    *[_type == "menu" && associatedPub->slug.current == $targetPubSlug && active == true] {
+      title,
+      slug,
+      sections[] {
+        sectionName,
+        sectionDescription,
+        items[] {
+          name,
+          description,
+          price,
+          dietary,
+          available
+        }
+      },
+      notes,
+      displayOrder
+    } | order(displayOrder asc, title asc)
+  `, params);
+}
