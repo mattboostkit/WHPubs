@@ -177,16 +177,30 @@ export default function MegaMenu({ pubs, currentPath }: MegaMenuProps) {
       
       {/* Static links without dropdowns */}
       <a
-        href="/offers"
+        href="/development-kitchen"
         className={`text-lg transition-all duration-300 relative group ${
-          isActive('/offers')
+          isActive('/development-kitchen')
             ? 'text-[#B79C64] font-semibold after:absolute after:bottom-[-4px] after:left-0 after:right-0 after:h-[2px] after:bg-[#B79C64]'
             : 'text-[#B79C64] hover:text-[#B79C64]/90'
         }`}
-        aria-label="Offers"
+        aria-label="Development Kitchen"
       >
-        Offers
-        {!isActive('/offers') && (
+        Development Kitchen
+        {!isActive('/development-kitchen') && (
+          <span className="absolute bottom-[-4px] left-0 w-0 h-[2px] bg-[#B79C64] transition-all duration-300 group-hover:w-full"></span>
+        )}
+      </a>
+      <a
+        href="/gift-cards"
+        className={`text-lg transition-all duration-300 relative group ${
+          isActive('/gift-cards')
+            ? 'text-[#B79C64] font-semibold after:absolute after:bottom-[-4px] after:left-0 after:right-0 after:h-[2px] after:bg-[#B79C64]'
+            : 'text-[#B79C64] hover:text-[#B79C64]/90'
+        }`}
+        aria-label="Gift Cards"
+      >
+        Gift Cards
+        {!isActive('/gift-cards') && (
           <span className="absolute bottom-[-4px] left-0 w-0 h-[2px] bg-[#B79C64] transition-all duration-300 group-hover:w-full"></span>
         )}
       </a>
