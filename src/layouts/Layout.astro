@@ -268,7 +268,16 @@ const metaDescription = description || footerDescription;
 				</div>
 				<!-- Mobile Navigation -->
 				<div class="flex flex-col space-y-6 text-xl" role="navigation">
-					{headerLinks.map(link => {
+					{/* Prominent Book a Table button at top of mobile menu */}
+					<a 
+						href="/book-a-table" 
+						class="mx-4 px-6 py-3 bg-[#B79C64] text-primary font-semibold rounded-lg text-center hover:bg-[#B79C64]/90 transition-all duration-300 shadow-lg"
+						aria-label="Book a table"
+					>
+						Book a Table
+					</a>
+					<div class="border-t border-[#B79C64]/20 pt-4"></div>
+					{headerLinks.filter(link => link.title !== "Make A Booking").map(link => {
 						const isActive = currentPath === link.url || 
 							(link.url !== '/' && currentPath.startsWith(link.url)) ||
 							(link.url.includes('#') && currentPath === '/' && link.url.startsWith('/#'));
