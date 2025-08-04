@@ -477,27 +477,9 @@ const pubStructuredData = {
       )}
 
       {/* Menus Section */}
-      {(pubMenus && pubMenus.length > 0) ? (
-        <div class="mb-12">
-          <h2 class="text-3xl font-semibold text-primary mb-6 flex items-center">
-            <UtensilsCrossed class="w-6 h-6 mr-3 text-primary/80" /> Our Menus
-          </h2>
-          <div class="space-y-6">
-            {pubMenus.map((menu) => (
-              <Card className="hover:shadow-xl transition-all duration-300 card-hover">
-                <CardHeader>
-                  <CardTitle className="text-2xl">{menu.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  {menu.menuContent && (
-                    <div class="space-y-4">
-                      <SanityPortableText value={menu.menuContent} />
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+      {(detailedMenus && detailedMenus.length > 0) ? (
+        <div class="mb-12 -mx-4 sm:-mx-6 lg:-mx-8">
+          <PubMenu menus={detailedMenus} client:load />
         </div>
       ) : (
         <div class="mb-12 p-8 bg-secondary/10 rounded-xl text-center">
