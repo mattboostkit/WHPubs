@@ -65,25 +65,65 @@ const allPubs = pubs;
     {/* Welcome to WH Pubs Section */}
     <section class="py-20 bg-gradient-to-b from-white to-gray-50">
       <div class="container mx-auto px-4">
-        <div class="max-w-4xl mx-auto text-center">
-          <p class="text-secondary uppercase tracking-widest text-sm font-semibold mb-4">Welcome to WH Pubs</p>
-          <h2 class="text-5xl font-bold text-primary mb-2">STEP INTO</h2>
-          <h3 class="text-3xl font-bold text-secondary mb-8">TIMELESS TRADITION</h3>
-          <div class="space-y-4 mb-10">
-            <p class="text-lg text-gray-700 leading-relaxed">
-              Step into warm, welcoming pubs where crackling fires meet contemporary comfort, 
-              sun-drenched gardens host perfect afternoons, and our kitchens serve honest British fare with a modern twist.
-            </p>
-            <p class="text-lg text-gray-700 leading-relaxed">
-              We're a collection of traditional pubs across South East England, each with its own character but united 
-              by our commitment to quality local produce, carefully kept ales, and genuine hospitality that makes every visit memorable.
-            </p>
+        <div class="max-w-6xl mx-auto">
+          <div class="text-center mb-12">
+            <p class="text-secondary uppercase tracking-widest text-sm font-semibold mb-4">Welcome to WH Pubs</p>
+            <h2 class="text-5xl font-bold text-primary mb-2">STEP INTO</h2>
+            <h3 class="text-3xl font-bold text-secondary mb-8">TIMELESS TRADITION</h3>
           </div>
-          <a href="#pubs" class="inline-block">
-            <Button size="lg" variant="default" className="bg-primary text-white hover:bg-primary/90 px-8 py-6 text-lg">
-              Book a Table
-            </Button>
-          </a>
+          
+          <div class="grid lg:grid-cols-2 gap-12 items-center mb-12">
+            {/* Text Content */}
+            <div class="space-y-4">
+              <p class="text-lg text-gray-700 leading-relaxed">
+                Step into warm, welcoming pubs where crackling fires meet contemporary comfort, 
+                sun-drenched gardens host perfect afternoons, and our kitchens serve honest British fare with a modern twist.
+              </p>
+              <p class="text-lg text-gray-700 leading-relaxed">
+                We're a collection of traditional pubs across South East England, each with its own character but united 
+                by our commitment to quality local produce, carefully kept ales, and genuine hospitality that makes every visit memorable.
+              </p>
+              <div class="pt-6">
+                <a href="/our-pubs" class="inline-block">
+                  <Button size="lg" variant="default" className="bg-primary text-white hover:bg-primary/90 px-8 py-6 text-lg">
+                    Book a Table
+                  </Button>
+                </a>
+              </div>
+            </div>
+            
+            {/* Images Grid */}
+            <div class="grid grid-cols-2 gap-4">
+              <div class="space-y-4">
+                <img 
+                  src="/images/pub-interior-cozy.jpg" 
+                  alt="Cozy pub interior with fireplace" 
+                  class="rounded-lg shadow-lg w-full h-48 object-cover"
+                  onerror="this.onerror=null; this.src='/images/pub-fallback.jpg';"
+                />
+                <img 
+                  src="/images/pub-garden-summer.jpg" 
+                  alt="Sun-drenched pub garden" 
+                  class="rounded-lg shadow-lg w-full h-64 object-cover"
+                  onerror="this.onerror=null; this.src='/images/pub-fallback.jpg';"
+                />
+              </div>
+              <div class="space-y-4 pt-8">
+                <img 
+                  src="/images/british-food-plate.jpg" 
+                  alt="Traditional British cuisine" 
+                  class="rounded-lg shadow-lg w-full h-64 object-cover"
+                  onerror="this.onerror=null; this.src='/images/food-fallback.jpg';"
+                />
+                <img 
+                  src="/images/local-ales-bar.jpg" 
+                  alt="Selection of local ales at the bar" 
+                  class="rounded-lg shadow-lg w-full h-48 object-cover"
+                  onerror="this.onerror=null; this.src='/images/pub-fallback.jpg';"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
