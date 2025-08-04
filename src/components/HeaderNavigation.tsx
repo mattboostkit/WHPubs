@@ -1,5 +1,4 @@
 import React from 'react';
-import MegaMenu from './MegaMenu';
 
 interface HeaderNavigationProps {
   pubs: any[];
@@ -9,12 +8,7 @@ interface HeaderNavigationProps {
 }
 
 export default function HeaderNavigation({ pubs, currentPath, isPubLayout, headerLinks }: HeaderNavigationProps) {
-  // For the main hub site, use the mega menu
-  if (!isPubLayout && pubs && pubs.length > 0) {
-    return <MegaMenu pubs={pubs} currentPath={currentPath} />;
-  }
-
-  // For individual pub sites, use the simple navigation
+  // Use the simple navigation for both hub and pub sites
   return (
     <div className="hidden md:flex items-center space-x-8" role="navigation">
       {headerLinks.filter(link => link.title !== "Make A Booking").map(link => {
