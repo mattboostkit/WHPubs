@@ -452,6 +452,13 @@ const pubStructuredData = {
         </Card>
       )}
 
+      {/* Come to us for Section */}
+      {pubFeatures && (
+        <div class="mb-12 -mx-4 sm:-mx-6 lg:-mx-8">
+          <PubFeatures features={pubFeatures} client:load />
+        </div>
+      )}
+
       <!-- Image Gallery -->
       {pub.gallery && pub.gallery.length > 0 && (
         <div class="mb-12">
