@@ -18,19 +18,26 @@ export default function MegaMenu({ pubs, currentPath }: MegaMenuProps) {
 
   const menuItems = [
     {
-      title: 'Our Venues',
-      key: 'venues',
-      href: '/#pubs',
+      title: 'Our Pubs',
+      key: 'pubs',
+      href: '/our-pubs',
       submenu: {
         sections: [
           {
-            title: 'Our Pubs',
+            title: 'Visit Our Pubs',
             items: pubs.map(pub => ({
               title: pub.name,
               href: `/${pub.slug.current}`,
               description: pub.locationName || pub.location || '',
               icon: <MapPin className="w-4 h-4" />
             }))
+          },
+          {
+            title: 'Quick Links',
+            items: [
+              { title: 'View All Pubs', href: '/our-pubs', icon: <MapPin className="w-4 h-4" />, description: 'See all our locations' },
+              { title: 'Book a Table', href: '/book-a-table', icon: <Calendar className="w-4 h-4" />, description: 'Make a reservation' }
+            ]
           }
         ]
       }
@@ -51,7 +58,7 @@ export default function MegaMenu({ pubs, currentPath }: MegaMenuProps) {
             ]
           },
           {
-            title: 'By Venue',
+            title: 'By Pub',
             items: pubs.slice(0, 3).map(pub => ({
               title: `Events at ${pub.name}`,
               href: `/events?pub=${pub.slug.current}`,
@@ -63,13 +70,13 @@ export default function MegaMenu({ pubs, currentPath }: MegaMenuProps) {
       }
     },
     {
-      title: 'Food & Drink',
-      key: 'food',
+      title: 'Menus',
+      key: 'menus',
       href: '/menu',
       submenu: {
         sections: [
           {
-            title: 'Menus',
+            title: 'Food & Drink',
             items: [
               { title: 'Sample Menu', href: '/menu', icon: <UtensilsCrossed className="w-4 h-4" />, description: 'View our offerings' },
               { title: 'Sunday Roasts', href: '/menu#sunday', icon: <UtensilsCrossed className="w-4 h-4" />, description: 'Traditional Sunday lunch' },
@@ -78,29 +85,11 @@ export default function MegaMenu({ pubs, currentPath }: MegaMenuProps) {
             ]
           },
           {
-            title: 'Dietary',
+            title: 'Dietary Options',
             items: [
-              { title: 'Vegetarian Options', href: '/menu#vegetarian', icon: <UtensilsCrossed className="w-4 h-4" />, description: 'Plant-based dishes' },
+              { title: 'Vegetarian', href: '/menu#vegetarian', icon: <UtensilsCrossed className="w-4 h-4" />, description: 'Plant-based dishes' },
               { title: 'Gluten Free', href: '/menu#gluten-free', icon: <UtensilsCrossed className="w-4 h-4" />, description: 'Gluten-free options' },
               { title: 'Kids Menu', href: '/menu#kids', icon: <UtensilsCrossed className="w-4 h-4" />, description: 'For our younger guests' }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      title: 'Private Dining',
-      key: 'private',
-      href: '/private-dining',
-      submenu: {
-        sections: [
-          {
-            title: 'Private Events',
-            items: [
-              { title: 'Private Dining', href: '/private-dining', icon: <Users className="w-4 h-4" />, description: 'Exclusive dining experiences' },
-              { title: 'Celebrations', href: '/private-dining#celebrations', icon: <Gift className="w-4 h-4" />, description: 'Birthdays & anniversaries' },
-              { title: 'Corporate Events', href: '/private-dining#corporate', icon: <Users className="w-4 h-4" />, description: 'Business meetings & events' },
-              { title: 'Weddings', href: '/private-dining#weddings', icon: <Gift className="w-4 h-4" />, description: 'Your special day' }
             ]
           }
         ]
