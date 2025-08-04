@@ -32,6 +32,15 @@ const currentPath = Astro.url.pathname;
 // Determine if we are rendering for a specific pub or the main hub
 const isPubLayout = !!activePub;
 
+// Fetch all pubs for the mega menu (only for main hub)
+let allPubs: any[] = [];
+if (!isPubLayout) {
+  try {
+    allPubs = await getPubs();
+  } catch (error) {
+    console.error('Failed to fetch pubs for mega menu:', error);
+  }
+}
 
 // --- Fetch Main Site Data ---
 // Fetch site settings for the main hub
