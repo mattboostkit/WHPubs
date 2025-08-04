@@ -86,6 +86,14 @@ const allPubs = pubs;
       </div>
     </section>
 
+    {/* Events Carousel Section */}
+    {upcomingEvents && upcomingEvents.length > 0 && (
+      <EventsCarousel 
+        events={upcomingEvents.slice(0, 9)} 
+        client:load 
+      />
+    )}
+
     {/* All Pubs Section */}
     <section id="pubs" class="py-20 bg-background">
       <div class="container mx-auto px-4">
