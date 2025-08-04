@@ -1,6 +1,6 @@
 ---
 import Layout from '@/layouts/Layout.astro';
-import { getPubs, getPubBySlug, getPosts, getMenusForPub, getEvents, getReviews, getOffers, getPubStories, getTeamMembers } from '@/lib/sanity';
+import { getPubs, getPubBySlug, getPosts, getMenusForPub, getEvents, getReviews, getOffers, getPubStories, getTeamMembers, getDetailedMenusForPub, getPubFeatures, getPrivacyPolicy } from '@/lib/sanity';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -12,6 +12,8 @@ import SanityPortableText from '@/components/SanityPortableText.jsx';
 import BlogCard from '@/components/BlogCard.astro';
 import ReviewsSection from '@/components/ReviewsSection.astro';
 import OffersSection from '@/components/OffersSection.astro';
+import PubMenu from '@/components/PubMenu';
+import PubFeatures from '@/components/PubFeatures';
 
 // 1. Generate routes for all pubs
 // This page will exist in each deployment, but getStaticPaths ensures
