@@ -35,18 +35,29 @@ const pageDescription = `Make a reservation at ${pubData.name}. Book your table 
       <div class="grid lg:grid-cols-3 gap-8">
         {/* Booking Widget Column - Takes up 2 columns on large screens */}
         <div class="lg:col-span-2">
-          {pubData.reservationsUrl ? (
-            <Card class="overflow-hidden shadow-lg">
-              <CardContent class="p-0">
-                <BookingWidget 
-                  reservationsUrl={pubData.reservationsUrl}
-                  pubName={pubData.name}
-                  height="800"
-                />
-              </CardContent>
-            </Card>
-          ) : (
-            <Card class="p-12 text-center">
+          {/* Enhanced Booking Form */}
+          <BookingForm pub={pubData} client:load />
+          
+          {/* Fallback to iframe if preferred */}
+          {pubData.reservationsUrl && (
+            <div class="mt-6">
+              <Card class="overflow-hidden shadow-lg">
+                <CardHeader class="bg-gray-50">
+                  <CardTitle class="text-lg">Or use our partner booking system</CardTitle>
+                </CardHeader>
+                <CardContent class="p-0">
+                  <BookingWidget 
+                    reservationsUrl={pubData.reservationsUrl}
+                    pubName={pubData.name}
+                    height="600"
+                  />
+                </CardContent>
+              </Card>
+            </div>
+          )}
+          
+          {!pubData.reservationsUrl && (
+            <Card class="p-12 text-center mt-6">
               <p class="text-lg text-primary/70 mb-4">
                 Online booking is not currently available for this location.
               </p>
