@@ -343,6 +343,22 @@ const allPubs = pubs;
     {/* Customer Reviews Section */}
     <ReviewsSection reviews={featuredReviews.slice(0, 6)} />
 
+    {/* Book a Table Section */}
+    <section class="py-16 bg-gradient-to-b from-white to-gray-50">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto text-center mb-12">
+          <p class="text-secondary uppercase tracking-widest text-sm font-semibold mb-4">Make a Reservation</p>
+          <h2 class="text-4xl font-bold text-primary mb-6">BOOK YOUR TABLE</h2>
+          <p class="text-lg text-gray-700">
+            Select your preferred pub, date and time to secure your table at one of our traditional British pubs.
+          </p>
+        </div>
+        <div class="max-w-md mx-auto">
+          <BookingForm pubs={allPubs} onMainPage={true} client:load />
+        </div>
+      </div>
+    </section>
+
     {/* Gift Cards Section */}
     <section class="py-16 bg-gradient-to-r from-secondary/10 to-secondary/5">
       <div class="container mx-auto px-4">
