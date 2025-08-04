@@ -57,6 +57,32 @@ const allPubs = pubs;
       <OffersSection offers={activeOffers.slice(0, 6)} />
     )}
 
+    {/* Welcome to WH Pubs Section */}
+    <section class="py-20 bg-gradient-to-b from-white to-gray-50">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto text-center">
+          <p class="text-secondary uppercase tracking-widest text-sm font-semibold mb-4">Welcome to WH Pubs</p>
+          <h2 class="text-5xl font-bold text-primary mb-2">STEP INTO</h2>
+          <h3 class="text-3xl font-bold text-secondary mb-8">TIMELESS TRADITION</h3>
+          <div class="space-y-4 mb-10">
+            <p class="text-lg text-gray-700 leading-relaxed">
+              Step into warm, welcoming pubs where crackling fires meet contemporary comfort, 
+              sun-drenched gardens host perfect afternoons, and our kitchens serve honest British fare with a modern twist.
+            </p>
+            <p class="text-lg text-gray-700 leading-relaxed">
+              We're a collection of traditional pubs across South East England, each with its own character but united 
+              by our commitment to quality local produce, carefully kept ales, and genuine hospitality that makes every visit memorable.
+            </p>
+          </div>
+          <a href="#pubs" class="inline-block">
+            <Button size="lg" variant="default" className="bg-primary text-white hover:bg-primary/90 px-8 py-6 text-lg">
+              Book a Table
+            </Button>
+          </a>
+        </div>
+      </div>
+    </section>
+
     {/* All Pubs Section */}
     <section id="pubs" class="py-20 bg-background">
       <div class="container mx-auto px-4">
