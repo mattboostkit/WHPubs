@@ -4,12 +4,13 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { MapPin, Clock, Phone, Music, ChefHat, Beer, ExternalLink, Star, Utensils, Dog, TreePine, Wheat } from 'lucide-react';
-import { getPubs, getHomepageData, getDevelopmentKitchen, getReviews, getOffers } from '../lib/sanity';
+import { getPubs, getHomepageData, getDevelopmentKitchen, getReviews, getOffers, getEvents } from '../lib/sanity';
 import { HeroCarousel } from '@/components/HeroCarousel';
 import { getPubUrl, isExternalUrl } from '@/lib/pub-urls';
 import ReviewsSection from '@/components/ReviewsSection.astro';
 import OffersSection from '@/components/OffersSection.astro';
 import PubCardHover from '@/components/PubCardHover';
+import EventsCarousel from '@/components/EventsCarousel';
 
 // This page always renders the main hub content.
 
@@ -30,6 +31,8 @@ const featuredReviews = await getReviews(null, true); // Get featured general re
 // Fetch active offers for the homepage
 const activeOffers = await getOffers(null, true); // Get active general offers
 
+// Fetch upcoming events for the homepage
+const upcomingEvents = await getEvents(); // Get all upcoming events
 
 // All pubs are equal - no featured pubs
 const allPubs = pubs;
