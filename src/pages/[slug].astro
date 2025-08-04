@@ -138,42 +138,119 @@ const pubStructuredData = {
       </section>
     )}
 
+    {/* Welcome Section */}
+    <section class="py-16 bg-gradient-to-b from-white to-gray-50">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto text-center">
+          <p class="text-secondary uppercase tracking-widest text-sm font-semibold mb-4">Welcome to</p>
+          <h1 class="text-5xl font-bold text-primary mb-8">{pub.name.toUpperCase()}</h1>
+          
+          {/* Custom welcome message based on pub */}
+          <div class="space-y-4 mb-10">
+            {pub.slug.current === 'the-cricketers-inn' && (
+              <>
+                <p class="text-lg text-gray-700 leading-relaxed">
+                  Step into a piece of Meopham history, where village life meets contemporary comfort. 
+                  Overlooking the historic village green, The Cricketers Inn has been the heart of local hospitality for generations.
+                </p>
+                <p class="text-lg text-gray-700 leading-relaxed">
+                  Our characterful pub welcomes you with roaring fires, traditional ales, and a menu that celebrates 
+                  the best of British cuisine. Whether you're here for a family lunch, a quiet pint, or a celebration 
+                  with friends, you'll find the perfect spot in our cozy bar or sun-trapped garden.
+                </p>
+              </>
+            )}
+            {pub.slug.current === 'the-rose-and-crown' && (
+              <>
+                <p class="text-lg text-gray-700 leading-relaxed">
+                  Step into the vibrant heart of Green Street Green, where traditional pub charm meets 
+                  modern dining excellence. The Rose and Crown pulses with energy from dawn till dusk, 
+                  offering an escape from the everyday.
+                </p>
+                <p class="text-lg text-gray-700 leading-relaxed">
+                  Our extensive outdoor dining areas create the perfect setting for any occasion, while inside, 
+                  the bustling atmosphere and warm welcome make every visit memorable. From morning coffee to 
+                  evening cocktails, we're here to serve splendid food and drink whenever you need us.
+                </p>
+              </>
+            )}
+            {pub.slug.current === 'the-little-brown-jug' && (
+              <>
+                <p class="text-lg text-gray-700 leading-relaxed">
+                  Step into a hidden gem nestled in the heart of the Kent countryside. The Little Brown Jug 
+                  enchants with its cozy corners, quirky character, and the kind of genuine warmth that turns 
+                  first-time visitors into lifelong friends.
+                </p>
+                <p class="text-lg text-gray-700 leading-relaxed">
+                  Our historic pub embraces its countryside setting, serving scrumptious locally-sourced food 
+                  alongside perfectly kept ales. Whether you're walking the North Downs Way or simply seeking 
+                  an authentic country pub experience, you'll find your perfect refuge here.
+                </p>
+              </>
+            )}
+            {pub.slug.current === 'the-chaser-inn' && (
+              <>
+                <p class="text-lg text-gray-700 leading-relaxed">
+                  Step into the vibrant heart of Shipbourne village, where muddy boots meet craft cocktails 
+                  and country character comes with a contemporary twist. The Chaser Inn bursts with life 
+                  through every season, from crackling winter fires to sun-drenched summer gardens.
+                </p>
+                <p class="text-lg text-gray-700 leading-relaxed">
+                  We're the kind of pub where dogs are as welcome as their owners, where local farmers 
+                  share stories over locally-brewed ales, and where our menu celebrates the bounty of Kent 
+                  with dishes that change with the seasons. Come as you are – we've saved you a seat by the fire.
+                </p>
+              </>
+            )}
+            {pub.slug.current === 'the-bull' && (
+              <>
+                <p class="text-lg text-gray-700 leading-relaxed">
+                  Step into the heart of Otford village life at The Bull, where traditional British hospitality 
+                  has been perfected over centuries. Our historic coaching inn combines timeless charm with 
+                  modern comforts, creating the perfect gathering place for every occasion.
+                </p>
+                <p class="text-lg text-gray-700 leading-relaxed">
+                  From our spacious beer garden that hosts summer celebrations to our cozy fireside corners 
+                  perfect for winter evenings, The Bull offers a warm welcome to locals and visitors alike. 
+                  Our kitchen serves excellent food throughout the day, while our bar showcases the finest 
+                  local ales alongside an impressive wine selection.
+                </p>
+              </>
+            )}
+          </div>
+          
+          {/* Location */}
+          {pub.location && (
+            <div class="flex items-center justify-center text-primary/70 mb-8">
+              <MapPin class="w-5 h-5 mr-2" />
+              <span class="text-lg">{pub.locationName || pub.location}</span>
+            </div>
+          )}
+          
+          {/* Book Table CTA */}
+          {pub.reservationsUrl && (
+            <a 
+              href="/book-a-table"
+              onclick={`window.analytics && window.analytics.trackReservation('${pub.name}', 'click_welcome')`}
+              class="inline-block"
+            >
+              <Button variant="default" size="lg" class="bg-primary text-white hover:bg-primary/90 px-8 py-6 text-lg">
+                Book A Table
+              </Button>
+            </a>
+          )}
+        </div>
+      </div>
+    </section>
+
     {/* Main Content Area */}
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16">
       <article class="max-w-4xl mx-auto">
 
-      <!-- Pub Name -->
-      <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-primary mb-4 text-center leading-tight">{pub.name}</h1>
-
-      <!-- Location -->
-      {pub.location && (
-        <div class="flex items-center justify-center text-primary/70 mb-6"> {/* Centered and added bottom margin */}
-          <MapPin class="w-5 h-5 mr-2" />
-          <span>{pub.location}</span>
-        </div>
-      )}
-
-      {/* Book Table CTA (Moved near top) */}
-      {pub.reservationsUrl && (
-        <div class="text-center mb-10"> {/* Centered and added bottom margin */}
-          <a 
-            href="/book-a-table"
-            onclick={`window.analytics && window.analytics.trackReservation('${pub.name}', 'click_main')`}
-          >
-            <Button variant="default" size="lg" class="bg-green-600 hover:bg-green-700 text-white font-semibold px-8 py-3"> {/* Larger padding */}
-              Book A Table
-            </Button>
-          </a>
-        </div>
-      )}
-
-      {/* Removed original CTA location */}
-
       <!-- Description -->
       {pub.description && (
         <div class="prose prose-lg max-w-none text-primary/90 mb-8">
-          <p>{pub.description}</p>
-          {/* If description were Portable Text, you'd render it here */}
+          <p class="text-xl leading-relaxed font-medium">{pub.description}</p>
         </div>
       )}
 
