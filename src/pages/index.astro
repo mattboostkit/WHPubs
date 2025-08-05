@@ -357,8 +357,8 @@ const allPubs = pubs;
             {/* Image */}
             <div class="relative rounded-lg overflow-hidden shadow-2xl">
               <img 
-                src="/images/pub-hire-event.jpg" 
-                alt="Private pub hire for events" 
+                src={homepageData?.pubHireImage?.asset?.url || "/images/pub-hire-event.jpg"} 
+                alt={homepageData?.pubHireImage?.alt || "Private pub hire for events"} 
                 class="w-full h-full object-cover"
                 onerror="this.onerror=null; this.src='/images/pub-interior-cozy.jpg';"
               />
