@@ -246,6 +246,10 @@ export async function getHomepageData() {
       heroButton1Link,
       heroButton2Text,
       heroButton2Link,
+      welcomeImage1 { asset->{ _id, url }, alt },
+      welcomeImage2 { asset->{ _id, url }, alt },
+      welcomeImage3 { asset->{ _id, url }, alt },
+      welcomeImage4 { asset->{ _id, url }, alt },
       pubHireImage { asset->{ _id, url }, alt }
     }
   `);
