@@ -61,33 +61,44 @@ export default function PubsCarousel({ pubs }: PubsCarouselProps) {
   }, [selectedIndex, isAnimating, pubs.length]);
 
   const getAmenityIcon = (amenity: string) => {
-    switch (amenity) {
-      case 'dogFriendly':
-        return <Dog className="w-4 h-4" />;
-      case 'garden':
-        return <TreePine className="w-4 h-4" />;
-      case 'localAles':
-        return <Beer className="w-4 h-4" />;
-      case 'food':
-        return <Utensils className="w-4 h-4" />;
-      default:
-        return null;
+    const lowerAmenity = amenity.toLowerCase();
+    if (lowerAmenity.includes('dog')) {
+      return <Dog className="w-4 h-4" />;
+    } else if (lowerAmenity.includes('garden')) {
+      return <TreePine className="w-4 h-4" />;
+    } else if (lowerAmenity.includes('ale')) {
+      return <Beer className="w-4 h-4" />;
+    } else if (lowerAmenity.includes('food') || lowerAmenity.includes('breakfast')) {
+      return <Utensils className="w-4 h-4" />;
     }
+    return null;
   };
 
   const getAmenityLabel = (amenity: string) => {
-    switch (amenity) {
-      case 'dogFriendly':
-        return 'Dog Friendly';
-      case 'garden':
-        return 'Garden';
-      case 'localAles':
-        return 'Local Ales';
-      case 'food':
-        return 'Food';
-      default:
-        return amenity;
+    const lowerAmenity = amenity.toLowerCase();
+    if (lowerAmenity.includes('dog')) {
+      return 'Dog Friendly';
+    } else if (lowerAmenity.includes('garden')) {
+      return 'Garden';
+    } else if (lowerAmenity.includes('ale')) {
+      return 'Local Ales';
+    } else if (lowerAmenity.includes('food') || lowerAmenity.includes('breakfast')) {
+      return 'Food';
     }
+    return amenity;
+  };
+  
+  // Filter out duplicate amenity types
+  const getUniqueAmenities = (amenities: string[]) => {
+    const seen = new Set<string>();
+    return amenities.filter(amenity => {
+      const label = getAmenityLabel(amenity);
+      if (seen.has(label)) {
+        return false;
+      }
+      seen.add(label);
+      return getAmenityIcon(amenity) !== null;
+    });
   };
 
   return (
