@@ -126,6 +126,40 @@ Configured for Netlify deployment with:
 - **Content Management Scripts**: Added scripts for populating Development Kitchen and privacy policy content
 - **Documentation**: Added comprehensive Development Kitchen content guide
 
+## Privacy Policy Implementation
+
+### Overview
+The privacy policy system provides comprehensive GDPR-compliant privacy policy management with both CMS integration and fallback content to ensure the site always has a privacy policy available.
+
+### Components
+- **Page**: `/src/pages/privacy-policy.astro` - Main privacy policy page with automatic fallback
+- **Component**: `/src/components/PrivacyPolicyContent.tsx` - React component for rendering PortableText content
+- **Schema**: `/wh-pubs/schemaTypes/privacyPolicy.ts` - Sanity schema for privacy policy management
+- **Fallback Data**: `/src/data/privacy-policy-dummy.ts` - Comprehensive fallback content
+- **Content Script**: `/scripts/privacy-policy-content.js` - Template content for CMS population
+
+### Features
+- **CMS Integration**: Full content management through Sanity Studio
+- **Pub-Specific Policies**: Support for both hub-wide and pub-specific privacy policies
+- **Automatic Fallback**: Displays comprehensive dummy content when no CMS content exists
+- **PortableText Rendering**: Rich text formatting with custom styling
+- **Date Handling**: Automatic formatting of last updated dates
+- **Active/Inactive Toggle**: Control policy visibility through CMS
+
+### Content Management
+- **Hub Policy**: Create privacy policy with no associated pub for site-wide use
+- **Pub-Specific Policy**: Associate policy with specific pub for customized content
+- **Active Status**: Toggle policies active/inactive without deletion
+- **Version Control**: Update lastUpdated field to track policy revisions
+
+### Fallback Behavior
+When no privacy policy exists in Sanity CMS:
+1. System automatically loads `dummyPrivacyPolicy` from `/src/data/privacy-policy-dummy.ts`
+2. Displays comprehensive UK GDPR-compliant privacy policy
+3. Shows placeholder last updated date
+4. Maintains full functionality and styling
+5. No errors or missing content scenarios
+
 ## Sanity Image Specifications (EXACT SIZES REQUIRED)
 
 ### 1. PAGE HERO IMAGES (About, Events, Blog, Contact, Careers)
