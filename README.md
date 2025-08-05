@@ -20,6 +20,7 @@ A website for WH Pubs, featuring traditional British pubs in South East England 
 - Event images with expandable view (600x300 thumbnails, 2400x1200 full size)
 - Private pub hire section with CMS-managed imagery
 - Comprehensive design system for consistent UI/UX across all sections
+- CMS-managed images for Welcome section (4 customizable images)
 
 ## Tech Stack
 
