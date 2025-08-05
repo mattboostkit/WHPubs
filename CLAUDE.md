@@ -50,6 +50,7 @@ npm run create-sample-posts  # Create sample blog posts
 - **career**: Job listings and career opportunities
 - **teamMember**: Team member profiles
 - **pubStory**: Individual pub stories and history
+- **privacyPolicy**: Privacy policy content with pub-specific or hub-wide scope
 - **site**: Legacy multi-site support structure
 
 ### Content Filtering Pattern
@@ -68,6 +69,7 @@ The Sanity client is configured in `src/lib/sanity.js` with helper functions for
 - `getEvents(targetPubSlug)` - Fetches events filtered by pub
 - `getPubBySlug(slug)` - Fetches single pub with all layout fields
 - `getDevelopmentKitchen()` - Fetches Development Kitchen content sections
+- `getPrivacyPolicy(pubSlug)` - Fetches privacy policy (hub or pub-specific)
 
 ## UI Components
 The project uses shadcn/ui components with a customized black (#1A1A1A) and gold (#B79C64) color scheme. All components are in `src/components/ui/` and use Tailwind CSS with the following custom theme variables:
@@ -120,7 +122,8 @@ Configured for Netlify deployment with:
 - **Development Kitchen CMS Integration**: Content for Development Kitchen page is now fully managed through Sanity CMS
 - **Events Filtering**: Added interactive filtering for events by pub location
 - **Enhanced Components**: New EventsFilter component for better user experience
-- **Content Management Scripts**: Added scripts for populating Development Kitchen content
+- **Privacy Policy System**: Complete privacy policy management with CMS integration and fallback content
+- **Content Management Scripts**: Added scripts for populating Development Kitchen and privacy policy content
 - **Documentation**: Added comprehensive Development Kitchen content guide
 
 ## Sanity Image Specifications (EXACT SIZES REQUIRED)
