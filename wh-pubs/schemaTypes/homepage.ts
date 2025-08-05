@@ -94,6 +94,22 @@ export default defineType({
         description: 'Internal link for button 2 (e.g., "/book")',
         initialValue: '/book',
     }),
+    defineField({
+      name: 'pubHireImage',
+      title: 'Pub Hire Section Image',
+      type: 'image',
+      description: 'Image for the "Hire Your Own WH Pub" section. Recommended size: 800x600px',
+      options: {hotspot: true},
+      fields: [
+        defineField({ 
+          name: 'alt', 
+          type: 'string', 
+          title: 'Alternative Text',
+          description: 'Describe the image for screen readers',
+          validation: Rule => Rule.required().error('Alt text is required for accessibility') 
+        })
+      ],
+    }),
   ],
   preview: {
     select: {
