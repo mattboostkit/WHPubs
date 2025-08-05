@@ -149,7 +149,7 @@ export default function PubsCarousel({ pubs }: PubsCarouselProps) {
                   {/* Amenities */}
                   {selectedPub.amenities && selectedPub.amenities.length > 0 && (
                     <div className="flex flex-wrap gap-2 mb-6">
-                      {selectedPub.amenities.map((amenity) => (
+                      {getUniqueAmenities(selectedPub.amenities).map((amenity) => (
                         <Badge 
                           key={amenity}
                           variant="secondary" 
