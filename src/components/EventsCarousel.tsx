@@ -157,7 +157,7 @@ export default function EventsCarousel({ events, title = "DISCOVER WHAT'S ON", s
                     {event.image?.asset?.url && (
                       <div className="h-48 overflow-hidden relative">
                         <img
-                          src={event.image.asset.url + '?w=400&h=200&fit=crop'}
+                          src={event.image.asset.url + '?w=600&h=275&fit=crop'}
                           alt={event.image.alt || event.title}
                           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                           loading="lazy"
