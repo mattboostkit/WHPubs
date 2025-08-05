@@ -90,7 +90,7 @@ export default function EventsCarousel({ events, title = "Discover What's On", s
         {/* Section Header */}
         <div className="text-center mb-12">
           <p className="text-secondary uppercase tracking-widest text-sm font-semibold mb-4">{subtitle}</p>
-          <h2 className="text-5xl font-bold text-primary mb-8">{title}</h2>
+          <h2 className="text-4xl font-bold text-primary mb-6">{title}</h2>
         </div>
 
         {/* All Events Button */}
