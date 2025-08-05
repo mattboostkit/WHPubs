@@ -170,30 +170,30 @@ const allPubs = pubs;
                   
                   {/* Amenity badges */}
                   <div class="flex flex-wrap gap-2 mb-4">
-                    {pub.amenities?.includes('dogFriendly') && (
+                    {(pub.amenities?.some(a => a.toLowerCase().includes('dog')) && (
                       <Badge variant="secondary" className="text-xs flex items-center gap-1 bg-secondary/20 text-primary border border-secondary/40">
                         <Dog className="w-3 h-3" />
                         Dog Friendly
                       </Badge>
-                    )}
-                    {pub.amenities?.includes('garden') && (
+                    ))}
+                    {(pub.amenities?.some(a => a.toLowerCase().includes('garden')) && (
                       <Badge variant="secondary" className="text-xs flex items-center gap-1 bg-secondary/20 text-primary border border-secondary/40">
                         <TreePine className="w-3 h-3" />
                         Garden
                       </Badge>
-                    )}
-                    {pub.amenities?.includes('localAles') && (
+                    ))}
+                    {(pub.amenities?.some(a => a.toLowerCase().includes('ale')) && (
                       <Badge variant="secondary" className="text-xs flex items-center gap-1 bg-secondary/20 text-primary border border-secondary/40">
                         <Beer className="w-3 h-3" />
                         Local Ales
                       </Badge>
-                    )}
-                    {pub.amenities?.includes('food') && (
+                    ))}
+                    {(pub.amenities?.some(a => a.toLowerCase().includes('food') || a.toLowerCase().includes('breakfast')) && (
                       <Badge variant="secondary" className="text-xs flex items-center gap-1 bg-secondary/20 text-primary border border-secondary/40">
                         <Utensils className="w-3 h-3" />
                         Food
                       </Badge>
-                    )}
+                    ))}
                   </div>
                   
                   {(() => {
@@ -241,30 +241,30 @@ const allPubs = pubs;
                         
                         {/* Amenity badges */}
                         <div class="flex flex-wrap gap-2 mb-4">
-                          {pub.amenities?.includes('dogFriendly') && (
+                          {(pub.amenities?.some(a => a.toLowerCase().includes('dog')) && (
                             <Badge variant="secondary" className="text-xs flex items-center gap-1 bg-secondary/20 text-primary border border-secondary/40">
                               <Dog className="w-3 h-3" />
                               Dog Friendly
                             </Badge>
-                          )}
-                          {pub.amenities?.includes('garden') && (
+                          ))}
+                          {(pub.amenities?.some(a => a.toLowerCase().includes('garden')) && (
                             <Badge variant="secondary" className="text-xs flex items-center gap-1 bg-secondary/20 text-primary border border-secondary/40">
                               <TreePine className="w-3 h-3" />
                               Garden
                             </Badge>
-                          )}
-                          {pub.amenities?.includes('localAles') && (
+                          ))}
+                          {(pub.amenities?.some(a => a.toLowerCase().includes('ale')) && (
                             <Badge variant="secondary" className="text-xs flex items-center gap-1 bg-secondary/20 text-primary border border-secondary/40">
                               <Beer className="w-3 h-3" />
                               Local Ales
                             </Badge>
-                          )}
-                          {pub.amenities?.includes('food') && (
+                          ))}
+                          {(pub.amenities?.some(a => a.toLowerCase().includes('food') || a.toLowerCase().includes('breakfast')) && (
                             <Badge variant="secondary" className="text-xs flex items-center gap-1 bg-secondary/20 text-primary border border-secondary/40">
                               <Utensils className="w-3 h-3" />
                               Food
                             </Badge>
-                          )}
+                          ))}
                         </div>
                         
                         {
@@ -406,7 +406,8 @@ const allPubs = pubs;
         <div class="max-w-4xl mx-auto text-center">
           <div class="bg-secondary/10 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6">
             <svg class="w-12 h-12 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 11h6m-3-3v6"></path>
             </svg>
           </div>
           <h2 class="text-3xl font-bold mb-4">Give the Gift of Great Times</h2>
