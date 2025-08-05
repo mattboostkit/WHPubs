@@ -155,11 +155,11 @@ export default function EventsCarousel({ events, title = "Discover What's On", s
                   <Card className="h-full overflow-hidden hover:shadow-xl transition-all duration-300 group cursor-pointer">
                     {/* Event Image */}
                     {event.image?.asset?.url && (
-                      <div className="h-64 overflow-hidden relative">
+                      <div className="h-56 overflow-hidden relative">
                         <img
-                          src={event.image.asset.url + '?w=600&h=400&fit=crop'}
+                          src={event.image.asset.url + '?w=800&h=450&fit=crop'}
                           alt={event.image.alt || event.title}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                           loading="lazy"
                           onError={(e) => {
                             const target = e.target as HTMLImageElement;
