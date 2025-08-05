@@ -95,28 +95,28 @@ const allPubs = pubs;
             <div class="grid grid-cols-2 gap-4">
               <div class="space-y-4">
                 <img 
-                  src="/images/pub-interior-cozy.jpg" 
-                  alt="Cozy pub interior with fireplace" 
+                  src={homepageData?.welcomeImage1?.asset?.url || "/images/pub-interior-cozy.jpg"} 
+                  alt={homepageData?.welcomeImage1?.alt || "Cozy pub interior with fireplace"} 
                   class="rounded-lg shadow-lg w-full h-48 object-cover"
                   onerror="this.onerror=null; this.src='/images/pub-fallback.jpg';"
                 />
                 <img 
-                  src="/images/pub-garden-summer.jpg" 
-                  alt="Sun-drenched pub garden" 
+                  src={homepageData?.welcomeImage2?.asset?.url || "/images/pub-garden-summer.jpg"} 
+                  alt={homepageData?.welcomeImage2?.alt || "Sun-drenched pub garden"} 
                   class="rounded-lg shadow-lg w-full h-64 object-cover"
                   onerror="this.onerror=null; this.src='/images/pub-fallback.jpg';"
                 />
               </div>
               <div class="space-y-4 pt-8">
                 <img 
-                  src="/images/british-food-plate.jpg" 
-                  alt="Traditional British cuisine" 
+                  src={homepageData?.welcomeImage3?.asset?.url || "/images/british-food-plate.jpg"} 
+                  alt={homepageData?.welcomeImage3?.alt || "Traditional British cuisine"} 
                   class="rounded-lg shadow-lg w-full h-64 object-cover"
                   onerror="this.onerror=null; this.src='/images/food-fallback.jpg';"
                 />
                 <img 
-                  src="/images/local-ales-bar.jpg" 
-                  alt="Selection of local ales at the bar" 
+                  src={homepageData?.welcomeImage4?.asset?.url || "/images/local-ales-bar.jpg"} 
+                  alt={homepageData?.welcomeImage4?.alt || "Selection of local ales at the bar"} 
                   class="rounded-lg shadow-lg w-full h-48 object-cover"
                   onerror="this.onerror=null; this.src='/images/pub-fallback.jpg';"
                 />
