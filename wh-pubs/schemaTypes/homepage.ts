@@ -95,6 +95,70 @@ export default defineType({
         initialValue: '/book',
     }),
     defineField({
+      name: 'welcomeImage1',
+      title: 'Welcome Section Image 1 (Top Left)',
+      type: 'image',
+      description: 'First image in the Welcome to WH Pubs grid. Recommended size: 400x300px',
+      options: {hotspot: true},
+      fields: [
+        defineField({ 
+          name: 'alt', 
+          type: 'string', 
+          title: 'Alternative Text',
+          description: 'Describe the image for screen readers',
+          validation: Rule => Rule.required().error('Alt text is required for accessibility') 
+        })
+      ],
+    }),
+    defineField({
+      name: 'welcomeImage2',
+      title: 'Welcome Section Image 2 (Bottom Left)',
+      type: 'image',
+      description: 'Second image in the Welcome to WH Pubs grid. Recommended size: 400x400px',
+      options: {hotspot: true},
+      fields: [
+        defineField({ 
+          name: 'alt', 
+          type: 'string', 
+          title: 'Alternative Text',
+          description: 'Describe the image for screen readers',
+          validation: Rule => Rule.required().error('Alt text is required for accessibility') 
+        })
+      ],
+    }),
+    defineField({
+      name: 'welcomeImage3',
+      title: 'Welcome Section Image 3 (Top Right)',
+      type: 'image',
+      description: 'Third image in the Welcome to WH Pubs grid. Recommended size: 400x400px',
+      options: {hotspot: true},
+      fields: [
+        defineField({ 
+          name: 'alt', 
+          type: 'string', 
+          title: 'Alternative Text',
+          description: 'Describe the image for screen readers',
+          validation: Rule => Rule.required().error('Alt text is required for accessibility') 
+        })
+      ],
+    }),
+    defineField({
+      name: 'welcomeImage4',
+      title: 'Welcome Section Image 4 (Bottom Right)',
+      type: 'image',
+      description: 'Fourth image in the Welcome to WH Pubs grid. Recommended size: 400x300px',
+      options: {hotspot: true},
+      fields: [
+        defineField({ 
+          name: 'alt', 
+          type: 'string', 
+          title: 'Alternative Text',
+          description: 'Describe the image for screen readers',
+          validation: Rule => Rule.required().error('Alt text is required for accessibility') 
+        })
+      ],
+    }),
+    defineField({
       name: 'pubHireImage',
       title: 'Pub Hire Section Image',
       type: 'image',
