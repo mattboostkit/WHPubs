@@ -143,6 +143,7 @@ Additional documentation can be found in the `docs` directory:
 - [Responsive Design Recommendations](docs/responsive-design-recommendations.md)
 - [Implementation Summary](docs/implementation-summary.md)
 - [Development Kitchen Content Guide](docs/development-kitchen-content-guide.md) - Guide for managing Development Kitchen content through Sanity CMS
+- [Design System](docs/design-system.md) - Comprehensive design system documentation for consistent UI/UX
 
 ## Multi-Site Architecture
 
