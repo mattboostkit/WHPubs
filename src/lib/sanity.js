@@ -245,7 +245,8 @@ export async function getHomepageData() {
       heroButton1Text,
       heroButton1Link,
       heroButton2Text,
-      heroButton2Link
+      heroButton2Link,
+      pubHireImage { asset->{ _id, url }, alt }
     }
   `);
 }
