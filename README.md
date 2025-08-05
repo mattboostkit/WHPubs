@@ -16,6 +16,7 @@ A website for WH Pubs, featuring traditional British pubs in South East England 
 - Interactive pub finder with filtering capabilities
 - Development Kitchen page with CMS-managed content
 - Events filtering by pub location
+- Privacy Policy page with CMS integration and fallback content
 
 ## Tech Stack
 
@@ -79,7 +80,7 @@ Set the following environment variables in Netlify:
 The content management system is accessible at: [https://whpubs.sanity.studio](https://whpubs.sanity.studio)
 
 - Login with your Sanity account credentials
-- Manage pubs, blog posts, events, menus, and more
+- Manage pubs, blog posts, events, menus, privacy policies, and more
 - Real-time preview of content changes
 - Collaborative editing capabilities
 
