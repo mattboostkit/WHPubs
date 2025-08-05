@@ -179,8 +179,9 @@ When no privacy policy exists in Sanity CMS:
 - **LOCATION:** Development Kitchen > Chef Profile > Image
 
 ### 5. EVENT IMAGES
-- **SIZE:** 1200 x 800 pixels
+- **SIZE:** 2400 x 1200 pixels (displays as 800x450 in carousel)
 - **LOCATION:** Events > [Event Name] > Event Image
+- **NOTE:** Images are displayed at 16:9 aspect ratio in the carousel
 
 ### 6. BLOG POST IMAGES  
 - **SIZE:** 1200 x 630 pixels
