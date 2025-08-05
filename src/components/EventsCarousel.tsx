@@ -31,7 +31,7 @@ interface EventsCarouselProps {
   subtitle?: string;
 }
 
-export default function EventsCarousel({ events, title = "DISCOVER WHAT'S ON", subtitle = "Be our guest" }: EventsCarouselProps) {
+export default function EventsCarousel({ events, title = "Discover What's On", subtitle = "Be our guest" }: EventsCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
   const [visibleCards, setVisibleCards] = useState(3);
