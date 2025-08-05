@@ -17,6 +17,7 @@ A website for WH Pubs, featuring traditional British pubs in South East England 
 - Development Kitchen page with CMS-managed content
 - Events filtering by pub location
 - Privacy Policy page with CMS integration and fallback content
+- Event images with expandable view (600x300 thumbnails, 2400x1200 full size)
 
 ## Tech Stack
 
