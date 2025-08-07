@@ -14,4 +14,6 @@ Disallow: /staging/
 Disallow: /test/
 
 # Sitemap location
-Sitemap: https://www.whpubs.com/sitemap.xml
+# For hub builds this will be https://www.whpubs.com/sitemap.xml
+# For pub builds (TARGET_PUB_SLUG set), Netlify/custom domain should host /sitemap.xml at its root
+Sitemap: /sitemap.xml

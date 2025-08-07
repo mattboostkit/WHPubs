@@ -13,7 +13,7 @@ export interface Props {
 const {
   title,
   description,
-  image = '/images/wh-pubs-og.jpg',
+  image = '/og-image.jpg',
   canonical,
   type = 'website',
   publishDate,
@@ -21,7 +21,7 @@ const {
   structuredData
 } = Astro.props;
 
-const siteUrl = Astro.site || 'https://whpubs.com';
+const siteUrl = Astro.site || 'https://www.whpubs.com';
 const canonicalURL = canonical || new URL(Astro.url.pathname, siteUrl).href;
 const ogImage = new URL(image, siteUrl).href;
 
@@ -31,7 +31,7 @@ const organizationSchema = {
   "@type": "Organization",
   "name": "WH Pubs",
   "url": siteUrl,
-  "logo": `${siteUrl}/images/wh-pubs-logo.png`,
+  "logo": `${siteUrl}/images/pub-logos/wh-pubs-logo.png`,
   "description": "Traditional British pubs offering quality food, drink, and hospitality in South East England",
   "address": {
     "@type": "PostalAddress",
