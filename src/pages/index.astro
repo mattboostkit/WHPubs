@@ -36,8 +36,10 @@ const activeOffers = await getOffers(null, true); // Get active general offers
 // Fetch upcoming events for the homepage
 const upcomingEvents = await getEvents(); // Get all upcoming events
 
-// All pubs are equal - no featured pubs
-const allPubs = pubs;
+// Ensure the five pubs are ordered as requested using Sanity data
+const desiredSlugs = ['the-cricketers-inn','the-little-brown-jug','the-bull','the-chaser-inn','the-rose-and-crown'];
+const pubsBySlug = new Map(pubs.map(p => [p.slug?.current || p.slug, p]));
+const allPubs = desiredSlugs.map(slug => pubsBySlug.get(slug)).filter(Boolean);
 
 
 ---
@@ -147,10 +149,10 @@ const allPubs = pubs;
           {allPubs.length > 0 ? (
             <>
               {/* First row - 3 pubs */}
-              <div class="grid md:grid-cols-3 gap-6 sm:gap-8">
+              <div class="grid md:grid-cols-3 gap-6 sm:gap-8 items-stretch">
                 {allPubs.slice(0, 3).map(pub => (
                   <PubCardHover pub={pub} client:load>
-                    <Card key={pub.slug.current} className="border-0 shadow-none mb-6 md:mb-0">
+                    <Card key={pub.slug.current} className="border-0 shadow-none mb-6 md:mb-0 h-full flex flex-col">
                 <CardHeader>
                   <CardTitle className="text-lg">{pub.name}</CardTitle>
                   <div class="flex items-center text-sm text-muted-foreground">
@@ -158,7 +160,7 @@ const allPubs = pubs;
                     <span>{pub.locationName || pub.location}</span>
                   </div>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="flex flex-col h-full">
                    <CardDescription className="text-sm mb-4 line-clamp-2">{pub.description}</CardDescription>
                   
                   {/* Amenity badges */}
@@ -193,7 +195,7 @@ const allPubs = pubs;
                     const pubUrl = getPubUrl(pub);
                     const isExt = isExternalUrl(pubUrl);
                     return (
-                      <div class="grid grid-cols-2 gap-2 items-stretch">
+                      <div class="grid grid-cols-2 gap-2 items-stretch mt-auto">
                         <a href={pubUrl} target={isExt ? "_blank" : undefined} rel={isExt ? "noopener noreferrer" : undefined} class="block">
                           <Button variant={isExt ? "default" : "outline"} size="sm" className={isExt ? "w-full h-10 bg-primary text-white hover:bg-primary/90" : "w-full h-10"}>
                             {isExt ? 'Visit Pub Site' : 'View Details'}
@@ -216,10 +218,10 @@ const allPubs = pubs;
               
               {/* Second row - 2 pubs centered */}
               {allPubs.length > 3 && (
-                <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto items-stretch">
                   {allPubs.slice(3, 5).map(pub => (
                     <PubCardHover pub={pub} client:load>
-                      <Card key={pub.slug.current} className="border-0 shadow-none">
+                      <Card key={pub.slug.current} className="border-0 shadow-none h-full flex flex-col">
                       <CardHeader>
                         <CardTitle className="text-lg">{pub.name}</CardTitle>
                         <div class="flex items-center text-sm text-muted-foreground">
@@ -227,7 +229,7 @@ const allPubs = pubs;
                           <span>{pub.locationName || pub.location}</span>
                         </div>
                       </CardHeader>
-                      <CardContent>
+                      <CardContent className="flex flex-col h-full">
                         <CardDescription className="text-sm mb-4 line-clamp-2">{pub.description}</CardDescription>
                         
                         {/* Amenity badges */}
@@ -262,7 +264,7 @@ const allPubs = pubs;
                           const pubUrl = getPubUrl(pub);
                           const isExt = isExternalUrl(pubUrl);
                           return (
-                            <div class="grid grid-cols-2 gap-2 items-stretch">
+                            <div class="grid grid-cols-2 gap-2 items-stretch mt-auto">
                               <a href={pubUrl} target={isExt ? "_blank" : undefined} rel={isExt ? "noopener noreferrer" : undefined} class="block">
                                 <Button variant={isExt ? "default" : "outline"} size="sm" className={isExt ? "w-full h-10 bg-primary text-white hover:bg-primary/90" : "w-full h-10"}>
                                   {isExt ? 'Visit Pub Site' : 'View Details'}
