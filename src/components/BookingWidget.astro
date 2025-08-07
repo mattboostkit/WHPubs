@@ -81,3 +81,45 @@ if (bookingSystem === 'opentable' && needsSpecialHandling) {
     overflow: hidden;
   }
 </style>
+
+<script>
+  // Prevent iframe from auto-scrolling
+  document.addEventListener('DOMContentLoaded', () => {
+    const iframes = document.querySelectorAll('.booking-iframe');
+    
+    iframes.forEach(iframe => {
+      // Store initial scroll position
+      const initialScrollY = window.scrollY || 0;
+      
+      // Prevent focus on load
+      iframe.addEventListener('load', () => {
+        // Restore scroll position
+        window.scrollTo(0, initialScrollY);
+        // Ensure we're at top if it's initial page load
+        if (initialScrollY === 0) {
+          setTimeout(() => {
+            window.scrollTo(0, 0);
+          }, 100);
+        }
+      });
+      
+      // Prevent focus events
+      iframe.addEventListener('focus', (e) => {
+        e.preventDefault();
+        window.scrollTo(0, initialScrollY);
+      });
+    });
+    
+    // Override scroll restoration
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    
+    // Force scroll to top on initial load
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+      }, 0);
+    });
+  });
+</script>
