@@ -250,7 +250,24 @@ export async function getHomepageData() {
       welcomeImage2 { asset->{ _id, url }, alt },
       welcomeImage3 { asset->{ _id, url }, alt },
       welcomeImage4 { asset->{ _id, url }, alt },
-      pubHireImage { asset->{ _id, url }, alt }
+      pubHireImage { asset->{ _id, url }, alt },
+      specialFeatures {
+        seasonalMenus {
+          title,
+          description,
+          image { asset->{ _id, url }, alt }
+        },
+        localAles {
+          title,
+          description,
+          image { asset->{ _id, url }, alt }
+        },
+        specialEvents {
+          title,
+          description,
+          image { asset->{ _id, url }, alt }
+        }
+      }
     }
   `);
 }
