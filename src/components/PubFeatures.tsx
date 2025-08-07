@@ -23,7 +23,7 @@ interface PubFeaturesProps {
 export default function PubFeatures({ features }: PubFeaturesProps) {
   if (!features || !features.features || features.features.length === 0) return null;
 
-  const title = features.title || 'Come to us for';
+  const title = features.title || 'Discover What\'s On Tap';
 
   return (
     <section className="py-16 bg-gray-50">
