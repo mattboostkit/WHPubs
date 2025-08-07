@@ -44,18 +44,18 @@ export default function PubCardHover({ pub, children }: PubCardHoverProps) {
 
   return (
     <div 
-      className="overflow-hidden hover:shadow-lg transition-shadow focus-within:shadow-lg"
+      className="overflow-hidden hover:shadow-lg transition-shadow focus-within:shadow-lg rounded-lg"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onFocus={() => setIsHovered(true)}
       onBlur={() => setIsHovered(false)}
     >
-      <div className="relative h-64 overflow-hidden group">
+      <div className="relative h-64 overflow-hidden group rounded-lg">
         {/* Exterior Image (default) */}
         <img
           src={exteriorImage}
           alt={exteriorAlt}
-          className={`w-full h-full object-cover transition-opacity duration-300 ${
+          className={`w-full h-full object-cover transition-opacity duration-300 rounded-lg ${
             isHovered ? 'opacity-0' : 'opacity-100'
           }`}
           loading="lazy"
@@ -71,7 +71,7 @@ export default function PubCardHover({ pub, children }: PubCardHoverProps) {
         <img
           src={interiorImage}
           alt={interiorAlt}
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 rounded-lg ${
             isHovered ? 'opacity-100' : 'opacity-0'
           }`}
           loading="lazy"
