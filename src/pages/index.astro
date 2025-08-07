@@ -415,34 +415,93 @@ const allPubs = pubs;
       </div>
     </section>
 
-    {/* Features Section */}
-    <section class="py-20 bg-gray-50">
-      <div class="container mx-auto px-4">
-        <div class="text-center mb-12">
-          <p class="text-secondary uppercase tracking-widest text-sm font-semibold mb-4">Why Choose Us</p>
-          <h2 class="text-4xl font-bold text-primary mb-6">What Makes Us Special</h2>
+    {/* What Makes Us Special Section - Full Width */}
+    <section class="bg-white">
+      <div class="text-center py-16">
+        <p class="text-secondary uppercase tracking-widest text-sm font-semibold mb-4">Why Choose Us</p>
+        <h2 class="text-4xl font-bold text-primary mb-2">What Makes Us Special</h2>
+      </div>
+      
+      {/* Full-width feature blocks */}
+      <div class="w-full">
+        {/* Seasonal Menus */}
+        <div class="relative h-96 flex items-center justify-center overflow-hidden">
+          {homepageData?.specialFeatures?.seasonalMenus?.image ? (
+            <div class="absolute inset-0">
+              <img 
+                src={homepageData.specialFeatures.seasonalMenus.image.asset.url} 
+                alt={homepageData.specialFeatures.seasonalMenus.image.alt}
+                class="w-full h-full object-cover"
+              />
+              <div class="absolute inset-0 bg-black/50"></div>
+            </div>
+          ) : (
+            <div class="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary/80"></div>
+          )}
+          <div class="relative z-10 text-center text-white px-4 max-w-2xl">
+            <div class="bg-white/10 backdrop-blur-sm w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+              <ChefHat class="w-10 h-10" />
+            </div>
+            <h3 class="text-3xl font-bold mb-4">
+              {homepageData?.specialFeatures?.seasonalMenus?.title || 'Seasonal Menus'}
+            </h3>
+            <p class="text-lg text-white/90">
+              {homepageData?.specialFeatures?.seasonalMenus?.description || 'Fresh, locally-sourced ingredients prepared by our skilled chefs.'}
+            </p>
+          </div>
         </div>
-        <div class="grid md:grid-cols-3 gap-8">
-          <div class="text-center">
-            <div class="bg-primary/10 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-4">
-              <ChefHat class="w-12 h-12 text-primary" />
+
+        {/* Local Ales */}
+        <div class="relative h-96 flex items-center justify-center overflow-hidden">
+          {homepageData?.specialFeatures?.localAles?.image ? (
+            <div class="absolute inset-0">
+              <img 
+                src={homepageData.specialFeatures.localAles.image.asset.url} 
+                alt={homepageData.specialFeatures.localAles.image.alt}
+                class="w-full h-full object-cover"
+              />
+              <div class="absolute inset-0 bg-black/50"></div>
             </div>
-            <h3 class="text-xl font-bold mb-2 text-primary">Seasonal Menus</h3>
-            <p class="text-muted-foreground">Fresh, locally-sourced ingredients prepared by our skilled chefs.</p>
+          ) : (
+            <div class="absolute inset-0 bg-gradient-to-l from-secondary/90 to-secondary/80"></div>
+          )}
+          <div class="relative z-10 text-center text-white px-4 max-w-2xl">
+            <div class="bg-white/10 backdrop-blur-sm w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+              <Beer class="w-10 h-10" />
+            </div>
+            <h3 class="text-3xl font-bold mb-4">
+              {homepageData?.specialFeatures?.localAles?.title || 'Local Ales'}
+            </h3>
+            <p class="text-lg text-white/90">
+              {homepageData?.specialFeatures?.localAles?.description || 'Carefully selected craft beers and traditional cask ales.'}
+            </p>
           </div>
-          <div class="text-center">
-            <div class="bg-primary/10 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Beer class="w-12 h-12 text-primary" />
+        </div>
+
+        {/* Special Events */}
+        <div class="relative h-96 flex items-center justify-center overflow-hidden">
+          {homepageData?.specialFeatures?.specialEvents?.image ? (
+            <div class="absolute inset-0">
+              <img 
+                src={homepageData.specialFeatures.specialEvents.image.asset.url} 
+                alt={homepageData.specialFeatures.specialEvents.image.alt}
+                class="w-full h-full object-cover"
+              />
+              <div class="absolute inset-0 bg-black/50"></div>
             </div>
-            <h3 class="text-xl font-bold mb-2 text-primary">Local Ales</h3>
-            <p class="text-muted-foreground">Carefully selected craft beers and traditional cask ales.</p>
-          </div>
-          <div class="text-center">
-            <div class="bg-primary/10 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Music class="w-12 h-12 text-primary" />
+          ) : (
+            <div class="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary/80"></div>
+          )}
+          <div class="relative z-10 text-center text-white px-4 max-w-2xl">
+            <div class="bg-white/10 backdrop-blur-sm w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+              <Music class="w-10 h-10" />
             </div>
-            <h3 class="text-xl font-bold mb-2 text-primary">Special Events</h3>
-            <p class="text-muted-foreground">Regular events, live music, and themed dining experiences.</p>
+            <h3 class="text-3xl font-bold mb-4">
+              {homepageData?.specialFeatures?.specialEvents?.title || 'Special Events'}
+            </h3>
+            <p class="text-lg text-white/90">
+              {homepageData?.specialFeatures?.specialEvents?.description || 'Regular events, live music, and themed dining experiences.'}
+            </p>
           </div>
         </div>
       </div>
