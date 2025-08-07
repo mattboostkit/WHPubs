@@ -11,45 +11,64 @@ export default function LiveResBookingWidget({
 }: LiveResBookingWidgetProps) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const scrollBlockedRef = useRef(true);
 
   useEffect(() => {
-    // Store the current scroll position
-    const currentScrollY = window.scrollY;
+    // Force page to stay at top during component mount
+    window.scrollTo(0, 0);
     
-    // Ensure iframe loads properly
-    if (iframeRef.current) {
-      iframeRef.current.src = 'https://events-widget.liveres.co.uk/widget.html?companyId=ec8abb94-2a3c-4969-9122-a6f2f9b27a96&stylingURL=Kl7AS';
-      
-      // Prevent auto-scrolling when iframe loads
-      iframeRef.current.onload = () => {
-        window.scrollTo(0, currentScrollY);
-        // Also scroll to top in case we're on initial page load
-        if (currentScrollY === 0) {
-          window.scrollTo(0, 0);
-        }
-      };
-    }
-
-    // Prevent focus stealing on mount
-    const preventAutoFocus = (e: Event) => {
-      if (containerRef.current?.contains(e.target as Node)) {
-        e.preventDefault();
-        e.stopPropagation();
-        window.scrollTo(0, currentScrollY);
+    // Block scroll attempts
+    const blockScroll = () => {
+      if (scrollBlockedRef.current) {
+        window.scrollTo(0, 0);
       }
     };
-
-    // Add listener to prevent focus events during initial load
-    document.addEventListener('focus', preventAutoFocus, true);
     
-    // Clean up after a short delay (once iframe is loaded)
-    const cleanup = setTimeout(() => {
-      document.removeEventListener('focus', preventAutoFocus, true);
-    }, 2000);
-
+    // Add aggressive scroll blocking
+    window.addEventListener('scroll', blockScroll);
+    
+    // Prevent focus during initial render
+    const preventFocus = (e: FocusEvent) => {
+      const target = e.target as HTMLElement;
+      if (target && target.tagName === 'IFRAME') {
+        e.preventDefault();
+        e.stopPropagation();
+        target.blur();
+        window.scrollTo(0, 0);
+      }
+    };
+    
+    document.addEventListener('focusin', preventFocus, true);
+    
+    // Load iframe with anti-scroll measures
+    if (iframeRef.current) {
+      // Disable interaction initially
+      iframeRef.current.style.pointerEvents = 'none';
+      
+      // Set source
+      iframeRef.current.src = 'https://events-widget.liveres.co.uk/widget.html?companyId=ec8abb94-2a3c-4969-9122-a6f2f9b27a96&stylingURL=Kl7AS';
+      
+      // Handle load event
+      iframeRef.current.onload = () => {
+        // Keep at top
+        window.scrollTo(0, 0);
+        
+        // Re-enable interaction after delay
+        setTimeout(() => {
+          if (iframeRef.current) {
+            iframeRef.current.style.pointerEvents = 'auto';
+          }
+          // Allow scrolling after content loads
+          scrollBlockedRef.current = false;
+        }, 1000);
+      };
+    }
+    
+    // Cleanup
     return () => {
-      clearTimeout(cleanup);
-      document.removeEventListener('focus', preventAutoFocus, true);
+      window.removeEventListener('scroll', blockScroll);
+      document.removeEventListener('focusin', preventFocus, true);
+      scrollBlockedRef.current = false;
     };
   }, []);
 
