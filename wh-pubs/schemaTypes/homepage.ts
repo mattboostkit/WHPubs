@@ -174,6 +174,117 @@ export default defineType({
         })
       ],
     }),
+    // What Makes Us Special section images
+    defineField({
+      name: 'specialFeatures',
+      title: 'What Makes Us Special Features',
+      type: 'object',
+      description: 'Configure the three features with background images',
+      fields: [
+        defineField({
+          name: 'seasonalMenus',
+          title: 'Seasonal Menus Feature',
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'image',
+              title: 'Background Image',
+              type: 'image',
+              description: 'Full-width background image for Seasonal Menus. Recommended size: 1920x600px',
+              options: {hotspot: true},
+              fields: [
+                defineField({ 
+                  name: 'alt', 
+                  type: 'string', 
+                  title: 'Alternative Text',
+                  validation: Rule => Rule.required()
+                })
+              ],
+            }),
+            defineField({
+              name: 'title',
+              title: 'Title',
+              type: 'string',
+              initialValue: 'Seasonal Menus',
+            }),
+            defineField({
+              name: 'description',
+              title: 'Description',
+              type: 'string',
+              initialValue: 'Fresh, locally-sourced ingredients prepared by our skilled chefs.',
+            }),
+          ]
+        }),
+        defineField({
+          name: 'localAles',
+          title: 'Local Ales Feature',
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'image',
+              title: 'Background Image',
+              type: 'image',
+              description: 'Full-width background image for Local Ales. Recommended size: 1920x600px',
+              options: {hotspot: true},
+              fields: [
+                defineField({ 
+                  name: 'alt', 
+                  type: 'string', 
+                  title: 'Alternative Text',
+                  validation: Rule => Rule.required()
+                })
+              ],
+            }),
+            defineField({
+              name: 'title',
+              title: 'Title',
+              type: 'string',
+              initialValue: 'Local Ales',
+            }),
+            defineField({
+              name: 'description',
+              title: 'Description',
+              type: 'string',
+              initialValue: 'Carefully selected craft beers and traditional cask ales.',
+            }),
+          ]
+        }),
+        defineField({
+          name: 'specialEvents',
+          title: 'Special Events Feature',
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'image',
+              title: 'Background Image',
+              type: 'image',
+              description: 'Full-width background image for Special Events. Recommended size: 1920x600px',
+              options: {hotspot: true},
+              fields: [
+                defineField({ 
+                  name: 'alt', 
+                  type: 'string', 
+                  title: 'Alternative Text',
+                  validation: Rule => Rule.required()
+                })
+              ],
+            }),
+            defineField({
+              name: 'title',
+              title: 'Title',
+              type: 'string',
+              initialValue: 'Special Events',
+            }),
+            defineField({
+              name: 'description',
+              title: 'Description',
+              type: 'string',
+              initialValue: 'Regular events, live music, and themed dining experiences.',
+            }),
+          ]
+        }),
+      ]
+    }),
   ],
   preview: {
     select: {
