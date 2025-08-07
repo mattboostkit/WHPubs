@@ -146,39 +146,69 @@ const pageDescription = `Make a reservation at ${pubData.name}. Book your table 
     </div>
   </main>
   
-  <!-- Prevent auto-scrolling to booking widget -->
+  <!-- Comprehensive anti-scroll for booking pages -->
   <script>
-    // Force page to stay at top
-    if (history.scrollRestoration) {
-      history.scrollRestoration = 'manual';
-    }
-    
-    // Store initial position
-    let targetScroll = 0;
-    
-    // Force scroll to top on various events
-    window.addEventListener('DOMContentLoaded', () => {
-      targetScroll = 0;
-      window.scrollTo(0, 0);
-    });
-    
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        window.scrollTo(0, targetScroll);
-      }, 0);
+    (function() {
+      // Immediately disable scroll restoration
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
       
-      // Additional check after a delay
-      setTimeout(() => {
-        if (window.scrollY > 100) {
+      // Force to top immediately
+      window.scrollTo(0, 0);
+      
+      // Block all scrolling during page load
+      let scrollBlocked = true;
+      const scrollBlocker = function() {
+        if (scrollBlocked) {
           window.scrollTo(0, 0);
+          return false;
         }
-      }, 500);
-    });
-    
-    // Prevent iframes from stealing focus
-    document.querySelectorAll('iframe').forEach(iframe => {
-      iframe.setAttribute('tabindex', '-1');
-      iframe.style.pointerEvents = 'auto';
-    });
+      };
+      
+      // Add scroll blocking
+      window.addEventListener('scroll', scrollBlocker, { passive: false });
+      document.addEventListener('scroll', scrollBlocker, { passive: false });
+      
+      // Handle DOM ready
+      document.addEventListener('DOMContentLoaded', () => {
+        window.scrollTo(0, 0);
+        
+        // Disable all iframes initially
+        const iframes = document.querySelectorAll('iframe');
+        iframes.forEach(iframe => {
+          iframe.setAttribute('tabindex', '-1');
+          iframe.style.pointerEvents = 'none';
+          
+          // Re-enable after load
+          iframe.addEventListener('load', () => {
+            window.scrollTo(0, 0);
+            setTimeout(() => {
+              iframe.style.pointerEvents = 'auto';
+            }, 500);
+          });
+        });
+      });
+      
+      // Handle page fully loaded
+      window.addEventListener('load', () => {
+        window.scrollTo(0, 0);
+        
+        // Release scroll block after delay
+        setTimeout(() => {
+          scrollBlocked = false;
+          window.scrollTo(0, 0);
+        }, 1500);
+      });
+      
+      // Extra safeguard for late-loading content
+      if (document.readyState === 'loading') {
+        document.addEventListener('readystatechange', () => {
+          if (document.readyState === 'complete') {
+            window.scrollTo(0, 0);
+          }
+        });
+      }
+    })();
   </script>
 </Layout>
