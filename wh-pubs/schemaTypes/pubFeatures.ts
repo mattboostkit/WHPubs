@@ -104,7 +104,7 @@ export default defineType({
     },
     prepare({pubName, active, features}) {
       return {
-        title: `${pubName || 'No Pub'} - Come to us for`,
+        title: `${pubName || 'No Pub'} - Discover What's On Tap`,
         subtitle: `${features?.length || 0} features${active === false ? ' (Inactive)' : ''}`
       }
     }
