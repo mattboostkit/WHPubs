@@ -71,11 +71,13 @@ function checkDirectory() {
 // Check if user is authenticated with Sanity
 function isAuthenticated() {
   try {
-    execSync('npx sanity config get api.projectId', { 
+    // Try to get the current user - this is a more reliable auth check
+    const result = execSync('npx sanity whoami', { 
       stdio: 'pipe',
-      encoding: 'utf-8' 
+      encoding: 'utf-8',
+      cwd: process.cwd() // Ensure we're checking in the current directory
     });
-    return true;
+    return result && result.length > 0;
   } catch (error) {
     return false;
   }
