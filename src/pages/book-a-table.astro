@@ -145,4 +145,40 @@ const pageDescription = `Make a reservation at ${pubData.name}. Book your table 
       </div>
     </div>
   </main>
+  
+  <!-- Prevent auto-scrolling to booking widget -->
+  <script>
+    // Force page to stay at top
+    if (history.scrollRestoration) {
+      history.scrollRestoration = 'manual';
+    }
+    
+    // Store initial position
+    let targetScroll = 0;
+    
+    // Force scroll to top on various events
+    window.addEventListener('DOMContentLoaded', () => {
+      targetScroll = 0;
+      window.scrollTo(0, 0);
+    });
+    
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        window.scrollTo(0, targetScroll);
+      }, 0);
+      
+      // Additional check after a delay
+      setTimeout(() => {
+        if (window.scrollY > 100) {
+          window.scrollTo(0, 0);
+        }
+      }, 500);
+    });
+    
+    // Prevent iframes from stealing focus
+    document.querySelectorAll('iframe').forEach(iframe => {
+      iframe.setAttribute('tabindex', '-1');
+      iframe.style.pointerEvents = 'auto';
+    });
+  </script>
 </Layout>
