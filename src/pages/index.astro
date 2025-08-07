@@ -36,10 +36,15 @@ const activeOffers = await getOffers(null, true); // Get active general offers
 // Fetch upcoming events for the homepage
 const upcomingEvents = await getEvents(); // Get all upcoming events
 
-// Ensure the five pubs are ordered as requested using Sanity data
+// Ensure pubs are ordered with preferred slugs first, but never hide others
 const desiredSlugs = ['the-cricketers-inn','the-little-brown-jug','the-bull','the-chaser-inn','the-rose-and-crown'];
-const pubsBySlug = new Map(pubs.map(p => [p.slug?.current || p.slug, p]));
-const allPubs = desiredSlugs.map(slug => pubsBySlug.get(slug)).filter(Boolean);
+const getSlug = (p) => p.slug?.current || p.slug;
+const orderIndex = (s) => {
+  const slug = typeof s === 'string' ? s : getSlug(s);
+  const i = desiredSlugs.indexOf(slug);
+  return i === -1 ? Number.MAX_SAFE_INTEGER : i;
+};
+const allPubs = pubs.slice().sort((a,b) => orderIndex(a) - orderIndex(b)).slice(0, 5);
 
 
 ---
@@ -298,7 +303,7 @@ const allPubs = desiredSlugs.map(slug => pubsBySlug.get(slug)).filter(Boolean);
     {/* Development Kitchen Section */}
     {developmentKitchen && (
       <section class="relative py-20 bg-gradient-to-r from-primary to-primary/95 text-secondary overflow-hidden border-t-4 border-secondary">
-        <div class="absolute inset-0 bg-[url('/images/pattern.svg')] opacity-5"></div>
+        <div class="absolute inset-0 opacity-5"></div>
         <div class="container mx-auto px-4 relative z-10">
           <div class="grid md:grid-cols-2 gap-12 items-center">
             <div>
