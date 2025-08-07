@@ -26,7 +26,7 @@ export default defineType({
       name: 'features',
       title: 'Features',
       type: 'array',
-      validation: Rule => Rule.max(6),
+      validation: Rule => Rule.required().min(3).max(3).error('Please add exactly 3 features'),
       of: [{
         type: 'object',
         name: 'feature',
