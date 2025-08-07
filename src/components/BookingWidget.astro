@@ -80,6 +80,8 @@ if (bookingSystem === 'opentable' && needsSpecialHandling) {
     border-radius: 0.5rem;
     overflow: hidden;
   }
+  /* Hide third-party cookie overlays that may appear at top-level (not inside iframe) */
+  .modal.cookie-consent { display: none !important; }
 </style>
 
 <script>

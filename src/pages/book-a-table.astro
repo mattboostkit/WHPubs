@@ -196,6 +196,27 @@ const pageDescription = `Make a reservation at ${pubData.name}. Book your table 
           scrollBlocked = false;
           window.scrollTo(0, 0);
         }, 1500);
+
+        // Attempt to auto-dismiss third-party cookie modal overlays that may cover the widget
+        try {
+          const tryHideCookieModal = () => {
+            const modal = document.querySelector('.modal.cookie-consent');
+            if (modal) {
+              modal.style.display = 'none';
+              modal.setAttribute('aria-hidden', 'true');
+            }
+          };
+          // Initial attempt and repeated a few times for late injections
+          tryHideCookieModal();
+          let attempts = 0;
+          const interval = setInterval(() => {
+            tryHideCookieModal();
+            attempts += 1;
+            if (attempts > 10) clearInterval(interval);
+          }, 500);
+        } catch (e) {
+          // swallow
+        }
       });
       
       // Extra safeguard for late-loading content
