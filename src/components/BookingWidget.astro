@@ -42,7 +42,7 @@ if (bookingSystem === 'opentable' && needsSpecialHandling) {
 }
 ---
 
-<div class="booking-widget-container">
+<div class="booking-widget-container" aria-label={`Booking widget for ${pubName}`}>
   {bookingSystem === 'unknown' ? (
     <div class="text-center p-8 bg-gray-50 rounded-lg">
       <p class="text-lg text-primary/70 mb-4">

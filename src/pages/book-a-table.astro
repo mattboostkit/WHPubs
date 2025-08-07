@@ -37,9 +37,6 @@ const pageDescription = `Make a reservation at ${pubData.name}. Book your table 
           {/* Use LiveRes booking system directly */}
           {pubData.liveResWidgetUrl || pubData.reservationsUrl ? (
             <Card class="overflow-hidden shadow-lg">
-              <CardHeader class="bg-primary text-white">
-                <CardTitle class="text-xl">Book a Table at {pubData.name}</CardTitle>
-              </CardHeader>
               <CardContent class="p-0">
                 <BookingWidget 
                   reservationsUrl={pubData.liveResWidgetUrl || pubData.reservationsUrl}
