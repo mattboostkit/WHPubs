@@ -3,7 +3,7 @@ import {StarIcon} from 'lucide-react'
 
 export default defineType({
   name: 'pubFeatures',
-  title: 'Pub Features (Come to us for)',
+  title: 'Pub Features (Discover What\'s On Tap)',
   type: 'document',
   icon: StarIcon,
   fields: [
@@ -19,8 +19,8 @@ export default defineType({
       name: 'title',
       title: 'Section Title',
       type: 'string',
-      initialValue: 'Come to us for',
-      description: 'The main heading for this section',
+      initialValue: 'Discover What\'s On Tap',
+      description: 'The main heading for this section (e.g., "Discover What\'s On Tap", "Why Choose Us", "Experience the Best")',
     }),
     defineField({
       name: 'features',
