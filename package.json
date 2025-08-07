@@ -9,7 +9,12 @@
     "build": "astro build && if [ ! -z \"$TARGET_PUB_SLUG\" ]; then echo \"Moving pub page to root...\"; mv dist/$TARGET_PUB_SLUG/index.html dist/index.html && rm -rf dist/$TARGET_PUB_SLUG; else echo \"Hub build, keeping index.html.\"; fi",
     "preview": "astro preview",
     "astro": "astro",
-    "assign-admin": "node scripts/assign-admin-role.js"
+    "assign-admin": "node scripts/assign-admin-role.js",
+    "sanity:deploy": "node scripts/deploy-sanity.js",
+    "sanity:check": "node scripts/sanity-check.js",
+    "sanity:login": "cd wh-pubs && npx sanity login",
+    "sanity:dev": "cd wh-pubs && npm run dev",
+    "deploy:all": "npm run build && npm run sanity:deploy"
   },
   "dependencies": {
     "@astrojs/react": "^4.3.0",
