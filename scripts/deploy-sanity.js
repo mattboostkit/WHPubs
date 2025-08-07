@@ -71,14 +71,17 @@ function checkDirectory() {
 // Check if user is authenticated with Sanity
 function isAuthenticated() {
   try {
-    // Try to get the current user - this is a more reliable auth check
-    const result = execSync('npx sanity whoami', { 
+    // Check if we can access the project - this requires authentication
+    const result = execSync('npx sanity projects list --format json', { 
       stdio: 'pipe',
       encoding: 'utf-8',
-      cwd: process.cwd() // Ensure we're checking in the current directory
+      cwd: process.cwd(),
+      timeout: 5000
     });
-    return result && result.length > 0;
+    // If we get a result, we're authenticated
+    return result && result.includes('it7wwto3');
   } catch (error) {
+    // If the command fails, we're not authenticated
     return false;
   }
 }
