@@ -7,10 +7,14 @@
  * It will prompt for login if needed and then deploy the studio.
  */
 
-const { execSync, spawn } = require('child_process');
-const readline = require('readline');
-const path = require('path');
-const fs = require('fs');
+import { execSync, spawn } from 'child_process';
+import readline from 'readline';
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Colors for console output
 const colors = {
@@ -201,4 +205,4 @@ async function main() {
 }
 
 // Run the script
-main();
+main().catch(console.error);
