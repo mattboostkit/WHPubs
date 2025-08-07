@@ -89,12 +89,16 @@ function isAuthenticated() {
 // Get current user info
 function getCurrentUser() {
   try {
-    const output = execSync('npx sanity whoami', { 
+    // Since whoami doesn't exist, just return a generic "Authenticated" message
+    const result = execSync('npx sanity projects list --format json', { 
       stdio: 'pipe',
       encoding: 'utf-8',
-      cwd: process.cwd()
+      cwd: process.cwd(),
+      timeout: 5000
     });
-    return output.trim();
+    if (result) {
+      return "Authenticated User";
+    }
   } catch (error) {
     // Silent fail
   }
