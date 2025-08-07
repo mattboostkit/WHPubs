@@ -586,4 +586,27 @@ const allPubs = pubs;
     </section>
 
   </main>
+  
+  <!-- Prevent auto-scrolling to booking widget -->
+  <script>
+    // Ensure page stays at top when loading
+    if (history.scrollRestoration) {
+      history.scrollRestoration = 'manual';
+    }
+    
+    // Force scroll to top on page load
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+      }, 0);
+    });
+    
+    // Prevent iframes from stealing focus and scrolling
+    document.addEventListener('DOMContentLoaded', () => {
+      const iframes = document.querySelectorAll('iframe');
+      iframes.forEach(iframe => {
+        iframe.setAttribute('tabindex', '-1');
+      });
+    });
+  </script>
 </Layout>
