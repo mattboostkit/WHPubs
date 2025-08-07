@@ -47,18 +47,50 @@ import { Calendar, Clock, Users, Utensils } from 'lucide-react';
 		</div>
 	</main>
 	
-	<!-- Prevent auto-scrolling to booking widget -->
+	<!-- Comprehensive anti-scroll for booking widget -->
 	<script>
-		// Ensure page stays at top when loading
-		if (history.scrollRestoration) {
-			history.scrollRestoration = 'manual';
-		}
-		
-		// Force scroll to top on page load
-		window.addEventListener('load', () => {
-			setTimeout(() => {
+		(function() {
+			// Disable scroll restoration
+			if ('scrollRestoration' in history) {
+				history.scrollRestoration = 'manual';
+			}
+			
+			// Force initial position
+			window.scrollTo(0, 0);
+			
+			// Block scrolling during load
+			let blockScroll = true;
+			const handleScroll = () => {
+				if (blockScroll) {
+					window.scrollTo(0, 0);
+				}
+			};
+			
+			window.addEventListener('scroll', handleScroll);
+			
+			// Setup iframe handling
+			document.addEventListener('DOMContentLoaded', () => {
+				const iframe = document.querySelector('iframe');
+				if (iframe) {
+					iframe.setAttribute('tabindex', '-1');
+					iframe.style.pointerEvents = 'none';
+					
+					iframe.addEventListener('load', () => {
+						window.scrollTo(0, 0);
+						setTimeout(() => {
+							iframe.style.pointerEvents = 'auto';
+						}, 500);
+					});
+				}
+			});
+			
+			// Release scroll block after load
+			window.addEventListener('load', () => {
 				window.scrollTo(0, 0);
-			}, 0);
-		});
+				setTimeout(() => {
+					blockScroll = false;
+				}, 1500);
+			});
+		})();
 	</script>
 </Layout>
