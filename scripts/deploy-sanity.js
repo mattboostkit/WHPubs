@@ -86,14 +86,12 @@ function isAuthenticated() {
 // Get current user info
 function getCurrentUser() {
   try {
-    const output = execSync('npx sanity debug --secrets', { 
+    const output = execSync('npx sanity whoami', { 
       stdio: 'pipe',
-      encoding: 'utf-8' 
+      encoding: 'utf-8',
+      cwd: process.cwd()
     });
-    const match = output.match(/User ID: ([^\n]+)/);
-    if (match) {
-      return match[1].trim();
-    }
+    return output.trim();
   } catch (error) {
     // Silent fail
   }
