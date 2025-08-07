@@ -24,12 +24,8 @@ const pageDescription = `Make a reservation at ${pubData.name}. Book your table 
 <Layout title={pageTitle} description={pageDescription} pub={pubData}>
   <main class="container mx-auto px-4 py-12">
     <div class="max-w-6xl mx-auto">
-      <h1 class="text-4xl md:text-5xl font-bold text-primary mb-4 text-center">
-        Book a Table at {pubData.name}
-      </h1>
-      <p class="text-lg text-primary/70 text-center mb-12">
-        Reserve your table online for the perfect dining experience
-      </p>
+      <h1 class="sr-only">Book a Table at {pubData.name}</h1>
+      <p class="sr-only">Reserve your table online for the perfect dining experience</p>
 
       <div class="grid lg:grid-cols-3 gap-8">
         {/* Booking Widget Column - Takes up 2 columns on large screens */}
@@ -37,6 +33,9 @@ const pageDescription = `Make a reservation at ${pubData.name}. Book your table 
           {/* Use LiveRes booking system directly */}
           {pubData.liveResWidgetUrl || pubData.reservationsUrl ? (
             <Card class="overflow-hidden shadow-lg">
+              <CardHeader class="bg-primary text-white">
+                <CardTitle class="text-xl">Make a Reservation</CardTitle>
+              </CardHeader>
               <CardContent class="p-0">
                 <BookingWidget 
                   reservationsUrl={pubData.liveResWidgetUrl || pubData.reservationsUrl}
