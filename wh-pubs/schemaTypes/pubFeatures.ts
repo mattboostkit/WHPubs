@@ -86,7 +86,7 @@ export default defineType({
           }
         }
       }],
-      description: 'Add up to 6 features that highlight why customers should visit'
+      description: 'Add exactly 3 features that highlight what makes this pub special'
     }),
     defineField({
       name: 'active',
