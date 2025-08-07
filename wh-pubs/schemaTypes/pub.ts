@@ -440,6 +440,13 @@ export default defineType({
       description: 'Link to the specific booking page/service for this pub (e.g., LiveRes link)',
     }),
     defineField({
+      name: 'liveResWidgetUrl',
+      title: 'LiveRes Widget URL',
+      type: 'url',
+      group: 'features',
+      description: 'Full LiveRes widget URL for this pub (e.g., https://events-widget.liveres.co.uk/widget.html?siteId=...&stylingURL=...)',
+    }),
+    defineField({
       name: 'depositRequired',
       title: 'Booking Deposit Required?',
       type: 'boolean',
