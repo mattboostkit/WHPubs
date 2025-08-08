@@ -76,7 +76,7 @@ const pageDescription = 'Discover the culinary innovation at the heart of WH Pub
           <div class="grid md:grid-cols-2 gap-12 items-center">
             <div class="prose prose-lg">
               {developmentKitchen.myJourney.content && (
-                <div set:html={developmentKitchen.myJourney.content} />
+                <SanityPortableText value={developmentKitchen.myJourney.content} client:load />
               )}
             </div>
             {developmentKitchen.myJourney.image && (
