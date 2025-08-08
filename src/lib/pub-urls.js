@@ -12,7 +12,17 @@ export const pubUrls = {
 
 // Helper function to get pub URL
 export function getPubUrl(pub) {
-  // If pub has a custom domain set in Sanity, use that
+  // Priority 1: Use the new pubWebsiteUrl field from Sanity
+  if (pub.pubWebsiteUrl) {
+    return pub.pubWebsiteUrl;
+  }
+  
+  // Priority 2: Use temporaryUrl field from Sanity
+  if (pub.temporaryUrl) {
+    return pub.temporaryUrl;
+  }
+  
+  // Priority 3: Legacy fields for backwards compatibility
   if (pub.externalDomain) {
     // Check if the domain already includes protocol
     if (pub.externalDomain.startsWith('http://') || pub.externalDomain.startsWith('https://')) {
@@ -22,13 +32,18 @@ export function getPubUrl(pub) {
     return `https://${pub.externalDomain}`;
   }
   
-  // Otherwise, use the Netlify URL based on slug
+  // Priority 4: Legacy url field
+  if (pub.url) {
+    return pub.url;
+  }
+  
+  // Priority 5: Use hardcoded Netlify URL based on slug (fallback)
   const slug = pub.slug?.current || pub.slug;
   if (slug && pubUrls[slug]) {
     return pubUrls[slug];
   }
   
-  // Fallback to internal page
+  // Final fallback to internal page
   return `/${slug}`;
 }
 
