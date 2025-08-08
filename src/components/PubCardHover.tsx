@@ -4,6 +4,8 @@ import { Eye } from 'lucide-react';
 interface PubCardHoverProps {
   pub: {
     name: string;
+    slug?: { current: string } | string;
+    externalDomain?: string;
     exteriorImage?: {
       asset?: {
         url: string;
@@ -30,6 +32,7 @@ interface PubCardHoverProps {
     };
   };
   children: React.ReactNode;
+  clickable?: boolean;
 }
 
 export default function PubCardHover({ pub, children }: PubCardHoverProps) {
