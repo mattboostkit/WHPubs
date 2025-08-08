@@ -112,7 +112,7 @@ const pageDescription = 'Discover the culinary innovation at the heart of WH Pub
             )}
             <div class="prose prose-lg">
               {developmentKitchen.whatWeDo.content && (
-                <div set:html={developmentKitchen.whatWeDo.content} />
+                <SanityPortableText value={developmentKitchen.whatWeDo.content} client:load />
               )}
             </div>
           </div>
