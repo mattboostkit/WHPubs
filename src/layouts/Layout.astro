@@ -86,9 +86,9 @@ if (isPubLayout && activePub) {
 	 // Check if pub has custom nav links
 	 if (activePub.headerNavLinks && activePub.headerNavLinks.length > 0) {
 	   headerLinks = activePub.headerNavLinks.map(link => ({ 
-	     title: link.title, 
-	     url: link.url, 
-	     ariaLabel: link.title 
+	     title: link.title || '', 
+	     url: link.url || '/', 
+	     ariaLabel: link.title || '' 
 	   }));
 	 } else {
 	   // Default nav structure for individual pub sites
