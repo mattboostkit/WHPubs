@@ -339,7 +339,7 @@ const metaDescription = description || footerDescription;
 					<div>
 						<h3 class="text-xl font-bold mb-4 text-secondary">Quick Links</h3>
 						<ul class="space-y-2" role="navigation" aria-label="Footer navigation">
-							{headerLinks.slice(0, 4).map(link => (
+							{headerLinks.slice(0, 4).filter(link => link.url).map(link => (
 								<li><a href={link.url} class="text-[#B79C64] hover:text-[#B79C64]/80 transition-colors" aria-label={link.ariaLabel}>{link.title}</a></li>
 							))}
 							<li><a href="/privacy-policy" class="text-[#B79C64] hover:text-[#B79C64]/80 transition-colors" aria-label="Privacy Policy">Privacy Policy</a></li>
