@@ -262,9 +262,9 @@ const metaDescription = description || footerDescription;
 					</a>
 					<div class="border-t border-[#B79C64]/20 pt-4"></div>
 					{headerLinks.filter(link => link.title !== "Make A Booking").map(link => {
-						const isActive = currentPath === link.url || 
+						const isActive = link.url && (currentPath === link.url || 
 							(link.url !== '/' && currentPath.startsWith(link.url)) ||
-							(link.url.includes('#') && currentPath === '/' && link.url.startsWith('/#'));
+							(link.url.includes('#') && currentPath === '/' && link.url.startsWith('/#')));
 						return (
 							<a 
 								href={link.url} 
