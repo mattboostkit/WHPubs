@@ -1,15 +1,13 @@
 import { getPubs, getPosts, getEvents } from '../lib/sanity';
 
 export async function get() {
-  // Determine base URL dynamically from Astro config env (hub) or fallback
-  const siteUrl = (Astro?.site?.toString?.() || 'https://www.whpubs.com').replace(/\/$/, '');
-  const targetPubSlug = import.meta.env.TARGET_PUB_SLUG;
+  const siteUrl = 'https://whpubs.com';
   
   // Fetch dynamic content
   const [pubs, posts, events] = await Promise.all([
-    getPubs(targetPubSlug || null),
+    getPubs(),
     getPosts(),
-    getEvents(targetPubSlug || null)
+    getEvents()
   ]);
 
   // Static pages
@@ -39,16 +37,14 @@ export async function get() {
     });
   });
 
-  // Add pub pages only on hub build
-  if (!targetPubSlug) {
-    pubs.forEach(pub => {
-      sitemapEntries.push({
-        url: `${siteUrl}/${pub.slug.current}`,
-        changefreq: 'weekly',
-        priority: 0.9
-      });
+  // Add pub pages
+  pubs.forEach(pub => {
+    sitemapEntries.push({
+      url: `${siteUrl}/${pub.slug.current}`,
+      changefreq: 'weekly',
+      priority: 0.9
     });
-  }
+  });
 
   // Add blog posts
   posts.forEach(post => {

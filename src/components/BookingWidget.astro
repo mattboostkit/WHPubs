@@ -42,7 +42,7 @@ if (bookingSystem === 'opentable' && needsSpecialHandling) {
 }
 ---
 
-<div class="booking-widget-container" aria-label={`Booking widget for ${pubName}`}>
+<div class="booking-widget-container">
   {bookingSystem === 'unknown' ? (
     <div class="text-center p-8 bg-gray-50 rounded-lg">
       <p class="text-lg text-primary/70 mb-4">
@@ -80,8 +80,6 @@ if (bookingSystem === 'opentable' && needsSpecialHandling) {
     border-radius: 0.5rem;
     overflow: hidden;
   }
-  /* Hide third-party cookie overlays that may appear at top-level (not inside iframe) */
-  .modal.cookie-consent { display: none !important; }
 </style>
 
 <script>

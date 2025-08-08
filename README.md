@@ -4,19 +4,9 @@ A website for WH Pubs, featuring traditional British pubs in South East England 
 
 ## Latest Updates (January 2025)
 
-- **SEO and Structure**
-  - Fixed breadcrumb JSON-LD URL generation in `src/components/SEO.astro`
-  - Standardized base URL to `https://www.whpubs.com` in SEO and used `Astro.site` where possible
-  - Made `public/robots.txt` sitemap reference relative (`/sitemap.xml`) so hub and pub sites serve correct sitemap per domain
-  - Updated `src/pages/sitemap.xml.js` to:
-    - Use `Astro.site` or fallback consistently
-    - Include pub URLs only on hub builds; filter posts/events per pub on pub builds using `TARGET_PUB_SLUG`
-  - Ensured pub structured data URLs derive from `Astro.site` in `src/pages/[slug].astro`
-- **Navigation**
-  - Mega Menu now links to each pub’s external domain via `getPubUrl()` mapping for correct cross-site navigation
-- **Docs and tidy-up**
-  - Clarified multi-site behavior and per-pub sitemap/robots in this README
-  - Normalized links, headings, and removed outdated references
+- **Event Images**: Optimized event carousel images to 16:9 aspect ratio (800x450) for better display
+- **Design System**: Implemented consistent UI/UX across all sections
+- **CMS Integration**: Added Sanity-managed images for Welcome and Pub Hire sections
 
 [Edit in StackBlitz next generation editor ⚡️](https://stackblitz.com/~/github.com/mattboostkit/WHPubs)
 
@@ -173,17 +163,3 @@ To build for a specific pub:
 ```bash
 TARGET_PUB_SLUG=the-bull npm run build
 ```
-
-### Hub vs Pub behaviors
-- Hub (no `TARGET_PUB_SLUG`):
-  - Sitemap includes hub pages, all pub index pages, blog posts, and events
-  - Robots points to `https://www.whpubs.com/sitemap.xml`
-  - Navigation to pubs uses external pub domains
-- Pub (`TARGET_PUB_SLUG` set):
-  - Sitemap includes only that pub’s pages/posts/events with the active domain as base
-  - Robots points to `/sitemap.xml` (served on the pub domain)
-  - All structured data URLs and canonicals use the pub domain when `Astro.site` is set
-
-### Notes for Owners
-- Update pub external domains in Sanity (`externalDomain`) to ensure all links and sitemaps reflect your live domain.
-- Submit each domain’s sitemap to Google Search Console after launch.

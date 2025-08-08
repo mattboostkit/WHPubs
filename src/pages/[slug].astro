@@ -78,7 +78,7 @@ const pubStructuredData = {
   "@type": "Restaurant",
   "name": pub.name,
   "image": pub.heroImage?.asset?.url || pub.image?.asset?.url,
-"url": Astro.site ? new URL(`/${pub.slug.current}`, Astro.site).href : `/${pub.slug.current}`,
+  "url": `https://whpubs.com/${pub.slug.current}`,
   "telephone": pub.contactPhone,
   "address": {
     "@type": "PostalAddress",
@@ -91,7 +91,7 @@ const pubStructuredData = {
   "servesCuisine": "British",
   "priceRange": "££",
   "openingHours": pub.openingHours ? pub.openingHours.split('\n').map(line => line.trim()).filter(Boolean) : [],
-"menu": pub.menuUrl || (Astro.site ? new URL(`/${pub.slug.current}/menu`, Astro.site).href : `/${pub.slug.current}/menu`),
+  "menu": pub.menuUrl || `https://whpubs.com/${pub.slug.current}/menu`,
   "acceptsReservations": !!pub.reservationsUrl,
   "hasMenu": pubMenus && pubMenus.length > 0,
   "aggregateRating": pubReviews && pubReviews.length > 0 ? {

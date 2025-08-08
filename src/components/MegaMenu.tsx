@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { ChevronDown, MapPin, Calendar, UtensilsCrossed, Image, Phone, Gift, Users } from 'lucide-react';
-import { getPubUrl } from '@/lib/pub-urls';
 
 interface Pub {
   name: string;
@@ -28,7 +27,7 @@ export default function MegaMenu({ pubs, currentPath }: MegaMenuProps) {
             title: 'Visit Our Pubs',
             items: pubs.map(pub => ({
               title: pub.name,
-              href: getPubUrl(pub),
+              href: `/${pub.slug.current}`,
               description: pub.locationName || pub.location || '',
               icon: <MapPin className="w-4 h-4" />
             }))

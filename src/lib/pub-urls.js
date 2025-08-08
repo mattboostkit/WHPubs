@@ -12,18 +12,20 @@ export const pubUrls = {
 
 // Helper function to get pub URL
 export function getPubUrl(pub) {
-  // Always prefer Netlify preview URLs during client sign‑off
-  const slug = pub.slug?.current || pub.slug;
-  if (slug && pubUrls[slug]) {
-    return pubUrls[slug];
-  }
-  
-  // Fallback to external domain only if mapping is missing
+  // If pub has a custom domain set in Sanity, use that
   if (pub.externalDomain) {
+    // Check if the domain already includes protocol
     if (pub.externalDomain.startsWith('http://') || pub.externalDomain.startsWith('https://')) {
       return pub.externalDomain;
     }
+    // If no protocol, add https://
     return `https://${pub.externalDomain}`;
+  }
+  
+  // Otherwise, use the Netlify URL based on slug
+  const slug = pub.slug?.current || pub.slug;
+  if (slug && pubUrls[slug]) {
+    return pubUrls[slug];
   }
   
   // Fallback to internal page

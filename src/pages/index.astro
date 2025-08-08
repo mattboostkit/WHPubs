@@ -36,15 +36,8 @@ const activeOffers = await getOffers(null, true); // Get active general offers
 // Fetch upcoming events for the homepage
 const upcomingEvents = await getEvents(); // Get all upcoming events
 
-// Ensure pubs are ordered with preferred slugs first, but never hide others
-const desiredSlugs = ['the-cricketers-inn','the-little-brown-jug','the-bull','the-chaser-inn','the-rose-and-crown'];
-const getSlug = (p) => p.slug?.current || p.slug;
-const orderIndex = (s) => {
-  const slug = typeof s === 'string' ? s : getSlug(s);
-  const i = desiredSlugs.indexOf(slug);
-  return i === -1 ? Number.MAX_SAFE_INTEGER : i;
-};
-const allPubs = pubs.slice().sort((a,b) => orderIndex(a) - orderIndex(b)).slice(0, 5);
+// All pubs are equal - no featured pubs
+const allPubs = pubs;
 
 
 ---
@@ -154,10 +147,10 @@ const allPubs = pubs.slice().sort((a,b) => orderIndex(a) - orderIndex(b)).slice(
           {allPubs.length > 0 ? (
             <>
               {/* First row - 3 pubs */}
-              <div class="grid md:grid-cols-3 gap-6 sm:gap-8 items-stretch">
+              <div class="grid md:grid-cols-3 gap-6 sm:gap-8">
                 {allPubs.slice(0, 3).map(pub => (
                   <PubCardHover pub={pub} client:load>
-                    <Card key={pub.slug.current} className="border-0 shadow-none mb-6 md:mb-0 h-full flex flex-col">
+                    <Card key={pub.slug.current} className="border-0 shadow-none mb-6 md:mb-0">
                 <CardHeader>
                   <CardTitle className="text-lg">{pub.name}</CardTitle>
                   <div class="flex items-center text-sm text-muted-foreground">
@@ -165,8 +158,8 @@ const allPubs = pubs.slice().sort((a,b) => orderIndex(a) - orderIndex(b)).slice(
                     <span>{pub.locationName || pub.location}</span>
                   </div>
                 </CardHeader>
-                <CardContent className="flex flex-col h-full">
-                   <CardDescription className="text-sm mb-4 line-clamp-2">{pub.description}</CardDescription>
+                <CardContent>
+                  <CardDescription className="text-sm mb-4 line-clamp-2">{pub.description}</CardDescription>
                   
                   {/* Amenity badges */}
                   <div class="flex flex-wrap gap-2 mb-4">
@@ -200,18 +193,20 @@ const allPubs = pubs.slice().sort((a,b) => orderIndex(a) - orderIndex(b)).slice(
                     const pubUrl = getPubUrl(pub);
                     const isExt = isExternalUrl(pubUrl);
                     return (
-                      <div class="grid grid-cols-2 gap-2 items-stretch mt-auto">
-                        <a href={pubUrl} target={isExt ? "_blank" : undefined} rel={isExt ? "noopener noreferrer" : undefined} class="block">
-                          <Button variant={isExt ? "default" : "outline"} size="sm" className={isExt ? "w-full h-10 bg-primary text-white hover:bg-primary/90" : "w-full h-10"}>
+                      <div class="flex gap-2">
+                        <a href={pubUrl} target={isExt ? "_blank" : undefined} rel={isExt ? "noopener noreferrer" : undefined} class="flex-1">
+                          <Button variant={isExt ? "default" : "outline"} size="sm" className={isExt ? "w-full bg-primary text-white hover:bg-primary/90" : "w-full"}>
                             {isExt ? 'Visit Pub Site' : 'View Details'}
                             {isExt && <ExternalLink className="w-3 h-3 ml-2" />}
                           </Button>
                         </a>
-                        <a href={pub.reservationsUrl || '/book-a-table'} class="block">
-                          <Button variant="secondary" size="sm" className="w-full h-10 bg-secondary/20 hover:bg-secondary/30 text-primary border border-secondary/40">
-                            Book a Table
-                          </Button>
-                        </a>
+                        {pub.reservationsUrl && (
+                          <a href={pub.reservationsUrl} target="_blank" rel="noopener noreferrer" class="flex-1">
+                            <Button variant="secondary" size="sm" className="w-full bg-secondary/20 hover:bg-secondary/30 text-primary border border-secondary/40">
+                              Book a Table
+                            </Button>
+                          </a>
+                        )}
                       </div>
                     );
                   })()}
@@ -223,10 +218,10 @@ const allPubs = pubs.slice().sort((a,b) => orderIndex(a) - orderIndex(b)).slice(
               
               {/* Second row - 2 pubs centered */}
               {allPubs.length > 3 && (
-                <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto items-stretch">
+                <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
                   {allPubs.slice(3, 5).map(pub => (
                     <PubCardHover pub={pub} client:load>
-                      <Card key={pub.slug.current} className="border-0 shadow-none h-full flex flex-col">
+                      <Card key={pub.slug.current} className="border-0 shadow-none">
                       <CardHeader>
                         <CardTitle className="text-lg">{pub.name}</CardTitle>
                         <div class="flex items-center text-sm text-muted-foreground">
@@ -234,7 +229,7 @@ const allPubs = pubs.slice().sort((a,b) => orderIndex(a) - orderIndex(b)).slice(
                           <span>{pub.locationName || pub.location}</span>
                         </div>
                       </CardHeader>
-                      <CardContent className="flex flex-col h-full">
+                      <CardContent>
                         <CardDescription className="text-sm mb-4 line-clamp-2">{pub.description}</CardDescription>
                         
                         {/* Amenity badges */}
@@ -265,25 +260,20 @@ const allPubs = pubs.slice().sort((a,b) => orderIndex(a) - orderIndex(b)).slice(
                           ))}
                         </div>
                         
-                        {(() => {
-                          const pubUrl = getPubUrl(pub);
-                          const isExt = isExternalUrl(pubUrl);
-                          return (
-                            <div class="grid grid-cols-2 gap-2 items-stretch mt-auto">
+                        {
+                          (() => {
+                            const pubUrl = getPubUrl(pub);
+                            const isExt = isExternalUrl(pubUrl);
+                            return (
                               <a href={pubUrl} target={isExt ? "_blank" : undefined} rel={isExt ? "noopener noreferrer" : undefined} class="block">
-                                <Button variant={isExt ? "default" : "outline"} size="sm" className={isExt ? "w-full h-10 bg-primary text-white hover:bg-primary/90" : "w-full h-10"}>
+                                <Button variant={isExt ? "default" : "outline"} size="sm" className={isExt ? "w-full bg-primary text-white hover:bg-primary/90" : "w-full"}>
                                   {isExt ? 'Visit Pub Site' : 'View Details'}
                                   {isExt && <ExternalLink className="w-3 h-3 ml-2" />}
                                 </Button>
                               </a>
-                              <a href={pub.reservationsUrl || '/book-a-table'} class="block">
-                                <Button variant="secondary" size="sm" className="w-full h-10 bg-secondary/20 hover:bg-secondary/30 text-primary border border-secondary/40">
-                                  Book a Table
-                                </Button>
-                              </a>
-                            </div>
-                          );
-                        })()}
+                            );
+                          })()
+                        }
                       </CardContent>
                       </Card>
                     </PubCardHover>
@@ -303,7 +293,7 @@ const allPubs = pubs.slice().sort((a,b) => orderIndex(a) - orderIndex(b)).slice(
     {/* Development Kitchen Section */}
     {developmentKitchen && (
       <section class="relative py-20 bg-gradient-to-r from-primary to-primary/95 text-secondary overflow-hidden border-t-4 border-secondary">
-        <div class="absolute inset-0 opacity-5"></div>
+        <div class="absolute inset-0 bg-[url('/images/pattern.svg')] opacity-5"></div>
         <div class="container mx-auto px-4 relative z-10">
           <div class="grid md:grid-cols-2 gap-12 items-center">
             <div>
