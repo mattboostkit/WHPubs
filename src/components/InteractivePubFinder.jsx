@@ -294,24 +294,20 @@ export default function InteractivePubFinder({ pubs = [] }) {
                             {isExt && <ExternalLink className="w-3 h-3 ml-2" aria-hidden="true" />}
                           </Button>
                         </a>
-                        {pub.reservationsUrl && (
-                          <a 
-                            href={pub.reservationsUrl} 
-                            target="_blank" 
-                            rel="noopener noreferrer" 
-                            className="flex-1"
-                            aria-label={`Book a table at ${pub.name} (opens in new tab)`}
+                        <a 
+                          href="/book-table" 
+                          className="flex-1"
+                          aria-label={`Book a table at ${pub.name}`}
+                        >
+                          <Button 
+                            variant="secondary" 
+                            size="sm" 
+                            className="w-full bg-secondary/20 hover:bg-secondary/30 text-primary border border-secondary/40"
+                            tabIndex={-1}
                           >
-                            <Button 
-                              variant="secondary" 
-                              size="sm" 
-                              className="w-full bg-secondary/20 hover:bg-secondary/30 text-primary border border-secondary/40"
-                              tabIndex={-1}
-                            >
-                              Book a Table
-                            </Button>
-                          </a>
-                        )}
+                            Book a Table
+                          </Button>
+                        </a>
                       </div>
                     </CardContent>
                   </PubCardHover>
