@@ -276,23 +276,43 @@ export default function InteractivePubFinder({ pubs = [] }) {
                         })}
                       </div>
                       
-                      <a 
-                        href={pubUrl} 
-                        target={isExt ? "_blank" : undefined} 
-                        rel={isExt ? "noopener noreferrer" : undefined} 
-                        className="block"
-                        aria-label={`${isExt ? 'Visit website' : 'View details'} for ${pub.name}${isExt ? ' (opens in new tab)' : ''}`}
-                      >
-                        <Button 
-                          variant={isExt ? "default" : "outline"} 
-                          size="sm" 
-                          className={isExt ? "w-full bg-primary text-white hover:bg-primary/90" : "w-full"}
-                          tabIndex={-1}
+                      <div className="flex gap-2">
+                        <a 
+                          href={pubUrl} 
+                          target={isExt ? "_blank" : undefined} 
+                          rel={isExt ? "noopener noreferrer" : undefined} 
+                          className="flex-1"
+                          aria-label={`${isExt ? 'Visit website' : 'View details'} for ${pub.name}${isExt ? ' (opens in new tab)' : ''}`}
                         >
-                          {isExt ? 'Visit Website' : 'View Details'}
-                          {isExt && <ExternalLink className="w-3 h-3 ml-2" aria-hidden="true" />}
-                        </Button>
-                      </a>
+                          <Button 
+                            variant={isExt ? "default" : "outline"} 
+                            size="sm" 
+                            className={isExt ? "w-full bg-primary text-white hover:bg-primary/90" : "w-full"}
+                            tabIndex={-1}
+                          >
+                            {isExt ? 'Visit Site' : 'View Details'}
+                            {isExt && <ExternalLink className="w-3 h-3 ml-2" aria-hidden="true" />}
+                          </Button>
+                        </a>
+                        {pub.reservationsUrl && (
+                          <a 
+                            href={pub.reservationsUrl} 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="flex-1"
+                            aria-label={`Book a table at ${pub.name} (opens in new tab)`}
+                          >
+                            <Button 
+                              variant="secondary" 
+                              size="sm" 
+                              className="w-full bg-secondary/20 hover:bg-secondary/30 text-primary border border-secondary/40"
+                              tabIndex={-1}
+                            >
+                              Book a Table
+                            </Button>
+                          </a>
+                        )}
+                      </div>
                     </CardContent>
                   </PubCardHover>
                 </Card>
