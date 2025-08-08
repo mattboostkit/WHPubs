@@ -3,7 +3,8 @@
 // Update these when domains change
 
 export const pubUrls = {
-  'the-bull': 'https://whpubs-thebull.netlify.app',
+  'the-bull-otford': 'https://whpubs-thebull.netlify.app',
+  'the-bull': 'https://whpubs-thebull.netlify.app', // Fallback for old slug
   'the-chaser-inn': 'https://whpubs-thechaserinn.netlify.app',
   'the-rose-and-crown': 'https://whpubs-theroseandcrown.netlify.app',
   'the-cricketers-inn': 'https://whpubs-thecricketersinn.netlify.app',
