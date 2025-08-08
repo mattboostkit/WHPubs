@@ -35,7 +35,7 @@ interface PubCardHoverProps {
   clickable?: boolean;
 }
 
-export default function PubCardHover({ pub, children }: PubCardHoverProps) {
+export default function PubCardHover({ pub, children, clickable = true }: PubCardHoverProps) {
   const [isHovered, setIsHovered] = useState(false);
 
   // Determine which images to use
@@ -45,13 +45,42 @@ export default function PubCardHover({ pub, children }: PubCardHoverProps) {
   const exteriorAlt = pub.exteriorImage?.alt || pub.image?.alt || `Exterior of ${pub.name}`;
   const interiorAlt = pub.interiorImage?.alt || pub.heroImage?.alt || `Interior of ${pub.name}`;
 
+  // Get the pub URL (prioritize external domain)
+  const getPubUrl = () => {
+    if (pub.externalDomain) {
+      return pub.externalDomain.startsWith('http') ? pub.externalDomain : `https://${pub.externalDomain}`;
+    }
+    return '#';
+  };
+
+  const handleCardClick = (e: React.MouseEvent) => {
+    // Don't navigate if clicking on buttons or links inside the card
+    const target = e.target as HTMLElement;
+    if (target.closest('a') || target.closest('button')) {
+      return;
+    }
+    
+    if (clickable && pub.externalDomain) {
+      const url = getPubUrl();
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
+  };
+
   return (
     <div 
-      className="overflow-hidden hover:shadow-lg transition-shadow focus-within:shadow-lg"
+      className="overflow-hidden hover:shadow-lg transition-shadow focus-within:shadow-lg cursor-pointer"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onFocus={() => setIsHovered(true)}
       onBlur={() => setIsHovered(false)}
+      onClick={handleCardClick}
+      role="article"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          handleCardClick(e as any);
+        }
+      }}
     >
       <div className="relative h-64 overflow-hidden group">
         {/* Exterior Image (default) */}
