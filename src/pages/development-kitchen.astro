@@ -130,7 +130,7 @@ const pageDescription = 'Discover the culinary innovation at the heart of WH Pub
           <div class="grid md:grid-cols-2 gap-12 items-center">
             <div class="prose prose-lg">
               {developmentKitchen.qualitySourcing.content && (
-                <div set:html={developmentKitchen.qualitySourcing.content} />
+                <SanityPortableText value={developmentKitchen.qualitySourcing.content} client:load />
               )}
             </div>
             {developmentKitchen.qualitySourcing.image && (
