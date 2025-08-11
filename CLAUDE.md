@@ -40,7 +40,7 @@ npm run create-sample-posts  # Create sample blog posts
    - Schema types in `wh-pubs/schemaTypes/`
 
 ### Key Data Models
-- **pub**: Individual pub with custom layout options (logo, nav links, colors)
+- **pub**: Individual pub with custom layout options (logo, nav links, colors, externalDomain)
 - **post**: Blog posts that can be associated with specific pubs or hub
 - **menu**: Menu content associated with pubs
 - **event**: Events associated with pubs or general
@@ -125,6 +125,8 @@ Configured for Netlify deployment with:
 - **Privacy Policy System**: Complete privacy policy management with CMS integration and fallback content
 - **Content Management Scripts**: Added scripts for populating Development Kitchen and privacy policy content
 - **Documentation**: Added comprehensive Development Kitchen content guide
+- **Interactive Pub Cards**: Enhanced PubCardHover component with clickable functionality that opens pub external domains
+- **URL Updates**: Updated pub-urls.js to support new pub naming conventions (e.g., the-bull-otford)
 
 ## Privacy Policy Implementation
 

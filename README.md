@@ -7,6 +7,8 @@ A website for WH Pubs, featuring traditional British pubs in South East England 
 - **Event Images**: Optimized event carousel images to 16:9 aspect ratio (800x450) for better display
 - **Design System**: Implemented consistent UI/UX across all sections
 - **CMS Integration**: Added Sanity-managed images for Welcome and Pub Hire sections
+- **Pub Cards**: Enhanced homepage pub cards with clickable functionality and direct links to individual pub sites
+- **URL Updates**: Updated pub URL mapping to support new pub naming conventions
 
 [Edit in StackBlitz next generation editor ⚡️](https://stackblitz.com/~/github.com/mattboostkit/WHPubs)
 
@@ -27,6 +29,7 @@ A website for WH Pubs, featuring traditional British pubs in South East England 
 - Private pub hire section with CMS-managed imagery
 - Comprehensive design system for consistent UI/UX across all sections
 - CMS-managed images for Welcome section (4 customizable images)
+- Interactive pub cards with hover effects and direct links to individual pub sites
 
 ## Tech Stack
 

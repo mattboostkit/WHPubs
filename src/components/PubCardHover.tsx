@@ -82,12 +82,12 @@ export default function PubCardHover({ pub, children, clickable = true }: PubCar
         }
       }}
     >
-      <div className="relative h-64 overflow-hidden group">
+      <div className="relative h-64 overflow-hidden rounded-lg group">
         {/* Exterior Image (default) */}
         <img
           src={exteriorImage}
           alt={exteriorAlt}
-          className={`w-full h-full object-cover transition-opacity duration-300 ${
+          className={`w-full h-full object-cover rounded-lg transition-opacity duration-300 ${
             isHovered ? 'opacity-0' : 'opacity-100'
           }`}
           loading="lazy"
@@ -103,7 +103,7 @@ export default function PubCardHover({ pub, children, clickable = true }: PubCar
         <img
           src={interiorImage}
           alt={interiorAlt}
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
+          className={`absolute inset-0 w-full h-full object-cover rounded-lg transition-opacity duration-300 ${
             isHovered ? 'opacity-100' : 'opacity-0'
           }`}
           loading="lazy"
