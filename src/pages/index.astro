@@ -84,7 +84,7 @@ const allPubs = pubs;
               </p>
               <div class="pt-6">
                 <a href="/book-table" class="inline-block">
-                  <Button size="lg" variant="default" className="bg-primary text-white hover:bg-primary/90 px-8 py-6 text-lg">
+                  <Button size="lg" variant="default">
                     Book a Table
                   </Button>
                 </a>
@@ -193,15 +193,14 @@ const allPubs = pubs;
                     const pubUrl = getPubUrl(pub);
                     const isExt = isExternalUrl(pubUrl);
                     return (
-                      <div class="grid grid-cols-2 gap-2">
+                      <div class="grid grid-cols-2 gap-3">
                         <a href={pubUrl} target={isExt ? "_blank" : undefined} rel={isExt ? "noopener noreferrer" : undefined} class="block">
-                          <Button variant="default" size="sm" className="w-full bg-primary text-white hover:bg-primary/90">
+                          <Button variant="default" size="sm" className="w-full">
                             Visit Pub Site
-                            <ExternalLink className="w-3 h-3 ml-1" />
                           </Button>
                         </a>
                         <a href="/book-table" class="block">
-                          <Button variant="secondary" size="sm" className="w-full bg-secondary text-primary hover:bg-secondary/90">
+                          <Button variant="secondary" size="sm" className="w-full">
                             Book a Table
                           </Button>
                         </a>
@@ -263,15 +262,14 @@ const allPubs = pubs;
                             const pubUrl = getPubUrl(pub);
                             const isExt = isExternalUrl(pubUrl);
                             return (
-                              <div class="grid grid-cols-2 gap-2">
+                              <div class="grid grid-cols-2 gap-3">
                                 <a href={pubUrl} target={isExt ? "_blank" : undefined} rel={isExt ? "noopener noreferrer" : undefined} class="block">
-                                  <Button variant="default" size="sm" className="w-full bg-primary text-white hover:bg-primary/90">
+                                  <Button variant="default" size="sm" className="w-full">
                                     Visit Pub Site
-                                    <ExternalLink className="w-3 h-3 ml-1" />
                                   </Button>
                                 </a>
                                 <a href="/book-table" class="block">
-                                  <Button variant="secondary" size="sm" className="w-full bg-secondary text-primary hover:bg-secondary/90">
+                                  <Button variant="secondary" size="sm" className="w-full">
                                     Book a Table
                                   </Button>
                                 </a>
@@ -325,7 +323,7 @@ const allPubs = pubs;
                 </div>
               </div>
               <a href="/development-kitchen">
-                <Button size="lg" variant="secondary" className="bg-secondary text-primary hover:bg-secondary/90">
+                <Button size="lg" variant="secondary">
                   Explore Our Kitchen
                 </Button>
               </a>
@@ -408,9 +406,8 @@ const allPubs = pubs;
               
               <div class="pt-6">
                 <a href="https://thegreatbritishpub.co.uk/" target="_blank" rel="noopener noreferrer">
-                  <Button size="lg" variant="default" className="bg-primary text-white hover:bg-primary/90 px-8 py-6 text-lg">
+                  <Button size="lg" variant="default">
                     Click for more details
-                    <ExternalLink className="w-5 h-5 ml-2" />
                   </Button>
                 </a>
               </div>
@@ -519,10 +516,10 @@ const allPubs = pubs;
     <section class="py-20 bg-gradient-to-b from-white to-gray-50">
       <div class="container mx-auto px-4">
         <div class="max-w-4xl mx-auto text-center mb-12">
-          <p class="text-secondary uppercase tracking-widest text-sm font-semibold mb-4">Make a Reservation</p>
-          <h2 class="text-4xl font-bold text-primary mb-6">Book Your Table</h2>
+          <p class="text-secondary uppercase tracking-widest text-sm font-semibold mb-4">Reservations</p>
+          <h2 class="text-4xl font-bold text-primary mb-6">Reserve Your Table</h2>
           <p class="text-lg text-gray-700">
-            Select your preferred pub, date and time to secure your table at one of our traditional British pubs.
+            Choose your preferred pub and secure your table at one of our traditional British pubs.
           </p>
         </div>
         <div class="max-w-4xl mx-auto">
@@ -544,7 +541,7 @@ const allPubs = pubs;
             WH Pubs gift cards are perfect for any occasion. Treat your loved ones to memorable moments at any of our traditional British pubs.
           </p>
           <a href="/gift-cards">
-            <Button size="lg" variant="secondary" className="bg-secondary text-primary hover:bg-secondary/90">
+            <Button size="lg" variant="secondary">
               Buy Gift Cards
             </Button>
           </a>
@@ -584,7 +581,7 @@ const allPubs = pubs;
             aria-label="Email address for newsletter"
             class="flex-1 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary bg-secondary/10 text-secondary placeholder:text-secondary/50 border border-secondary/20"
           />
-          <Button type="submit" variant="secondary" class="bg-secondary text-primary hover:bg-secondary/90">Subscribe</Button>
+          <Button type="submit" variant="secondary">Subscribe</Button>
         </form>
         </div>
       </div>

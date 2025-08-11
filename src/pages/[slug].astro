@@ -134,7 +134,7 @@ const pubStructuredData = {
           )}
           {pub.heroOverlayButtonText && pub.heroOverlayButtonLink && (
             <a href={pub.heroOverlayButtonLink} target="_blank" rel="noopener noreferrer">
-               <Button variant="secondary" size="lg" class="bg-[#B79C64] hover:bg-[#B79C64]/90 text-primary font-semibold px-8 py-3 shadow-lg">
+               <Button variant="secondary" size="lg">
                  {pub.heroOverlayButtonText}
                </Button>
             </a>
@@ -239,7 +239,7 @@ const pubStructuredData = {
               onclick={`window.analytics && window.analytics.trackReservation('${pub.name}', 'click_welcome')`}
               class="inline-block"
             >
-              <Button variant="default" size="lg" class="bg-primary text-white hover:bg-primary/90 px-8 py-6 text-lg">
+              <Button variant="default" size="lg">
                 Book A Table
               </Button>
             </a>
