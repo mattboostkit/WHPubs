@@ -86,6 +86,13 @@ export async function getPubBySlug(slug) {
       name,
       slug,
       location,
+      squareLogo {
+        asset->{
+          _id,
+          url
+        },
+        alt
+      },
       image {
         asset->{
           _id,
