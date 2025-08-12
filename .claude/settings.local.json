@@ -42,7 +42,8 @@
       "mcp__sanity__update_document",
       "mcp__sanity__list_workspace_schemas",
       "Bash(echo:*)",
-      "Bash(TARGET_PUB_SLUG=the-bull-otford npm run build)"
+      "Bash(TARGET_PUB_SLUG=the-bull-otford npm run build)",
+      "mcp__ide__getDiagnostics"
     ],
     "deny": []
   }
