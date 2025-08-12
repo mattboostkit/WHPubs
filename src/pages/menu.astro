@@ -3,6 +3,7 @@
 import Layout from '@/layouts/Layout.astro';
 import { getPubBySlug, getMenusForPub } from '@/lib/sanity';
 import SanityPortableText from '@/components/SanityPortableText.jsx';
+import PubHeader from '@/components/PubHeader';
 
 // Determine the target pub for this build/request
 const targetPubSlug = import.meta.env.TARGET_PUB_SLUG;
