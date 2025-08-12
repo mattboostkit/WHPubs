@@ -13,11 +13,23 @@ export default function LiveResBookingWidget({
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Load iframe normally without scroll blocking
-    if (iframeRef.current) {
-      // Set source
-      iframeRef.current.src = 'https://events-widget.liveres.co.uk/widget.html?companyId=ec8abb94-2a3c-4969-9122-a6f2f9b27a96&stylingURL=Kl7AS';
-    }
+    // Store current scroll position
+    const currentScrollY = window.scrollY;
+    
+    // Load iframe with a delay to prevent focus stealing
+    const timer = setTimeout(() => {
+      if (iframeRef.current) {
+        // Set source
+        iframeRef.current.src = 'https://events-widget.liveres.co.uk/widget.html?companyId=ec8abb94-2a3c-4969-9122-a6f2f9b27a96&stylingURL=Kl7AS';
+        
+        // Restore scroll position after iframe loads
+        iframeRef.current.onload = () => {
+          window.scrollTo(0, currentScrollY);
+        };
+      }
+    }, 100);
+    
+    return () => clearTimeout(timer);
   }, []);
 
   return (
