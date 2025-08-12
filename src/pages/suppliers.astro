@@ -1,12 +1,10 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { getPubBySlug } from '../lib/sanity';
+import Layout from '@/layouts/Layout.astro';
+import PubSuppliers from '@/components/PubSuppliers';
+import { getPubBySlug } from '@/lib/sanity';
 
 const targetPubSlug = import.meta.env.TARGET_PUB_SLUG;
 const targetPub = targetPubSlug ? await getPubBySlug(targetPubSlug) : null;
-
-// Define suppliers for each pub with real descriptions
-const pubSuppliers = {
   'the-chaser-inn': [
     {
       name: 'Bodium Meats',
