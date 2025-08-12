@@ -198,9 +198,9 @@ export async function getPubs(targetPubSlug = null) {
       heroOverlayButtonLink, // Fetch overlay button link
       // Why Choose Us fields
       whyChooseUs {
-        reason1 { title, description },
-        reason2 { title, description },
-        reason3 { title, description },
+        reason1 { title, description, image { asset->{ _id, url } } },
+        reason2 { title, description, image { asset->{ _id, url } } },
+        reason3 { title, description, image { asset->{ _id, url } } },
         backgroundImage { asset->{ _id, url }, alt }
       },
       // Layout fields
