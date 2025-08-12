@@ -48,6 +48,7 @@ export const schemaTypes = [
   loyaltyProgram,
   pubFeatures,
   privacyPolicy,
+  featuredDishes,
   blockContent, 
   googleMapEmbed
 ]
