@@ -555,6 +555,13 @@ const pubStructuredData = {
       {/* Events Section */}
       <PubEventsSection events={pubEvents} pubName={pub.name} client:load />
 
+      {/* Social Feed Section */}
+      <PubSocialFeed 
+        pubName={pub.name}
+        instagramHandle={pub.instagramUrl ? `@${pub.instagramUrl.split('/').pop()}` : '@whpubs'}
+        facebookUrl={pub.facebookUrl}
+        client:visible
+      />
 
       {/* Customer Reviews Section */}
       {pubReviews && pubReviews.length > 0 && (
