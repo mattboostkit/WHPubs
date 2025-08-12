@@ -16,6 +16,7 @@ import PubMenu from '@/components/PubMenu';
 import PubFeatures from '@/components/PubFeatures';
 import PubEventsSection from '@/components/PubEventsSection';
 import WhyChooseUs from '@/components/WhyChooseUs';
+import ChristmasMenu from '@/components/ChristmasMenu';
 
 // 1. Generate routes for all pubs
 // This page will exist in each deployment, but getStaticPaths ensures
@@ -478,29 +479,44 @@ const pubStructuredData = {
         </div>
       )}
 
-      {/* Menus Section */}
-      {(detailedMenus && detailedMenus.length > 0) ? (
+      {/* Christmas Menu Section */}
+      <div class="mb-12 -mx-4 sm:-mx-6 lg:-mx-8">
+        <ChristmasMenu 
+          christmasMenu={pub.christmasMenu}
+          pubName={pub.name}
+          bookingUrl={pub.reservationsUrl || '/book-a-table'}
+          client:load
+        />
+      </div>
+
+      {/* Regular Menus Section */}
+      {(detailedMenus && detailedMenus.length > 0) && (
         <div class="mb-12 -mx-4 sm:-mx-6 lg:-mx-8">
           <PubMenu menus={detailedMenus} client:load />
         </div>
-      ) : (
-        <div class="mb-12 p-8 bg-secondary/10 rounded-xl text-center">
-          <UtensilsCrossed class="w-12 h-12 mx-auto mb-4 text-primary/40" />
-          <h3 class="text-xl font-semibold text-primary mb-2">Menus Coming Soon</h3>
-          <p class="text-primary/70">We're currently updating our menu selection. Please check back soon!</p>
-        </div>
       )}
 
-      {/* Why Choose Us Section */}
-      {pub.whyChooseUs && (
-        <div class="mb-12 -mx-4 sm:-mx-6 lg:-mx-8">
-          <WhyChooseUs 
-            reasons={pub.whyChooseUs}
-            backgroundImage={pub.whyChooseUs?.backgroundImage?.asset?.url}
-            client:load
-          />
-        </div>
-      )}
+      {/* Why Choose Us Section - Always show with defaults if not provided */}
+      <div class="mb-12 -mx-4 sm:-mx-6 lg:-mx-8">
+        <WhyChooseUs 
+          reasons={pub.whyChooseUs || {
+            reason1: { 
+              title: "EXCEPTIONAL FOOD", 
+              description: "Fresh, locally-sourced ingredients prepared by our talented chefs" 
+            },
+            reason2: { 
+              title: "PERFECT ATMOSPHERE", 
+              description: "Cozy interiors with roaring fires and beautiful gardens for sunny days" 
+            },
+            reason3: { 
+              title: "MEMORABLE EVENTS", 
+              description: "From live music to quiz nights, there's always something happening" 
+            }
+          }}
+          backgroundImage={pub.whyChooseUs?.backgroundImage?.asset?.url}
+          client:load
+        />
+      </div>
 
       {/* Events Section */}
       <PubEventsSection events={pubEvents} pubName={pub.name} client:load />
