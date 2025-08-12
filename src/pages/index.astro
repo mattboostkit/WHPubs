@@ -53,15 +53,11 @@ const allPubs = pubs;
 {/* Use homepage title from Sanity if available */}
 <Layout title={homepageData?.title || "WH Pubs - Traditional British Pubs"}>
   <main>
-    {/* Hero Section with Carousel */}
-    <HeroCarousel 
+    {/* Enhanced Hero Section */}
+    <EnhancedHero 
       images={homepageData?.heroImages || (homepageData?.heroImage ? [homepageData.heroImage] : [])}
-      heroTitle={homepageData?.heroTitle || 'Traditional British Hospitality in the South East of England'}
-      heroSubtitle={homepageData?.heroSubtitle || 'Traditional British Hospitality...'}
-      heroButton1Text={homepageData?.heroButton1Text}
-      heroButton1Link={homepageData?.heroButton1Link}
-      heroButton2Text={homepageData?.heroButton2Text}
-      heroButton2Link={homepageData?.heroButton2Link}
+      tagline="ESCAPE TO EXTRAORDINARY"
+      subtitle="Five distinctive pubs. Countless memories waiting to be made."
       client:load
     />
 
