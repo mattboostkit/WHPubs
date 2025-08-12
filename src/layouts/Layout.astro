@@ -437,6 +437,14 @@ const metaDescription = description || footerDescription;
 					});
 				}
 			});
+			
+			// Ensure page starts at top on load
+			if ('scrollRestoration' in history) {
+				history.scrollRestoration = 'manual';
+			}
+			window.addEventListener('load', () => {
+				window.scrollTo(0, 0);
+			});
 		</script>
 	</body>
 </html>
