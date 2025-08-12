@@ -297,6 +297,26 @@ export default defineType({
 
     // --- Media Group ---
     defineField({
+      name: 'squareLogo',
+      title: '🎯 Square Pub Logo (500x500px)',
+      type: 'image',
+      group: 'media',
+      description: 'REQUIRED: Square logo for pub branding. 🖼️ SIZE: 500x500px (1:1 ratio)',
+      options: {
+        hotspot: true,
+      },
+      fields: [
+        {
+          name: 'alt',
+          type: 'string',
+          title: 'Alternative text',
+          description: 'e.g., "The Bull logo"',
+          validation: (Rule) => Rule.required(),
+        }
+      ],
+      validation: (Rule) => Rule.required().error('Please upload a square logo for the pub'),
+    }),
+    defineField({
       name: 'image',
       title: 'Main Listing Image (828x605px)',
       type: 'image',
