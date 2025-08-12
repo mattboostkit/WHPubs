@@ -135,6 +135,9 @@ const allPubs = pubs;
       </div>
     </section>
 
+    {/* Services Grid - What We Offer */}
+    <ServicesGrid client:visible />
+
     {/* Events Carousel Section */}
     {upcomingEvents && upcomingEvents.length > 0 && (
       <EventsCarousel 
@@ -143,6 +146,8 @@ const allPubs = pubs;
       />
     )}
 
+    {/* Testimonials Carousel */}
+    <TestimonialsCarousel client:visible />
 
     {/* All Pubs Grid Section */}
     <section id="pubs" class="py-20 bg-white">
