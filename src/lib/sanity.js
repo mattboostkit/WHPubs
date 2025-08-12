@@ -261,9 +261,9 @@ export async function getHomepageData() {
       welcomeImage4 { asset->{ _id, url }, alt },
       pubHireImage { asset->{ _id, url }, alt },
       whyChooseUs {
-        reason1 { title, description },
-        reason2 { title, description },
-        reason3 { title, description },
+        reason1 { title, description, image { asset->{ _id, url } } },
+        reason2 { title, description, image { asset->{ _id, url } } },
+        reason3 { title, description, image { asset->{ _id, url } } },
         backgroundImage { asset->{ _id, url }, alt }
       },
       specialFeatures {
