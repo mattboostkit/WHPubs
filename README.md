@@ -32,7 +32,7 @@ A website for WH Pubs, featuring traditional British pubs in South East England 
 ### Core Functionality
 - Responsive design for all devices with mobile-first approach
 - Accessibility improvements with ARIA labels and keyboard navigation
-- SEO optimizations with meta tags, sitemap, and robots.txt
+- SEO optimisations with meta tags, sitemap, and robots.txt
 - Schema.org structured data for better search results
 - Custom 404 error page
 - Google Analytics integration
