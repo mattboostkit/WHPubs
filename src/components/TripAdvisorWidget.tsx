@@ -72,29 +72,30 @@ export default function TripAdvisorWidget({ pubSlug, pubName }: TripAdvisorWidge
     return null; // Don't show widget if no TripAdvisor data available
   }
 
-  // Mock recent reviews - in production, these would come from TripAdvisor API
+  // IMPORTANT: Replace with actual recent reviews from TripAdvisor
+  // You can manually copy recent reviews or integrate with TripAdvisor API if available
   useEffect(() => {
     setRecentReviews([
       {
-        author: 'John D',
-        date: '2 days ago',
+        author: '[Real reviewer name]',
+        date: '[Actual date]',
         rating: 5,
-        title: 'Excellent food and service',
-        text: 'Had a wonderful Sunday roast here. The beef was cooked to perfection and the staff were incredibly attentive.'
+        title: '[Copy actual review title from TripAdvisor]',
+        text: '[Copy actual review text from TripAdvisor for this pub]'
       },
       {
-        author: 'Sarah M',
-        date: '1 week ago',
+        author: '[Real reviewer name]',
+        date: '[Actual date]',
         rating: 5,
-        title: 'Perfect pub lunch',
-        text: 'Great atmosphere, friendly staff, and delicious food. The fish and chips were the best I\'ve had in a long time!'
+        title: '[Copy actual review title from TripAdvisor]',
+        text: '[Copy actual review text from TripAdvisor for this pub]'
       },
       {
-        author: 'Mike T',
-        date: '2 weeks ago',
+        author: '[Real reviewer name]',
+        date: '[Actual date]',
         rating: 4,
-        title: 'Lovely traditional pub',
-        text: 'Beautiful setting and great selection of ales. Will definitely be back!'
+        title: '[Copy actual review title from TripAdvisor]',
+        text: '[Copy actual review text from TripAdvisor for this pub]'
       }
     ]);
   }, []);
