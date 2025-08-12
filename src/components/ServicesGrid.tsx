@@ -4,20 +4,6 @@ import { Users, Gift, Calendar, Utensils, Music, Beer } from 'lucide-react';
 export default function ServicesGrid() {
   const services = [
     {
-      icon: Users,
-      title: 'Private Dining',
-      description: 'Exclusive spaces for special occasions and corporate events',
-      link: '/private-dining',
-      color: 'from-blue-500 to-indigo-600'
-    },
-    {
-      icon: Gift,
-      title: 'Gift Cards',
-      description: 'The perfect present for food and drink lovers',
-      link: '/gift-cards',
-      color: 'from-purple-500 to-pink-600'
-    },
-    {
       icon: Calendar,
       title: 'Events & Live Music',
       description: 'Regular entertainment across all our venues',
