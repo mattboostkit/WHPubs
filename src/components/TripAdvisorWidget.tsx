@@ -6,49 +6,61 @@ interface TripAdvisorWidgetProps {
   pubName: string;
 }
 
-// Mapping of pub slugs to TripAdvisor data
+// Mapping of pub slugs to TripAdvisor and Google data
 const tripAdvisorData = {
   'the-little-brown-jug': {
     url: 'https://www.tripadvisor.co.uk/Restaurant_Review-g503920-d1367884-Reviews-The_Little_Brown_Jug-Tonbridge_Kent_England.html',
     locationId: '1367884',
     rating: 4.5,
     reviewCount: 324,
-    ranking: '#3 of 45 restaurants in Tonbridge'
+    ranking: '#3 of 45 restaurants in Tonbridge',
+    googlePlaceId: 'ChIJxxxxxxxxxxxxxxxxxxxxxx', // Replace with actual Place ID
+    googleMapsUrl: 'https://g.page/r/CxxxxxxxxxxxxxxxxxxxxEBM/review' // Replace with actual review URL
   },
   'the-cricketers-inn': {
     url: 'https://www.tripadvisor.co.uk/Restaurant_Review-g1011993-d2069972-Reviews-The_Cricketers_Inn_Restaurant-Meopham_Kent_England.html',
     locationId: '2069972',
     rating: 4.5,
     reviewCount: 289,
-    ranking: '#1 of 5 restaurants in Meopham'
+    ranking: '#1 of 5 restaurants in Meopham',
+    googlePlaceId: 'ChIJxxxxxxxxxxxxxxxxxxxxxx',
+    googleMapsUrl: 'https://g.page/r/CxxxxxxxxxxxxxxxxxxxxEBM/review'
   },
   'the-bull': {
     url: 'https://www.tripadvisor.co.uk/Restaurant_Review-g790312-d732667-Reviews-Bull-Otford_Sevenoaks_District_Kent_England.html',
     locationId: '732667',
     rating: 4.0,
     reviewCount: 412,
-    ranking: '#2 of 4 restaurants in Otford'
+    ranking: '#2 of 4 restaurants in Otford',
+    googlePlaceId: 'ChIJxxxxxxxxxxxxxxxxxxxxxx',
+    googleMapsUrl: 'https://g.page/r/CxxxxxxxxxxxxxxxxxxxxEBM/review'
   },
   'the-bull-otford': {
     url: 'https://www.tripadvisor.co.uk/Restaurant_Review-g790312-d732667-Reviews-Bull-Otford_Sevenoaks_District_Kent_England.html',
     locationId: '732667',
     rating: 4.0,
     reviewCount: 412,
-    ranking: '#2 of 4 restaurants in Otford'
+    ranking: '#2 of 4 restaurants in Otford',
+    googlePlaceId: 'ChIJxxxxxxxxxxxxxxxxxxxxxx',
+    googleMapsUrl: 'https://g.page/r/CxxxxxxxxxxxxxxxxxxxxEBM/review'
   },
   'the-rose-and-crown': {
     url: 'https://www.tripadvisor.co.uk/Restaurant_Review-g1934185-d10245277-Reviews-The_Rose_and_Crown-Orpington_Bromley_Greater_London_England.html',
     locationId: '10245277',
     rating: 4.5,
     reviewCount: 198,
-    ranking: '#8 of 89 restaurants in Orpington'
+    ranking: '#8 of 89 restaurants in Orpington',
+    googlePlaceId: 'ChIJxxxxxxxxxxxxxxxxxxxxxx',
+    googleMapsUrl: 'https://g.page/r/CxxxxxxxxxxxxxxxxxxxxEBM/review'
   },
   'the-chaser-inn': {
     url: 'https://www.tripadvisor.co.uk/Restaurant_Review-g503920-d1018188-Reviews-The_Chaser_Inn-Tonbridge_Kent_England.html',
     locationId: '1018188',
     rating: 4.5,
     reviewCount: 376,
-    ranking: '#5 of 45 restaurants in Tonbridge'
+    ranking: '#5 of 45 restaurants in Tonbridge',
+    googlePlaceId: 'ChIJxxxxxxxxxxxxxxxxxxxxxx',
+    googleMapsUrl: 'https://g.page/r/CxxxxxxxxxxxxxxxxxxxxEBM/review'
   }
 };
 
