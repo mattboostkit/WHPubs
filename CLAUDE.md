@@ -6,6 +6,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 WH Pubs is a multi-site platform for traditional British pubs in South East England, built with Astro and Sanity CMS. The project supports both a main hub site and individual pub sites with configurable layouts and content.
 
+## Language and Localisation
+
+**IMPORTANT: All text content must be written in UK English**
+- Use UK spelling conventions (e.g., colour not color, centre not center, organisation not organization)
+- Use UK date formats (DD/MM/YYYY)
+- Use UK terminology (e.g., car park not parking lot, lift not elevator, mobile not cell phone)
+- Currency should be in GBP (£) format
+- The client is based in the UK and serves UK customers
+
 ## Development Commands
 
 ### Frontend (Astro)
