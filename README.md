@@ -39,7 +39,7 @@ A website for WH Pubs, featuring traditional British pubs in South East England 
 
 ### Content Management
 - Content Management System (Sanity Studio) for all content types
-- CMS-managed images for Welcome section (4 customizable images)
+- CMS-managed images for Welcome section (4 customisable images)
 - Development Kitchen page with fully CMS-managed content
 - Privacy Policy page with CMS integration and fallback content
 
