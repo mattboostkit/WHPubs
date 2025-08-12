@@ -296,8 +296,13 @@ export default function PubSuppliers({
     return acc;
   }, {} as Record<string, string[]>);
 
+  // In compact mode, limit to top 3 categories for cleaner display
+  const displayCategories = compact 
+    ? Object.entries(groupedSuppliers).slice(0, 3)
+    : Object.entries(groupedSuppliers);
+
   return (
-    <section className="py-16 lg:py-20 bg-gradient-to-b from-white to-gray-50">
+    <section className={`${compact ? 'py-12' : 'py-16 lg:py-20'} bg-gradient-to-b from-white to-gray-50`}>
       <div className="container mx-auto px-4">
         <div className="max-w-7xl mx-auto">
           {showTitle && (
