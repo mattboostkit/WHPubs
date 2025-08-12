@@ -69,8 +69,10 @@ export default function LiveResBookingWidget({
           minHeight: height,
         }}
         allow="payment"
-        // Prevent iframe from stealing focus
+        // Prevent iframe from stealing focus and scrolling
         tabIndex={-1}
+        loading="lazy"
+        sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox allow-payment"
       />
     </div>
   );
