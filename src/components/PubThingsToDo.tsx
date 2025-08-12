@@ -31,7 +31,7 @@ const pubActivities = {
       items: [
         { name: 'The Roundabout Duck Pond', description: 'Charming village pond with resident ducks', icon: <Waves className="w-5 h-5" /> },
         { name: 'The Historic Otford Mosaic', description: 'Beautiful historic mosaic artwork', icon: <Camera className="w-5 h-5" /> },
-        { name: 'Otford Palace', description: 'Ruins of Archbishop's Palace from 1514', icon: <Castle className="w-5 h-5" /> },
+        { name: 'Otford Palace', description: "Ruins of Archbishop's Palace from 1514", icon: <Castle className="w-5 h-5" /> },
         { name: 'Otford Library', description: 'Community library and local history resources', icon: <Book className="w-5 h-5" /> },
         { name: 'Otford Playground & Sports Ground', description: 'Family-friendly recreation facilities', icon: <Users className="w-5 h-5" /> }
       ]
@@ -65,7 +65,7 @@ const pubActivities = {
       items: [
         { name: 'The Roundabout Duck Pond', description: 'Charming village pond with resident ducks', icon: <Waves className="w-5 h-5" /> },
         { name: 'The Historic Otford Mosaic', description: 'Beautiful historic mosaic artwork', icon: <Camera className="w-5 h-5" /> },
-        { name: 'Otford Palace', description: 'Ruins of Archbishop's Palace from 1514', icon: <Castle className="w-5 h-5" /> },
+        { name: 'Otford Palace', description: "Ruins of Archbishop's Palace from 1514", icon: <Castle className="w-5 h-5" /> },
         { name: 'Otford Library', description: 'Community library and local history resources', icon: <Book className="w-5 h-5" /> },
         { name: 'Otford Playground & Sports Ground', description: 'Family-friendly recreation facilities', icon: <Users className="w-5 h-5" /> }
       ]
