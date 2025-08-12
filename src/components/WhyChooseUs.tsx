@@ -32,22 +32,22 @@ export default function WhyChooseUs({ reasons, backgroundImage }: WhyChooseUsPro
   const defaultReasons: Reason[] = [
     {
       number: "01",
-      title: reasons?.reason1?.title || "FOOD & DRINK",
+      title: reasons?.reason1?.title || "Food & Drink",
       description: reasons?.reason1?.description || "Fresh, locally-sourced ingredients prepared by our skilled chefs",
       icon: <Utensils className="w-6 h-6" />,
       image: reasons?.reason1?.image?.asset?.url || backgroundImage || defaultImages[0]
     },
     {
       number: "02",
-      title: reasons?.reason2?.title || "SHACKS",
-      description: reasons?.reason2?.description || "Outdoor dining experiences with BBQ and craft beers",
+      title: reasons?.reason2?.title || "Garden Dining",
+      description: reasons?.reason2?.description || "Beautiful outdoor spaces with seasonal menus and craft beers",
       icon: <Beer className="w-6 h-6" />,
       image: reasons?.reason2?.image?.asset?.url || backgroundImage || defaultImages[1]
     },
     {
       number: "03",
-      title: reasons?.reason3?.title || "PRIVATE DINING",
-      description: reasons?.reason3?.description || "Exclusive spaces for special occasions and events",
+      title: reasons?.reason3?.title || "Private Events",
+      description: reasons?.reason3?.description || "Exclusive spaces for special occasions and celebrations",
       icon: <Calendar className="w-6 h-6" />,
       image: reasons?.reason3?.image?.asset?.url || backgroundImage || defaultImages[2]
     }
