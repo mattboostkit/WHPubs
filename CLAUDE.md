@@ -204,10 +204,38 @@ const data = await prisma.user.findMany({
 
 ## Recent Updates
 
-### New Features (January 2025)
+### Navigation & UI Enhancements (January 2025)
+- **Enhanced Navigation Structure**: Comprehensive menu system competitive with industry leaders
+  - Fixed duplicate menu items with improved deduplication logic in `HeaderNavigation.tsx`
+  - Added prominent Book A Table CTA button
+  - Navigation items: Home, Menus, What's On, Gallery, Our Suppliers, Things To Do, Contact
+
+### New Components (January 2025)
+- **PubAmenities Component** (`/src/components/PubAmenities.tsx`)
+  - Interactive amenities showcase with 15+ amenity types
+  - Pub-specific configurations with icons and descriptions
+  - All pubs feature Sunday Roast and Dog Friendly as standard
+  - Special features: Tiki Huts for Rose & Crown and Little Brown Jug
+
+- **PubThingsToDo Component** (`/src/components/PubThingsToDo.tsx`)
+  - Location-specific attractions guide
+  - Three categories: Village attractions, Walks & Nature, Local Events
+  - Detailed content for all 5 pub locations
+  - Interactive category switching with visual feedback
+
+- **PubSuppliers Component** (`/src/components/PubSuppliers.tsx`)
+  - Comprehensive supplier partnerships showcase
+  - Interactive hover effects and detailed descriptions
+  - Compact mode for pub pages, full mode for dedicated page
+
+- **HeaderNavigation Component** (`/src/components/HeaderNavigation.tsx`)
+  - Improved navigation with proper deduplication logic
+  - Integrated Book A Table CTA button
+  - Active state indicators and hover effects
+
+### Content & Features (January 2025)
 - **Development Kitchen CMS Integration**: Content for Development Kitchen page is now fully managed through Sanity CMS
-- **Events Filtering**: Added interactive filtering for events by pub location
-- **Enhanced Components**: New EventsFilter component for better user experience
+- **Events Filtering**: Added interactive filtering for events by pub location with EventsFilter component
 - **Privacy Policy System**: Complete privacy policy management with CMS integration and fallback content
 - **Content Management Scripts**: Added scripts for populating Development Kitchen and privacy policy content
 - **Documentation**: Added comprehensive Development Kitchen content guide
