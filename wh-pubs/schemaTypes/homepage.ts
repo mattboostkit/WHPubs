@@ -174,11 +174,103 @@ export default defineType({
         })
       ],
     }),
-    // What Makes Us Special section images
+    // Why Choose Us section (replaces What Makes Us Special)
+    defineField({
+      name: 'whyChooseUs',
+      title: 'Why Choose Us - Three Reasons',
+      type: 'object',
+      description: 'Three compelling reasons why customers should visit WH Pubs',
+      fields: [
+        {
+          name: 'reason1',
+          title: 'Reason 1',
+          type: 'object',
+          fields: [
+            {
+              name: 'title',
+              title: 'Title',
+              type: 'string',
+              description: 'e.g., "FOOD & DRINK"',
+              validation: (Rule) => Rule.max(30),
+            },
+            {
+              name: 'description',
+              title: 'Description',
+              type: 'text',
+              rows: 2,
+              description: 'Brief description (1-2 sentences)',
+              validation: (Rule) => Rule.max(150),
+            },
+          ],
+        },
+        {
+          name: 'reason2',
+          title: 'Reason 2',
+          type: 'object',
+          fields: [
+            {
+              name: 'title',
+              title: 'Title',
+              type: 'string',
+              description: 'e.g., "LOCAL ALES"',
+              validation: (Rule) => Rule.max(30),
+            },
+            {
+              name: 'description',
+              title: 'Description',
+              type: 'text',
+              rows: 2,
+              description: 'Brief description (1-2 sentences)',
+              validation: (Rule) => Rule.max(150),
+            },
+          ],
+        },
+        {
+          name: 'reason3',
+          title: 'Reason 3',
+          type: 'object',
+          fields: [
+            {
+              name: 'title',
+              title: 'Title',
+              type: 'string',
+              description: 'e.g., "SPECIAL EVENTS"',
+              validation: (Rule) => Rule.max(30),
+            },
+            {
+              name: 'description',
+              title: 'Description',
+              type: 'text',
+              rows: 2,
+              description: 'Brief description (1-2 sentences)',
+              validation: (Rule) => Rule.max(150),
+            },
+          ],
+        },
+        {
+          name: 'backgroundImage',
+          title: 'Section Background Image',
+          type: 'image',
+          description: 'Background image for the Why Choose Us section (recommended: 1920x500px)',
+          options: {
+            hotspot: true,
+          },
+          fields: [
+            {
+              name: 'alt',
+              type: 'string',
+              title: 'Alternative Text',
+            }
+          ],
+        },
+      ],
+    }),
+    // Keep old specialFeatures for backward compatibility but hidden
     defineField({
       name: 'specialFeatures',
-      title: 'What Makes Us Special Features',
+      title: 'What Makes Us Special Features (Legacy)',
       type: 'object',
+      hidden: true,
       description: 'Configure the three features with background images',
       fields: [
         defineField({
