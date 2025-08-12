@@ -17,7 +17,7 @@ interface PubHeaderProps {
   className?: string;
 }
 
-export default function PubHeader({ pubName, squareLogo, className = '' }: PubHeaderProps) {
+export default function PubHeader({ pubName, squareLogo, fallbackLogo, className = '' }: PubHeaderProps) {
   return (
     <section className={`py-12 lg:py-16 bg-gradient-to-b from-white to-gray-50 ${className}`}>
       <div className="container mx-auto px-4">
