@@ -276,46 +276,7 @@ const pubMaps = {
 			</div>
 		</section>
 
-		{/* New Section: Pub Location Maps */}
-		<section class="py-16 bg-white">
-			<div class="container mx-auto px-4">
-				<h2 class="text-3xl font-bold text-center mb-12">Find Our Pubs</h2>
-				
-				<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-					{allPubs.map((pub) => (
-						<div class="space-y-4">
-							<h3 class="text-xl font-bold text-black">{pub.name}</h3>
-							<div class="rounded-lg overflow-hidden shadow-lg">
-								<GoogleMapEmbed 
-									iframe={pubMaps[pub.slug?.current] || tempIframe}
-									className="w-full h-[300px]"
-									client:load
-								/>
-							</div>
-							<div class="space-y-2 text-sm">
-								<p class="flex items-center gap-2">
-									<MapPin class="w-4 h-4 text-gold" />
-									{pub.location}
-								</p>
-								{pub.contactPhone && (
-									<p class="flex items-center gap-2">
-										<Phone class="w-4 h-4 text-gold" />
-										{pub.contactPhone}
-									</p>
-								)}
-								<a 
-									href={getPubUrl(pub)} 
-									target="_blank"
-									rel="noopener noreferrer"
-									class="inline-flex items-center text-gold hover:text-gold-dark font-semibold mt-2"
-								>
-									Visit Pub Website →
-								</a>
-							</div>
-						</div>
-					))}
-				</div>
-			</div>
-		</section>
+		{/* Location Finder Section */}
+		<LocationFinder client:visible />
 	</main>
 </Layout>
