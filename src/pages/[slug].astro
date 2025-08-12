@@ -146,6 +146,13 @@ const pubStructuredData = {
       </section>
     )}
 
+    {/* Pub Header with Square Logo */}
+    <PubHeader 
+      pubName={pub.name}
+      squareLogo={pub.squareLogo}
+      client:visible
+    />
+
     {/* Welcome Section */}
     <section class="py-16 bg-gradient-to-b from-white to-gray-50">
       <div class="container mx-auto px-4">
