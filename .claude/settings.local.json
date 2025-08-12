@@ -44,7 +44,8 @@
       "Bash(echo:*)",
       "Bash(TARGET_PUB_SLUG=the-bull-otford npm run build)",
       "mcp__ide__getDiagnostics",
-      "WebFetch(domain:www.tripadvisor.co.uk)"
+      "WebFetch(domain:www.tripadvisor.co.uk)",
+      "WebFetch(domain:elitepubs.com)"
     ],
     "deny": []
   }
