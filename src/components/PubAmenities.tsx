@@ -139,6 +139,13 @@ const amenitiesConfig = {
     icon: <Cigarette className="w-8 h-8" />,
     title: 'Smoking Area',
     description: 'Designated outdoor smoking area'
+  },
+  
+  // Special Features
+  'Tiki Huts': {
+    icon: <TreePine className="w-8 h-8" />,
+    title: 'Tiki Huts',
+    description: 'Unique tropical-themed outdoor dining spaces'
   }
 };
 
