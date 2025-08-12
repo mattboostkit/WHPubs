@@ -177,7 +177,7 @@ Additional documentation can be found in the `docs` directory:
 
 - [Site Improvements](docs/site-improvements.md)
 - [Cross-Browser Testing](docs/cross-browser-testing.md)
-- [Performance Optimization](docs/performance-optimization.md)
+- [Performance Optimisation](docs/performance-optimization.md)
 - [Responsive Design Recommendations](docs/responsive-design-recommendations.md)
 - [Implementation Summary](docs/implementation-summary.md)
 - [Development Kitchen Content Guide](docs/development-kitchen-content-guide.md) - Guide for managing Development Kitchen content through Sanity CMS
