@@ -564,12 +564,21 @@ const pubStructuredData = {
         client:visible
       />
 
+      {/* TripAdvisor Reviews Widget */}
+      <div class="mb-12 -mx-4 sm:-mx-6 lg:-mx-8">
+        <TripAdvisorWidget 
+          pubSlug={pub.slug.current}
+          pubName={pub.name}
+          client:visible
+        />
+      </div>
+
       {/* Customer Reviews Section */}
       {pubReviews && pubReviews.length > 0 && (
         <div class="mb-12 -mx-4 sm:-mx-6 lg:-mx-8">
           <ReviewsSection 
             reviews={pubReviews.slice(0, 6)} 
-            title={`Reviews for ${pub.name}`}
+            title={`More Reviews for ${pub.name}`}
             subtitle="See what our customers are saying"
           />
         </div>
