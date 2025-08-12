@@ -108,12 +108,12 @@ Configured for Netlify deployment with:
 - **Local Studio**: http://localhost:3333 (when running `npm run dev` in wh-pubs directory)
 - **Project Dashboard**: https://www.sanity.io/organizations/ou2Yw2hhu/project/it7wwto3
 
-## CRITICAL: Git Workflow
-**ALWAYS COMMIT AND PUSH AFTER MAKING CHANGES**
-- Commit changes immediately after making them
+## Git & Version Control
+
+- Add and commit automatically whenever an entire task is finished
+- Use descriptive commit messages that capture the full scope of changes
 - Push to GitHub so Netlify can deploy
 - User cannot see changes until they are deployed
-- Use descriptive commit messages
 - Push with: `git push origin main`
 
 ## Recent Updates
