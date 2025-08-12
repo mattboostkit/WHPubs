@@ -438,13 +438,10 @@ const metaDescription = description || footerDescription;
 				}
 			});
 			
-			// Ensure page starts at top on load
+			// Allow natural scroll restoration
 			if ('scrollRestoration' in history) {
-				history.scrollRestoration = 'manual';
+				history.scrollRestoration = 'auto';
 			}
-			window.addEventListener('load', () => {
-				window.scrollTo(0, 0);
-			});
 		</script>
 	</body>
 </html>
