@@ -8,6 +8,12 @@ interface PubHeaderProps {
     };
     alt?: string;
   };
+  fallbackLogo?: {
+    asset?: {
+      url: string;
+    };
+    alt?: string;
+  };
   className?: string;
 }
 
