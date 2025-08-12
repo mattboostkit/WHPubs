@@ -32,17 +32,19 @@ export default function LiveResBookingWidget({
         width="100%"
         height={height}
         frameBorder="0"
-        scrolling="auto"
+        scrolling="no"
         style={{
           border: 'none',
           maxWidth: '100%',
           minHeight: height,
+          pointerEvents: 'auto',
         }}
         allow="payment"
-        // Prevent iframe from stealing focus and scrolling
+        // Prevent iframe from stealing focus
         tabIndex={-1}
         loading="lazy"
-        sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox allow-payment"
+        // Remove sandbox to allow full functionality but keep focus prevention
+        data-no-focus="true"
       />
     </div>
   );
