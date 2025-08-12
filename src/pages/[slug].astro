@@ -36,7 +36,14 @@ export async function getStaticPaths() {
   if (targetPubSlug) {
     // If building a specific pub site, only fetch and build that pub's page
     // Fetching data for specific pub slug
-    const singlePub = await getPubBySlug(targetPubSlug);
+    let singlePub = await getPubBySlug(targetPubSlug);
+    
+    // Handle slug migration: the-bull -> the-bull-otford
+    if (!singlePub && targetPubSlug === 'the-bull') {
+      console.log('Trying alternative slug: the-bull-otford');
+      singlePub = await getPubBySlug('the-bull-otford');
+    }
+    
     // Data fetched for specific pub
     if (singlePub) {
       pubsToBuild.push(singlePub);
