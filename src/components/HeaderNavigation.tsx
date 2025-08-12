@@ -18,9 +18,6 @@ export default function HeaderNavigation({ pubs, currentPath, isPubLayout, heade
     return array.findIndex(l => l.title === link.title && l.url === link.url) === index;
   });
 
-  // Debug log to see what we're working with
-  console.log('HeaderNavigation - Original links:', headerLinks);
-  console.log('HeaderNavigation - Filtered unique links:', uniqueLinks);
 
   return (
     <div className="hidden md:flex items-center space-x-8" role="navigation">
