@@ -23,6 +23,8 @@ import PubAtmosphere from '@/components/PubAtmosphere';
 import PubHighlights from '@/components/PubHighlights';
 import PubSocialFeed from '@/components/PubSocialFeed';
 import TripAdvisorWidget from '@/components/TripAdvisorWidget';
+import PubWarmWelcome from '@/components/PubWarmWelcome';
+import PubPerfectFor from '@/components/PubPerfectFor';
 
 // 1. Generate routes for all pubs
 // This page will exist in each deployment, but getStaticPaths ensures
@@ -176,8 +178,25 @@ const pubStructuredData = {
     {/* Highlights Section - Show what's special this week */}
     <PubHighlights pubName={pub.name} client:visible />
 
-    {/* Welcome Section */}
-    <section class="py-16 bg-gradient-to-b from-white to-gray-50">
+    {/* Warm Welcome Section - Enhanced */}
+    <PubWarmWelcome
+      pubName={pub.name}
+      pubSlug={pub.slug.current}
+      description={pub.description}
+      location={pub.location}
+      locationName={pub.locationName}
+      openingHours={pub.openingHours}
+      contactPhone={pub.contactPhone}
+      heroImage={{
+        url: pub.gallery?.[0]?.asset?.url,
+        alt: pub.gallery?.[0]?.alt
+      }}
+      amenities={pub.amenities}
+      client:visible
+    />
+
+    {/* Original Welcome Section - Hidden */}
+    <section class="py-16 bg-gradient-to-b from-white to-gray-50 hidden">
       <div class="container mx-auto px-4">
         <div class="max-w-4xl mx-auto text-center">
           <p class="text-secondary uppercase tracking-widest text-sm font-semibold mb-4">Welcome to</p>
