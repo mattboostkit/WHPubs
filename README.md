@@ -4,11 +4,26 @@ A website for WH Pubs, featuring traditional British pubs in South East England 
 
 ## Latest Updates (January 2025)
 
+### Navigation & UI Enhancements
+- **Enhanced Navigation**: Comprehensive menu structure competitive with industry leaders (Home, Menus, What's On, Gallery, Suppliers, Things To Do, Contact)
+- **Fixed Navigation Issues**: Resolved duplicate menu items by improving deduplication logic
+- **Book A Table CTA**: Prominent call-to-action button in navigation
+
+### New Components & Features
+- **PubAmenities Component**: Interactive amenities showcase with 15+ amenity types and pub-specific configurations
+- **PubThingsToDo Component**: Location-specific attractions guide with Village, Walks & Nature, and Local Events categories
+- **PubSuppliers Component**: Comprehensive supplier partnerships showcase with interactive design
+- **HeaderNavigation Component**: Improved navigation with proper deduplication and CTA button integration
+
+### Content & Functionality
+- **Amenities Management**: All pubs feature Sunday Roast and Dog Friendly as standard, with pub-specific variations
+- **Things To Do Section**: Detailed local attractions for each pub location including nature reserves, historical sites, and events
+- **Suppliers Section**: Dedicated suppliers page and compact version integrated into pub pages
 - **Event Images**: Optimized event carousel images to 16:9 aspect ratio (800x450) for better display
 - **Design System**: Implemented consistent UI/UX across all sections
 - **CMS Integration**: Added Sanity-managed images for Welcome and Pub Hire sections
 - **Pub Cards**: Enhanced homepage pub cards with clickable functionality and direct links to individual pub sites
-- **URL Updates**: Updated pub URL mapping to support new pub naming conventions
+- **URL Updates**: Updated pub URL mapping to support new pub naming conventions (e.g., the-bull-otford)
 
 [Edit in StackBlitz next generation editor ⚡️](https://stackblitz.com/~/github.com/mattboostkit/WHPubs)
 
