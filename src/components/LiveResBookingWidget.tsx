@@ -13,23 +13,45 @@ export default function LiveResBookingWidget({
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Store current scroll position
-    const currentScrollY = window.scrollY;
+    // Only load on homepage, not on initial page load
+    const isHomepage = window.location.pathname === '/';
+    
+    // Store current scroll position before any changes
+    const initialScrollY = window.scrollY;
+    
+    // Prevent initial scroll by maintaining position
+    const preventScroll = () => {
+      if (window.scrollY !== initialScrollY) {
+        window.scrollTo(0, initialScrollY);
+      }
+    };
     
     // Load iframe with a delay to prevent focus stealing
     const timer = setTimeout(() => {
       if (iframeRef.current) {
+        // Add scroll prevention during load
+        window.addEventListener('scroll', preventScroll);
+        
         // Set source
         iframeRef.current.src = 'https://events-widget.liveres.co.uk/widget.html?companyId=ec8abb94-2a3c-4969-9122-a6f2f9b27a96&stylingURL=Kl7AS';
         
-        // Restore scroll position after iframe loads
+        // Remove scroll prevention after iframe loads
         iframeRef.current.onload = () => {
-          window.scrollTo(0, currentScrollY);
+          setTimeout(() => {
+            window.removeEventListener('scroll', preventScroll);
+            // Ensure we're still at the top if this is initial page load
+            if (isHomepage && initialScrollY === 0) {
+              window.scrollTo(0, 0);
+            }
+          }, 300);
         };
       }
-    }, 100);
+    }, 500); // Increased delay to let page settle
     
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('scroll', preventScroll);
+    };
   }, []);
 
   return (
