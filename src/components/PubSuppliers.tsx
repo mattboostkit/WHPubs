@@ -558,32 +558,60 @@ export default function PubSuppliers({
 
           {/* Call to Action */}
           <div className="text-center mt-16">
-            <div className="bg-primary rounded-xl p-8 text-center">
-              <h3 className="text-2xl font-bold text-secondary mb-4">
-                Taste the Difference Quality Makes
-              </h3>
-              <p className="text-secondary/90 mb-6 max-w-2xl mx-auto">
-                Every ingredient we serve has been carefully selected from our network of trusted suppliers. 
-                Come and experience the exceptional flavors that partnerships with the best producers create.
-              </p>
-              <div className="flex flex-wrap gap-4 justify-center">
-                <a
-                  href="/book-table"
-                  className="inline-flex items-center px-8 py-3 bg-secondary text-primary font-semibold rounded-lg hover:bg-secondary/90 transition-all duration-300 shadow-lg hover:shadow-xl"
-                >
-                  Book Your Table
-                  <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </a>
-                <a
-                  href="#menus"
-                  className="inline-flex items-center px-8 py-3 bg-white/10 text-secondary font-semibold rounded-lg border-2 border-secondary hover:bg-white hover:text-primary transition-all duration-300"
-                >
-                  View Our Menus
-                </a>
+            {compact ? (
+              <div className="bg-white border border-gray-200 rounded-xl p-6 text-center">
+                <h3 className="text-xl font-bold text-primary mb-3">
+                  Quality You Can Taste
+                </h3>
+                <p className="text-gray-600 mb-6">
+                  We partner with {relevantSuppliers.length}+ trusted suppliers who share our commitment to exceptional quality.
+                </p>
+                <div className="flex flex-wrap gap-3 justify-center">
+                  <a
+                    href="/suppliers"
+                    className="inline-flex items-center px-6 py-2 bg-primary text-secondary font-semibold rounded-lg hover:bg-primary/90 transition-all duration-300"
+                  >
+                    View All Suppliers
+                    <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </a>
+                  <a
+                    href="/book-table"
+                    className="inline-flex items-center px-6 py-2 bg-white text-primary font-semibold rounded-lg border-2 border-primary hover:bg-primary hover:text-secondary transition-all duration-300"
+                  >
+                    Book Your Table
+                  </a>
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="bg-primary rounded-xl p-8 text-center">
+                <h3 className="text-2xl font-bold text-secondary mb-4">
+                  Taste the Difference Quality Makes
+                </h3>
+                <p className="text-secondary/90 mb-6 max-w-2xl mx-auto">
+                  Every ingredient we serve has been carefully selected from our network of trusted suppliers. 
+                  Come and experience the exceptional flavors that partnerships with the best producers create.
+                </p>
+                <div className="flex flex-wrap gap-4 justify-center">
+                  <a
+                    href="/book-table"
+                    className="inline-flex items-center px-8 py-3 bg-secondary text-primary font-semibold rounded-lg hover:bg-secondary/90 transition-all duration-300 shadow-lg hover:shadow-xl"
+                  >
+                    Book Your Visit
+                    <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </a>
+                  <a
+                    href="#menus"
+                    className="inline-flex items-center px-8 py-3 bg-white/10 text-secondary font-semibold rounded-lg border-2 border-secondary hover:bg-white hover:text-primary transition-all duration-300"
+                  >
+                    View Our Menus
+                  </a>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
