@@ -203,6 +203,31 @@ export async function getPubs(targetPubSlug = null) {
         reason3 { title, description, image { asset->{ _id, url } } },
         backgroundImage { asset->{ _id, url }, alt }
       },
+      // Christmas Menu fields
+      christmasMenu {
+        enabled,
+        title,
+        subtitle,
+        menuImage { asset->{ _id, url } },
+        menuPdf { asset->{ _id, url } },
+        menuDetails[] {
+          courseType,
+          items[] {
+            name,
+            description,
+            price,
+            dietary
+          }
+        },
+        pricing {
+          adultPrice,
+          childPrice,
+          additionalInfo
+        },
+        availability,
+        bookingInfo,
+        ctaText
+      },
       // Layout fields
       logo { asset->{ _id, url }, alt },
       headerNavLinks[]{ title, url },
