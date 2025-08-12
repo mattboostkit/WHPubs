@@ -185,7 +185,7 @@ const data = await prisma.user.findMany({
 // Consider adding to prisma rules:
 // - Standard select fields
 // - Common where conditions
-// - Performance optimization patterns
+// - Performance optimisation patterns
 ```
 
 **Rule Quality Checks:**
