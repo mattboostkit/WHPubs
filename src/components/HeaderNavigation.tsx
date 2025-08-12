@@ -8,10 +8,18 @@ interface HeaderNavigationProps {
 }
 
 export default function HeaderNavigation({ pubs, currentPath, isPubLayout, headerLinks }: HeaderNavigationProps) {
-  // Use the simple navigation for both hub and pub sites
+  // Remove duplicates and filter out "Make A Booking" (handled separately as CTA button)
+  const uniqueLinks = headerLinks.filter((link, index, array) => {
+    // Filter out "Make A Booking" as it's handled as a separate CTA button
+    if (link.title === "Make A Booking") return false;
+    
+    // Remove duplicates by checking if this is the first occurrence of this title
+    return array.findIndex(l => l.title === link.title) === index;
+  });
+
   return (
     <div className="hidden md:flex items-center space-x-8" role="navigation">
-      {headerLinks.filter(link => link.title !== "Make A Booking").map(link => {
+      {uniqueLinks.map(link => {
         const isActive = currentPath === link.url || 
           (link.url !== '/' && currentPath.startsWith(link.url)) ||
           (link.url.includes('#') && currentPath === '/' && link.url.startsWith('/#'));
