@@ -18,10 +18,10 @@ export default function ServicesGrid() {
       color: 'from-orange-500 to-red-600'
     },
     {
-      icon: Music,
-      title: 'Quiz Nights',
-      description: 'Test your knowledge at our weekly pub quizzes',
-      link: '/events',
+      icon: ChefHat,
+      title: 'Development Kitchen',
+      description: 'Our unique culinary innovation hub - creating tomorrow\'s classics today',
+      link: '/development-kitchen',
       color: 'from-yellow-500 to-orange-600'
     },
     {
