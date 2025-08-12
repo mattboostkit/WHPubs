@@ -590,6 +590,16 @@ const pubStructuredData = {
       {/* Events Section */}
       <PubEventsSection events={pubEvents} pubName={pub.name} client:load />
 
+      {/* Suppliers Section - Compact for pub pages */}
+      <div class="mb-12 -mx-4 sm:-mx-6 lg:-mx-8">
+        <PubSuppliers 
+          pubName={pub.name} 
+          pubSlug={pub.slug.current} 
+          compact={true}
+          client:visible
+        />
+      </div>
+
       {/* Social Feed Section */}
       <PubSocialFeed 
         pubName={pub.name}
