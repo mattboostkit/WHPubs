@@ -260,6 +260,12 @@ export async function getHomepageData() {
       welcomeImage3 { asset->{ _id, url }, alt },
       welcomeImage4 { asset->{ _id, url }, alt },
       pubHireImage { asset->{ _id, url }, alt },
+      whyChooseUs {
+        reason1 { title, description },
+        reason2 { title, description },
+        reason3 { title, description },
+        backgroundImage { asset->{ _id, url }, alt }
+      },
       specialFeatures {
         seasonalMenus {
           title,
