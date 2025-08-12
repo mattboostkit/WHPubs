@@ -59,9 +59,10 @@ export default function WhyChooseUs({ reasons, backgroundImage }: WhyChooseUsPro
     <section className="bg-white py-16 lg:py-20">
       <div className="container mx-auto px-4">
         {/* Section Title - Centered on mobile, left-aligned on desktop */}
-        <div className="text-center lg:text-left mb-8 lg:mb-12 max-w-4xl">
-          <h2 className="text-3xl lg:text-5xl font-bold text-primary uppercase tracking-wide">
-            Come to us for
+        <div className="text-center mb-12">
+          <span className="text-secondary text-sm font-semibold uppercase tracking-wider">Why Choose Us</span>
+          <h2 className="text-4xl md:text-5xl font-bold text-primary mt-2 mb-4">
+            Come To Us For
           </h2>
         </div>
 
