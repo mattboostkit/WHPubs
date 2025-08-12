@@ -153,6 +153,13 @@ export async function getPubs(targetPubSlug = null) {
       locationName,
       addressLine1,
       postcode,
+      squareLogo {
+        asset->{
+          _id,
+          url
+        },
+        alt
+      },
       image {
         asset->{
           _id,
