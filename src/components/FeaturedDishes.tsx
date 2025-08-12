@@ -1,50 +1,97 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Clock, Flame, Award, ArrowRight } from 'lucide-react';
+import { getFeaturedDishes } from '../lib/sanity';
 
 interface Dish {
   name: string;
   description: string;
   price: string;
-  image: string;
+  image?: {
+    asset?: {
+      url: string;
+    };
+  };
   tag?: string;
-  pub?: string;
+  pubLocation?: string;
 }
 
+interface FeaturedDishesData {
+  title?: string;
+  subtitle?: string;
+  dishes?: Dish[];
+}
+
+// Fallback dishes data
+const fallbackDishes: Dish[] = [
+  {
+    name: 'Sunday Roast Trio',
+    description: 'Beef, pork & chicken with all the trimmings, Yorkshire puddings, roast potatoes and seasonal vegetables',
+    price: '£18.95',
+    tag: 'Chef\'s Special',
+    pubLocation: 'Available at all locations'
+  },
+  {
+    name: 'Beer Battered Fish & Chips',
+    description: 'Fresh cod in our signature beer batter, triple-cooked chips, mushy peas and homemade tartare sauce',
+    price: '£15.95',
+    tag: 'Best Seller',
+    pubLocation: 'The Cricketers Inn'
+  },
+  {
+    name: 'Steak & Ale Pie',
+    description: 'Slow-cooked British beef in rich ale gravy, buttery puff pastry, mash and seasonal greens',
+    price: '£14.95',
+    tag: 'Traditional',
+    pubLocation: 'The Bull'
+  },
+  {
+    name: 'Wild Mushroom Risotto',
+    description: 'Creamy arborio rice with mixed wild mushrooms, truffle oil, parmesan and fresh herbs',
+    price: '£13.95',
+    tag: 'Vegetarian',
+    pubLocation: 'The Rose and Crown'
+  }
+];
+
 export default function FeaturedDishes() {
-  const dishes: Dish[] = [
-    {
-      name: 'Sunday Roast Trio',
-      description: 'Beef, pork & chicken with all the trimmings, Yorkshire puddings, roast potatoes and seasonal vegetables',
-      price: '£18.95',
-      image: '/images/sunday-roast.jpg',
-      tag: 'Chef\'s Special',
-      pub: 'Available at all locations'
-    },
-    {
-      name: 'Beer Battered Fish & Chips',
-      description: 'Fresh cod in our signature beer batter, triple-cooked chips, mushy peas and homemade tartare sauce',
-      price: '£15.95',
-      image: '/images/fish-chips.jpg',
-      tag: 'Best Seller',
-      pub: 'The Cricketers Inn'
-    },
-    {
-      name: 'Steak & Ale Pie',
-      description: 'Slow-cooked British beef in rich ale gravy, buttery puff pastry, mash and seasonal greens',
-      price: '£14.95',
-      image: '/images/steak-pie.jpg',
-      tag: 'Traditional',
-      pub: 'The Bull'
-    },
-    {
-      name: 'Wild Mushroom Risotto',
-      description: 'Creamy arborio rice with mixed wild mushrooms, truffle oil, parmesan and fresh herbs',
-      price: '£13.95',
-      image: '/images/risotto.jpg',
-      tag: 'Vegetarian',
-      pub: 'The Rose and Crown'
+  const [featuredData, setFeaturedData] = useState<FeaturedDishesData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const data = await getFeaturedDishes();
+        if (data) {
+          setFeaturedData(data);
+        }
+      } catch (error) {
+        console.error('Error fetching featured dishes:', error);
+      } finally {
+        setIsLoading(false);
+      }
     }
-  ];
+    fetchData();
+  }, []);
+
+  // Use CMS data if available, otherwise use fallback
+  const title = featuredData?.title || 'Signature Dishes';
+  const subtitle = featuredData?.subtitle || 'Crafted with passion using the finest local ingredients';
+  const dishes = featuredData?.dishes && featuredData.dishes.length > 0 ? featuredData.dishes : fallbackDishes;
+
+  // Get fallback image for dish
+  const getDishImage = (dish: Dish, index: number) => {
+    if (dish.image?.asset?.url) {
+      return dish.image.asset.url;
+    }
+    // Fallback images based on index
+    const fallbackImages = [
+      '/images/sunday-roast.jpg',
+      '/images/fish-chips.jpg', 
+      '/images/steak-pie.jpg',
+      '/images/risotto.jpg'
+    ];
+    return fallbackImages[index % fallbackImages.length] || '/images/food-fallback.jpg';
+  };
 
   return (
     <section className="py-20 bg-gradient-to-b from-white to-gray-50">
@@ -53,15 +100,15 @@ export default function FeaturedDishes() {
           {/* Header */}
           <div className="text-center mb-12">
             <span className="text-secondary text-sm font-semibold uppercase tracking-wider">From Our Kitchens</span>
-            <h2 className="text-4xl md:text-5xl font-bold text-primary mt-2 mb-4">Signature Dishes</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-primary mt-2 mb-4">{title}</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Crafted with passion using the finest local ingredients
+              {subtitle}
             </p>
           </div>
 
           {/* Dishes Grid */}
           <div className="grid md:grid-cols-2 gap-8 mb-12">
-            {dishes.map((dish, index) => (
+            {dishes.slice(0, 4).map((dish, index) => (
               <div 
                 key={index}
                 className="group bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300"
@@ -70,7 +117,7 @@ export default function FeaturedDishes() {
                   {/* Image */}
                   <div className="relative h-64 lg:h-full overflow-hidden">
                     <img
-                      src={dish.image}
+                      src={getDishImage(dish, index)}
                       alt={dish.name}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       onError={(e) => {
@@ -89,7 +136,7 @@ export default function FeaturedDishes() {
                     <div>
                       <h3 className="text-2xl font-bold text-primary mb-2">{dish.name}</h3>
                       <p className="text-gray-600 mb-4">{dish.description}</p>
-                      <p className="text-xs text-gray-500 mb-4">{dish.pub}</p>
+                      <p className="text-xs text-gray-500 mb-4">{dish.pubLocation || 'Available at all locations'}</p>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-3xl font-bold text-secondary">{dish.price}</span>
