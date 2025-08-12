@@ -5,7 +5,7 @@ const client = createClient({
   dataset: 'production',
   apiVersion: '2023-05-03',
   token: process.env.SANITY_TOKEN,
-  useCdn: false,
+  useCdn: true, // Use CDN for read operations
 });
 
 // Mapping of pub slugs to their Why Choose Us content
