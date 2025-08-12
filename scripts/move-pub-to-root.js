@@ -3,8 +3,12 @@
 // Script to move pub page to root after build
 // Handles slug mappings (e.g., the-bull -> the-bull-otford)
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const targetPubSlug = process.env.TARGET_PUB_SLUG;
 
