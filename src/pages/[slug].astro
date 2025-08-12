@@ -15,6 +15,7 @@ import OffersSection from '@/components/OffersSection.astro';
 import PubMenu from '@/components/PubMenu';
 import PubFeatures from '@/components/PubFeatures';
 import PubEventsSection from '@/components/PubEventsSection';
+import WhyChooseUs from '@/components/WhyChooseUs';
 
 // 1. Generate routes for all pubs
 // This page will exist in each deployment, but getStaticPaths ensures
@@ -487,6 +488,17 @@ const pubStructuredData = {
           <UtensilsCrossed class="w-12 h-12 mx-auto mb-4 text-primary/40" />
           <h3 class="text-xl font-semibold text-primary mb-2">Menus Coming Soon</h3>
           <p class="text-primary/70">We're currently updating our menu selection. Please check back soon!</p>
+        </div>
+      )}
+
+      {/* Why Choose Us Section */}
+      {pub.whyChooseUs && (
+        <div class="mb-12 -mx-4 sm:-mx-6 lg:-mx-8">
+          <WhyChooseUs 
+            reasons={pub.whyChooseUs}
+            backgroundImage={pub.whyChooseUs?.backgroundImage?.asset?.url}
+            client:load
+          />
         </div>
       )}
 
