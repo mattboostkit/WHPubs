@@ -28,10 +28,20 @@ if (!targetPubSlug && !pubData) {
 ---
 
 <Layout title={pageTitle} description={pageDescription} pub={pubData}>
-  <main class="container mx-auto px-4 py-12 pt-24"> {/* Added padding-top */}
-    <h1 class="text-4xl md:text-5xl font-bold text-primary mb-12 text-center">
-      {pubData ? `${pubData.name} Menu` : 'Our Menus'}
-    </h1>
+  <main>
+    {/* Pub Header with Square Logo - only show for pub-specific pages */}
+    {pubData && (
+      <PubHeader 
+        pubName={pubData.name}
+        squareLogo={pubData.squareLogo}
+        client:visible
+      />
+    )}
+    
+    <div class="container mx-auto px-4 py-12">
+      <h1 class="text-4xl md:text-5xl font-bold text-primary mb-12 text-center">
+        {pubData ? 'Menu' : 'Our Menus'}
+      </h1>
 
     {menus && menus.length > 0 ? (
       <div class="space-y-12">
