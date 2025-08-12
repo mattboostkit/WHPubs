@@ -62,6 +62,9 @@ const allPubs = pubs;
       client:load
     />
 
+    {/* Stats Section - Build Trust Immediately */}
+    <HomepageStats client:visible />
+
     {/* Special Offers Section */}
     {activeOffers && activeOffers.length > 0 && (
       <OffersSection offers={activeOffers.slice(0, 6)} />
