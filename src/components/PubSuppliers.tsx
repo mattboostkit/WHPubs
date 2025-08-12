@@ -371,7 +371,7 @@ export default function PubSuppliers({
           {selectedCategory === 'All' ? (
             // Show grouped by category
             <div className="space-y-12">
-              {Object.entries(groupedSuppliers).map(([category, suppliers]) => (
+              {displayCategories.map(([category, suppliers]) => (
                 <div key={category}>
                   <h3 className="text-2xl font-bold text-primary mb-6 flex items-center gap-3">
                     <div className="w-8 h-8 bg-secondary/10 rounded-lg flex items-center justify-center">
