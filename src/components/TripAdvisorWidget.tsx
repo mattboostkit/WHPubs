@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Star, ExternalLink, Award } from 'lucide-react';
+import { Star, ExternalLink, Award, MessageSquare, ThumbsUp } from 'lucide-react';
 
 interface TripAdvisorWidgetProps {
   pubSlug: string;
