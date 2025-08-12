@@ -54,7 +54,7 @@ const pubActivities = {
         { name: 'Village Events Board', description: 'Check Council boards around Otford for upcoming events', icon: <Calendar className="w-5 h-5" /> },
         { name: 'Otford May Day', description: 'Traditional May Day celebrations on the Green', icon: <Users className="w-5 h-5" /> },
         { name: 'Otford Festival', description: 'Annual summer festival with music and stalls', icon: <Users className="w-5 h-5" /> },
-        { name: 'St. Bartholomew's Church Events', description: 'Regular concerts and community events', icon: <Church className="w-5 h-5" /> }
+        { name: "St. Bartholomew's Church Events", description: 'Regular concerts and community events', icon: <Church className="w-5 h-5" /> }
       ]
     }
   },
@@ -88,7 +88,7 @@ const pubActivities = {
         { name: 'Village Events Board', description: 'Check Council boards around Otford for upcoming events', icon: <Calendar className="w-5 h-5" /> },
         { name: 'Otford May Day', description: 'Traditional May Day celebrations on the Green', icon: <Users className="w-5 h-5" /> },
         { name: 'Otford Festival', description: 'Annual summer festival with music and stalls', icon: <Users className="w-5 h-5" /> },
-        { name: 'St. Bartholomew's Church Events', description: 'Regular concerts and community events', icon: <Church className="w-5 h-5" /> }
+        { name: "St. Bartholomew's Church Events", description: 'Regular concerts and community events', icon: <Church className="w-5 h-5" /> }
       ]
     }
   },
@@ -143,7 +143,7 @@ const pubActivities = {
       icon: <Footprints className="w-6 h-6" />,
       items: [
         { name: 'High Elms Country Park', description: '250 acres with nature trails and BEECHE visitor centre', icon: <Mountain className="w-5 h-5" /> },
-        { name: 'Downe Bank Nature Reserve', description: 'Darwin's thinking path with rare orchids', icon: <TreePine className="w-5 h-5" /> },
+        { name: 'Downe Bank Nature Reserve', description: "Darwin's thinking path with rare orchids", icon: <TreePine className="w-5 h-5" /> },
         { name: 'Keston Common', description: 'Historic parkland with ponds and windmill', icon: <TreePine className="w-5 h-5" /> },
         { name: 'Farnborough Village Walk', description: 'Circular walk through historic village', icon: <Footprints className="w-5 h-5" /> },
         { name: 'Orpington to Chelsfield Walk', description: 'Scenic countryside route', icon: <Footprints className="w-5 h-5" /> }
@@ -167,7 +167,7 @@ const pubActivities = {
       items: [
         { name: 'Chiddingstone Castle', description: 'Victorian castle with Egyptian and Japanese collections', icon: <Castle className="w-5 h-5" /> },
         { name: 'Historic Chiddingstone Village', description: 'Tudor village preserved by National Trust', icon: <Camera className="w-5 h-5" /> },
-        { name: 'St. Luke's Church', description: 'Victorian church with beautiful stained glass', icon: <Church className="w-5 h-5" /> },
+        { name: "St. Luke's Church", description: 'Victorian church with beautiful stained glass', icon: <Church className="w-5 h-5" /> },
         { name: 'Penshurst Place', description: 'Medieval manor house with 600 years of history', icon: <Castle className="w-5 h-5" /> },
         { name: 'The Chiding Stone', description: 'Ancient sandstone outcrop and village namesake', icon: <Mountain className="w-5 h-5" /> }
       ]
