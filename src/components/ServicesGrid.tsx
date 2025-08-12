@@ -1,5 +1,5 @@
 import React from 'react';
-import { Users, Gift, Calendar, Utensils, Music, Beer } from 'lucide-react';
+import { Users, Gift, Calendar, Utensils, ChefHat, Beer } from 'lucide-react';
 
 export default function ServicesGrid() {
   const services = [
