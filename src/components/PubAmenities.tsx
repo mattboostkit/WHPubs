@@ -150,6 +150,7 @@ const amenitiesConfig = {
 };
 
 // Pub-specific amenities based on what we know about each pub
+// All pubs have Sunday Roast and Dog Friendly as standard
 const pubAmenities = {
   'the-bull': [
     'Disabled Facilities', 'Dog Friendly', 'Family Friendly', 'Beer Garden', 
@@ -164,12 +165,12 @@ const pubAmenities = {
     'Car Park', 'Free WiFi', 'Card Payments', 'Live Music', 'Sunday Roast', 'Function Room'
   ],
   'the-rose-and-crown': [
-    'Disabled Facilities', 'Dog Friendly', 'Family Friendly', 'Beer Garden', 
+    'Disabled Facilities', 'Dog Friendly', 'Family Friendly', 'Beer Garden', 'Tiki Huts',
     'Car Park', 'Free WiFi', 'Card Payments', 'Games Area', 'Sunday Roast', 'Baby Changing'
   ],
   'the-little-brown-jug': [
-    'Disabled Facilities', 'Dog Friendly', 'Family Friendly', 'Garden', 
-    'Car Park', 'Free WiFi', 'Card Payments', 'Live Music', 'Sunday Roast', 'Smoking Area'
+    'Disabled Facilities', 'Dog Friendly', 'Family Friendly', 'Garden', 'Tiki Huts',
+    'Car Park', 'Free WiFi', 'Card Payments', 'Live Music', 'Sunday Roast'
   ],
   'the-chaser-inn': [
     'Disabled Facilities', 'Dog Friendly', 'Family Friendly', 'Garden', 
