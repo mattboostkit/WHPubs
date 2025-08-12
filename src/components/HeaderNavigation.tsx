@@ -8,14 +8,19 @@ interface HeaderNavigationProps {
 }
 
 export default function HeaderNavigation({ pubs, currentPath, isPubLayout, headerLinks }: HeaderNavigationProps) {
-  // Remove duplicates and filter out "Make A Booking" (handled separately as CTA button)
+  // Remove duplicates and filter out "Make A Booking" (handled separately as CTA button)  
   const uniqueLinks = headerLinks.filter((link, index, array) => {
     // Filter out "Make A Booking" as it's handled as a separate CTA button
     if (link.title === "Make A Booking") return false;
     
-    // Remove duplicates by checking if this is the first occurrence of this title
-    return array.findIndex(l => l.title === link.title) === index;
+    // Remove duplicates by checking if this is the first occurrence of this title AND URL combination
+    // This prevents removing legitimate different links with the same title
+    return array.findIndex(l => l.title === link.title && l.url === link.url) === index;
   });
+
+  // Debug log to see what we're working with
+  console.log('HeaderNavigation - Original links:', headerLinks);
+  console.log('HeaderNavigation - Filtered unique links:', uniqueLinks);
 
   return (
     <div className="hidden md:flex items-center space-x-8" role="navigation">
