@@ -134,8 +134,14 @@ const allPubs = pubs;
       </div>
     </section>
 
+    {/* Featured Dishes Showcase */}
+    <FeaturedDishes client:visible />
+
     {/* Services Grid - What We Offer */}
     <ServicesGrid client:visible />
+
+    {/* What's On Section */}
+    <WhatsOn client:visible />
 
     {/* Events Carousel Section */}
     {upcomingEvents && upcomingEvents.length > 0 && (
