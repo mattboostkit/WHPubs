@@ -14,50 +14,52 @@ interface Testimonial {
 export default function TestimonialsCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
 
+  // IMPORTANT: Replace these with actual customer testimonials from your review platforms
+  // You can pull these from Sanity CMS reviews or your actual TripAdvisor/Google reviews
   const testimonials: Testimonial[] = [
     {
       id: 1,
-      name: 'Sarah Thompson',
+      name: 'Customer Name', // Replace with real customer
       location: 'The Cricketers Inn',
       rating: 5,
-      text: 'Absolutely wonderful Sunday roast! The beef was perfectly cooked and the Yorkshire puddings were huge. Staff were so friendly and the atmosphere was perfect for our family gathering.',
-      date: 'Last week',
-      source: 'Google'
-    },
-    {
-      id: 2,
-      name: 'James Mitchell',
-      location: 'The Rose and Crown',
-      rating: 5,
-      text: 'The best pub garden in Kent! We spent a lovely summer afternoon here with friends. Great selection of local ales and the food was exceptional. Will definitely be back!',
-      date: '2 weeks ago',
+      text: '[Add real review text here from TripAdvisor/Google Reviews]', // Replace with actual review
+      date: 'Date', // Add actual date
       source: 'TripAdvisor'
     },
     {
+      id: 2,
+      name: 'Customer Name', // Replace with real customer
+      location: 'The Rose and Crown',
+      rating: 5,
+      text: '[Add real review text here from TripAdvisor/Google Reviews]', // Replace with actual review
+      date: 'Date', // Add actual date
+      source: 'Google'
+    },
+    {
       id: 3,
-      name: 'Emma Wilson',
+      name: 'Customer Name', // Replace with real customer
       location: 'The Little Brown Jug',
       rating: 5,
-      text: 'Such a cozy and welcoming pub! The log fire was roaring, the food was delicious, and the staff made us feel right at home. A real gem in the countryside.',
-      date: '3 days ago',
-      source: 'Facebook'
+      text: '[Add real review text here from TripAdvisor/Google Reviews]', // Replace with actual review
+      date: 'Date', // Add actual date
+      source: 'TripAdvisor'
     },
     {
       id: 4,
-      name: 'David Clarke',
+      name: 'Customer Name', // Replace with real customer
       location: 'The Chaser Inn',
       rating: 5,
-      text: 'Fantastic live music night! The atmosphere was electric and the band was brilliant. Great craft beers and the burger was one of the best I\'ve had. Highly recommend!',
-      date: 'Yesterday',
+      text: '[Add real review text here from TripAdvisor/Google Reviews]', // Replace with actual review
+      date: 'Date', // Add actual date
       source: 'Google'
     },
     {
       id: 5,
-      name: 'Lucy Anderson',
+      name: 'Customer Name', // Replace with real customer
       location: 'The Bull',
       rating: 5,
-      text: 'We held our anniversary dinner here and it was perfect. The private dining room was beautiful, the service was impeccable, and the food was outstanding. Thank you for making our day special!',
-      date: 'Last month',
+      text: '[Add real review text here from TripAdvisor/Google Reviews]', // Replace with actual review
+      date: 'Date', // Add actual date
       source: 'TripAdvisor'
     }
   ];
