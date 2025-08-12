@@ -272,6 +272,17 @@ const pubStructuredData = {
       </div>
     </section>
 
+    {/* Atmosphere Section - Visual showcase */}
+    <PubAtmosphere 
+      pubName={pub.name}
+      images={pub.gallery?.map(img => ({
+        url: img.asset?.url,
+        caption: img.alt || 'Interior view',
+        time: 'All Day'
+      }))}
+      client:visible
+    />
+
     {/* Main Content Area */}
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16">
       <article class="max-w-4xl mx-auto">
