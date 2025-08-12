@@ -860,3 +860,26 @@ export async function getDetailedMenusForPub(targetPubSlug) {
     } | order(displayOrder asc, title asc)
   `, params);
 }
+
+// Helper function to get featured dishes for homepage
+export async function getFeaturedDishes() {
+  return client.fetch(`
+    *[_type == "featuredDishes" && active == true][0] {
+      title,
+      subtitle,
+      dishes[] {
+        name,
+        description,
+        price,
+        image {
+          asset->{
+            _id,
+            url
+          }
+        },
+        tag,
+        pubLocation
+      }
+    }
+  `);
+}
