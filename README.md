@@ -29,22 +29,35 @@ A website for WH Pubs, featuring traditional British pubs in South East England 
 
 ## Features
 
-- Responsive design for all devices
-- Accessibility improvements with ARIA labels
+### Core Functionality
+- Responsive design for all devices with mobile-first approach
+- Accessibility improvements with ARIA labels and keyboard navigation
 - SEO optimizations with meta tags, sitemap, and robots.txt
 - Schema.org structured data for better search results
 - Custom 404 error page
 - Google Analytics integration
-- Content Management System (Sanity Studio)
-- Interactive pub finder with filtering capabilities
-- Development Kitchen page with CMS-managed content
-- Events filtering by pub location
+
+### Content Management
+- Content Management System (Sanity Studio) for all content types
+- CMS-managed images for Welcome section (4 customizable images)
+- Development Kitchen page with fully CMS-managed content
 - Privacy Policy page with CMS integration and fallback content
+
+### Pub Features
+- Interactive pub finder with filtering capabilities
+- Interactive pub cards with hover effects and direct links to individual pub sites
+- Comprehensive amenities showcase with 15+ amenity types
+- Things To Do guides with location-specific attractions
+- Events filtering by pub location
 - Event images with expandable view (600x300 thumbnails, 2400x1200 full size)
 - Private pub hire section with CMS-managed imagery
+- Dedicated supplier partnerships showcase
+
+### Design System
 - Comprehensive design system for consistent UI/UX across all sections
-- CMS-managed images for Welcome section (4 customizable images)
-- Interactive pub cards with hover effects and direct links to individual pub sites
+- shadcn/ui components with custom theming
+- Tailwind CSS with custom color scheme (Black #1A1A1A and Gold #B79C64)
+- Lora font for headings, Noto Sans for body text
 
 ## Tech Stack
 
