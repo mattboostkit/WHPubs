@@ -18,121 +18,121 @@ const pubPerfectScenarios = {
   'the-cricketers-inn': [
     {
       icon: <Utensils className="w-6 h-6" />,
-      title: 'Sunday Roasts',
-      description: 'Award-winning traditional roasts with all the trimmings, served in generous portions that have locals booking weeks ahead',
-      image: '/images/sunday-roast.jpg'
-    },
-    {
-      icon: <Users className="w-6 h-6" />,
-      title: 'Family Gatherings',
-      description: 'Spacious dining areas and a welcoming garden perfect for bringing the whole family together',
-      image: '/images/family-dining.jpg'
+      title: 'Orangery Dining',
+      description: 'Our stunning Orangery provides the perfect setting for special meals, with natural light flooding through glass walls and views over our gardens',
+      image: '/images/orangery-dining.jpg'
     },
     {
       icon: <PartyPopper className="w-6 h-6" />,
-      title: 'Village Events',
-      description: 'From quiz nights to live music, we\'re the social heart of Meopham village life',
-      image: '/images/pub-event.jpg'
+      title: 'BBQ & Outside Events',
+      description: 'Our extensive BBQ and outside area hosts everything from summer parties to live music nights, creating unforgettable outdoor experiences',
+      image: '/images/bbq-outdoor.jpg'
+    },
+    {
+      icon: <Coffee className="w-6 h-6" />,
+      title: 'Bar Area Gatherings',
+      description: 'Our welcoming bar area is the heart of village life, where locals gather for craft ales, conversation, and our famous pub quiz nights',
+      image: '/images/bar-area.jpg'
     }
   ],
   'the-rose-and-crown': [
     {
-      icon: <Coffee className="w-6 h-6" />,
-      title: 'All-Day Dining',
-      description: 'From morning coffee and breakfast through to evening cocktails, we\'re here whenever hunger strikes',
-      image: '/images/breakfast-dining.jpg'
+      icon: <PartyPopper className="w-6 h-6" />,
+      title: 'Tiki Hut Paradise',
+      description: 'Escape to our tropical Tiki Huts for cocktails and summer parties - your own private island getaway in the heart of Kent',
+      image: '/images/tiki-huts.jpg'
     },
     {
       icon: <Users className="w-6 h-6" />,
-      title: 'Garden Parties',
-      description: 'Our extensive gardens are perfect for celebrations, with plenty of space for kids to play',
-      image: '/images/garden-party.jpg'
+      title: 'Family Fun Zone',
+      description: 'Our dedicated Kids Area means parents can relax while children play safely, making us the perfect destination for family gatherings',
+      image: '/images/kids-area.jpg'
     },
     {
-      icon: <Heart className="w-6 h-6" />,
-      title: 'Date Nights',
-      description: 'Intimate corners, candlelit tables, and a carefully curated wine list for romantic evenings',
-      image: '/images/romantic-dinner.jpg'
+      icon: <Utensils className="w-6 h-6" />,
+      title: 'Pizza Shack Delights',
+      description: 'Watch our chefs craft authentic wood-fired pizzas in our Pizza Shack - perfect for casual dining or garden parties',
+      image: '/images/pizza-shack.jpg'
     }
   ],
   'the-little-brown-jug': [
     {
-      icon: <Coffee className="w-6 h-6" />,
-      title: 'Countryside Escapes',
-      description: 'The perfect stop after exploring the Kent countryside, with hearty meals to refuel',
-      image: '/images/countryside-pub.jpg'
+      icon: <PartyPopper className="w-6 h-6" />,
+      title: 'Tiki Hut Escapes',
+      description: 'Our charming Tiki Huts offer intimate dining spaces perfect for celebrations or romantic dinners under the stars',
+      image: '/images/tiki-retreat.jpg'
     },
     {
       icon: <Utensils className="w-6 h-6" />,
-      title: 'Seasonal Dining',
-      description: 'Menus that change with the seasons, showcasing the best of Kent\'s local produce',
-      image: '/images/seasonal-food.jpg'
+      title: 'Playground Smokehouse',
+      description: 'Experience authentic BBQ from our Playground Smokehouse, where slow-cooked meats and vibrant flavors create unforgettable meals',
+      image: '/images/smokehouse.jpg'
     },
     {
-      icon: <Heart className="w-6 h-6" />,
-      title: 'Cozy Retreats',
-      description: 'Fireside tables and quiet corners perfect for escaping the everyday',
-      image: '/images/cozy-pub.jpg'
+      icon: <Calendar className="w-6 h-6" />,
+      title: 'All-Weather Dining',
+      description: 'Our innovative Retractable Roof means you can enjoy al fresco dining come rain or shine - the British weather won\'t stop your plans',
+      image: '/images/retractable-roof.jpg'
     }
   ],
   'the-chaser-inn': [
     {
-      icon: <PartyPopper className="w-6 h-6" />,
-      title: 'Quiz Nights',
-      description: 'Test your knowledge at our legendary quiz nights that bring the whole village together',
-      image: '/images/quiz-night.jpg'
+      icon: <Heart className="w-6 h-6" />,
+      title: 'The Church Room',
+      description: 'Our historic Church Room provides an intimate setting for private parties, with original features creating a unique atmosphere',
+      image: '/images/church-room.jpg'
+    },
+    {
+      icon: <Coffee className="w-6 h-6" />,
+      title: 'Courtyard Gatherings',
+      description: 'Our charming Courtyard is perfect for afternoon drinks or evening meals, offering a peaceful retreat from the bustle',
+      image: '/images/courtyard.jpg'
     },
     {
       icon: <Users className="w-6 h-6" />,
-      title: 'Dog Walkers',
-      description: 'Four-legged friends are always welcome, with water bowls and treats at the ready',
-      image: '/images/dog-friendly.jpg'
-    },
-    {
-      icon: <Utensils className="w-6 h-6" />,
-      title: 'Weekend Brunches',
-      description: 'Lazy weekend mornings with locally sourced breakfasts and proper coffee',
-      image: '/images/brunch.jpg'
+      title: 'Garden Celebrations',
+      description: 'Our beautiful Garden hosts everything from wedding receptions to summer parties, with space for marquees and outdoor entertainment',
+      image: '/images/garden-events.jpg'
     }
   ],
   'the-bull-otford': [
     {
-      icon: <Calendar className="w-6 h-6" />,
-      title: 'Special Occasions',
-      description: 'Private dining rooms and bespoke menus for birthdays, anniversaries, and celebrations',
-      image: '/images/private-dining.jpg'
+      icon: <Heart className="w-6 h-6" />,
+      title: 'Fireside Dining',
+      description: 'Cozy up by our roaring Fireplaces for intimate dinners or warming winter lunches - the perfect escape on chilly days',
+      image: '/images/fireplace-dining.jpg'
     },
     {
       icon: <Users className="w-6 h-6" />,
-      title: 'Business Lunches',
-      description: 'Professional service and quiet spaces perfect for working lunches and meetings',
-      image: '/images/business-lunch.jpg'
+      title: 'Garden Gatherings',
+      description: 'Our spacious Garden is ideal for summer celebrations, family parties, and lazy Sunday afternoons with friends',
+      image: '/images/garden-party.jpg'
     },
     {
-      icon: <Heart className="w-6 h-6" />,
-      title: 'Village Life',
-      description: 'At the heart of Otford for 500 years, we\'re where the community comes together',
-      image: '/images/village-pub.jpg'
+      icon: <Coffee className="w-6 h-6" />,
+      title: 'Bar Social Hub',
+      description: 'Our vibrant Bar area is where the village comes alive - from morning coffee to evening cocktails, it\'s the heart of Otford social life',
+      image: '/images/bar-social.jpg'
     }
   ],
   'the-bull': [
     {
-      icon: <Calendar className="w-6 h-6" />,
-      title: 'Special Occasions',
-      description: 'Private dining rooms and bespoke menus for birthdays, anniversaries, and celebrations',
-      image: '/images/private-dining.jpg'
+      icon: <Heart className="w-6 h-6" />,
+      title: 'Fireside Dining',
+      description: 'Cozy up by our roaring Fireplaces for intimate dinners or warming winter lunches - the perfect escape on chilly days',
+      image: '/images/fireplace-dining.jpg'
     },
     {
       icon: <Users className="w-6 h-6" />,
-      title: 'Business Lunches',
-      description: 'Professional service and quiet spaces perfect for working lunches and meetings',
-      image: '/images/business-lunch.jpg'
+      title: 'Garden Gatherings',
+      description: 'Our spacious Garden is ideal for summer celebrations, family parties, and lazy Sunday afternoons with friends',
+      image: '/images/garden-party.jpg'
     },
     {
-      icon: <Heart className="w-6 h-6" />,
-      title: 'Village Life',
-      description: 'At the heart of Otford for 500 years, we\'re where the community comes together',
-      image: '/images/village-pub.jpg'
+      icon: <Coffee className="w-6 h-6" />,
+      title: 'Bar Social Hub',
+      description: 'Our vibrant Bar area is where the village comes alive - from morning coffee to evening cocktails, it\'s the heart of Otford social life',
+      image: '/images/bar-social.jpg'
     }
   ]
 };
