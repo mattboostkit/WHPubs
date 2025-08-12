@@ -157,6 +157,16 @@ const pubStructuredData = {
       client:visible
     />
 
+    {/* Quick Info Section - Right after header for immediate information */}
+    <section class="py-8 -mt-8 relative z-10">
+      <div class="container mx-auto px-4">
+        <PubQuickInfo pub={pub} client:visible />
+      </div>
+    </section>
+
+    {/* Highlights Section - Show what's special this week */}
+    <PubHighlights pubName={pub.name} client:visible />
+
     {/* Welcome Section */}
     <section class="py-16 bg-gradient-to-b from-white to-gray-50">
       <div class="container mx-auto px-4">
