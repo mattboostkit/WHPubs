@@ -19,6 +19,7 @@ import loyaltyProgram from './loyaltyProgram'
 import aboutContent from './aboutContent'
 import pubFeatures from './pubFeatures'
 import privacyPolicy from './privacyPolicy'
+import featuredDishes from './featuredDishes'
 import { eventsPageSettings, blogPageSettings, aboutPageSettings, contactPageSettings, careersPageSettings, thingsToDoPageSettings, pubFinderPageSettings } from './pageSettings'
 
 export const schemaTypes = [
