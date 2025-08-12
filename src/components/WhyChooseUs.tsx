@@ -127,7 +127,7 @@ export default function WhyChooseUs({ reasons, backgroundImage }: WhyChooseUsPro
                   </span>
                   <div className="flex-1">
                     <h4 className={`
-                      text-lg lg:text-xl font-bold uppercase tracking-wider transition-colors duration-300
+                      text-lg lg:text-xl font-bold transition-colors duration-300
                       ${hoveredIndex === index ? 'text-white' : 'text-primary'}
                     `}>
                       {reason.title}
