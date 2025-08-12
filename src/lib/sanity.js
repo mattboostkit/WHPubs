@@ -196,6 +196,13 @@ export async function getPubs(targetPubSlug = null) {
       heroOverlayText, // Fetch overlay text
       heroOverlayButtonText, // Fetch overlay button text
       heroOverlayButtonLink, // Fetch overlay button link
+      // Why Choose Us fields
+      whyChooseUs {
+        reason1 { title, description },
+        reason2 { title, description },
+        reason3 { title, description },
+        backgroundImage { asset->{ _id, url }, alt }
+      },
       // Layout fields
       logo { asset->{ _id, url }, alt },
       headerNavLinks[]{ title, url },
