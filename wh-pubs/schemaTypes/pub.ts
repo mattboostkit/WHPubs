@@ -70,7 +70,7 @@ export default defineType({
               name: 'title',
               title: 'Title',
               type: 'string',
-              description: 'e.g., "LOCAL ALES"',
+              description: 'e.g., "SHACKS" or "LOCAL ALES"',
               validation: (Rule) => Rule.max(30),
             },
             {
@@ -80,6 +80,15 @@ export default defineType({
               rows: 2,
               description: 'Brief description (1-2 sentences)',
               validation: (Rule) => Rule.max(150),
+            },
+            {
+              name: 'image',
+              title: 'Image',
+              type: 'image',
+              description: 'Image for this reason (recommended: 1920x1080px or 16:9 ratio)',
+              options: {
+                hotspot: true,
+              },
             },
           ],
         },
@@ -92,7 +101,7 @@ export default defineType({
               name: 'title',
               title: 'Title',
               type: 'string',
-              description: 'e.g., "LIVE EVENTS"',
+              description: 'e.g., "PRIVATE DINING" or "SPECIAL EVENTS"',
               validation: (Rule) => Rule.max(30),
             },
             {
@@ -102,6 +111,15 @@ export default defineType({
               rows: 2,
               description: 'Brief description (1-2 sentences)',
               validation: (Rule) => Rule.max(150),
+            },
+            {
+              name: 'image',
+              title: 'Image',
+              type: 'image',
+              description: 'Image for this reason (recommended: 1920x1080px or 16:9 ratio)',
+              options: {
+                hotspot: true,
+              },
             },
           ],
         },
