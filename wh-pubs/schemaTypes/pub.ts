@@ -24,6 +24,90 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'whyChooseUs',
+      title: 'Why Choose Us - Three Reasons',
+      type: 'object',
+      group: 'basic',
+      description: 'Three compelling reasons why customers should visit this pub',
+      fields: [
+        {
+          name: 'reason1',
+          title: 'Reason 1',
+          type: 'object',
+          fields: [
+            {
+              name: 'title',
+              title: 'Title',
+              type: 'string',
+              description: 'e.g., "EXCEPTIONAL FOOD"',
+              validation: (Rule) => Rule.max(30),
+            },
+            {
+              name: 'description',
+              title: 'Description',
+              type: 'text',
+              rows: 2,
+              description: 'Brief description (1-2 sentences)',
+              validation: (Rule) => Rule.max(150),
+            },
+          ],
+        },
+        {
+          name: 'reason2',
+          title: 'Reason 2',
+          type: 'object',
+          fields: [
+            {
+              name: 'title',
+              title: 'Title',
+              type: 'string',
+              description: 'e.g., "LOCAL ALES"',
+              validation: (Rule) => Rule.max(30),
+            },
+            {
+              name: 'description',
+              title: 'Description',
+              type: 'text',
+              rows: 2,
+              description: 'Brief description (1-2 sentences)',
+              validation: (Rule) => Rule.max(150),
+            },
+          ],
+        },
+        {
+          name: 'reason3',
+          title: 'Reason 3',
+          type: 'object',
+          fields: [
+            {
+              name: 'title',
+              title: 'Title',
+              type: 'string',
+              description: 'e.g., "LIVE EVENTS"',
+              validation: (Rule) => Rule.max(30),
+            },
+            {
+              name: 'description',
+              title: 'Description',
+              type: 'text',
+              rows: 2,
+              description: 'Brief description (1-2 sentences)',
+              validation: (Rule) => Rule.max(150),
+            },
+          ],
+        },
+        {
+          name: 'backgroundImage',
+          title: 'Section Background Image',
+          type: 'image',
+          description: 'Background image for the Why Choose Us section (recommended: 1920x500px)',
+          options: {
+            hotspot: true,
+          },
+        },
+      ],
+    }),
+    defineField({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
