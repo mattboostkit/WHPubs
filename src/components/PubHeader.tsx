@@ -22,12 +22,12 @@ export default function PubHeader({ pubName, squareLogo, fallbackLogo, className
     <section className={`py-12 lg:py-16 bg-gradient-to-b from-white to-gray-50 ${className}`}>
       <div className="container mx-auto px-4">
         <div className="flex flex-col items-center text-center">
-          {/* Square Logo */}
-          {squareLogo?.asset?.url ? (
+          {/* Logo - prefer squareLogo, fallback to regular logo */}
+          {(squareLogo?.asset?.url || fallbackLogo?.asset?.url) ? (
             <div className="mb-6 lg:mb-8">
               <img 
-                src={squareLogo.asset.url}
-                alt={squareLogo.alt || `${pubName} logo`}
+                src={squareLogo?.asset?.url || fallbackLogo?.asset?.url}
+                alt={squareLogo?.alt || fallbackLogo?.alt || `${pubName} logo`}
                 className="w-32 h-32 lg:w-40 lg:h-40 object-contain rounded-lg shadow-lg"
               />
             </div>
