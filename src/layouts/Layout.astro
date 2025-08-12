@@ -91,14 +91,16 @@ if (isPubLayout && activePub) {
 	     ariaLabel: link.title || '' 
 	   }));
 	 } else {
-	   // Default nav structure for individual pub sites
+	   // Enhanced nav structure for individual pub sites - competitive with Elite Pubs
 	   headerLinks = [
 	     { title: "Home", url: "/", ariaLabel: "Home" }, 
-	     { title: "Menu", url: "/menu", ariaLabel: "Menu" }, 
-	     { title: "Events", url: "/events", ariaLabel: "Events" },
-	     { title: "Things To Do", url: "/things-to-do", ariaLabel: "Things To Do" },
-	     { title: "Gallery", url: "/gallery", ariaLabel: "Gallery" },
-	     { title: "Suppliers", url: "/suppliers", ariaLabel: "Our Suppliers" },
+	     { title: "Menus", url: "/menu", ariaLabel: "Our Menus" }, 
+	     { title: "What's On", url: "/events", ariaLabel: "What's On - Events" },
+	     { title: "Private Dining", url: "/private-dining", ariaLabel: "Private Dining" },
+	     { title: "Gallery", url: "/gallery", ariaLabel: "Photo Gallery" },
+	     { title: "Our Suppliers", url: "/suppliers", ariaLabel: "Our Quality Suppliers" },
+	     { title: "Things To Do", url: "/things-to-do", ariaLabel: "Local Things To Do" },
+	     { title: "Contact", url: "/contact", ariaLabel: "Contact Us" },
 	     // Show booking link if pub has reservations URL
 	     ...(activePub.reservationsUrl ? [{ title: "Make A Booking", url: "/book-table", ariaLabel: "Make a Booking" }] : []),
 	   ];
