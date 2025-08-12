@@ -796,6 +796,134 @@ export default defineType({
 
     // --- Special Offers & Promotions ---
     defineField({
+      name: 'christmasMenu',
+      title: 'Christmas Menu',
+      type: 'object',
+      group: 'content',
+      description: 'Christmas menu details and booking information',
+      fields: [
+        {
+          name: 'enabled',
+          title: 'Show Christmas Menu Section',
+          type: 'boolean',
+          description: 'Enable to display Christmas menu section on the pub page',
+          initialValue: false,
+        },
+        {
+          name: 'title',
+          title: 'Section Title',
+          type: 'string',
+          description: 'e.g., "Christmas at The Bull"',
+          validation: (Rule) => Rule.max(50),
+        },
+        {
+          name: 'subtitle',
+          title: 'Subtitle',
+          type: 'text',
+          rows: 2,
+          description: 'Brief introduction text',
+          validation: (Rule) => Rule.max(200),
+        },
+        {
+          name: 'menuImage',
+          title: 'Menu Image',
+          type: 'image',
+          description: 'Christmas menu image or festive photo (recommended: 1200x800px)',
+          options: {
+            hotspot: true,
+          },
+        },
+        {
+          name: 'menuPdf',
+          title: 'Christmas Menu PDF',
+          type: 'file',
+          description: 'Upload the Christmas menu as a PDF',
+          options: {
+            accept: '.pdf',
+          },
+        },
+        {
+          name: 'menuDetails',
+          title: 'Menu Details',
+          type: 'array',
+          of: [
+            {
+              type: 'object',
+              fields: [
+                {
+                  name: 'courseType',
+                  title: 'Course Type',
+                  type: 'string',
+                  options: {
+                    list: [
+                      { title: 'Starters', value: 'starters' },
+                      { title: 'Mains', value: 'mains' },
+                      { title: 'Desserts', value: 'desserts' },
+                      { title: 'Set Menu', value: 'setMenu' },
+                    ],
+                  },
+                },
+                {
+                  name: 'items',
+                  title: 'Menu Items',
+                  type: 'array',
+                  of: [
+                    {
+                      type: 'object',
+                      fields: [
+                        { name: 'name', type: 'string', title: 'Dish Name' },
+                        { name: 'description', type: 'text', rows: 2, title: 'Description' },
+                        { name: 'price', type: 'string', title: 'Price (e.g., £24.95)' },
+                        { name: 'dietary', type: 'array', of: [{ type: 'string' }], title: 'Dietary Info', options: {
+                          list: [
+                            { title: 'Vegetarian', value: 'V' },
+                            { title: 'Vegan', value: 'VE' },
+                            { title: 'Gluten Free', value: 'GF' },
+                            { title: 'Dairy Free', value: 'DF' },
+                          ],
+                        }},
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          name: 'pricing',
+          title: 'Pricing Information',
+          type: 'object',
+          fields: [
+            { name: 'adultPrice', type: 'string', title: 'Adult Price', description: 'e.g., "£65 per person"' },
+            { name: 'childPrice', type: 'string', title: 'Children Price', description: 'e.g., "£25 per child (under 12)"' },
+            { name: 'additionalInfo', type: 'text', rows: 2, title: 'Additional Pricing Info' },
+          ],
+        },
+        {
+          name: 'availability',
+          title: 'Availability',
+          type: 'text',
+          rows: 2,
+          description: 'When is the Christmas menu available? e.g., "Available from 1st December to 24th December"',
+        },
+        {
+          name: 'bookingInfo',
+          title: 'Booking Information',
+          type: 'text',
+          rows: 3,
+          description: 'Special booking instructions or requirements',
+        },
+        {
+          name: 'ctaText',
+          title: 'Call to Action Text',
+          type: 'string',
+          description: 'Button text (default: "Book Your Christmas Table")',
+          initialValue: 'Book Your Christmas Table',
+        },
+      ],
+    }),
+    defineField({
       name: 'currentOffers',
       title: 'Current Offers & Promotions',
       type: 'array',
