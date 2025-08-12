@@ -58,3 +58,36 @@ async function debugPubData() {
 }
 
 debugPubData();
+
+async function debugBullData() {
+  try {
+    console.log('\n--- Checking The Bull for comparison ---');
+    const pub = await client.fetch(`
+      *[_type == "pub" && slug.current == "the-bull"][0] {
+        name,
+        slug,
+        squareLogo {
+          asset->{
+            _id,
+            url
+          },
+          alt
+        },
+        logo {
+          asset->{
+            _id,
+            url
+          },
+          alt
+        }
+      }
+    `);
+    
+    console.log('The Bull data:', JSON.stringify(pub, null, 2));
+    
+  } catch (error) {
+    console.error('Error fetching Bull data:', error);
+  }
+}
+
+debugBullData();
