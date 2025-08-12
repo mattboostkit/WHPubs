@@ -31,7 +31,12 @@ npm run create-sample-posts  # Create sample blog posts
 1. **Frontend (Astro)**: Static site generator at root level
    - Pages in `src/pages/` - Dynamic routing with `[slug].astro` and `[...slug].astro`
    - Components in `src/components/` - React components with Tailwind/shadcn UI
-   - New components: `EventsFilter.tsx` for filtering events by pub
+   - Key components: 
+     - `PubAmenities.tsx` - Amenities showcase
+     - `PubThingsToDo.tsx` - Local attractions guide
+     - `PubSuppliers.tsx` - Supplier partnerships
+     - `HeaderNavigation.tsx` - Enhanced navigation
+     - `EventsFilter.tsx` - Event filtering by pub
    - Sanity integration via `src/lib/sanity.js`
 
 2. **CMS (Sanity)**: Headless CMS in `wh-pubs/` directory
