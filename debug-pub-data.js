@@ -91,3 +91,27 @@ async function debugBullData() {
 }
 
 debugBullData();
+
+async function listAllPubs() {
+  try {
+    console.log('\n--- Listing all pubs ---');
+    const pubs = await client.fetch(`
+      *[_type == "pub"] {
+        name,
+        "slug": slug.current,
+        "hasSquareLogo": defined(squareLogo),
+        "hasLogo": defined(logo)
+      } | order(name asc)
+    `);
+    
+    console.log('All pubs:');
+    pubs.forEach(pub => {
+      console.log(`- ${pub.name} (${pub.slug}) - squareLogo: ${pub.hasSquareLogo}, logo: ${pub.hasLogo}`);
+    });
+    
+  } catch (error) {
+    console.error('Error listing pubs:', error);
+  }
+}
+
+listAllPubs();
