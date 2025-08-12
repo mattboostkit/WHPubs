@@ -75,7 +75,7 @@ export default function EnhancedHero({
             href="/book-table"
             className="inline-flex items-center gap-3 bg-secondary text-primary px-8 py-4 rounded-full text-lg font-semibold hover:bg-secondary/90 transition-all duration-300 shadow-2xl hover:shadow-3xl group"
           >
-            Book Your Experience
+            Book a Table
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </a>
         </div>
