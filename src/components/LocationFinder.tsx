@@ -141,13 +141,14 @@ export default function LocationFinder() {
             {/* Map Area with all pub markers */}
             <div className="bg-gray-200 rounded-xl overflow-hidden h-[600px] relative">
               <iframe
-                src="https://www.google.com/maps/d/embed?mid=1YvPzqOm7qXzFQQ_9RqQYJdPFZvSMGXE&ehbc=2E312F&z=10"
+                src="https://www.google.com/maps/embed?pb=!1m76!1m12!1m3!1d159759.04441462823!2d0.1278893!3d51.3127658!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m61!3e0!4m5!1s0x47df4e6f3d6c3d9f%3A0x1234567890abcdef!2sThe%20Bull%2C%20High%20Street%2C%20Otford%2C%20TN14%205PG!3m2!1d51.3127658!2d0.1878893!4m5!1s0x47df538c123456789%3A0xabcdef1234567890!2sThe%20Chaser%20Inn%2C%20Stumble%20Hill%2C%20Shipbourne%2C%20TN11%209PE!3m2!1d51.2661244!2d0.3129497!4m5!1s0x47df3f5e123456789%3A0x9876543210fedcba!2sThe%20Cricketers%20Inn%2C%20Wrotham%20Road%2C%20Meopham%2C%20DA13%200QA!3m2!1d51.3665831!2d0.3656189!4m5!1s0x47df4567890abcdef%3A0xfedcba9876543210!2sThe%20Little%20Brown%20Jug%2C%20High%20Street%2C%20Chiddingstone%20Causeway%2C%20TN11%208JJ!3m2!1d51.1905677!2d0.1467361!4m5!1s0x47d8a9c123456789%3A0x0123456789abcdef!2sThe%20Rose%20%26%20Crown%2C%20Green%20Street%20Green%2C%20Orpington%2C%20BR6%206BT!3m2!1d51.3547244!2d0.0835533!5e0!3m2!1sen!2suk!4v1699999999999!5m2!1sen!2suk"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
+                className="grayscale"
               />
               <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-3">
                 <p className="text-sm font-semibold text-gray-700">All WH Pubs Locations</p>
