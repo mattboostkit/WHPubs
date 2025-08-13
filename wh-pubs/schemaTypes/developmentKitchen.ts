@@ -245,6 +245,82 @@ export default defineType({
       ]
     }),
     defineField({
+      name: 'handmadeBurgers',
+      title: 'Handmade Burgers Section',
+      type: 'object',
+      description: 'Showcase your handmade burger craftsmanship',
+      fields: [
+        defineField({
+          name: 'heading',
+          title: 'Section Heading',
+          type: 'string',
+          initialValue: 'Crafted by Hand, Made with Pride'
+        }),
+        defineField({
+          name: 'subheading',
+          title: 'Subheading',
+          type: 'string',
+          initialValue: 'Every Burger Tells Our Story'
+        }),
+        defineField({
+          name: 'content',
+          title: 'Content',
+          type: 'blockContent',
+          description: 'Describe your burger-making philosophy and process'
+        }),
+        defineField({
+          name: 'image1',
+          title: 'Burger Making Image 1',
+          type: 'image',
+          description: '🖼️ Ideal size: 800x600px - First image showing burger preparation',
+          options: { hotspot: true },
+          fields: [
+            {
+              name: 'alt',
+              type: 'string',
+              title: 'Alternative text',
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: 'caption',
+              type: 'string',
+              title: 'Image Caption',
+              description: 'Optional caption for the image'
+            }
+          ],
+        }),
+        defineField({
+          name: 'image2',
+          title: 'Burger Making Image 2',
+          type: 'image',
+          description: '🖼️ Ideal size: 800x600px - Second image showing burger preparation',
+          options: { hotspot: true },
+          fields: [
+            {
+              name: 'alt',
+              type: 'string',
+              title: 'Alternative text',
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: 'caption',
+              type: 'string',
+              title: 'Image Caption',
+              description: 'Optional caption for the image'
+            }
+          ],
+        }),
+        defineField({
+          name: 'highlights',
+          title: 'Key Highlights',
+          type: 'array',
+          of: [{type: 'string'}],
+          description: 'List key points about your burger-making process (e.g., "100% British Beef", "Hand-formed daily")',
+          validation: (Rule) => Rule.max(4)
+        }),
+      ]
+    }),
+    defineField({
       name: 'process',
       title: 'Development Process',
       type: 'array',
