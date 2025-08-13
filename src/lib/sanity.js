@@ -217,6 +217,18 @@ export async function getPubs(targetPubSlug = null) {
         reason3 { title, description, image { asset->{ _id, url } } },
         backgroundImage { asset->{ _id, url }, alt }
       },
+      signatureDishes {
+        title,
+        subtitle,
+        dishes[] {
+          name,
+          description,
+          price,
+          image { asset->{ _id, url } },
+          tag,
+          pubLocation
+        }
+      },
       // Christmas Menu fields
       christmasMenu {
         enabled,
@@ -304,6 +316,18 @@ export async function getHomepageData() {
         reason2 { title, description, image { asset->{ _id, url } } },
         reason3 { title, description, image { asset->{ _id, url } } },
         backgroundImage { asset->{ _id, url }, alt }
+      },
+      signatureDishes {
+        title,
+        subtitle,
+        dishes[] {
+          name,
+          description,
+          price,
+          image { asset->{ _id, url } },
+          tag,
+          pubLocation
+        }
       },
       specialFeatures {
         seasonalMenus {
