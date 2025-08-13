@@ -791,6 +791,13 @@ export async function getAboutContent() {
         },
         alt
       },
+      ownerPhoto{
+        asset->{
+          url,
+          metadata
+        },
+        alt
+      },
       storyContent,
       showLeadershipSection,
       showCommitmentsSection
