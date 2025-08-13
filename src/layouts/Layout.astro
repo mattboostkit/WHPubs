@@ -210,9 +210,12 @@ const metaDescription = description || footerDescription;
 			<nav id="main-navigation" class="container mx-auto px-4 py-4" aria-label="Main navigation">
 				<div class="flex items-center justify-between">
 					<!-- Site Name / Logo -->
-					<a href="/" class="text-[#B79C64]" aria-label={`${siteName} Home`}>
+					<a href="/" class="text-[#B79C64] flex items-center space-x-3" aria-label={`${siteName} Home`}>
 						{logoUrl ? (
-							<img src={logoUrl} alt={logoAlt} class="h-14 max-w-[200px] sm:max-w-[300px] object-contain" />
+							<div class="flex items-center space-x-3">
+								<img src={logoUrl} alt={logoAlt} class="h-14 w-14 object-contain rounded" />
+								<span class="text-xl font-bold text-[#B79C64] hidden sm:block">{siteName}</span>
+							</div>
 						) : (
 							<span class="text-4xl font-bold">{siteName}</span>
 						)}
