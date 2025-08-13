@@ -156,20 +156,82 @@ export default function LocationFinder() {
 
           {/* Locations Grid */}
           <div className="grid lg:grid-cols-2 gap-8">
-            {/* Map Area with all pub markers */}
+            {/* Map Area */}
             <div className="bg-gray-200 rounded-xl overflow-hidden h-[600px] relative">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d319577.0889184132!2d-0.10000000000000003!3d51.3!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8a00baf21de75%3A0x52963a5addd52a99!2sKent%2C%20UK!5e0!3m2!1sen!2suk!4v1699999999999!5m2!1sen!2suk"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
+              {selectedLocation === 'all' ? (
+                // Show overview map for all locations
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d159488.0!2d0.2!3d51.3!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2suk!4v1699999999999!5m2!1sen!2suk"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              ) : selectedLocation === 'the-bull-otford' ? (
+                // The Bull map
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2493.904093306749!2d0.18611027660845464!3d51.312888771769785!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47df4db978c81c1b%3A0xd66f455756ad699f!2sThe%20Bull%20Otford!5e0!3m2!1sen!2suk!4v1699999999999!5m2!1sen!2suk"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              ) : selectedLocation === 'the-chaser-inn' ? (
+                // The Chaser Inn map
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2497.498833271306!2d0.27940319999999996!3d51.2467242!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47df4eb4b05c18c1%3A0x34dc01e2a04954fe!2sThe%20Chaser%20Inn!5e0!3m2!1sen!2suk!4v1699999999999!5m2!1sen!2suk"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              ) : selectedLocation === 'the-cricketers-inn' ? (
+                // The Cricketers Inn map
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2491.3173076202774!2d0.34097931580257!3d51.366585179617054!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8b546d4579b01%3A0x5179ff7bd7517ace!2sThe%20Cricketers%20Inn!5e0!3m2!1sen!2suk!4v1699999999999!5m2!1sen!2suk"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              ) : selectedLocation === 'the-little-brown-jug' ? (
+                // The Little Brown Jug map
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2500.154703105503!2d0.173989!3d51.197801!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47df501777eaf4f9%3A0x5eae38e6d7d85e0!2sThe%20Little%20Brown%20Jug!5e0!3m2!1sen!2suk!4v1699999999999!5m2!1sen!2suk"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              ) : selectedLocation === 'the-rose-and-crown' ? (
+                // The Rose & Crown map
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2491.8696234259864!2d0.08827199999999999!3d51.350308000000005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8ab547005a3d9%3A0x179ee3cf1e1a6ee0!2sThe%20Rose%20%26%20Crown!5e0!3m2!1sen!2suk!4v1699999999999!5m2!1sen!2suk"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              ) : null}
               <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-3">
-                <p className="text-sm font-semibold text-gray-700">All WH Pubs Locations</p>
-                <p className="text-xs text-gray-500">5 traditional pubs across Kent & South East London</p>
+                <p className="text-sm font-semibold text-gray-700">
+                  {selectedLocation === 'all' ? 'All WH Pubs Locations' : filteredLocations[0]?.name || 'Location'}
+                </p>
+                <p className="text-xs text-gray-500">
+                  {selectedLocation === 'all' ? '5 traditional pubs across Kent & South East London' : 'Click for directions'}
+                </p>
               </div>
             </div>
 
