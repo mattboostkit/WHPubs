@@ -391,6 +391,11 @@ export async function getEvents(targetPubSlug = null) {
     // Fetch ALL events from all pubs for the main hub
     filter = '';
   }
+  
+  // Only show events from today onwards (August 13, 2025)
+  const today = new Date('2025-08-13').toISOString().split('T')[0];
+  filter += ` && date >= "${today}"`;
+  
   const params = targetPubSlug ? { targetPubSlug } : {};
 
   return client.fetch(`
