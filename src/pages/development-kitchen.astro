@@ -42,52 +42,34 @@ const pageDescription = 'Discover the culinary innovation at the heart of WH Pub
     </div>
   </section>
 
-  <!-- Chef Profile Section -->
+  <!-- Chef Profile Section with Journey -->
   {developmentKitchen?.chefProfile && (
     <section class="py-16 bg-background">
       <div class="container mx-auto px-4">
-        <div class="grid md:grid-cols-2 gap-12 items-center">
-          {developmentKitchen.chefProfile.image && (
-            <div class="order-2 md:order-1">
-              <div class="relative aspect-[4/5] overflow-hidden rounded-lg shadow-xl">
-                <img 
-                  src={developmentKitchen.chefProfile.image.asset.url} 
-                  alt={developmentKitchen.chefProfile.image.alt}
-                  class="absolute inset-0 w-full h-full object-cover object-top"
-                />
-              </div>
-            </div>
-          )}
-          <div class="order-1 md:order-2">
-            <h2 class="text-4xl font-bold mb-2 text-primary">{developmentKitchen.chefProfile.name}</h2>
-            <p class="text-xl text-muted-foreground mb-6">{developmentKitchen.chefProfile.title}</p>
-          </div>
-        </div>
-      </div>
-    </section>
-  )}
-
-  <!-- My Journey Section -->
-  {developmentKitchen?.myJourney && (
-    <section class="py-16 bg-muted/50">
-      <div class="container mx-auto px-4">
-        <div class="max-w-4xl mx-auto">
-          <h2 class="text-4xl font-bold mb-8 text-primary text-center">{developmentKitchen.myJourney.heading}</h2>
-          <div class="grid md:grid-cols-2 gap-12 items-center">
-            <div class="prose prose-lg">
-              {developmentKitchen.myJourney.content && (
-                <SanityPortableText value={developmentKitchen.myJourney.content} client:load />
-              )}
-            </div>
-            {developmentKitchen.myJourney.image && (
-              <div class="relative aspect-[4/3] overflow-hidden rounded-lg shadow-xl">
-                <img 
-                  src={developmentKitchen.myJourney.image.asset.url} 
-                  alt={developmentKitchen.myJourney.image.alt}
-                  class="w-full h-full object-cover"
-                />
+        <div class="max-w-5xl mx-auto">
+          <div class="grid md:grid-cols-2 gap-12 items-start">
+            {developmentKitchen.chefProfile.image && (
+              <div>
+                <div class="relative aspect-[4/5] overflow-hidden rounded-lg shadow-xl">
+                  <img 
+                    src={developmentKitchen.chefProfile.image.asset.url} 
+                    alt={developmentKitchen.chefProfile.image.alt}
+                    class="absolute inset-0 w-full h-full object-cover object-top"
+                  />
+                </div>
               </div>
             )}
+            <div>
+              <h2 class="text-4xl font-bold mb-2 text-primary">{developmentKitchen.chefProfile.name}</h2>
+              <p class="text-xl text-muted-foreground mb-8">{developmentKitchen.chefProfile.title}</p>
+              
+              {/* Journey content directly under the title */}
+              {developmentKitchen?.myJourney?.content && (
+                <div class="prose prose-lg max-w-none">
+                  <SanityPortableText value={developmentKitchen.myJourney.content} client:load />
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
