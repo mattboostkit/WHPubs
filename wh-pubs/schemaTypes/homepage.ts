@@ -292,6 +292,86 @@ export default defineType({
         },
       ],
     }),
+    // Signature Dishes section
+    defineField({
+      name: 'signatureDishes',
+      title: 'Signature Dishes',
+      type: 'object',
+      description: 'Configure the signature dishes section on the homepage',
+      fields: [
+        {
+          name: 'title',
+          title: 'Section Title',
+          type: 'string',
+          initialValue: 'Signature Dishes',
+          description: 'Main heading for the signature dishes section',
+        },
+        {
+          name: 'subtitle',
+          title: 'Section Subtitle',
+          type: 'string',
+          initialValue: 'Crafted with passion using the finest local ingredients',
+          description: 'Subtitle text below the main heading',
+        },
+        {
+          name: 'dishes',
+          title: 'Featured Dishes',
+          type: 'array',
+          description: 'Add up to 4 signature dishes to showcase',
+          validation: Rule => Rule.max(4),
+          of: [
+            {
+              type: 'object',
+              fields: [
+                {
+                  name: 'name',
+                  title: 'Dish Name',
+                  type: 'string',
+                  validation: Rule => Rule.required(),
+                },
+                {
+                  name: 'description',
+                  title: 'Description',
+                  type: 'text',
+                  rows: 3,
+                  validation: Rule => Rule.required(),
+                },
+                {
+                  name: 'price',
+                  title: 'Price',
+                  type: 'string',
+                  description: 'e.g., "£18.95"',
+                  validation: Rule => Rule.required(),
+                },
+                {
+                  name: 'image',
+                  title: 'Dish Image',
+                  type: 'image',
+                  description: 'Image of the dish (recommended: 600x400px)',
+                  options: {
+                    hotspot: true,
+                  },
+                  validation: Rule => Rule.required(),
+                },
+                {
+                  name: 'tag',
+                  title: 'Special Tag',
+                  type: 'string',
+                  description: 'Optional tag like "Chef\'s Special" or "Best Seller"',
+                },
+                {
+                  name: 'pubLocation',
+                  title: 'Available At',
+                  type: 'string',
+                  initialValue: 'Available at all locations',
+                  description: 'Where this dish is available',
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    }),
     // Keep old specialFeatures for backward compatibility but hidden
     defineField({
       name: 'specialFeatures',
