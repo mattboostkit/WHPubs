@@ -78,9 +78,9 @@ let footerDescription = siteSettings?.footerDescription || "Traditional British 
 // Override with pub-specific data if available
 if (isPubLayout && activePub) {
 	siteName = activePub.name || siteName;
-	// Use pub logo if available, otherwise keep the fetched main site logo (or null)
-	logoUrl = activePub.logo?.asset?.url || logoUrl;
-	logoAlt = activePub.logo?.alt || `${activePub.name} Logo`;
+	// Use pub square logo first (preferred for header), then fallback to regular logo, then main site logo
+	logoUrl = activePub.squareLogo?.asset?.url || activePub.logo?.asset?.url || logoUrl;
+	logoAlt = activePub.squareLogo?.alt || activePub.logo?.alt || `${activePub.name} Logo`;
 
 	 // Define the specific nav structure for individual pub sites
 	 // Check if pub has custom nav links
