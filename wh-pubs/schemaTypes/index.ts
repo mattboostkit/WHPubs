@@ -20,7 +20,7 @@ import aboutContent from './aboutContent'
 import pubFeatures from './pubFeatures'
 import privacyPolicy from './privacyPolicy'
 import featuredDishes from './featuredDishes'
-import { eventsPageSettings, blogPageSettings, aboutPageSettings, contactPageSettings, careersPageSettings, thingsToDoPageSettings, pubFinderPageSettings } from './pageSettings'
+import { eventsPageSettings, blogPageSettings, aboutPageSettings, contactPageSettings, careersPageSettings, thingsToDoPageSettings, pubFinderPageSettings, suppliersPageSettings, giftCardsPageSettings } from './pageSettings'
 
 export const schemaTypes = [
   siteSettings,
