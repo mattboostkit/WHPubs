@@ -7,8 +7,7 @@
       "env": {
         "SANITY_PROJECT_ID": "it7wwto3",
         "SANITY_DATASET": "production",
-        "SANITY_API_TOKEN": "skXuiPcSKKiRE4EbIyvykHXCOdMg5UQyDhmh996zoM02WfPFd01qwEOjDD0IGw6s6VOzLFtJAzM7LIIlZi1iUw18Mo4Y67sfvJSlzkKKIO5pCa96pbAvNjABUVNU8z3Wgss6sZ1fCQx2yEHy9xlyp6I0t8h2jJgoUmf97Gep9ZG3bhu02P6j",
-        "MCP_USER_ROLE": "developer"
+        "SANITY_API_TOKEN": "skXuiPcSKKiRE4EbIyvykHXCOdMg5UQyDhmh996zoM02WfPFd01qwEOjDD0IGw6s6VOzLFtJAzM7LIIlZi1iUw18Mo4Y67sfvJSlzkKKIO5pCa96pbAvNjABUVNU8z3Wgss6sZ1fCQx2yEHy9xlyp6I0t8h2jJgoUmf97Gep9ZG3bhu02P6j"
       }
     },
     "bright-data": {
