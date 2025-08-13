@@ -420,6 +420,14 @@ export async function getDevelopmentKitchen() {
         content[]{ ..., asset-> },
         image { asset->{ _id, url }, alt }
       },
+      handmadeBurgers {
+        heading,
+        subheading,
+        content[]{ ..., asset-> },
+        image1 { asset->{ _id, url }, alt, caption },
+        image2 { asset->{ _id, url }, alt, caption },
+        highlights
+      },
       process[] {
         stepNumber,
         title,
