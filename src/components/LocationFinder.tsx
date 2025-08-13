@@ -159,7 +159,7 @@ export default function LocationFinder() {
             {/* Map Area with all pub markers */}
             <div className="bg-gray-200 rounded-xl overflow-hidden h-[600px] relative">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m68!1m12!1m3!1d159788.48749920648!2d0.10523915624999996!3d51.30724925!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m53!3e0!4m5!1s0x47df4db978c81c1b%3A0xd66f455756ad699f!2sThe%20Bull%20Otford%20-%20by%20WH%20Pubs%2C%20High%20St%2C%20Otford%2C%20Sevenoaks%20TN14%205PG!3m2!1d51.3128887!2d0.1863279!4m5!1s0x47df4eb4b05c18c1%3A0x34dc01e2a04954fe!2sThe%20Chaser%20Inn%2C%20Stumble%20Hill%2C%20Shipbourne%2C%20Tonbridge%20TN11%209PE!3m2!1d51.2467242!2d0.2818592!4m5!1s0x47d8b546d4579b01%3A0x5179ff7bd7517ace!2sThe%20Cricketers%20Inn%2C%20Wrotham%20Rd%2C%20Meopham%2C%20Gravesend%20DA13%200QA!3m2!1d51.3665831!2d0.3431495!4m5!1s0x47df501777eaf4f9%3A0x5eae38e6d7d85e0!2sThe%20Little%20Brown%20Jug%2C%20Chiddingstone%20Causeway%2C%20Tonbridge%20TN11%208JJ!3m2!1d51.197801!2d0.176178!4m5!1s0x47d8ab547005a3d9%3A0x179ee3cf1e1a6ee0!2sThe%20Rose%20%26%20Crown%2C%20Green%20Street%20Green%2C%20Orpington%20BR6%206BT!3m2!1d51.350308!2d0.091092!5e0!3m2!1sen!2suk!4v1699999999999!5m2!1sen!2suk"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d319577.0889184132!2d-0.10000000000000003!3d51.3!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8a00baf21de75%3A0x52963a5addd52a99!2sKent%2C%20UK!5e0!3m2!1sen!2suk!4v1699999999999!5m2!1sen!2suk"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
