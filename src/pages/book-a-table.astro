@@ -1,214 +1,263 @@
 ---
 // src/pages/book-a-table.astro
 import Layout from '@/layouts/Layout.astro';
-import { getPubBySlug } from '@/lib/sanity';
+import PageHero from '@/components/PageHero.astro';
+import { getPubs, getPageSettings } from '@/lib/sanity';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Phone, MapPin, Clock } from 'lucide-react';
-import BookingWidget from '@/components/BookingWidget.astro';
+import { Badge } from "@/components/ui/badge";
+import { Phone, MapPin, Clock, Calendar, Users, ChefHat, Star } from 'lucide-react';
+import LiveResBookingWidget from '@/components/LiveResBookingWidget';
 
-// Determine the target pub for this build/request
-const targetPubSlug = import.meta.env.TARGET_PUB_SLUG;
+// This is the main hub booking page
+// For individual pub sites, they have their own book-a-table pages
 
-// Fetch the specific pub's data
-const pubData = targetPubSlug ? await getPubBySlug(targetPubSlug) : null;
+// Fetch all pubs for the selector
+const allPubs = await getPubs();
 
-// Only show page if we're on a pub site
-if (!pubData) {
-  return Astro.redirect('/404');
-}
+// Sort pubs alphabetically
+const sortedPubs = allPubs.sort((a, b) => a.name.localeCompare(b.name));
 
-const pageTitle = `Book a Table - ${pubData.name}`;
-const pageDescription = `Make a reservation at ${pubData.name}. Book your table online for the best dining experience.`;
+// Remove duplicates based on slug
+const uniquePubs = sortedPubs.reduce((acc, pub) => {
+  if (!acc.find(p => p.slug.current === pub.slug.current)) {
+    acc.push(pub);
+  }
+  return acc;
+}, []);
+
+const pageTitle = "Book a Table - WH Pubs";
+const pageDescription = "Reserve your table at any of our five traditional British pubs across Kent and South East London.";
 ---
 
-<Layout title={pageTitle} description={pageDescription} pub={pubData}>
-  <main class="container mx-auto px-4 py-12">
-    <div class="max-w-6xl mx-auto">
-      <h1 class="text-4xl md:text-5xl font-bold text-primary mb-4 text-center">
-        Book a Table at {pubData.name}
-      </h1>
-      <p class="text-lg text-primary/70 text-center mb-12">
-        Reserve your table online for the perfect dining experience
-      </p>
+<Layout title={pageTitle} description={pageDescription}>
+  <PageHero 
+    title="Book a Table"
+    subtitle="Reserve your perfect dining experience at any of our pubs"
+    fallbackImage="/images/book-table-hero.jpg"
+  />
+  
+  <main>
+    {/* Main Booking Section */}
+    <section class="py-16 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="max-w-7xl mx-auto">
+          {/* Intro Text */}
+          <div class="text-center mb-12">
+            <p class="text-lg text-primary/70 max-w-3xl mx-auto">
+              Whether you're planning a romantic dinner, family gathering, or catching up with friends, 
+              secure your table at one of our welcoming pubs. Select your preferred location below to make a reservation.
+            </p>
+          </div>
 
-      <div class="grid lg:grid-cols-3 gap-8">
-        {/* Booking Widget Column - Takes up 2 columns on large screens */}
-        <div class="lg:col-span-2">
-          {/* Use LiveRes booking system directly */}
-          {pubData.liveResWidgetUrl || pubData.reservationsUrl ? (
-            <Card class="overflow-hidden shadow-lg">
-              <CardHeader class="bg-primary text-white">
-                <CardTitle class="text-xl">Book a Table at {pubData.name}</CardTitle>
-              </CardHeader>
-              <CardContent class="p-0">
-                <BookingWidget 
-                  reservationsUrl={pubData.liveResWidgetUrl || pubData.reservationsUrl}
-                  pubName={pubData.name}
-                  height="700"
-                />
-              </CardContent>
-            </Card>
-          ) : (
-            <Card class="p-12 text-center">
-              <p class="text-lg text-primary/70 mb-4">
-                Online booking is not currently available for this location.
-              </p>
-              {pubData.contactPhone && (
-                <p class="text-lg">
-                  Please call us on <a href={`tel:${pubData.contactPhone.replace(/\s/g, '')}`} class="text-secondary font-semibold hover:underline">{pubData.contactPhone}</a> to make a reservation.
-                </p>
-              )}
-            </Card>
-          )}
-        </div>
+          <div class="grid lg:grid-cols-3 gap-8">
+            {/* Booking Widget Column - Takes up 2 columns */}
+            <div class="lg:col-span-2">
+              <Card class="overflow-hidden shadow-xl">
+                <CardHeader class="bg-primary text-white">
+                  <CardTitle class="text-2xl flex items-center">
+                    <Calendar class="w-6 h-6 mr-3" />
+                    Make Your Reservation
+                  </CardTitle>
+                </CardHeader>
+                <CardContent class="p-0">
+                  {/* LiveRes Booking Widget */}
+                  <LiveResBookingWidget height="750px" client:load />
+                </CardContent>
+              </Card>
 
-        {/* Information Column */}
-        <div class="space-y-6">
-          {/* Contact Information */}
-          <Card class="hover:shadow-lg transition-shadow">
-            <CardHeader>
-              <CardTitle class="text-xl">Contact Information</CardTitle>
-            </CardHeader>
-            <CardContent class="space-y-4">
-              {pubData.contactPhone && (
-                <div class="flex items-center">
-                  <Phone class="w-5 h-5 mr-3 text-primary/60" />
-                  <div>
-                    <p class="text-sm text-primary/70">Call us</p>
-                    <a href={`tel:${pubData.contactPhone.replace(/\s/g, '')}`} class="font-medium text-primary hover:text-secondary transition-colors">
-                      {pubData.contactPhone}
-                    </a>
-                  </div>
+              {/* Pub Selection Cards Below Widget */}
+              <div class="mt-8">
+                <h3 class="text-xl font-bold mb-4">Or Call Your Preferred Pub Directly:</h3>
+                <div class="grid sm:grid-cols-2 gap-4">
+                  {uniquePubs.map((pub) => (
+                    <Card class="hover:shadow-lg transition-all hover:-translate-y-1">
+                      <CardContent class="p-4">
+                        <div class="flex items-start justify-between">
+                          <div class="flex-1">
+                            <h4 class="font-semibold text-lg mb-1">{pub.name}</h4>
+                            {pub.locationName && (
+                              <p class="text-sm text-primary/60 mb-2">{pub.locationName}</p>
+                            )}
+                            {pub.contactPhone && (
+                              <a 
+                                href={`tel:${pub.contactPhone.replace(/\s/g, '')}`}
+                                class="inline-flex items-center text-secondary hover:text-secondary/80 font-medium"
+                              >
+                                <Phone class="w-4 h-4 mr-2" />
+                                {pub.contactPhone}
+                              </a>
+                            )}
+                          </div>
+                          {pub.name === 'The Little Brown Jug' && (
+                            <Badge variant="secondary" class="ml-2">Head Office</Badge>
+                          )}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
                 </div>
-              )}
-              
-              {(pubData.location || pubData.addressLine1) && (
-                <div class="flex items-start">
-                  <MapPin class="w-5 h-5 mr-3 text-primary/60 mt-1" />
-                  <div>
-                    <p class="text-sm text-primary/70">Find us</p>
-                    <p class="font-medium text-primary">{pubData.location}</p>
-                    {pubData.addressLine1 && <p class="text-sm text-primary/80">{pubData.addressLine1}</p>}
-                    {pubData.postcode && <p class="text-sm text-primary/80">{pubData.postcode}</p>}
+              </div>
+            </div>
+
+            {/* Information Sidebar */}
+            <div class="space-y-6">
+              {/* Booking Benefits */}
+              <Card class="border-secondary/20">
+                <CardHeader>
+                  <CardTitle class="text-xl flex items-center">
+                    <Star class="w-5 h-5 mr-2 text-secondary" />
+                    Why Book With Us
+                  </CardTitle>
+                </CardHeader>
+                <CardContent class="space-y-3">
+                  <div class="flex items-start">
+                    <span class="text-secondary mr-2">✓</span>
+                    <p class="text-sm">Instant confirmation of your booking</p>
                   </div>
-                </div>
-              )}
-            </CardContent>
-          </Card>
+                  <div class="flex items-start">
+                    <span class="text-secondary mr-2">✓</span>
+                    <p class="text-sm">Easily modify or cancel online</p>
+                  </div>
+                  <div class="flex items-start">
+                    <span class="text-secondary mr-2">✓</span>
+                    <p class="text-sm">Special dietary requirements catered for</p>
+                  </div>
+                  <div class="flex items-start">
+                    <span class="text-secondary mr-2">✓</span>
+                    <p class="text-sm">Priority seating for online bookings</p>
+                  </div>
+                  <div class="flex items-start">
+                    <span class="text-secondary mr-2">✓</span>
+                    <p class="text-sm">Exclusive online booking offers</p>
+                  </div>
+                </CardContent>
+              </Card>
 
-          {/* Opening Hours */}
-          {pubData.openingHours && (
-            <Card class="hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <CardTitle class="text-xl flex items-center">
-                  <Clock class="w-5 h-5 mr-2" />
-                  Opening Hours
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <pre class="whitespace-pre-wrap font-sans text-sm">{pubData.openingHours}</pre>
-              </CardContent>
-            </Card>
-          )}
+              {/* Group Bookings */}
+              <Card class="bg-secondary/10 border-secondary/20">
+                <CardHeader>
+                  <CardTitle class="text-xl flex items-center">
+                    <Users class="w-5 h-5 mr-2" />
+                    Large Groups & Events
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p class="text-sm text-primary/80 mb-4">
+                    Planning a special celebration or corporate event? We can accommodate:
+                  </p>
+                  <ul class="space-y-2 text-sm">
+                    <li>• Birthday parties</li>
+                    <li>• Wedding receptions</li>
+                    <li>• Corporate functions</li>
+                    <li>• Christmas parties</li>
+                    <li>• Private dining rooms</li>
+                  </ul>
+                  <p class="text-sm text-primary/80 mt-4">
+                    For groups of 8+ or private events, please call your chosen pub directly.
+                  </p>
+                </CardContent>
+              </Card>
 
-          {/* Booking Information */}
-          <Card class="bg-secondary/10 border-secondary/20">
-            <CardHeader>
-              <CardTitle class="text-xl">Booking Information</CardTitle>
-            </CardHeader>
-            <CardContent class="space-y-3 text-sm">
-              <p>• Tables are held for 15 minutes past booking time</p>
-              <p>• For groups larger than 8, please call us directly</p>
-              <p>• Special dietary requirements? Let us know when booking</p>
-              <p>• Cancellations can be made up to 2 hours before your booking</p>
-            </CardContent>
-          </Card>
+              {/* Dining Information */}
+              <Card>
+                <CardHeader>
+                  <CardTitle class="text-xl flex items-center">
+                    <ChefHat class="w-5 h-5 mr-2" />
+                    Dining Information
+                  </CardTitle>
+                </CardHeader>
+                <CardContent class="space-y-3 text-sm">
+                  <div>
+                    <p class="font-semibold mb-1">Food Service Times</p>
+                    <p class="text-primary/70">
+                      Mon-Fri: 12pm-3pm & 6pm-9pm<br/>
+                      Sat: 12pm-9:30pm<br/>
+                      Sun: 12pm-8pm (Roast until 4pm)
+                    </p>
+                  </div>
+                  <div>
+                    <p class="font-semibold mb-1">Dietary Requirements</p>
+                    <p class="text-primary/70">
+                      We cater for all dietary needs including vegetarian, vegan, gluten-free, 
+                      and other allergies. Please inform us when booking.
+                    </p>
+                  </div>
+                  <div>
+                    <p class="font-semibold mb-1">Children & Dogs</p>
+                    <p class="text-primary/70">
+                      All our pubs are family and dog-friendly. High chairs and children's menus available.
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
 
-          {/* Special Requests */}
-          <Card class="border-primary/20">
-            <CardHeader>
-              <CardTitle class="text-xl">Special Occasions?</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p class="text-sm text-primary/80 mb-3">
-                Celebrating something special? Let us know! We can help with:
-              </p>
-              <ul class="space-y-1 text-sm text-primary/70">
-                <li>• Birthday celebrations</li>
-                <li>• Anniversary dinners</li>
-                <li>• Business meetings</li>
-                <li>• Private dining areas</li>
-              </ul>
-            </CardContent>
-          </Card>
+              {/* Cancellation Policy */}
+              <Card class="border-primary/20">
+                <CardHeader>
+                  <CardTitle class="text-lg">Booking Policy</CardTitle>
+                </CardHeader>
+                <CardContent class="space-y-2 text-sm text-primary/70">
+                  <p>• Tables are held for 15 minutes past booking time</p>
+                  <p>• Cancellations can be made up to 2 hours before</p>
+                  <p>• For same-day bookings, please call directly</p>
+                  <p>• Deposits may be required for large groups</p>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </main>
-  
-  <!-- Comprehensive anti-scroll for booking pages -->
-  <script>
-    (function() {
-      // Immediately disable scroll restoration
-      if ('scrollRestoration' in history) {
-        history.scrollRestoration = 'manual';
-      }
-      
-      // Force to top immediately
-      window.scrollTo(0, 0);
-      
-      // Block all scrolling during page load
-      let scrollBlocked = true;
-      const scrollBlocker = function() {
-        if (scrollBlocked) {
-          window.scrollTo(0, 0);
-          return false;
-        }
-      };
-      
-      // Add scroll blocking
-      window.addEventListener('scroll', scrollBlocker, { passive: false });
-      document.addEventListener('scroll', scrollBlocker, { passive: false });
-      
-      // Handle DOM ready
-      document.addEventListener('DOMContentLoaded', () => {
-        window.scrollTo(0, 0);
-        
-        // Disable all iframes initially
-        const iframes = document.querySelectorAll('iframe');
-        iframes.forEach(iframe => {
-          iframe.setAttribute('tabindex', '-1');
-          iframe.style.pointerEvents = 'none';
+    </section>
+
+    {/* Opening Hours Section */}
+    <section class="py-16 bg-gray-50">
+      <div class="container mx-auto px-4">
+        <div class="max-w-6xl mx-auto">
+          <h2 class="text-3xl font-bold text-center mb-12">Our Pubs Are Open</h2>
           
-          // Re-enable after load
-          iframe.addEventListener('load', () => {
-            window.scrollTo(0, 0);
-            setTimeout(() => {
-              iframe.style.pointerEvents = 'auto';
-            }, 500);
-          });
-        });
-      });
-      
-      // Handle page fully loaded
-      window.addEventListener('load', () => {
-        window.scrollTo(0, 0);
-        
-        // Release scroll block after delay
-        setTimeout(() => {
-          scrollBlocked = false;
-          window.scrollTo(0, 0);
-        }, 1500);
-      });
-      
-      // Extra safeguard for late-loading content
-      if (document.readyState === 'loading') {
-        document.addEventListener('readystatechange', () => {
-          if (document.readyState === 'complete') {
-            window.scrollTo(0, 0);
-          }
-        });
-      }
-    })();
-  </script>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {uniquePubs.map((pub) => (
+              <Card class="hover:shadow-lg transition-shadow">
+                <CardHeader>
+                  <CardTitle class="text-lg">{pub.name}</CardTitle>
+                  {pub.locationName && (
+                    <p class="text-sm text-primary/60">{pub.locationName}</p>
+                  )}
+                </CardHeader>
+                <CardContent>
+                  <div class="space-y-3">
+                    {pub.openingHours ? (
+                      <div class="flex items-start">
+                        <Clock class="w-4 h-4 mr-2 text-primary/60 mt-0.5" />
+                        <p class="text-sm whitespace-pre-line">{pub.openingHours}</p>
+                      </div>
+                    ) : (
+                      <div class="flex items-start">
+                        <Clock class="w-4 h-4 mr-2 text-primary/60 mt-0.5" />
+                        <div class="text-sm">
+                          <p>Mon-Fri: 12pm-11pm</p>
+                          <p>Sat: 12pm-12am</p>
+                          <p>Sun: 12pm-10pm</p>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {pub.addressLine1 && (
+                      <div class="flex items-start">
+                        <MapPin class="w-4 h-4 mr-2 text-primary/60 mt-0.5" />
+                        <div class="text-sm">
+                          <p>{pub.addressLine1}</p>
+                          {pub.postcode && <p>{pub.postcode}</p>}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 </Layout>
