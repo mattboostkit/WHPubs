@@ -57,7 +57,7 @@ const getDietaryBadge = (dietary: string) => {
   }
 };
 
-export default function ChristmasMenu({ christmasMenu, pubName, bookingUrl = '/book-a-table' }: ChristmasMenuProps) {
+export default function ChristmasMenu({ christmasMenu, pubName, bookingUrl = '/book-table' }: ChristmasMenuProps) {
   // If no Christmas menu or not enabled, show coming soon
   if (!christmasMenu?.enabled) {
     return (
