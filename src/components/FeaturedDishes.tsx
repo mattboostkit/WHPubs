@@ -57,30 +57,41 @@ const fallbackDishes: Dish[] = [
   }
 ];
 
-export default function FeaturedDishes() {
+export default function FeaturedDishes({ signatureDishes }: FeaturedDishesProps) {
   const [featuredData, setFeaturedData] = useState<FeaturedDishesData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const data = await getFeaturedDishes();
-        if (data) {
-          setFeaturedData(data);
+    // If signature dishes are passed as props, use them
+    if (signatureDishes) {
+      setFeaturedData(signatureDishes);
+      setIsLoading(false);
+    } else {
+      // Otherwise, fetch from the separate featuredDishes document
+      async function fetchData() {
+        try {
+          const data = await getFeaturedDishes();
+          if (data) {
+            setFeaturedData(data);
+          }
+        } catch (error) {
+          console.error('Error fetching featured dishes:', error);
+        } finally {
+          setIsLoading(false);
         }
-      } catch (error) {
-        console.error('Error fetching featured dishes:', error);
-      } finally {
-        setIsLoading(false);
       }
+      fetchData();
     }
-    fetchData();
-  }, []);
+  }, [signatureDishes]);
 
   // Use CMS data if available, otherwise use fallback
-  const title = featuredData?.title || 'Signature Dishes';
-  const subtitle = featuredData?.subtitle || 'Crafted with passion using the finest local ingredients';
-  const dishes = featuredData?.dishes && featuredData.dishes.length > 0 ? featuredData.dishes : fallbackDishes;
+  const title = featuredData?.title || signatureDishes?.title || 'Signature Dishes';
+  const subtitle = featuredData?.subtitle || signatureDishes?.subtitle || 'Crafted with passion using the finest local ingredients';
+  const dishes = (featuredData?.dishes && featuredData.dishes.length > 0) 
+    ? featuredData.dishes 
+    : (signatureDishes?.dishes && signatureDishes.dishes.length > 0) 
+    ? signatureDishes.dishes 
+    : fallbackDishes;
 
   // Get fallback image for dish
   const getDishImage = (dish: Dish, index: number) => {
