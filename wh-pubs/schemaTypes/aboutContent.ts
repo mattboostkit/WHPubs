@@ -41,6 +41,23 @@ export default defineType({
       ],
     }),
     defineField({
+      name: 'ownerPhoto',
+      title: 'Owner Photo',
+      type: 'image',
+      description: 'Photo of the current owner (recommended size: 800x1000px)',
+      options: {
+        hotspot: true,
+      },
+      fields: [
+        {
+          name: 'alt',
+          type: 'string',
+          title: 'Alternative text',
+          description: 'Important for SEO and accessibility',
+        }
+      ],
+    }),
+    defineField({
       name: 'storyContent',
       title: 'Story Content',
       type: 'array',
