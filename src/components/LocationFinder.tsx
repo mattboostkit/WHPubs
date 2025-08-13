@@ -8,7 +8,7 @@ interface Location {
   postcode: string;
   phone: string;
   openingHours: string;
-  image: string;
+  logo: string;
   features: string[];
   transport: {
     parking: string;
@@ -27,7 +27,7 @@ export default function LocationFinder() {
       postcode: 'TN14 5PG',
       phone: '01959 580585',
       openingHours: 'Mon-Fri: 12pm-11pm, Sat: 12pm-12am, Sun: 12pm-10pm',
-      image: '/images/pub-bull.jpg',
+      logo: '/images/logos/bull-logo.png',
       features: ['Historic Coaching Inn', 'Private Dining', 'Garden', 'Dog Friendly'],
       transport: {
         parking: 'Public car park opposite',
@@ -41,7 +41,7 @@ export default function LocationFinder() {
       postcode: 'TN11 9PE',
       phone: '01732 810360',
       openingHours: 'Mon-Fri: 12pm-11pm, Sat: 12pm-12am, Sun: 12pm-10pm',
-      image: '/images/pub-chaser.jpg',
+      logo: '/images/logos/chaser-logo.png',
       features: ['Live Music', 'Garden', 'Quiz Nights', 'Dog Friendly'],
       transport: {
         parking: 'Free parking',
@@ -55,7 +55,7 @@ export default function LocationFinder() {
       postcode: 'DA13 0QA',
       phone: '01474 812163',
       openingHours: 'Mon-Fri: 12pm-11pm, Sat: 12pm-12am, Sun: 12pm-10pm',
-      image: '/images/pub-cricketers.jpg',
+      logo: '/images/logos/cricketers-logo.png',
       features: ['Dog Friendly', 'Garden', 'Parking', 'Live Sports'],
       transport: {
         parking: 'Free car park for 50 cars',
@@ -69,7 +69,7 @@ export default function LocationFinder() {
       postcode: 'TN11 8JJ',
       phone: '01892 870318',
       openingHours: 'Mon-Fri: 12pm-11pm, Sat: 12pm-12am, Sun: 12pm-10pm',
-      image: '/images/pub-brown-jug.jpg',
+      logo: '/images/logos/brown-jug-logo.png',
       features: ['Head Office', 'Historic Building', 'Real Ales', 'Dog Friendly'],
       transport: {
         parking: 'Village car park nearby',
@@ -83,7 +83,7 @@ export default function LocationFinder() {
       postcode: 'BR6 6BT',
       phone: '01689 869029',
       openingHours: 'Mon-Fri: 12pm-11pm, Sat: 12pm-12am, Sun: 12pm-10pm',
-      image: '/images/pub-rose-crown.jpg',
+      logo: '/images/logos/rose-crown-logo.png',
       features: ['Large Garden', 'Family Friendly', 'Parking', 'Dog Friendly'],
       transport: {
         parking: 'On-site parking available',
@@ -163,14 +163,14 @@ export default function LocationFinder() {
                   className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group"
                 >
                   <div className="flex">
-                    {/* Image */}
-                    <div className="w-32 h-32 flex-shrink-0">
+                    {/* Logo */}
+                    <div className="w-32 h-32 flex-shrink-0 bg-gray-50 flex items-center justify-center p-4">
                       <img
-                        src={location.image}
-                        alt={location.name}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        src={location.logo}
+                        alt={`${location.name} logo`}
+                        className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
                         onError={(e) => {
-                          e.currentTarget.src = '/images/pub-fallback.jpg';
+                          e.currentTarget.src = '/images/wh-pubs-logo.png';
                         }}
                       />
                     </div>
