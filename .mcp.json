@@ -13,7 +13,7 @@
     "bright-data": {
       "type": "stdio",
       "command": "npx",
-      "args": ["@brightdata/mcp"],
+      "args": ["-y", "@brightdata/mcp"],
       "env": {
         "API_TOKEN": "c3ad4f21-2f6c-43a4-86e1-0801ef6d6903"
       }
