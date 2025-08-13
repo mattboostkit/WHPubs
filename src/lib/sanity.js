@@ -387,13 +387,10 @@ export async function getEvents(targetPubSlug = null) {
 export async function getDevelopmentKitchen() {
   return client.fetch(`
     *[_type == "developmentKitchen"][0] {
-      title,
       heroImage { asset->{ _id, url }, alt },
-      introText[]{ ..., asset-> },
       chefProfile {
         name,
         title,
-        bio[]{ ..., asset-> },
         image { asset->{ _id, url }, alt }
       },
       myJourney {
@@ -405,10 +402,6 @@ export async function getDevelopmentKitchen() {
         heading,
         content[]{ ..., asset-> },
         image { asset->{ _id, url }, alt }
-      },
-      philosophy {
-        heading,
-        content[]{ ..., asset-> }
       },
       qualitySourcing {
         heading,
@@ -428,42 +421,10 @@ export async function getDevelopmentKitchen() {
         image2 { asset->{ _id, url }, alt, caption },
         highlights
       },
-      process[] {
-        stepNumber,
-        title,
-        description,
-        image { asset->{ _id, url }, alt }
-      },
-      innovations[] {
-        dishName,
-        description,
-        season,
-        image { asset->{ _id, url }, alt },
-        availableAt[]->{ name, slug }
-      },
       gallery[] {
         asset->{ _id, url },
         alt,
-        caption,
-        category
-      },
-      suppliers[] {
-        name,
-        description,
-        location,
-        logo { asset->{ _id, url }, alt },
-        website
-      },
-      seasonalFocus {
-        season,
-        theme,
-        description[]{ ..., asset-> },
-        featuredIngredients
-      },
-      seo {
-        metaTitle,
-        metaDescription,
-        ogImage { asset->{ _id, url } }
+        caption
       }
     }
   `);
