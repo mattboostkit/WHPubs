@@ -136,7 +136,10 @@ const allPubs = pubs;
     </section>
 
     {/* Featured Dishes Showcase */}
-    <FeaturedDishes client:visible />
+    <FeaturedDishes 
+      client:visible 
+      signatureDishes={homepageData?.signatureDishes}
+    />
 
     {/* Services Grid - What We Offer */}
     <ServicesGrid client:visible />
