@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MapPin, Phone, Clock, Navigation, ExternalLink, Car, Train } from 'lucide-react';
+import { getPubs } from '../lib/sanity';
 
 interface Location {
   name: string;
@@ -8,7 +9,7 @@ interface Location {
   postcode: string;
   phone: string;
   openingHours: string;
-  logo: string;
+  image: string;
   features: string[];
   transport: {
     parking: string;
@@ -18,6 +19,23 @@ interface Location {
 
 export default function LocationFinder() {
   const [selectedLocation, setSelectedLocation] = useState<string>('all');
+  const [pubImages, setPubImages] = useState<Record<string, string>>({});
+  
+  useEffect(() => {
+    // Fetch pub data from Sanity to get actual images
+    getPubs().then(pubs => {
+      const images: Record<string, string> = {};
+      pubs.forEach(pub => {
+        const slug = pub.slug?.current || pub.slug;
+        // Use exteriorImage first, then image, then heroImage as fallback
+        const imageUrl = pub.exteriorImage?.asset?.url || pub.image?.asset?.url || pub.heroImage?.asset?.url;
+        if (imageUrl) {
+          images[slug] = imageUrl;
+        }
+      });
+      setPubImages(images);
+    }).catch(console.error);
+  }, []);
 
   const locations: Location[] = [
     {
@@ -27,7 +45,7 @@ export default function LocationFinder() {
       postcode: 'TN14 5PG',
       phone: '01959 580585',
       openingHours: 'Mon-Fri: 12pm-11pm, Sat: 12pm-12am, Sun: 12pm-10pm',
-      logo: '/images/pub-logos/the-bull-logo.png',
+      image: '/images/pub-bull.jpg',
       features: ['Historic Coaching Inn', 'Private Dining', 'Garden', 'Dog Friendly'],
       transport: {
         parking: 'Public car park opposite',
@@ -41,7 +59,7 @@ export default function LocationFinder() {
       postcode: 'TN11 9PE',
       phone: '01732 810360',
       openingHours: 'Mon-Fri: 12pm-11pm, Sat: 12pm-12am, Sun: 12pm-10pm',
-      logo: '/images/pub-logos/the-chaser-inn-logo.png',
+      image: '/images/pub-chaser.jpg',
       features: ['Live Music', 'Garden', 'Quiz Nights', 'Dog Friendly'],
       transport: {
         parking: 'Free parking',
@@ -55,7 +73,7 @@ export default function LocationFinder() {
       postcode: 'DA13 0QA',
       phone: '01474 812163',
       openingHours: 'Mon-Fri: 12pm-11pm, Sat: 12pm-12am, Sun: 12pm-10pm',
-      logo: '/images/pub-logos/wh-pubs-logo.png', // Cricketers logo not available yet
+      image: '/images/pub-cricketers.jpg',
       features: ['Dog Friendly', 'Garden', 'Parking', 'Live Sports'],
       transport: {
         parking: 'Free car park for 50 cars',
@@ -69,7 +87,7 @@ export default function LocationFinder() {
       postcode: 'TN11 8JJ',
       phone: '01892 870318',
       openingHours: 'Mon-Fri: 12pm-11pm, Sat: 12pm-12am, Sun: 12pm-10pm',
-      logo: '/images/pub-logos/wh-pubs-logo.png', // Little Brown Jug logo not available yet
+      image: '/images/pub-brown-jug.jpg',
       features: ['Head Office', 'Historic Building', 'Real Ales', 'Dog Friendly'],
       transport: {
         parking: 'Village car park nearby',
@@ -83,7 +101,7 @@ export default function LocationFinder() {
       postcode: 'BR6 6BT',
       phone: '01689 869029',
       openingHours: 'Mon-Fri: 12pm-11pm, Sat: 12pm-12am, Sun: 12pm-10pm',
-      logo: '/images/pub-logos/the-crown-logo.png', // Using Crown logo for Rose & Crown
+      image: '/images/pub-rose-crown.jpg',
       features: ['Large Garden', 'Family Friendly', 'Parking', 'Dog Friendly'],
       transport: {
         parking: 'On-site parking available',
@@ -141,14 +159,13 @@ export default function LocationFinder() {
             {/* Map Area with all pub markers */}
             <div className="bg-gray-200 rounded-xl overflow-hidden h-[600px] relative">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m76!1m12!1m3!1d159759.04441462823!2d0.1278893!3d51.3127658!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m61!3e0!4m5!1s0x47df4e6f3d6c3d9f%3A0x1234567890abcdef!2sThe%20Bull%2C%20High%20Street%2C%20Otford%2C%20TN14%205PG!3m2!1d51.3127658!2d0.1878893!4m5!1s0x47df538c123456789%3A0xabcdef1234567890!2sThe%20Chaser%20Inn%2C%20Stumble%20Hill%2C%20Shipbourne%2C%20TN11%209PE!3m2!1d51.2661244!2d0.3129497!4m5!1s0x47df3f5e123456789%3A0x9876543210fedcba!2sThe%20Cricketers%20Inn%2C%20Wrotham%20Road%2C%20Meopham%2C%20DA13%200QA!3m2!1d51.3665831!2d0.3656189!4m5!1s0x47df4567890abcdef%3A0xfedcba9876543210!2sThe%20Little%20Brown%20Jug%2C%20High%20Street%2C%20Chiddingstone%20Causeway%2C%20TN11%208JJ!3m2!1d51.1905677!2d0.1467361!4m5!1s0x47d8a9c123456789%3A0x0123456789abcdef!2sThe%20Rose%20%26%20Crown%2C%20Green%20Street%20Green%2C%20Orpington%2C%20BR6%206BT!3m2!1d51.3547244!2d0.0835533!5e0!3m2!1sen!2suk!4v1699999999999!5m2!1sen!2suk"
+                src="https://www.google.com/maps/embed?pb=!1m68!1m12!1m3!1d159788.48749920648!2d0.10523915624999996!3d51.30724925!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m53!3e0!4m5!1s0x47df4db978c81c1b%3A0xd66f455756ad699f!2sThe%20Bull%20Otford%20-%20by%20WH%20Pubs%2C%20High%20St%2C%20Otford%2C%20Sevenoaks%20TN14%205PG!3m2!1d51.3128887!2d0.1863279!4m5!1s0x47df4eb4b05c18c1%3A0x34dc01e2a04954fe!2sThe%20Chaser%20Inn%2C%20Stumble%20Hill%2C%20Shipbourne%2C%20Tonbridge%20TN11%209PE!3m2!1d51.2467242!2d0.2818592!4m5!1s0x47d8b546d4579b01%3A0x5179ff7bd7517ace!2sThe%20Cricketers%20Inn%2C%20Wrotham%20Rd%2C%20Meopham%2C%20Gravesend%20DA13%200QA!3m2!1d51.3665831!2d0.3431495!4m5!1s0x47df501777eaf4f9%3A0x5eae38e6d7d85e0!2sThe%20Little%20Brown%20Jug%2C%20Chiddingstone%20Causeway%2C%20Tonbridge%20TN11%208JJ!3m2!1d51.197801!2d0.176178!4m5!1s0x47d8ab547005a3d9%3A0x179ee3cf1e1a6ee0!2sThe%20Rose%20%26%20Crown%2C%20Green%20Street%20Green%2C%20Orpington%20BR6%206BT!3m2!1d51.350308!2d0.091092!5e0!3m2!1sen!2suk!4v1699999999999!5m2!1sen!2suk"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                className="grayscale"
               />
               <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-3">
                 <p className="text-sm font-semibold text-gray-700">All WH Pubs Locations</p>
@@ -164,14 +181,14 @@ export default function LocationFinder() {
                   className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group"
                 >
                   <div className="flex">
-                    {/* Logo */}
-                    <div className="w-32 h-32 flex-shrink-0 bg-gray-50 flex items-center justify-center p-4">
+                    {/* Pub Image */}
+                    <div className="w-32 h-32 flex-shrink-0">
                       <img
-                        src={location.logo}
-                        alt={`${location.name} logo`}
-                        className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
+                        src={pubImages[location.slug] || location.image}
+                        alt={location.name}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                         onError={(e) => {
-                          e.currentTarget.src = '/images/pub-logos/wh-pubs-logo.png';
+                          e.currentTarget.src = '/images/pub-fallback.jpg';
                         }}
                       />
                     </div>
