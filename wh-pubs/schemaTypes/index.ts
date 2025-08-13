@@ -16,7 +16,7 @@ import giftCard from './giftCard'
 import teamMember from './teamMember'
 import pubStory from './pubStory'
 import loyaltyProgram from './loyaltyProgram'
-import aboutContent from './aboutContent'
+// aboutContent removed - consolidated into aboutPageSettings
 import pubFeatures from './pubFeatures'
 import privacyPolicy from './privacyPolicy'
 import featuredDishes from './featuredDishes'
