@@ -295,16 +295,28 @@ export default defineType({
     // Signature Dishes section
     defineField({
       name: 'signatureDishes',
-      title: 'Signature Dishes',
+      title: '🍽️ Signature Dishes Section',
       type: 'object',
-      description: 'Configure the signature dishes section on the homepage',
+      description: 'Configure the signature dishes showcase on the homepage',
+      options: {
+        collapsible: true,
+        collapsed: false,
+      },
       fields: [
+        {
+          name: 'sectionLabel',
+          title: 'Section Label',
+          type: 'string',
+          initialValue: 'FROM OUR KITCHENS',
+          description: 'Small text above the main title (e.g., "FROM OUR KITCHENS")',
+        },
         {
           name: 'title',
           title: 'Section Title',
           type: 'string',
           initialValue: 'Signature Dishes',
           description: 'Main heading for the signature dishes section',
+          validation: Rule => Rule.required(),
         },
         {
           name: 'subtitle',
