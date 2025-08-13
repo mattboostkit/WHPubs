@@ -328,23 +328,6 @@ export async function getHomepageData() {
           tag,
           pubLocation
         }
-      },
-      specialFeatures {
-        seasonalMenus {
-          title,
-          description,
-          image { asset->{ _id, url }, alt }
-        },
-        localAles {
-          title,
-          description,
-          image { asset->{ _id, url }, alt }
-        },
-        specialEvents {
-          title,
-          description,
-          image { asset->{ _id, url }, alt }
-        }
       }
     }
   `);
