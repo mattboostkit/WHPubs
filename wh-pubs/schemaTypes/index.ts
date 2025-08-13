@@ -27,7 +27,6 @@ export const schemaTypes = [
   homepage, 
   developmentKitchen,
   thingsToDo,
-  aboutContent,
   eventsPageSettings,
   blogPageSettings,
   aboutPageSettings,
