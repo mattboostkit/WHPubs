@@ -94,9 +94,9 @@ const supplierDatabase: Record<string, SupplierData> = {
   'Longfield Bakery': {
     name: 'Longfield Bakery',
     category: 'Bakery',
-    description: 'Local bakery specializing in traditional breads and pastries, baked fresh daily with passion and expertise.',
+    description: 'Local bakery specialising in traditional breads and pastries, baked fresh daily with passion and expertise.',
     location: 'Longfield, Kent',
-    specialties: ['Fresh bread', 'Traditional methods', 'Local favorite', 'Daily baking'],
+    specialties: ['Fresh bread', 'Traditional methods', 'Local favourite', 'Daily baking'],
     sustainable: true
   },
   'Salcombe Dairy Ice cream': {
@@ -113,9 +113,9 @@ const supplierDatabase: Record<string, SupplierData> = {
   'Smokin Brothers Salmon': {
     name: 'Smokin Brothers Salmon',
     category: 'Specialty Seafood',
-    description: 'Artisan salmon smokers using traditional methods to create exceptional smoked fish products with distinctive flavors.',
+    description: 'Artisan salmon smokers using traditional methods to create exceptional smoked fish products with distinctive flavours.',
     location: 'UK',
-    specialties: ['Traditional smoking', 'Premium salmon', 'Artisan methods', 'Distinctive flavors'],
+    specialties: ['Traditional smoking', 'Premium salmon', 'Artisan methods', 'Distinctive flavours'],
     sustainable: true
   },
   'Tracklements Sauces': {
@@ -132,7 +132,7 @@ const supplierDatabase: Record<string, SupplierData> = {
   'Wicks Bacon': {
     name: 'Wicks Bacon',
     category: 'Cured Meats',
-    description: 'Traditional bacon curers specializing in premium quality bacon and cured meats using time-honored smoking and curing techniques.',
+    description: 'Traditional bacon curers specialising in premium quality bacon and cured meats using time-honoured smoking and curing techniques.',
     location: 'UK',
     specialties: ['Traditional curing', 'Premium bacon', 'Smoked meats', 'Artisan methods'],
     sustainable: true
@@ -148,7 +148,7 @@ const supplierDatabase: Record<string, SupplierData> = {
   'Mr Fitz Aqua Spritz': {
     name: 'Mr Fitz Aqua Spritz',
     category: 'Beverages',
-    description: 'Innovative beverage creators specializing in refreshing spritzes and artisanal drinks that perfectly complement modern pub dining.',
+    description: 'Innovative beverage creators specialising in refreshing spritzes and artisanal drinks that perfectly complement modern pub dining.',
     location: 'UK',
     specialties: ['Aqua spritzes', 'Refreshing drinks', 'Modern beverages', 'Artisan quality'],
     sustainable: true
@@ -195,18 +195,18 @@ const supplierDatabase: Record<string, SupplierData> = {
   'Ninju Juices': {
     name: 'Ninju Juices',
     category: 'Juices',
-    description: 'Fresh juice specialists creating vibrant, healthy drinks using premium fruits and innovative flavor combinations.',
+    description: 'Fresh juice specialists creating vibrant, healthy drinks using premium fruits and innovative flavour combinations.',
     location: 'UK',
-    specialties: ['Fresh juices', 'Natural ingredients', 'Innovative flavors', 'Healthy options'],
+    specialties: ['Fresh juices', 'Natural ingredients', 'Innovative flavours', 'Healthy options'],
     sustainable: true
   },
   'Vimto Cordials': {
     name: 'Vimto',
     category: 'Cordials',
-    description: 'Iconic British cordial brand creating distinctive fruit-flavored drinks that have been a family favorite for over a century.',
+    description: 'Iconic British cordial brand creating distinctive fruit-flavoured drinks that have been a family favourite for over a century.',
     location: 'Manchester, UK',
     established: '1908',
-    specialties: ['Fruit cordials', 'British heritage', 'Family favorite', 'Distinctive flavors'],
+    specialties: ['Fruit cordials', 'British heritage', 'Family favourite', 'Distinctive flavours'],
     sustainable: false
   }
 };
@@ -591,7 +591,7 @@ export default function PubSuppliers({
                 </h3>
                 <p className="text-secondary/90 mb-6 max-w-2xl mx-auto">
                   Every ingredient we serve has been carefully selected from our network of trusted suppliers. 
-                  Come and experience the exceptional flavors that partnerships with the best producers create.
+                  Come and experience the exceptional flavours that partnerships with the best producers create.
                 </p>
                 <div className="flex flex-wrap gap-4 justify-center">
                   <a
