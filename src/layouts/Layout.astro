@@ -326,7 +326,10 @@ const metaDescription = description || footerDescription;
 						{logoUrl ? (
 							<a href="/" aria-label={`${siteName} Home`} class="no-underline inline-flex items-center space-x-4 mb-6">
 								<img src={logoUrl} alt={logoAlt} class="h-16 w-16 object-contain rounded" />
-								<span class="text-2xl font-bold text-[#B79C64]" style="font-family: 'Lora', serif;">{siteName}</span>
+								{/* Only show name text for individual pubs, not for WH Pubs main site */}
+								{siteName !== 'WH Pubs' && (
+									<span class="text-2xl font-bold text-[#B79C64]" style="font-family: 'Lora', serif;">{siteName}</span>
+								)}
 							</a>
 						) : (
 							<h3 class="text-3xl font-bold mb-6" style="font-family: Georgia, 'Times New Roman', serif;">{siteName}</h3>
