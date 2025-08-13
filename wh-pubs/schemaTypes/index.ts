@@ -35,6 +35,8 @@ export const schemaTypes = [
   careersPageSettings,
   thingsToDoPageSettings,
   pubFinderPageSettings,
+  suppliersPageSettings,
+  giftCardsPageSettings,
   post, 
   pub, 
   menu, 
