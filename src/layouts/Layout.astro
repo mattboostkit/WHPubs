@@ -214,7 +214,10 @@ const metaDescription = description || footerDescription;
 						{logoUrl ? (
 							<div class="flex items-center space-x-3">
 								<img src={logoUrl} alt={logoAlt} class="h-14 w-14 object-contain rounded" />
-								<span class="text-xl font-bold text-[#B79C64] hidden sm:block">{siteName}</span>
+								{/* Only show name text for individual pubs, not for WH Pubs main site */}
+								{siteName !== 'WH Pubs' && (
+									<span class="text-xl font-bold text-[#B79C64] hidden sm:block">{siteName}</span>
+								)}
 							</div>
 						) : (
 							<span class="text-4xl font-bold">{siteName}</span>
