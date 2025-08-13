@@ -36,7 +36,7 @@ export default function MegaMenu({ pubs, currentPath }: MegaMenuProps) {
             title: 'Quick Links',
             items: [
               { title: 'View All Pubs', href: '/our-pubs', icon: <MapPin className="w-4 h-4" />, description: 'See all our locations' },
-              { title: 'Book a Table', href: '/book-a-table', icon: <Calendar className="w-4 h-4" />, description: 'Make a reservation' }
+              { title: 'Book a Table', href: '/book-table', icon: <Calendar className="w-4 h-4" />, description: 'Make a reservation' }
             ]
           }
         ]
