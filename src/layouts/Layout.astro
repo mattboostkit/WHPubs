@@ -250,7 +250,7 @@ const metaDescription = description || footerDescription;
 					<a href="/" class="text-[#B79C64] flex items-center space-x-3" aria-label={`${siteName} Home`}>
 						{logoUrl ? (
 							<div class="flex items-center space-x-3">
-								<img src={logoUrl} alt={logoAlt} class="h-12 w-12 object-contain rounded" />
+								<img src={logoUrl} alt={logoAlt} class={siteName === 'WH Pubs' ? "h-16 w-16 object-contain rounded" : "h-12 w-12 object-contain rounded"} />
 								{/* Only show name text for individual pubs, not for WH Pubs main site */}
 								{siteName !== 'WH Pubs' && (
 									<span class="text-lg font-bold text-[#B79C64]">{siteName}</span>
