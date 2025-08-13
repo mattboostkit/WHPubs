@@ -174,10 +174,10 @@ export default defineType({
         })
       ],
     }),
-    // Why Choose Us section (replaces What Makes Us Special)
+    // Come To Us For section (formerly Why Choose Us)
     defineField({
       name: 'whyChooseUs',
-      title: 'Why Choose Us - Three Reasons',
+      title: 'Come To Us For',
       type: 'object',
       description: 'Three compelling reasons why customers should visit WH Pubs',
       fields: [
