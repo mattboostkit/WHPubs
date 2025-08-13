@@ -329,16 +329,18 @@ export default defineType({
           name: 'dishes',
           title: 'Featured Dishes',
           type: 'array',
-          description: 'Add up to 4 signature dishes to showcase',
-          validation: Rule => Rule.max(4),
+          description: 'Add up to 4 signature dishes to showcase on the homepage',
+          validation: Rule => Rule.required().min(1).max(4).error('Please add 1-4 signature dishes'),
           of: [
             {
               type: 'object',
+              title: 'Dish',
               fields: [
                 {
                   name: 'name',
                   title: 'Dish Name',
                   type: 'string',
+                  description: 'e.g., "Sunday Roast Trio", "Beer Battered Fish & Chips"',
                   validation: Rule => Rule.required(),
                 },
                 {
@@ -346,39 +348,84 @@ export default defineType({
                   title: 'Description',
                   type: 'text',
                   rows: 3,
-                  validation: Rule => Rule.required(),
+                  description: 'Appetizing description of the dish and its ingredients',
+                  validation: Rule => Rule.required().max(200),
                 },
                 {
                   name: 'price',
                   title: 'Price',
                   type: 'string',
-                  description: 'e.g., "£18.95"',
+                  description: 'Display price (e.g., "£18.95" or "From £12.95")',
                   validation: Rule => Rule.required(),
                 },
                 {
                   name: 'image',
                   title: 'Dish Image',
                   type: 'image',
-                  description: 'Image of the dish (recommended: 600x400px)',
+                  description: 'High-quality image of the dish (recommended: 800x600px)',
                   options: {
                     hotspot: true,
                   },
                   validation: Rule => Rule.required(),
+                  fields: [
+                    {
+                      name: 'alt',
+                      type: 'string',
+                      title: 'Alternative Text',
+                      description: 'Describe the dish for screen readers',
+                      validation: Rule => Rule.required(),
+                    }
+                  ],
                 },
                 {
                   name: 'tag',
-                  title: 'Special Tag',
+                  title: 'Special Tag/Badge',
                   type: 'string',
-                  description: 'Optional tag like "Chef\'s Special" or "Best Seller"',
+                  description: 'Optional badge like "Chef\'s Special", "Best Seller", "Traditional", "Vegetarian"',
+                  options: {
+                    list: [
+                      { title: 'Chef\'s Special', value: 'Chef\'s Special' },
+                      { title: 'Best Seller', value: 'Best Seller' },
+                      { title: 'Traditional', value: 'Traditional' },
+                      { title: 'Vegetarian', value: 'Vegetarian' },
+                      { title: 'Vegan', value: 'Vegan' },
+                      { title: 'Gluten Free', value: 'Gluten Free' },
+                      { title: 'New', value: 'New' },
+                    ],
+                  },
                 },
                 {
                   name: 'pubLocation',
                   title: 'Available At',
                   type: 'string',
+                  description: 'Specify which pub(s) offer this dish, or "Available at all locations"',
                   initialValue: 'Available at all locations',
-                  description: 'Where this dish is available',
+                  options: {
+                    list: [
+                      { title: 'Available at all locations', value: 'Available at all locations' },
+                      { title: 'The Bull', value: 'The Bull' },
+                      { title: 'The Chaser Inn', value: 'The Chaser Inn' },
+                      { title: 'The Cricketers Inn', value: 'The Cricketers Inn' },
+                      { title: 'The Little Brown Jug', value: 'The Little Brown Jug' },
+                      { title: 'The Rose & Crown', value: 'The Rose and Crown' },
+                    ],
+                  },
+                },
+                {
+                  name: 'bookingLink',
+                  title: 'Book Now Link',
+                  type: 'string',
+                  description: 'Optional booking link for this dish (defaults to /book-table)',
+                  initialValue: '/book-table',
                 },
               ],
+              preview: {
+                select: {
+                  title: 'name',
+                  subtitle: 'price',
+                  media: 'image',
+                },
+              },
             },
           ],
         },
