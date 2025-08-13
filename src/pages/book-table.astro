@@ -54,8 +54,13 @@ const pageDescription = "Reserve your table at any of our five traditional Briti
             <div class="lg:col-span-2">
               <Card class="overflow-hidden shadow-xl">
                 <CardHeader class="bg-primary text-white">
-                  <CardTitle class="text-2xl flex items-center">
-                    <Calendar class="w-6 h-6 mr-3" />
+                  <CardTitle class="text-2xl flex items-center gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                      <line x1="16" y1="2" x2="16" y2="6"></line>
+                      <line x1="8" y1="2" x2="8" y2="6"></line>
+                      <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
                     Make Your Reservation
                   </CardTitle>
                 </CardHeader>
@@ -67,29 +72,31 @@ const pageDescription = "Reserve your table at any of our five traditional Briti
 
               {/* Pub Selection Cards Below Widget */}
               <div class="mt-8">
-                <h3 class="text-xl font-bold mb-4">Or Call Your Preferred Pub Directly:</h3>
+                <h3 class="text-xl font-bold mb-6 text-primary">Or Call Your Preferred Pub Directly:</h3>
                 <div class="grid sm:grid-cols-2 gap-4">
                   {uniquePubs.map((pub) => (
-                    <Card class="hover:shadow-lg transition-all hover:-translate-y-1">
-                      <CardContent class="p-4">
+                    <Card class="hover:shadow-lg transition-all hover:-translate-y-1 border border-gray-200">
+                      <CardContent class="p-5">
                         <div class="flex items-start justify-between">
                           <div class="flex-1">
-                            <h4 class="font-semibold text-lg mb-1">{pub.name}</h4>
+                            <h4 class="font-semibold text-lg mb-1 text-primary">{pub.name}</h4>
                             {pub.locationName && (
-                              <p class="text-sm text-primary/60 mb-2">{pub.locationName}</p>
+                              <p class="text-sm text-gray-600 mb-3">{pub.locationName}</p>
                             )}
                             {pub.contactPhone && (
                               <a 
                                 href={`tel:${pub.contactPhone.replace(/\s/g, '')}`}
-                                class="inline-flex items-center text-secondary hover:text-secondary/80 font-medium"
+                                class="inline-flex items-center gap-2 text-secondary hover:text-secondary/80 font-medium transition-colors"
                               >
-                                <Phone class="w-4 h-4 mr-2" />
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0">
+                                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                </svg>
                                 {pub.contactPhone}
                               </a>
                             )}
                           </div>
                           {pub.name === 'The Little Brown Jug' && (
-                            <Badge variant="secondary" class="ml-2">Head Office</Badge>
+                            <Badge variant="secondary" class="ml-3 whitespace-nowrap">Head Office</Badge>
                           )}
                         </div>
                       </CardContent>
@@ -103,41 +110,58 @@ const pageDescription = "Reserve your table at any of our five traditional Briti
             <div class="space-y-6">
               {/* Booking Benefits */}
               <Card class="border-secondary/20">
-                <CardHeader>
-                  <CardTitle class="text-xl flex items-center">
-                    <Star class="w-5 h-5 mr-2 text-secondary" />
+                <CardHeader class="pb-4">
+                  <CardTitle class="text-xl flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-secondary flex-shrink-0">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
                     Why Book With Us
                   </CardTitle>
                 </CardHeader>
                 <CardContent class="space-y-3">
-                  <div class="flex items-start">
-                    <span class="text-secondary mr-2">✓</span>
-                    <p class="text-sm">Instant confirmation of your booking</p>
+                  <div class="flex items-start gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-secondary mt-0.5 flex-shrink-0">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    <p class="text-sm text-gray-700">Instant confirmation of your booking</p>
                   </div>
-                  <div class="flex items-start">
-                    <span class="text-secondary mr-2">✓</span>
-                    <p class="text-sm">Easily modify or cancel online</p>
+                  <div class="flex items-start gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-secondary mt-0.5 flex-shrink-0">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    <p class="text-sm text-gray-700">Easily modify or cancel online</p>
                   </div>
-                  <div class="flex items-start">
-                    <span class="text-secondary mr-2">✓</span>
-                    <p class="text-sm">Special dietary requirements catered for</p>
+                  <div class="flex items-start gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-secondary mt-0.5 flex-shrink-0">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    <p class="text-sm text-gray-700">Special dietary requirements catered for</p>
                   </div>
-                  <div class="flex items-start">
-                    <span class="text-secondary mr-2">✓</span>
-                    <p class="text-sm">Priority seating for online bookings</p>
+                  <div class="flex items-start gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-secondary mt-0.5 flex-shrink-0">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    <p class="text-sm text-gray-700">Priority seating for online bookings</p>
                   </div>
-                  <div class="flex items-start">
-                    <span class="text-secondary mr-2">✓</span>
-                    <p class="text-sm">Exclusive online booking offers</p>
+                  <div class="flex items-start gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-secondary mt-0.5 flex-shrink-0">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    <p class="text-sm text-gray-700">Exclusive online booking offers</p>
                   </div>
                 </CardContent>
               </Card>
 
               {/* Group Bookings */}
               <Card class="bg-secondary/10 border-secondary/20">
-                <CardHeader>
-                  <CardTitle class="text-xl flex items-center">
-                    <Users class="w-5 h-5 mr-2" />
+                <CardHeader class="pb-4">
+                  <CardTitle class="text-xl flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0">
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="9" cy="7" r="4"></circle>
+                      <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
                     Large Groups & Events
                   </CardTitle>
                 </CardHeader>
@@ -160,9 +184,12 @@ const pageDescription = "Reserve your table at any of our five traditional Briti
 
               {/* Dining Information */}
               <Card>
-                <CardHeader>
-                  <CardTitle class="text-xl flex items-center">
-                    <ChefHat class="w-5 h-5 mr-2" />
+                <CardHeader class="pb-4">
+                  <CardTitle class="text-xl flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0">
+                      <path d="M6 13.87A4 4 0 0 1 7.41 6a5.11 5.11 0 0 1 1.05-1.54 5 5 0 0 1 7.08 0A5.11 5.11 0 0 1 16.59 6 4 4 0 0 1 18 13.87V21H6Z"></path>
+                      <line x1="6" y1="17" x2="18" y2="17"></line>
+                    </svg>
                     Dining Information
                   </CardTitle>
                 </CardHeader>
