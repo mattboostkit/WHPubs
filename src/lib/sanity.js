@@ -218,15 +218,17 @@ export async function getPubs(targetPubSlug = null) {
         backgroundImage { asset->{ _id, url }, alt }
       },
       signatureDishes {
+        sectionLabel,
         title,
         subtitle,
         dishes[] {
           name,
           description,
           price,
-          image { asset->{ _id, url } },
+          image { asset->{ _id, url }, alt },
           tag,
-          pubLocation
+          pubLocation,
+          bookingLink
         }
       },
       // Christmas Menu fields
@@ -318,15 +320,17 @@ export async function getHomepageData() {
         backgroundImage { asset->{ _id, url }, alt }
       },
       signatureDishes {
+        sectionLabel,
         title,
         subtitle,
         dishes[] {
           name,
           description,
           price,
-          image { asset->{ _id, url } },
+          image { asset->{ _id, url }, alt },
           tag,
-          pubLocation
+          pubLocation,
+          bookingLink
         }
       }
     }
