@@ -21,6 +21,10 @@ interface FeaturedDishesData {
   dishes?: Dish[];
 }
 
+interface FeaturedDishesProps {
+  signatureDishes?: FeaturedDishesData;
+}
+
 // Fallback dishes data
 const fallbackDishes: Dish[] = [
   {
