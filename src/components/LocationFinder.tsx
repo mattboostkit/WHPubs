@@ -55,7 +55,7 @@ export default function LocationFinder() {
       postcode: 'DA13 0QA',
       phone: '01474 812163',
       openingHours: 'Mon-Fri: 12pm-11pm, Sat: 12pm-12am, Sun: 12pm-10pm',
-      logo: '/images/pub-logos/the-cricketers-inn-logo.png',
+      logo: '/images/pub-logos/wh-pubs-logo.png', // Cricketers logo not available yet
       features: ['Dog Friendly', 'Garden', 'Parking', 'Live Sports'],
       transport: {
         parking: 'Free car park for 50 cars',
@@ -69,7 +69,7 @@ export default function LocationFinder() {
       postcode: 'TN11 8JJ',
       phone: '01892 870318',
       openingHours: 'Mon-Fri: 12pm-11pm, Sat: 12pm-12am, Sun: 12pm-10pm',
-      logo: '/images/pub-logos/the-little-brown-jug-logo.png',
+      logo: '/images/pub-logos/wh-pubs-logo.png', // Little Brown Jug logo not available yet
       features: ['Head Office', 'Historic Building', 'Real Ales', 'Dog Friendly'],
       transport: {
         parking: 'Village car park nearby',
@@ -83,7 +83,7 @@ export default function LocationFinder() {
       postcode: 'BR6 6BT',
       phone: '01689 869029',
       openingHours: 'Mon-Fri: 12pm-11pm, Sat: 12pm-12am, Sun: 12pm-10pm',
-      logo: '/images/pub-logos/the-rose-crown-logo.png',
+      logo: '/images/pub-logos/the-crown-logo.png', // Using Crown logo for Rose & Crown
       features: ['Large Garden', 'Family Friendly', 'Parking', 'Dog Friendly'],
       transport: {
         parking: 'On-site parking available',
