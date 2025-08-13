@@ -22,12 +22,42 @@ export default function LocationFinder() {
 
   const locations: Location[] = [
     {
+      name: 'The Bull',
+      slug: 'the-bull-otford',
+      address: 'High Street, Otford',
+      postcode: 'TN14 5PG',
+      phone: '01959 580585',
+      openingHours: 'Mon-Fri: 12pm-11pm, Sat: 12pm-12am, Sun: 12pm-10pm',
+      image: '/images/pub-bull.jpg',
+      distance: '6.8 miles',
+      features: ['Historic Coaching Inn', 'Private Dining', 'Garden', 'Dog Friendly'],
+      transport: {
+        parking: 'Public car park opposite',
+        train: 'Otford Station (0.3 miles)'
+      }
+    },
+    {
+      name: 'The Chaser Inn',
+      slug: 'the-chaser-inn',
+      address: 'Stumble Hill, Shipbourne',
+      postcode: 'TN11 9PE',
+      phone: '01732 810360',
+      openingHours: 'Mon-Fri: 12pm-11pm, Sat: 12pm-12am, Sun: 12pm-10pm',
+      image: '/images/pub-chaser.jpg',
+      distance: '5.2 miles',
+      features: ['Live Music', 'Garden', 'Quiz Nights', 'Dog Friendly'],
+      transport: {
+        parking: 'Free parking',
+        train: 'Tonbridge Station (4 miles)'
+      }
+    },
+    {
       name: 'The Cricketers Inn',
       slug: 'the-cricketers-inn',
-      address: 'Wrotham Road, Meopham',
+      address: 'Wrotham Road, Meopham Green',
       postcode: 'DA13 0QA',
       phone: '01474 812163',
-      openingHours: 'Mon-Sun: 11am-11pm',
+      openingHours: 'Mon-Fri: 12pm-11pm, Sat: 12pm-12am, Sun: 12pm-10pm',
       image: '/images/pub-cricketers.jpg',
       distance: '2.3 miles',
       features: ['Dog Friendly', 'Garden', 'Parking', 'Live Sports'],
@@ -37,63 +67,33 @@ export default function LocationFinder() {
       }
     },
     {
-      name: 'The Rose and Crown',
-      slug: 'the-rose-and-crown',
-      address: 'Green Street Green, Orpington',
-      postcode: 'BR6 6BT',
-      phone: '01689 851200',
-      openingHours: 'Mon-Sun: 11am-11pm',
-      image: '/images/pub-rose-crown.jpg',
-      distance: '3.1 miles',
-      features: ['Large Garden', 'Family Friendly', 'Parking'],
-      transport: {
-        parking: 'On-site parking available',
-        train: 'Chelsfield Station (1.5 miles)'
-      }
-    },
-    {
       name: 'The Little Brown Jug',
       slug: 'the-little-brown-jug',
-      address: 'Chiddingstone Causeway',
+      address: 'High Street, Chiddingstone Causeway',
       postcode: 'TN11 8JJ',
-      phone: '01892 870328',
-      openingHours: 'Mon-Sun: 11am-11pm',
+      phone: '01892 870318',
+      openingHours: 'Mon-Fri: 12pm-11pm, Sat: 12pm-12am, Sun: 12pm-10pm',
       image: '/images/pub-brown-jug.jpg',
       distance: '4.7 miles',
-      features: ['Historic Building', 'Real Ales', 'Dog Friendly'],
+      features: ['Head Office', 'Historic Building', 'Real Ales', 'Dog Friendly'],
       transport: {
         parking: 'Village car park nearby',
         train: 'Penshurst Station (2 miles)'
       }
     },
     {
-      name: 'The Chaser Inn',
-      slug: 'the-chaser-inn',
-      address: 'Stumble Hill, Shipbourne',
-      postcode: 'TN11 9PE',
-      phone: '01732 810360',
-      openingHours: 'Mon-Sun: 12pm-11pm',
-      image: '/images/pub-chaser.jpg',
-      distance: '5.2 miles',
-      features: ['Live Music', 'Garden', 'Quiz Nights'],
+      name: 'The Rose & Crown',
+      slug: 'the-rose-and-crown',
+      address: 'Green Street Green, Orpington',
+      postcode: 'BR6 6BT',
+      phone: '01689 869029',
+      openingHours: 'Mon-Fri: 12pm-11pm, Sat: 12pm-12am, Sun: 12pm-10pm',
+      image: '/images/pub-rose-crown.jpg',
+      distance: '3.1 miles',
+      features: ['Large Garden', 'Family Friendly', 'Parking', 'Dog Friendly'],
       transport: {
-        parking: 'Free parking',
-        train: 'Tonbridge Station (4 miles)'
-      }
-    },
-    {
-      name: 'The Bull',
-      slug: 'the-bull',
-      address: 'High Street, Otford',
-      postcode: 'TN14 5PG',
-      phone: '01959 522233',
-      openingHours: 'Mon-Sun: 11am-11pm',
-      image: '/images/pub-bull.jpg',
-      distance: '6.8 miles',
-      features: ['Historic Coaching Inn', 'Private Dining', 'Garden'],
-      transport: {
-        parking: 'Public car park opposite',
-        train: 'Otford Station (0.3 miles)'
+        parking: 'On-site parking available',
+        train: 'Chelsfield Station (1.5 miles)'
       }
     }
   ];
