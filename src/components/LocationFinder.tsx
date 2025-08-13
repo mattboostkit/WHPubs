@@ -9,7 +9,6 @@ interface Location {
   phone: string;
   openingHours: string;
   image: string;
-  distance?: string;
   features: string[];
   transport: {
     parking: string;
@@ -29,7 +28,6 @@ export default function LocationFinder() {
       phone: '01959 580585',
       openingHours: 'Mon-Fri: 12pm-11pm, Sat: 12pm-12am, Sun: 12pm-10pm',
       image: '/images/pub-bull.jpg',
-      distance: '6.8 miles',
       features: ['Historic Coaching Inn', 'Private Dining', 'Garden', 'Dog Friendly'],
       transport: {
         parking: 'Public car park opposite',
@@ -44,7 +42,6 @@ export default function LocationFinder() {
       phone: '01732 810360',
       openingHours: 'Mon-Fri: 12pm-11pm, Sat: 12pm-12am, Sun: 12pm-10pm',
       image: '/images/pub-chaser.jpg',
-      distance: '5.2 miles',
       features: ['Live Music', 'Garden', 'Quiz Nights', 'Dog Friendly'],
       transport: {
         parking: 'Free parking',
@@ -59,7 +56,6 @@ export default function LocationFinder() {
       phone: '01474 812163',
       openingHours: 'Mon-Fri: 12pm-11pm, Sat: 12pm-12am, Sun: 12pm-10pm',
       image: '/images/pub-cricketers.jpg',
-      distance: '2.3 miles',
       features: ['Dog Friendly', 'Garden', 'Parking', 'Live Sports'],
       transport: {
         parking: 'Free car park for 50 cars',
@@ -74,7 +70,6 @@ export default function LocationFinder() {
       phone: '01892 870318',
       openingHours: 'Mon-Fri: 12pm-11pm, Sat: 12pm-12am, Sun: 12pm-10pm',
       image: '/images/pub-brown-jug.jpg',
-      distance: '4.7 miles',
       features: ['Head Office', 'Historic Building', 'Real Ales', 'Dog Friendly'],
       transport: {
         parking: 'Village car park nearby',
@@ -89,7 +84,6 @@ export default function LocationFinder() {
       phone: '01689 869029',
       openingHours: 'Mon-Fri: 12pm-11pm, Sat: 12pm-12am, Sun: 12pm-10pm',
       image: '/images/pub-rose-crown.jpg',
-      distance: '3.1 miles',
       features: ['Large Garden', 'Family Friendly', 'Parking', 'Dog Friendly'],
       transport: {
         parking: 'On-site parking available',
@@ -144,21 +138,20 @@ export default function LocationFinder() {
 
           {/* Locations Grid */}
           <div className="grid lg:grid-cols-2 gap-8">
-            {/* Map Area */}
+            {/* Map Area with all pub markers */}
             <div className="bg-gray-200 rounded-xl overflow-hidden h-[600px] relative">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d159488.29796033!2d0.0!3d51.3!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTHCsDE4JzAwLjAiTiAwwrAwMCcwMC4wIkU!5e0!3m2!1sen!2suk!4v1635959040851!5m2!1sen!2suk"
+                src="https://www.google.com/maps/d/embed?mid=1YvPzqOm7qXzFQQ_9RqQYJdPFZvSMGXE&ehbc=2E312F&z=10"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                className="grayscale"
               />
               <div className="absolute top-4 left-4 bg-white rounded-lg shadow-lg p-3">
-                <p className="text-sm font-semibold text-gray-700">Interactive Map</p>
-                <p className="text-xs text-gray-500">Click markers for details</p>
+                <p className="text-sm font-semibold text-gray-700">All WH Pubs Locations</p>
+                <p className="text-xs text-gray-500">5 traditional pubs across Kent & South East London</p>
               </div>
             </div>
 
@@ -186,12 +179,6 @@ export default function LocationFinder() {
                     <div className="flex-1 p-4">
                       <div className="flex items-start justify-between mb-2">
                         <h3 className="text-xl font-bold text-primary">{location.name}</h3>
-                        {location.distance && (
-                          <span className="text-sm text-gray-500 flex items-center gap-1">
-                            <Navigation className="w-3 h-3" />
-                            {location.distance}
-                          </span>
-                        )}
                       </div>
 
                       <div className="space-y-1 text-sm text-gray-600 mb-3">
