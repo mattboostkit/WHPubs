@@ -45,7 +45,7 @@ export default function LocationFinder() {
       postcode: 'TN14 5PG',
       phone: '01959 580585',
       openingHours: 'Mon-Fri: 12pm-11pm, Sat: 12pm-12am, Sun: 12pm-10pm',
-      image: '/images/pub-bull.jpg',
+      image: '/images/hero-fallback.jpg', // Bull image not available, using fallback
       features: ['Historic Coaching Inn', 'Private Dining', 'Garden', 'Dog Friendly'],
       transport: {
         parking: 'Public car park opposite',
@@ -59,7 +59,7 @@ export default function LocationFinder() {
       postcode: 'TN11 9PE',
       phone: '01732 810360',
       openingHours: 'Mon-Fri: 12pm-11pm, Sat: 12pm-12am, Sun: 12pm-10pm',
-      image: '/images/pub-chaser.jpg',
+      image: '/images/chaser-inn.jpg',
       features: ['Live Music', 'Garden', 'Quiz Nights', 'Dog Friendly'],
       transport: {
         parking: 'Free parking',
@@ -73,7 +73,7 @@ export default function LocationFinder() {
       postcode: 'DA13 0QA',
       phone: '01474 812163',
       openingHours: 'Mon-Fri: 12pm-11pm, Sat: 12pm-12am, Sun: 12pm-10pm',
-      image: '/images/pub-cricketers.jpg',
+      image: '/images/cricketers-inn.jpg',
       features: ['Dog Friendly', 'Garden', 'Parking', 'Live Sports'],
       transport: {
         parking: 'Free car park for 50 cars',
@@ -87,7 +87,7 @@ export default function LocationFinder() {
       postcode: 'TN11 8JJ',
       phone: '01892 870318',
       openingHours: 'Mon-Fri: 12pm-11pm, Sat: 12pm-12am, Sun: 12pm-10pm',
-      image: '/images/pub-brown-jug.jpg',
+      image: '/images/little-brown-jug.jpg',
       features: ['Head Office', 'Historic Building', 'Real Ales', 'Dog Friendly'],
       transport: {
         parking: 'Village car park nearby',
@@ -101,7 +101,7 @@ export default function LocationFinder() {
       postcode: 'BR6 6BT',
       phone: '01689 869029',
       openingHours: 'Mon-Fri: 12pm-11pm, Sat: 12pm-12am, Sun: 12pm-10pm',
-      image: '/images/pub-rose-crown.jpg',
+      image: '/images/rose-and-crown.jpg',
       features: ['Large Garden', 'Family Friendly', 'Parking', 'Dog Friendly'],
       transport: {
         parking: 'On-site parking available',
@@ -188,7 +188,7 @@ export default function LocationFinder() {
                         alt={location.name}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                         onError={(e) => {
-                          e.currentTarget.src = '/images/pub-fallback.jpg';
+                          e.currentTarget.src = '/images/hero-fallback.jpg';
                         }}
                       />
                     </div>
