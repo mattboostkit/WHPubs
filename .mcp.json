@@ -1,12 +1,3 @@
 {
-  "mcpServers": {
-    "sanity": {
-      "type": "stdio",
-      "command": "npx",
-      "args": [
-        "@cloudcode/mcp-server-sanity"
-      ],
-      "env": {}
-    }
-  }
+  "mcpServers": {}
 }
