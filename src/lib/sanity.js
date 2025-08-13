@@ -540,6 +540,18 @@ export async function getPageSettings(pageName = null) {
         heroImage { asset->{ _id, url }, alt },
         heroTitle,
         heroSubtitle
+      },
+      "suppliers": *[_type == "suppliersPageSettings"][0] {
+        title,
+        heroImage { asset->{ _id, url }, alt },
+        heroTitle,
+        heroSubtitle
+      },
+      "giftCards": *[_type == "giftCardsPageSettings"][0] {
+        title,
+        heroImage { asset->{ _id, url }, alt },
+        heroTitle,
+        heroSubtitle
       }
     }
   `);
