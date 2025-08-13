@@ -244,9 +244,12 @@ const metaDescription = description || footerDescription;
 			<div id="mobile-menu" class="fixed inset-0 bg-primary z-50 flex flex-col p-4 transform translate-x-full transition-transform duration-300 ease-in-out" role="dialog" aria-modal="true" aria-label="Mobile navigation">
 				<div class="flex justify-between items-center mb-8">
 					<!-- Mobile Menu Header -->
-					<a href="/" class="text-[#B79C64]" aria-label={`${siteName} Home`}>
+					<a href="/" class="text-[#B79C64] flex items-center space-x-3" aria-label={`${siteName} Home`}>
 						{logoUrl ? (
-							<img src={logoUrl} alt={logoAlt} class="h-14 max-w-[200px] sm:max-w-[300px] object-contain" />
+							<div class="flex items-center space-x-3">
+								<img src={logoUrl} alt={logoAlt} class="h-12 w-12 object-contain rounded" />
+								<span class="text-lg font-bold text-[#B79C64]">{siteName}</span>
+							</div>
 						) : (
 							<span class="text-4xl font-bold">{siteName}</span>
 						)}
