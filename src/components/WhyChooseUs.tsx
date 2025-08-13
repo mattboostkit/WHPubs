@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Utensils, Beer, Calendar } from 'lucide-react';
+import { Utensils, TreePine, Calendar } from 'lucide-react';
 
 interface Reason {
   number: string;
@@ -41,7 +41,7 @@ export default function WhyChooseUs({ reasons, backgroundImage }: WhyChooseUsPro
       number: "02",
       title: reasons?.reason2?.title || "Garden Dining",
       description: reasons?.reason2?.description || "Beautiful outdoor spaces with seasonal menus and craft beers",
-      icon: <Beer className="w-6 h-6" />,
+      icon: <TreePine className="w-6 h-6" />,
       image: reasons?.reason2?.image?.asset?.url || backgroundImage || defaultImages[1]
     },
     {
