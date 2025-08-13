@@ -1,3 +1,12 @@
 {
-  "mcpServers": {}
+  "mcpServers": {
+    "sanity": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "@sanity/mcp-server@latest"
+      ],
+      "env": {}
+    }
+  }
 }
