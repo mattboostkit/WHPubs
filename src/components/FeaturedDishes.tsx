@@ -28,32 +28,32 @@ interface FeaturedDishesProps {
 // Fallback dishes data
 const fallbackDishes: Dish[] = [
   {
-    name: 'Sunday Roast Trio',
-    description: 'Beef, pork & chicken with all the trimmings, Yorkshire puddings, roast potatoes and seasonal vegetables',
-    price: '£18.95',
+    name: 'Award Winning Larkins Beer Battered Fish & Chips',
+    description: 'Atlantic Cod from the clear cold healthy waters of the Barents sea in a Larkins beer batter served with homemade triple cooked chunky chips and creamy mushy peas',
+    price: '£19.95',
+    tag: 'Award Winning',
+    pubLocation: 'Available at all locations'
+  },
+  {
+    name: 'Our Classic Homemade \'Gourmet\' Burger',
+    description: 'Using the finest cuts of British chuck, rib, brisket steak, served with sliced gherkin, tomato & baby gem lettuce in a seeded brioche bun with burger sauce & fries',
+    price: '£17.95',
     tag: 'Chef\'s Special',
     pubLocation: 'Available at all locations'
   },
   {
-    name: 'Beer Battered Fish & Chips',
-    description: 'Fresh cod in our signature beer batter, triple-cooked chips, mushy peas and homemade tartare sauce',
-    price: '£15.95',
-    tag: 'Best Seller',
-    pubLocation: 'The Cricketers Inn'
+    name: 'Chargrilled Line Caught Yellowfin Tuna Steak Nicoise Salad',
+    description: 'Chargrilled Yellowfin Tuna Steak, Heritage Tomato, New Potato, Green Beans, Marinated Anchovies, Boiled Free Range Egg, Provencale olives, Wild Rocket, Crispy Capers, Salsa Verde',
+    price: '£22.95',
+    tag: 'Premium',
+    pubLocation: 'Available at all locations'
   },
   {
-    name: 'Steak & Ale Pie',
-    description: 'Slow-cooked British beef in rich ale gravy, buttery puff pastry, mash and seasonal greens',
-    price: '£14.95',
-    tag: 'Traditional',
-    pubLocation: 'The Bull'
-  },
-  {
-    name: 'Wild Mushroom Risotto',
-    description: 'Creamy arborio rice with mixed wild mushrooms, truffle oil, parmesan and fresh herbs',
-    price: '£13.95',
-    tag: 'Vegetarian',
-    pubLocation: 'The Rose and Crown'
+    name: 'Handmade Award-Winning Italian Tortellini Pasta',
+    description: 'Filled with crayfish and prawns tossed in garlic, Chilli & Chive Butter, topped with freshly grated parmesan cheese and a twist of black pepper. Served with fresh garlic bread',
+    price: '£19.95',
+    tag: 'Award Winning',
+    pubLocation: 'Available at all locations'
   }
 ];
 
