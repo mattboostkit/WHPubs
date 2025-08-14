@@ -156,8 +156,10 @@ const allPubs = pubs;
       />
     )}
 
-    {/* Testimonials Carousel */}
-    <TestimonialsCarousel client:visible />
+    {/* Customer Reviews Section */}
+    {allReviews && allReviews.length > 0 && (
+      <CustomerReviews reviews={allReviews} client:visible />
+    )}
 
     {/* All Pubs Grid Section */}
     <section id="pubs" class="py-20 bg-white">
