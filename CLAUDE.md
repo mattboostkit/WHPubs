@@ -78,12 +78,13 @@ The build system supports creating pub-specific builds using `TARGET_PUB_SLUG` e
 ## Sanity Client Configuration
 The Sanity client is configured in `src/lib/sanity.js` with helper functions for all content types:
 - `getPosts(targetPubSlug)` - Fetches posts filtered by pub
-- `getPubs(targetPubSlug)` - Fetches pub data
+- `getPubs(targetPubSlug)` - Fetches pub data with enhanced signature dishes fields
 - `getMenusForPub(targetPubSlug)` - Fetches menus for a specific pub
 - `getEvents(targetPubSlug)` - Fetches events filtered by pub
 - `getPubBySlug(slug)` - Fetches single pub with all layout fields
 - `getDevelopmentKitchen()` - Fetches Development Kitchen content sections
 - `getPrivacyPolicy(pubSlug)` - Fetches privacy policy (hub or pub-specific)
+- `getHomepageData()` - Fetches homepage data including enhanced signature dishes section
 
 ## UI Components
 The project uses shadcn/ui components with a customized black (#1A1A1A) and gold (#B79C64) color scheme. All components are in `src/components/ui/` and use Tailwind CSS with the following custom theme variables:
