@@ -256,6 +256,18 @@ const data = await prisma.user.findMany({
 - **Interactive Pub Cards**: Enhanced PubCardHover component with clickable functionality that opens pub external domains
 - **URL Updates**: Updated pub-urls.js to support new pub naming conventions (e.g., the-bull-otford)
 
+### Signature Dishes Enhancement (January 2025)
+- **Enhanced Signature Dishes Schema**: Updated homepage schema with improved signature dishes section
+  - Added `sectionLabel` field for section branding (e.g., "FROM OUR KITCHENS")
+  - Added `bookingLink` field to dishes for direct booking capability
+  - Enhanced image handling with required alt text for accessibility
+  - Improved validation rules for better content management
+- **FeaturedDishes Component**: React component that displays signature dishes with fallback data
+  - Supports custom tags (Chef's Special, Best Seller, Traditional)
+  - Pub location indicators for multi-site dish availability
+  - Responsive grid layout with hover effects
+- **Sanity Query Updates**: Modified `getPubs()` and `getHomepageData()` functions to include new signature dishes fields
+
 ## Privacy Policy Implementation
 
 ### Overview
