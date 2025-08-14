@@ -586,6 +586,25 @@ export async function getReviews(targetPubSlug = null, featured = false) {
   `, params);
 }
 
+// Helper function to get ALL reviews across all pubs
+export async function getAllReviews(limit = 20) {
+  return client.fetch(`
+    *[_type == "review" && published != false] {
+      _id,
+      customerName,
+      rating,
+      reviewText,
+      reviewDate,
+      date,
+      source,
+      featured,
+      verified,
+      published,
+      associatedPub->{ name, slug }
+    } | order(featured desc, rating desc, reviewDate desc)[0...${limit}]
+  `);
+}
+
 // Helper function to get offers, optionally filtered by pub slug
 export async function getOffers(targetPubSlug = null, activeOnly = true) {
   let filter = '';
