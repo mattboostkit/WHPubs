@@ -38,6 +38,8 @@ try {
 
 // Fetch featured reviews for the homepage
 const featuredReviews = await getReviews(null, true); // Get featured general reviews
+// Fetch all reviews across all pubs for the testimonials carousel
+const allReviews = await getAllReviews(10); // Get top 10 reviews from all pubs
 
 // Fetch active offers for the homepage
 const activeOffers = await getOffers(null, true); // Get active general offers
