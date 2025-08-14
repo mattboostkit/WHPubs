@@ -403,6 +403,7 @@ export async function getEvents(targetPubSlug = null) {
 export async function getDevelopmentKitchen() {
   return client.fetch(`
     *[_type == "developmentKitchen"][0] {
+      title,
       heroImage { asset->{ _id, url }, alt },
       chefProfile {
         name,
