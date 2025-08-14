@@ -796,11 +796,8 @@ export async function getLoyaltyProgramData() {
 // Get about page content (now consolidated in aboutPageSettings)
 export async function getAboutContent() {
   return await client.fetch(`
-    *[_type == "aboutPageSettings"][0]{
+    *[_type == "aboutContent"][0]{
       title,
-      heroImage { asset->{ _id, url }, alt },
-      heroTitle,
-      heroSubtitle,
       mainTitle,
       founderPhoto{
         asset->{
