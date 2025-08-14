@@ -58,7 +58,8 @@ npm run create-sample-posts  # Create sample blog posts
 - **post**: Blog posts that can be associated with specific pubs or hub
 - **menu**: Menu content associated with pubs
 - **event**: Events associated with pubs or general
-- **homepage**: Configurable hero section for main hub
+- **homepage**: Configurable hero section for main hub with enhanced signature dishes
+- **featuredDishes**: Standalone featured dishes document type for managing signature dishes
 - **developmentKitchen**: Content sections for Development Kitchen page (myJourney, whatWeDo, qualitySourcing, christmasSpecial)
 - **pageSettings**: Configurable settings for various pages
 - **career**: Job listings and career opportunities
