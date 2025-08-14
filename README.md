@@ -14,8 +14,10 @@ A website for WH Pubs, featuring traditional British pubs in South East England 
 - **PubThingsToDo Component**: Location-specific attractions guide with Village, Walks & Nature, and Local Events categories
 - **PubSuppliers Component**: Comprehensive supplier partnerships showcase with interactive design
 - **HeaderNavigation Component**: Improved navigation with proper deduplication and CTA button integration
+- **FeaturedDishes Component**: Signature dishes showcase with customizable tags and pub location indicators
 
 ### Content & Functionality
+- **Signature Dishes Enhancement**: Improved homepage signature dishes section with section labeling, booking links, and enhanced accessibility
 - **Amenities Management**: All pubs feature Sunday Roast and Dog Friendly as standard, with pub-specific variations
 - **Things To Do Section**: Detailed local attractions for each pub location including nature reserves, historical sites, and events
 - **Suppliers Section**: Dedicated suppliers page and compact version integrated into pub pages
