@@ -4,7 +4,7 @@ export const client = createClient({
   projectId: 'it7wwto3',
   dataset: 'production',
   apiVersion: '2023-05-03', // Use today's date or the date you created your project
-  useCdn: true, // Enable CDN for faster content updates (may have slight delay)
+  useCdn: false, // Disabled CDN for immediate content updates (no caching delay)
 });
 
 // Helper function to get posts, optionally filtered by pub slug
