@@ -571,15 +571,18 @@ export async function getReviews(targetPubSlug = null, featured = false) {
 
   return client.fetch(`
     *[_type == "review" ${filter}] {
+      _id,
       customerName,
       rating,
       reviewText,
+      reviewDate,
       date,
       source,
       featured,
       verified,
+      published,
       associatedPub->{ name, slug }
-    } | order(featured desc, date desc)
+    } | order(featured desc, reviewDate desc, date desc)
   `, params);
 }
 
