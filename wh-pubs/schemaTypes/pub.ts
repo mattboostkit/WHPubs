@@ -372,6 +372,23 @@ export default defineType({
       ]
     }),
     defineField({
+      name: 'bookingPageHeroImage',
+      title: '🎯 Booking Page Hero Image (1920x768px)',
+      type: 'image',
+      group: 'media',
+      description: 'Hero image specifically for the Book a Table page of this pub. Should showcase dining atmosphere or restaurant interior. 🖼️ REQUIRED SIZE: 1920x768px',
+      options: { hotspot: true },
+      fields: [
+        {
+          name: 'alt',
+          type: 'string',
+          title: 'Alternative text',
+          description: 'Describe this booking page hero image (e.g., "Elegant dining room at The Bull")',
+          validation: Rule => Rule.required().error('Alt text is required for accessibility')
+        }
+      ]
+    }),
+    defineField({
       name: 'exteriorImage',
       title: 'Exterior Image (828x605px)',
       type: 'image',
