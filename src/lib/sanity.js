@@ -208,6 +208,7 @@ export async function getPubs(targetPubSlug = null) {
         alt
       },
       heroImage { asset->{ _id, url }, alt }, // Fetch hero image
+      thingsToDoHeroImage { asset->{ _id, url }, alt }, // Fetch Things To Do hero image
       heroOverlayText, // Fetch overlay text
       heroOverlayButtonText, // Fetch overlay button text
       heroOverlayButtonLink, // Fetch overlay button link
