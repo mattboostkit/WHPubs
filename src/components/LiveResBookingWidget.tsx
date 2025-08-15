@@ -9,7 +9,7 @@ interface LiveResBookingWidgetProps {
 
 export default function LiveResBookingWidget({ 
   className = '', 
-  height = '800px',
+  height = '1000px',
   siteId,
   stylingURL = 'Kl7AS'
 }: LiveResBookingWidgetProps) {
