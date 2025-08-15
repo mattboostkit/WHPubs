@@ -20,9 +20,9 @@ const allPubs = await getPubs();
 // Sort pubs alphabetically
 const sortedPubs = allPubs.sort((a, b) => a.name.localeCompare(b.name));
 
-// Remove duplicates based on slug
+// Remove duplicates based on slug and exclude mobile pub service
 const uniquePubs = sortedPubs.reduce((acc, pub) => {
-  if (!acc.find(p => p.slug.current === pub.slug.current)) {
+  if (!acc.find(p => p.slug.current === pub.slug.current) && pub.slug.current !== 'your-wh-pub') {
     acc.push(pub);
   }
   return acc;
