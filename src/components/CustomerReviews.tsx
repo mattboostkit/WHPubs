@@ -191,27 +191,6 @@ export default function CustomerReviews({ reviews, showPubLink = true }: Custome
             )}
           </div>
 
-          {/* Stats Bar */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-            <div className="text-center">
-              <div className="text-4xl font-bold text-primary mb-2">
-                {displayReviews.filter(r => r.rating === 5).length}
-              </div>
-              <p className="text-gray-600">5-Star Reviews</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-primary mb-2">
-                {(displayReviews.reduce((acc, r) => acc + r.rating, 0) / displayReviews.length).toFixed(1)}
-              </div>
-              <p className="text-gray-600">Average Rating</p>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl font-bold text-primary mb-2">
-                100%
-              </div>
-              <p className="text-gray-600">Would Recommend</p>
-            </div>
-          </div>
 
           {/* CTA */}
           <div className="text-center mt-12">
