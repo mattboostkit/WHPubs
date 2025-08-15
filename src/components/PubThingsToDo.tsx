@@ -106,9 +106,9 @@ const pubActivities = {
       title: 'Walks & Nature',
       icon: <Footprints className="w-6 h-6" />,
       items: [
-        { name: 'Meopham Circular Walk', description: '5 miles from Camer Park through ancient woodland and farmland. Start from pub, explore 45-acre country park, return via Meopham Green. 2 hours, easy.', icon: <TreePine className="w-5 h-5" /> },
-        { name: 'Luddesdown Valley Loop', description: '6 miles to historic Luddesdown Court and church. Beautiful valley views, ancient yew trees, return via North Downs Way. 2.5 hours, moderate.', icon: <Church className="w-5 h-5" /> },
-        { name: 'Trosley Country Park Trail', description: '4 miles to 170-acre chalk downland park with panoramic views. Beech woodland, wildflower meadows, visitor centre with cafe. 2 hours, moderate.', icon: <Mountain className="w-5 h-5" /> }
+        { name: 'Meopham Circular Walk', description: '5 miles from The Cricketers Inn through ancient woodland and farmland. Explore 45-acre Camer Country Park, return via Meopham Green. 2 hours, easy.', icon: <TreePine className="w-5 h-5" /> },
+        { name: 'Luddesdown Valley Loop', description: '6 miles from The Cricketers to historic Luddesdown Court and church. Beautiful valley views, ancient yew trees, return via North Downs Way. 2.5 hours, moderate.', icon: <Church className="w-5 h-5" /> },
+        { name: 'Trosley Country Park Trail', description: '4 miles from the pub to 170-acre chalk downland park with panoramic views. Beech woodland, wildflower meadows, visitor centre with cafe. 2 hours, moderate.', icon: <Mountain className="w-5 h-5" /> }
       ]
     },
     events: {
