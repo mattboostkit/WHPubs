@@ -75,8 +75,14 @@ export default function InteractivePubFinder({ pubs = [] }) {
   const filteredPubs = useMemo(() => {
     return pubs.filter(pub => {
       // Location filter
-      if (selectedLocation !== 'all' && pub.location !== selectedLocation && pub.locationName !== selectedLocation) {
-        return false;
+      if (selectedLocation !== 'all') {
+        const pubLocation = pub.location || pub.locationName;
+        const pubPostcode = pub.postcode;
+        const pubDisplayName = pubLocation + (pubPostcode ? ` (${pubPostcode})` : '');
+        
+        if (selectedLocation !== pubDisplayName && selectedLocation !== pubLocation) {
+          return false;
+        }
       }
 
       // Amenity filter
