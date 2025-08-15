@@ -230,7 +230,7 @@ export default function LocationFinder() {
                   {selectedLocation === 'all' ? 'All WH Pubs Locations' : filteredLocations[0]?.name || 'Location'}
                 </p>
                 <p className="text-xs text-gray-500">
-                  {selectedLocation === 'all' ? '5 traditional pubs across Kent & South East London' : 'Click for directions'}
+                  {selectedLocation === 'all' ? '5 traditional pubs across Kent & South East London' : ''}
                 </p>
               </div>
             </div>
