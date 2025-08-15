@@ -379,9 +379,9 @@ export async function getEvents(targetPubSlug = null) {
     filter = '';
   }
   
-  // Only show events from today onwards (August 13, 2025)
-  const today = new Date('2025-08-13').toISOString().split('T')[0];
-  filter += ` && date >= "${today}"`;
+  // Only show events from August 15, 2025 onwards
+  const minDate = '2025-08-15';
+  filter += ` && date >= "${minDate}"`;
   
   const params = targetPubSlug ? { targetPubSlug } : {};
 
