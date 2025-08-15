@@ -89,7 +89,7 @@ export default function WhyChooseUs({ reasons, backgroundImage }: WhyChooseUsPro
                     {displayReason.number}
                   </span>
                   <div>
-                    <h3 className="text-2xl lg:text-3xl font-bold mb-2">
+                    <h3 className="text-2xl lg:text-3xl font-bold mb-2 text-white">
                       {displayReason.title}
                     </h3>
                     <p className="text-base lg:text-lg text-white/90 leading-relaxed max-w-xl">
