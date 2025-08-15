@@ -17,12 +17,11 @@ const client = createClient({
 
 // Mapping of pub slugs to their specific LiveRes widget URLs
 const pubLiveResUrls = {
-  'little-brown-jug': 'https://events-widget.liveres.co.uk/widget.html?siteId=4c4d14e2-7bf3-4952-baea-69da60126460&stylingURL=Kl7AS',
-  'rose-and-crown': 'https://events-widget.liveres.co.uk/widget.html?siteId=304df119-0d39-4f03-bce3-6deee8b79d90&stylingURL=Kl7AS',
-  'cricketers-inn': 'https://events-widget.liveres.co.uk/widget.html?siteId=329d4e4f-c7ff-4ca0-ab7b-7d866ce38670&stylingURL=Kl7AS',
-  'the-bull': 'https://events-widget.liveres.co.uk/widget.html?siteId=cc8b210d-e765-4aa6-b10e-f3dba5a9d039&stylingURL=Kl7AS',
-  'the-bull-otford': 'https://events-widget.liveres.co.uk/widget.html?siteId=cc8b210d-e765-4aa6-b10e-f3dba5a9d039&stylingURL=Kl7AS', // Same as the-bull
-  'chaser-inn': 'https://events-widget.liveres.co.uk/widget.html?siteId=36a6d37c-eeb9-40d9-932f-f9ffdb5d630a&stylingURL=Kl7AS'
+  'the-little-brown-jug': 'https://events-widget.liveres.co.uk/widget.html?siteId=4c4d14e2-7bf3-4952-baea-69da60126460&stylingURL=Kl7AS',
+  'the-rose-and-crown': 'https://events-widget.liveres.co.uk/widget.html?siteId=304df119-0d39-4f03-bce3-6deee8b79d90&stylingURL=Kl7AS',
+  'the-cricketers-inn': 'https://events-widget.liveres.co.uk/widget.html?siteId=329d4e4f-c7ff-4ca0-ab7b-7d866ce38670&stylingURL=Kl7AS',
+  'the-bull-otford': 'https://events-widget.liveres.co.uk/widget.html?siteId=cc8b210d-e765-4aa6-b10e-f3dba5a9d039&stylingURL=Kl7AS',
+  'the-chaser-inn': 'https://events-widget.liveres.co.uk/widget.html?siteId=36a6d37c-eeb9-40d9-932f-f9ffdb5d630a&stylingURL=Kl7AS'
 };
 
 async function updatePubLiveResUrls() {
