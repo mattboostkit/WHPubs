@@ -74,12 +74,12 @@ const pageDescription = "Reserve your table at any of our five traditional Briti
                 <div class="grid sm:grid-cols-2 gap-4">
                   {uniquePubs.map((pub) => (
                     <Card class="hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-200">
-                      <CardContent class="p-6">
-                        <div class="flex items-start justify-between gap-3">
+                      <CardContent class="p-8">
+                        <div class="flex items-start justify-between gap-4">
                           <div class="flex-1">
-                            <h4 class="font-semibold text-lg mb-2 text-primary">{pub.name}</h4>
+                            <h4 class="font-semibold text-lg mb-4 text-primary">{pub.name}</h4>
                             {pub.locationName && (
-                              <p class="text-sm text-gray-600 mb-4">{pub.locationName}</p>
+                              <p class="text-base text-gray-600 mb-6">{pub.locationName}</p>
                             )}
                             {pub.contactPhone && (
                               <a 
