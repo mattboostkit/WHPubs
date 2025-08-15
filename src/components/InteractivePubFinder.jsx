@@ -40,10 +40,24 @@ export default function InteractivePubFinder({ pubs = [] }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [showFilters, setShowFilters] = useState(false);
 
-  // Extract unique locations
+  // Extract unique locations with postcodes
   const locations = useMemo(() => {
-    const uniqueLocations = [...new Set(pubs.map(pub => pub.location || pub.locationName).filter(Boolean))];
-    return uniqueLocations.sort();
+    const locationEntries = pubs.map(pub => {
+      const location = pub.location || pub.locationName;
+      const postcode = pub.postcode;
+      return {
+        displayName: location + (postcode ? ` (${postcode})` : ''),
+        location: location,
+        postcode: postcode
+      };
+    }).filter(entry => entry.location);
+    
+    // Remove duplicates based on display name
+    const uniqueLocations = locationEntries.filter((entry, index, self) => 
+      index === self.findIndex(e => e.displayName === entry.displayName)
+    );
+    
+    return uniqueLocations.sort((a, b) => a.displayName.localeCompare(b.displayName));
   }, [pubs]);
 
   // Extract all available amenities
