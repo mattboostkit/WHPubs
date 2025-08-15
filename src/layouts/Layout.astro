@@ -500,6 +500,19 @@ const metaDescription = description || footerDescription;
 			if ('scrollRestoration' in history) {
 				history.scrollRestoration = 'auto';
 			}
+			
+			// Service Worker registration for better performance and offline functionality
+			if ('serviceWorker' in navigator) {
+				window.addEventListener('load', () => {
+					navigator.serviceWorker.register('/sw.js')
+						.then((registration) => {
+							console.log('SW registered: ', registration);
+						})
+						.catch((registrationError) => {
+							console.log('SW registration failed: ', registrationError);
+						});
+				});
+			}
 		</script>
 	</body>
 </html>
