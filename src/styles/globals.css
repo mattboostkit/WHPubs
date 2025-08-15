@@ -176,6 +176,52 @@
   .header-center {
     @apply text-center;
   }
+
+  /* 
+   * WH PUBS UNIVERSAL HEADER SYSTEM USAGE GUIDE
+   * ============================================
+   * 
+   * This system provides consistent typography across all WH Pubs sites.
+   * Use these classes instead of ad-hoc Tailwind font/size combinations.
+   * 
+   * HEADER HIERARCHY:
+   * 
+   * .header-hero       - Hero sections, landing pages (text-4xl → text-7xl)
+   * .header-section    - Main section headers (text-3xl → text-5xl)  
+   * .header-subsection - Sub-section headers (text-2xl → text-4xl)
+   * .header-content    - Content area headers (text-xl → text-3xl)
+   * .header-small      - Small headers (text-lg → text-2xl)
+   * .header-micro      - Micro headers (text-base → text-xl)
+   * 
+   * COMPACT VARIANTS (tighter spacing):
+   * .header-section-compact
+   * .header-subsection-compact
+   * 
+   * COLOR MODIFIERS (apply after size class):
+   * .header-primary    - Black text (default)
+   * .header-secondary  - Gold text 
+   * .header-white      - White text
+   * .header-gold       - Gold text (alias for header-secondary)
+   * 
+   * UTILITY MODIFIERS:
+   * .header-center     - Center align text
+   * 
+   * EXAMPLES:
+   * <h1 class="header-hero">Page Title</h1>
+   * <h2 class="header-section header-secondary">Gold Section</h2>
+   * <h3 class="header-subsection-compact header-center">Centered Sub-header</h3>
+   * <h4 class="header-content header-white">White Content Header</h4>
+   * 
+   * RESPONSIVE BEHAVIOR:
+   * All header classes are mobile-first responsive and scale appropriately.
+   * No need to add responsive prefixes (sm:, md:, lg:) - they're built in.
+   * 
+   * BRAND CONSISTENCY:
+   * - Font: Lora serif (enforced)
+   * - Colors: Primary black (#1A1A1A), Secondary gold (#B79C64)
+   * - Spacing: Consistent margin-bottom values
+   * - Line height: Optimized for readability
+   */
   
   p {
     @apply text-base leading-relaxed mb-4;
