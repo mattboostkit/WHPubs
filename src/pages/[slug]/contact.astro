@@ -1,0 +1,234 @@
+---
+// Contact page for individual pubs
+import Layout from '@/layouts/Layout.astro';
+import { getPubBySlug, getPubs } from '@/lib/sanity';
+import PageHero from '@/components/PageHero.astro';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { MapPin, Phone, Clock, Mail } from 'lucide-react';
+import GoogleMapEmbed from '@/components/GoogleMapEmbed';
+
+// Generate static paths for all pubs
+export async function getStaticPaths() {
+  const targetPubSlug = import.meta.env.TARGET_PUB_SLUG;
+  
+  if (targetPubSlug) {
+    // For pub-specific builds, only build the contact page for that pub
+    return [{
+      params: { slug: targetPubSlug }
+    }];
+  }
+  
+  // For main site, build contact pages for all pubs
+  const pubs = await getPubs();
+  return pubs.map(pub => ({
+    params: { slug: pub.slug.current }
+  }));
+}
+
+// Get the pub slug from the URL
+const { slug } = Astro.params;
+
+// Fetch the pub data
+const pub = await getPubBySlug(slug);
+
+// Redirect to 404 if pub not found
+if (!pub) {
+  return Astro.redirect('/404');
+}
+
+// Page metadata
+const pageTitle = `Contact ${pub.name} - WH Pubs`;
+const pageDescription = `Get in touch with ${pub.name} for bookings, enquiries, and information. Located in ${pub.locationName || pub.location}.`;
+
+// Use the pub's hero image or fallback
+const heroImage = pub.heroImage || pub.image;
+---
+
+<Layout title={pageTitle} description={pageDescription} pub={pub}>
+  {/* Hero Section */}
+  <PageHero 
+    image={heroImage}
+    title={`Contact ${pub.name}`}
+    subtitle={`Get in touch for bookings, enquiries, and information`}
+    fallbackImage="/images/contact-hero.jpg"
+  />
+  
+  <main>
+    {/* Contact Information Section */}
+    <section class="py-16 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+          
+          <div class="grid md:grid-cols-2 gap-8">
+            {/* Contact Details */}
+            <div>
+              <Card class="h-fit">
+                <CardHeader>
+                  <CardTitle class="text-2xl flex items-center gap-3">
+                    <MapPin class="w-6 h-6 text-primary" />
+                    {pub.name}
+                  </CardTitle>
+                  {pub.locationName && (
+                    <Badge variant="secondary" class="w-fit">{pub.locationName}</Badge>
+                  )}
+                </CardHeader>
+                <CardContent class="space-y-4">
+                  {/* Address */}
+                  <div class="space-y-2">
+                    <h3 class="font-semibold text-lg">Address</h3>
+                    <div class="text-gray-600">
+                      {pub.location && <p>{pub.location}</p>}
+                      {pub.addressLine1 && <p>{pub.addressLine1}</p>}
+                      {pub.postcode && <p>{pub.postcode}</p>}
+                    </div>
+                  </div>
+
+                  {/* Phone */}
+                  {pub.contactPhone && (
+                    <div class="space-y-2">
+                      <h3 class="font-semibold text-lg flex items-center gap-2">
+                        <Phone class="w-5 h-5" />
+                        Phone
+                      </h3>
+                      <a 
+                        href={`tel:${pub.contactPhone.replace(/\s/g, '')}`}
+                        class="text-secondary hover:text-secondary/80 font-medium text-lg transition-colors"
+                      >
+                        {pub.contactPhone}
+                      </a>
+                    </div>
+                  )}
+
+                  {/* Opening Hours */}
+                  {pub.openingHours && (
+                    <div class="space-y-2">
+                      <h3 class="font-semibold text-lg flex items-center gap-2">
+                        <Clock class="w-5 h-5" />
+                        Opening Hours
+                      </h3>
+                      <pre class="whitespace-pre-wrap text-gray-600 font-sans text-sm leading-relaxed">{pub.openingHours}</pre>
+                    </div>
+                  )}
+
+                  {/* Food Serving Times */}
+                  {pub.foodServingTimes && (
+                    <div class="space-y-2">
+                      <h3 class="font-semibold text-lg">Food Serving Times</h3>
+                      <div class="text-gray-600">
+                        {pub.foodServingTimes.split('\n').map((line, idx) => (
+                          <span key={idx} class="inline-block mr-3 mb-1 px-2 py-1 bg-gray-100 rounded text-sm">{line}</span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Email */}
+                  <div class="space-y-2">
+                    <h3 class="font-semibold text-lg flex items-center gap-2">
+                      <Mail class="w-5 h-5" />
+                      Email
+                    </h3>
+                    <a 
+                      href="mailto:enquiries@whpubs.com"
+                      class="text-secondary hover:text-secondary/80 transition-colors"
+                    >
+                      enquiries@whpubs.com
+                    </a>
+                  </div>
+
+                  {/* Booking Button */}
+                  {pub.reservationsUrl && (
+                    <div class="pt-4">
+                      <a 
+                        href="/book-table"
+                        class="inline-flex items-center px-6 py-3 bg-primary text-secondary font-semibold rounded-lg hover:bg-primary/90 transition-all duration-300 shadow-lg hover:shadow-xl"
+                      >
+                        Book a Table
+                      </a>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Map */}
+            <div>
+              <Card class="overflow-hidden">
+                <CardHeader>
+                  <CardTitle class="text-xl">Find Us</CardTitle>
+                </CardHeader>
+                <CardContent class="p-0">
+                  {pub.googleMapEmbed?.iframe ? (
+                    <GoogleMapEmbed 
+                      iframe={pub.googleMapEmbed.iframe} 
+                      className="w-full h-[400px]"
+                      client:load
+                    />
+                  ) : (
+                    <div class="w-full h-[400px] bg-gray-200 flex items-center justify-center">
+                      <p class="text-gray-500">Map not available</p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+
+          {/* Additional Information */}
+          <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Accessibility */}
+            <Card class="bg-gray-50">
+              <CardHeader>
+                <CardTitle class="text-lg">Accessibility</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p class="text-sm text-gray-600">
+                  {pub.amenities?.includes('Wheelchair Accessible') 
+                    ? 'Wheelchair accessible with accessible parking and facilities.' 
+                    : 'Please call us to discuss accessibility requirements.'}
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* Parking */}
+            <Card class="bg-gray-50">
+              <CardHeader>
+                <CardTitle class="text-lg">Parking</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p class="text-sm text-gray-600">
+                  {pub.amenities?.includes('Parking') 
+                    ? 'Free parking available on site.' 
+                    : 'Street parking available nearby.'}
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* Groups & Events */}
+            <Card class="bg-gray-50">
+              <CardHeader>
+                <CardTitle class="text-lg">Groups & Events</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p class="text-sm text-gray-600">
+                  We welcome group bookings and private events. Please call us to discuss your requirements.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Back to Main Pub Page */}
+          <div class="mt-12 text-center">
+            <a 
+              href={`/${pub.slug.current}`}
+              class="inline-flex items-center px-6 py-3 bg-white text-primary font-semibold rounded-lg border-2 border-primary hover:bg-primary hover:text-secondary transition-all duration-300"
+            >
+              ← Back to {pub.name}
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
