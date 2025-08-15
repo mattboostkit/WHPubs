@@ -3,6 +3,8 @@ import React, { useEffect, useRef } from 'react';
 interface LiveResBookingWidgetProps {
   className?: string;
   height?: string;
+  siteId?: string;
+  stylingURL?: string;
 }
 
 export default function LiveResBookingWidget({ 
