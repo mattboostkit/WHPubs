@@ -295,35 +295,6 @@ export default function PubThingsToDo({ pubName, pubSlug }: PubThingsToDoProps) 
             ))}
           </div>
 
-          {/* Tips Section */}
-          <div className="mt-16 bg-gradient-to-br from-secondary/5 to-primary/5 rounded-2xl p-8">
-            <div className="max-w-4xl mx-auto text-center">
-              <h3 className="header-subsection-compact">
-                Planning Your Visit?
-              </h3>
-              <p className="text-gray-600 mb-6">
-                Our friendly team is always happy to provide local recommendations and directions. 
-                Don't hesitate to ask us about the best routes, opening times, or hidden gems in the area.
-              </p>
-              <div className="flex flex-wrap gap-4 justify-center">
-                <a
-                  href={`/${pubSlug}/things-to-do`}
-                  className="inline-flex items-center px-6 py-3 bg-primary text-secondary font-semibold rounded-lg hover:bg-primary/90 transition-all duration-300 shadow-lg hover:shadow-xl"
-                >
-                  See Full Guide
-                  <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </a>
-                <a
-                  href="/book-table"
-                  className="inline-flex items-center px-6 py-3 bg-white text-primary font-semibold rounded-lg border-2 border-primary hover:bg-primary hover:text-secondary transition-all duration-300"
-                >
-                  Book Your Table
-                </a>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>
