@@ -60,7 +60,7 @@ export default function ServicesGrid() {
                       <div className="inline-flex p-3 rounded-lg bg-gray-100 group-hover:bg-white/20 transition-colors duration-300 flex-shrink-0">
                         <Icon className="w-6 h-6 text-gray-700 group-hover:text-white transition-colors duration-300" />
                       </div>
-                      <h3 className="text-xl font-bold text-gray-900 group-hover:text-white transition-colors duration-300 pt-2">
+                      <h3 className="header-content text-gray-900 group-hover:text-white transition-colors duration-300 pt-2">
                         {service.title}
                       </h3>
                     </div>
