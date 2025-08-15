@@ -71,7 +71,7 @@ if (!pubData && (!thingsToDo || thingsToDo.length === 0)) {
     {!pageSettings && (
       <div class="text-center mb-12">
         <h1 class="text-4xl md:text-5xl font-bold text-primary mb-4">
-          Things To Do Near {pubData.name}
+          {pubData ? `Things To Do Near ${pubData.name}` : 'Things To Do'}
         </h1>
         <p class="text-lg text-primary/70">Discover local attractions, walks, and activities</p>
       </div>
