@@ -116,6 +116,7 @@ export async function getPubBySlug(slug) {
       },
       heroImage { asset->{ _id, url }, alt },
       thingsToDoHeroImage { asset->{ _id, url }, alt },
+      bookingPageHeroImage { asset->{ _id, url }, alt },
       heroOverlayText, // Fetch overlay text
       heroOverlayButtonText, // Fetch overlay button text
       heroOverlayButtonLink, // Fetch overlay button link
