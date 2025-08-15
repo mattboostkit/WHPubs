@@ -236,7 +236,7 @@ export default function PubPerfectFor({ pubName, pubSlug }: PubPerfectForProps) 
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent">
                   <div className="absolute bottom-0 left-0 right-0 p-8">
                     <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
-                      <h4 className="text-2xl font-bold text-white mb-2">
+                      <h4 className="text-2xl font-bold text-secondary mb-2">
                         {activeScenario.title}
                       </h4>
                       <p className="text-white/90 text-sm">
