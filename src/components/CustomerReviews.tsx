@@ -62,7 +62,7 @@ export default function CustomerReviews({ reviews, showPubLink = true }: Custome
             <span className="inline-block px-4 py-1 bg-secondary/10 text-secondary rounded-full text-sm font-semibold uppercase tracking-wider mb-4">
               Customer Reviews
             </span>
-            <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
+            <h2 className="header-section">
               What Our Customers Say
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
