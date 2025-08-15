@@ -74,11 +74,9 @@ const pubActivities = {
       title: 'Walks & Nature',
       icon: <Footprints className="w-6 h-6" />,
       items: [
-        { name: 'Kemsing Down Nature Reserve', description: 'Stunning chalk downland with panoramic views', icon: <Mountain className="w-5 h-5" /> },
-        { name: 'Fackenden Down Nature Reserve', description: 'Ancient woodland and wildflower meadows', icon: <TreePine className="w-5 h-5" /> },
-        { name: 'Polhill Bank Nature Reserve', description: 'Beautiful downland with rare orchids', icon: <TreePine className="w-5 h-5" /> },
-        { name: 'The Otford Circular Walk', description: '5-mile circular route through countryside', icon: <Footprints className="w-5 h-5" /> },
-        { name: 'The Otford to Shoreham Walk', description: 'Scenic walk along the Darent Valley', icon: <Footprints className="w-5 h-5" /> }
+        { name: 'Otford Circular Walk', description: '5.3 miles through North Downs with spectacular views. Start from The Bull, climb 145 woodland steps, visit the Solar System model. 2-3 hours, moderate difficulty.', icon: <Footprints className="w-5 h-5" /> },
+        { name: 'Shoreham Valley Loop', description: '6 miles via historic Shoreham village and River Darent. Beautiful riverside paths, cross Darent Valley Golf Course, return through farmland. 2.5 hours, easy-moderate.', icon: <TreePine className="w-5 h-5" /> },
+        { name: 'Otford to Knole Park', description: '7 miles to Knole House through ancient deer park. See wild deer, visit National Trust property, return via North Downs Way. Full day adventure.', icon: <Castle className="w-5 h-5" /> }
       ]
     },
     events: {
