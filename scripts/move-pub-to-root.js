@@ -38,6 +38,25 @@ if (fs.existsSync(sourcePath)) {
   // Move the index.html to root
   fs.renameSync(sourcePath, targetPath);
   
+  // Move all sub-pages to root level
+  if (fs.existsSync(sourceDir)) {
+    const items = fs.readdirSync(sourceDir);
+    for (const item of items) {
+      const sourcePath = path.join(sourceDir, item);
+      const targetPath = path.join(distDir, item);
+      
+      // Only move directories (sub-pages)
+      if (fs.statSync(sourcePath).isDirectory()) {
+        // Remove existing directory if it exists
+        if (fs.existsSync(targetPath)) {
+          fs.rmSync(targetPath, { recursive: true, force: true });
+        }
+        fs.renameSync(sourcePath, targetPath);
+        console.log(`Moved ${item} to root level`);
+      }
+    }
+  }
+  
   // Remove the source directory
   fs.rmSync(sourceDir, { recursive: true, force: true });
   
@@ -45,9 +64,31 @@ if (fs.existsSync(sourcePath)) {
 } else {
   // Try the original slug as fallback
   const fallbackPath = path.join(distDir, targetPubSlug, 'index.html');
+  const fallbackDir = path.join(distDir, targetPubSlug);
+  
   if (fs.existsSync(fallbackPath)) {
     fs.renameSync(fallbackPath, targetPath);
-    fs.rmSync(path.join(distDir, targetPubSlug), { recursive: true, force: true });
+    
+    // Move all sub-pages to root level
+    if (fs.existsSync(fallbackDir)) {
+      const items = fs.readdirSync(fallbackDir);
+      for (const item of items) {
+        const sourcePath = path.join(fallbackDir, item);
+        const targetPath = path.join(distDir, item);
+        
+        // Only move directories (sub-pages)  
+        if (fs.statSync(sourcePath).isDirectory()) {
+          // Remove existing directory if it exists
+          if (fs.existsSync(targetPath)) {
+            fs.rmSync(targetPath, { recursive: true, force: true });
+          }
+          fs.renameSync(sourcePath, targetPath);
+          console.log(`Moved ${item} to root level`);
+        }
+      }
+    }
+    
+    fs.rmSync(fallbackDir, { recursive: true, force: true });
     console.log(`Successfully moved ${targetPubSlug}/index.html to root`);
   } else {
     console.error(`ERROR: Could not find pub page at ${sourcePath} or ${fallbackPath}`);
