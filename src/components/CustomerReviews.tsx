@@ -63,7 +63,7 @@ export default function CustomerReviews({ reviews, showPubLink = true }: Custome
               Customer Reviews
             </span>
             <h2 className="text-4xl md:text-5xl font-bold text-primary mb-4">
-              What Our Guests Say
+              What Our Customers Say
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               Real experiences from our valued customers across all WH Pubs locations
