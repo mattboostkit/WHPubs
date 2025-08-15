@@ -34,8 +34,9 @@ const pageDescription = "Reserve your table at any of our five traditional Briti
 
 <Layout title={pageTitle} description={pageDescription}>
   <PageHero 
-    title="Book a Table"
-    subtitle="Reserve your perfect dining experience at any of our pubs"
+    title={pageSettings?.heroTitle || "Book a Table"}
+    subtitle={pageSettings?.heroSubtitle || "Reserve your perfect dining experience at any of our pubs"}
+    image={pageSettings?.heroImage}
     fallbackImage="/images/book-table-hero.jpg"
   />
   
