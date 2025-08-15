@@ -168,7 +168,7 @@ if (!pubData && (!thingsToDo || thingsToDo.length === 0)) {
       <div class="text-center py-16">
         <Compass class="w-16 h-16 mx-auto mb-4 text-primary/30" />
         <p class="text-lg text-primary/70">
-          No activities listed for {pubData.name} right now. Check back soon!
+          {pubData ? `No activities listed for ${pubData.name} right now. Check back soon!` : 'No activities available right now. Check back soon!'}
         </p>
       </div>
     )}
