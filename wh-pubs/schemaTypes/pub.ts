@@ -264,7 +264,16 @@ export default defineType({
       title: 'Contact Phone',
       type: 'string',
       group: 'location',
-      validation: (Rule) => Rule.required(),
+      description: 'Optional for mobile services if email contact is preferred',
+      validation: (Rule) => Rule.custom((phone, context) => {
+        // Make contactPhone optional for mobile services
+        if (context.document?.locationName === 'Mobile Service' || 
+            context.document?.locationName === 'Anywhere' ||
+            context.document?.slug?.current === 'your-wh-pub') {
+          return true; // Optional for mobile services
+        }
+        return phone ? true : 'Contact phone is required for fixed-location pubs';
+      }),
     }),
     defineField({
       name: 'googleMapsUrl',
