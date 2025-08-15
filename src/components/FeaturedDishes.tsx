@@ -115,7 +115,7 @@ export default function FeaturedDishes({ signatureDishes }: FeaturedDishesProps)
           {/* Header */}
           <div className="text-center mb-12">
             <span className="text-secondary text-sm font-semibold uppercase tracking-wider">From Our Kitchens</span>
-            <h2 className="text-4xl md:text-5xl font-bold text-primary mt-2 mb-4">{title}</h2>
+            <h2 className="header-section">{title}</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               {subtitle}
             </p>
