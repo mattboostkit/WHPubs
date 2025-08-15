@@ -236,7 +236,7 @@ export default function PubThingsToDo({ pubName, pubSlug }: PubThingsToDoProps) 
             <span className="inline-block px-4 py-1 bg-secondary/10 text-secondary rounded-full text-sm font-semibold uppercase tracking-wider mb-4">
               Explore the Area
             </span>
-            <h2 className="text-3xl lg:text-4xl font-bold text-primary mb-6">
+            <h2 className="header-subsection">
               Things To Do Near {pubName}
             </h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
