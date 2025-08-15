@@ -176,8 +176,13 @@ if (!pubData && (!thingsToDo || thingsToDo.length === 0)) {
     {/* Call to action */}
     <div class="mt-16 text-center bg-secondary/10 rounded-lg p-8">
       <h3 class="text-2xl font-semibold text-primary mb-4">Ready to Visit?</h3>
-      <p class="text-primary/70 mb-6">After exploring the area, stop by {pubData.name} for a well-deserved refreshment!</p>
-      {pubData.reservationsUrl && (
+      <p class="text-primary/70 mb-6">
+        {pubData 
+          ? `After exploring the area, stop by ${pubData.name} for a well-deserved refreshment!`
+          : 'After exploring the area, stop by one of our pubs for a well-deserved refreshment!'
+        }
+      </p>
+      {(pubData?.reservationsUrl || !pubData) && (
         <a href="/book-table">
           <Button size="lg" variant="default">
             Book a Table
