@@ -174,11 +174,9 @@ const pubActivities = {
       title: 'Walks & Nature',
       icon: <Footprints className="w-6 h-6" />,
       items: [
-        { name: 'Eden Valley Walk', description: 'Beautiful valley walk along River Eden', icon: <Waves className="w-5 h-5" /> },
-        { name: 'Hever to Chiddingstone Walk', description: 'Links two historic villages', icon: <Footprints className="w-5 h-5" /> },
-        { name: 'Bough Beech Reservoir', description: 'Nature reserve with bird watching opportunities', icon: <Waves className="w-5 h-5" /> },
-        { name: 'Vanguard Way', description: 'Long-distance path passing through area', icon: <Footprints className="w-5 h-5" /> },
-        { name: 'Sevenoaks Circular Walk', description: 'Countryside route with pub stops', icon: <TreePine className="w-5 h-5" /> }
+        { name: 'Hever Castle Circular', description: '6.1 miles via Hever Castle and historic Chiddingstone. Start from pub, visit Anne Boleyn\'s childhood home, return through Tudor village. 2.5 hours, moderate.', icon: <Castle className="w-5 h-5" /> },
+        { name: 'Bore Place to The Little Brown Jug', description: '4 miles through rolling Weald countryside. Ancient footpaths, working farm views, perfect lunch walk ending at the pub. 1.5 hours, easy.', icon: <Footprints className="w-5 h-5" /> },
+        { name: 'Penshurst & Bough Beech Loop', description: '7.8 miles via Penshurst Place and reservoir. Medieval manor house, nature reserve with bird hides, hop gardens. 3.5 hours, moderate.', icon: <Waves className="w-5 h-5" /> }
       ]
     },
     events: {
