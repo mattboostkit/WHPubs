@@ -106,11 +106,9 @@ const pubActivities = {
       title: 'Walks & Nature',
       icon: <Footprints className="w-6 h-6" />,
       items: [
-        { name: 'Trosley Country Park', description: '170 acres of ancient woodland on North Downs', icon: <Mountain className="w-5 h-5" /> },
-        { name: 'Meopham Heritage Trail', description: 'Historical walk through the village', icon: <Footprints className="w-5 h-5" /> },
-        { name: 'Wealdway Long Distance Path', description: 'Passes through Meopham countryside', icon: <Footprints className="w-5 h-5" /> },
-        { name: 'Cobham Woods', description: 'Ancient woodland with marked trails', icon: <TreePine className="w-5 h-5" /> },
-        { name: 'Nurstead Court Walk', description: 'Circular walk to historic manor house', icon: <Castle className="w-5 h-5" /> }
+        { name: 'Meopham Circular Walk', description: '5 miles from Camer Park through ancient woodland and farmland. Start from pub, explore 45-acre country park, return via Meopham Green. 2 hours, easy.', icon: <TreePine className="w-5 h-5" /> },
+        { name: 'Luddesdown Valley Loop', description: '6 miles to historic Luddesdown Court and church. Beautiful valley views, ancient yew trees, return via North Downs Way. 2.5 hours, moderate.', icon: <Church className="w-5 h-5" /> },
+        { name: 'Trosley Country Park Trail', description: '4 miles to 170-acre chalk downland park with panoramic views. Beech woodland, wildflower meadows, visitor centre with cafe. 2 hours, moderate.', icon: <Mountain className="w-5 h-5" /> }
       ]
     },
     events: {
