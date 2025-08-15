@@ -1,18 +1,19 @@
 #!/usr/bin/env node
 
 /**
- * Script to create "Your WH Pub" mobile service document
- * Run this script to create the mobile pub service entry in Sanity CMS
+ * Script to create "Your WH Pub" mobile service document in Sanity
+ * This creates the mobile pub service entry for the Our Pubs section
  */
 
 import { createClient } from '@sanity/client';
+import 'dotenv/config';
 
 const client = createClient({
-  projectId: 'it7wwto3',
-  dataset: 'production',
+  projectId: process.env.SANITY_PROJECT_ID || 'it7wwto3',
+  dataset: process.env.SANITY_DATASET || 'production',
   useCdn: false,
-  apiVersion: '2024-01-01',
-  token: process.env.SANITY_TOKEN, // You'll need to set this
+  apiVersion: '2024-01-15',
+  token: process.env.SANITY_TOKEN
 });
 
 const mobilePubDocument = {
@@ -22,53 +23,30 @@ const mobilePubDocument = {
     _type: 'slug',
     current: 'your-wh-pub'
   },
-  description: 'Our mobile pub service delivers authentic British pub experience to your chosen location.',
+  description: 'Our mobile pub service delivers authentic British pub experience to your chosen location. Perfect for weddings, corporate events, festivals, and private celebrations.',
+  featured: true,
   location: 'Anywhere',
   locationName: 'Mobile Service',
   addressLine1: 'Mobile Service',
-  addressLine2: '',
   postcode: 'ANYWHERE',
-  email: 'mobile@whpubs.co.uk',
-  contactPhone: '01234 567890',
-  openingHours: 'Available by appointment',
+  contactEmail: 'mobile@whpubs.co.uk',
+  contactPhone: '+44 1234 567890',
+  openingHours: 'Available by appointment - all days',
   foodServingTimes: 'Flexible - arranged per event',
-  featured: true,
   
-  // Reuse existing image references - update these with proper mobile pub images later
-  image: {
-    _type: 'image',
-    asset: {
-      _type: 'reference',
-      _ref: 'image-7d2d38ac86a5a481624e1d458c6bfb8f02e5d457-828x605-jpg' // Placeholder - replace with mobile pub image
-    },
-    alt: 'Your WH Pub mobile service setup'
-  },
-  
-  heroImage: {
-    _type: 'image',
-    asset: {
-      _type: 'reference',
-      _ref: 'image-6eee1da5d7d6910e35d18ab27fbb5102f93c986f-1920x800-jpg' // Placeholder - replace with mobile pub hero
-    },
-    alt: 'Your WH Pub mobile service hero image'
-  },
-  
-  squareLogo: {
-    _type: 'image',
-    asset: {
-      _type: 'reference',
-      _ref: 'image-7d2d38ac86a5a481624e1d458c6bfb8f02e5d457-828x605-jpg' // Placeholder - replace with square logo
-    },
-    alt: 'Your WH Pub mobile service logo'
-  },
-  
-  // Mobile service specific content
-  pubWebsiteUrl: 'https://whpubs.co.uk/your-wh-pub',
-  
-  // Amenities focused on mobile service
+  // Structured opening hours
+  monday: 'Available by appointment',
+  tuesday: 'Available by appointment', 
+  wednesday: 'Available by appointment',
+  thursday: 'Available by appointment',
+  friday: 'Available by appointment',
+  saturday: 'Available by appointment',
+  sunday: 'Available by appointment',
+
+  // Mobile service specific amenities
   amenities: [
     'Mobile Bar Service',
-    'Professional Staff',
+    'Professional Staff', 
     'Full Licensing',
     'Custom Menus',
     'Event Planning',
@@ -78,33 +56,23 @@ const mobilePubDocument = {
     'Wine Selection',
     'Soft Drinks'
   ],
-  
-  // Service-focused opening hours
-  openingHoursStructured: {
-    monday: 'Available by appointment',
-    tuesday: 'Available by appointment',
-    wednesday: 'Available by appointment',
-    thursday: 'Available by appointment',
-    friday: 'Available by appointment',
-    saturday: 'Available by appointment',
-    sunday: 'Available by appointment'
-  },
-  
-  // Payment methods
-  paymentMethods: ['cards', 'contactless', 'applepay', 'googlepay', 'cash'],
-  
-  // Dietary options
-  dietaryOptions: ['vegetarian', 'vegan', 'glutenfree', 'kids'],
-  
-  // Contact preferences
-  preferredContactMethod: 'email',
-  
-  // Bio section for mobile service
+
+  // Booking and external links
+  url: 'mailto:mobile@whpubs.co.uk',
+  externalDomain: 'mailto:mobile@whpubs.co.uk',
+  reservationsUrl: 'mailto:mobile@whpubs.co.uk',
+
+  // Hero overlay content
+  heroOverlayText: 'Bring the Pub to You',
+  heroOverlayButtonText: 'Get Quote',
+  heroOverlayButtonLink: 'mailto:mobile@whpubs.co.uk',
+
+  // Bio content
   bioName: 'Mobile Pub Service',
   bioTitle: 'Bringing the Pub to You',
   bioText: 'Our mobile pub service brings the authentic British pub experience directly to your chosen location. Whether it\'s a wedding, corporate event, festival, or private celebration, we provide professional bar service with traditional ales, premium spirits, and the warm hospitality WH Pubs is known for.',
-  
-  // Special features for mobile service
+
+  // Special features
   specialFeatures: [
     {
       title: 'Flexible Setup',
@@ -112,28 +80,25 @@ const mobilePubDocument = {
       capacity: 200
     },
     {
-      title: 'Professional Service',
-      description: 'Experienced bar staff trained in traditional pub hospitality',
-      capacity: null
+      title: 'Professional Service', 
+      description: 'Experienced bar staff trained in traditional pub hospitality'
     },
     {
       title: 'Full Licensing',
-      description: 'Complete licensing coverage for all types of events and venues',
-      capacity: null
+      description: 'Complete licensing coverage for all types of events and venues'
     }
   ],
-  
-  // Accessibility and service info
-  accessibilityInfo: 'Mobile service can be configured to meet accessibility requirements at any venue',
-  parkingInfo: 'Service vehicle parking arranged per venue requirements',
-  
-  // Allergen information
-  allergenInfo: 'Full allergen information provided for all beverages and any food offerings. Please inform us of any specific dietary requirements when booking.',
-  
+
+  // Additional information
+  accessibilityInformation: 'Mobile service can be configured to meet accessibility requirements at any venue',
+  parkingInformation: 'Service vehicle parking arranged per venue requirements',
+  allergenInformation: 'Full allergen information provided for all beverages and any food offerings. Please inform us of any specific dietary requirements when booking.',
+  preferredContactMethod: 'Email',
+
   // SEO
-  metaTitle: 'Your WH Pub - Mobile Pub Service | WH Pubs',
-  metaDescription: 'Bring authentic British pub experience to your event with Your WH Pub mobile service. Professional bar staff, traditional ales, and premium service.',
-  
+  seoMetaTitle: 'Your WH Pub - Mobile Pub Service | WH Pubs',
+  seoMetaDescription: 'Bring authentic British pub experience to your event with Your WH Pub mobile service. Professional bar staff, traditional ales, and premium service.',
+
   // Current offers
   currentOffers: [
     {
@@ -141,7 +106,7 @@ const mobilePubDocument = {
       description: 'Book our mobile service for your event and receive 10% off your first booking',
       validFrom: '2025-01-01',
       validUntil: '2025-12-31',
-      termsConditions: 'Valid for new bookings only. Minimum 4-hour service required.'
+      termsAndConditions: 'Valid for new bookings only. Minimum 4-hour service required.'
     }
   ]
 };
@@ -152,26 +117,29 @@ async function createMobilePub() {
     
     const result = await client.create(mobilePubDocument);
     
-    console.log('✅ Successfully created mobile pub document:');
-    console.log(`Document ID: ${result._id}`);
-    console.log(`Name: ${result.name}`);
-    console.log(`Slug: ${result.slug.current}`);
-    console.log('\n🎯 Next steps:');
-    console.log('1. Upload proper mobile pub images in Sanity Studio');
-    console.log('2. Update the pubHireImage field in homepage document to reference this pub');
-    console.log('3. Deploy Sanity Studio with: npm run deploy');
-    console.log('4. Update frontend if needed');
+    console.log('✅ Successfully created Your WH Pub mobile service!');
+    console.log('Document ID:', result._id);
+    console.log('Slug:', result.slug.current);
+    console.log('');
+    console.log('The mobile pub service will now appear as the 6th pub in:');
+    console.log('- Homepage "Our Pubs" section');
+    console.log('- /our-pubs page');
+    console.log('');
+    console.log('Note: You may need to upload images in Sanity Studio:');
+    console.log('- Square Logo (500x500px)');
+    console.log('- Main Listing Image (828x605px)');
+    console.log('- Hero Banner Image (1920x800px)');
     
   } catch (error) {
-    console.error('❌ Error creating mobile pub document:', error);
+    console.error('❌ Error creating mobile pub document:', error.message);
     
-    if (error.statusCode === 401) {
-      console.log('\n💡 Make sure to set SANITY_TOKEN environment variable:');
-      console.log('export SANITY_TOKEN="your_token_here"');
-      console.log('\nGet a token from: https://www.sanity.io/manage/personal/tokens');
+    if (error.message.includes('rate limit')) {
+      console.log('');
+      console.log('🔄 Rate limit hit. Please wait a few minutes and try again.');
+      console.log('Alternatively, you can create this document manually in Sanity Studio:');
+      console.log('https://whpubs.sanity.studio');
     }
   }
 }
 
-// Run the script
 createMobilePub();
