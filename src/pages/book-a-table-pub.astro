@@ -63,7 +63,7 @@ const pageDescription = `Reserve your table at ${pub.name}, ${pub.locationName |
                 <CardContent class="p-0">
                   {/* Pub-specific LiveRes Booking Widget */}
                   <LiveResBookingWidget 
-                    height="750px" 
+                    height="1000px" 
                     siteId={siteId} 
                     client:load 
                   />
@@ -85,7 +85,7 @@ const pageDescription = `Reserve your table at ${pub.name}, ${pub.locationName |
                             href={`tel:${pub.contactPhone.replace(/\s/g, '')}`}
                             class="inline-flex items-center text-secondary hover:text-secondary/80 font-semibold text-lg transition-colors group"
                           >
-                            <Phone class="w-5 h-5 mr-3 group-hover:scale-110 transition-transform" />
+                            📞
                             {pub.contactPhone}
                           </a>
                         )}
@@ -211,7 +211,6 @@ const pageDescription = `Reserve your table at ${pub.name}, ${pub.locationName |
                 <CardContent class="space-y-2 text-sm text-primary/70">
                   <p>• Tables are held for 15 minutes past booking time</p>
                   <p>• Cancellations can be made up to 2 hours before</p>
-                  <p>• For same-day bookings, please call directly</p>
                   <p>• We're family and dog-friendly</p>
                 </CardContent>
               </Card>
