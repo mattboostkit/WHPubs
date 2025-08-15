@@ -929,3 +929,43 @@ export async function getFeaturedDishes() {
     }
   `);
 }
+
+// Helper function to get customer reviews
+export async function getCustomerReviews(targetPubSlug = null, limit = 10, featuredOnly = false) {
+  let filter = '&& active == true';
+  
+  if (targetPubSlug) {
+    // Fetch reviews for a specific pub
+    filter += ` && associatedPub->slug.current == $targetPubSlug`;
+  } else {
+    // For homepage, get general reviews (no pub association) and featured reviews
+    filter += ` && (!defined(associatedPub) || featured == true)`;
+  }
+  
+  if (featuredOnly) {
+    filter += ` && featured == true`;
+  }
+  
+  const params = { 
+    ...(targetPubSlug && { targetPubSlug }),
+    limit
+  };
+
+  return client.fetch(`
+    *[_type == "customerReview" ${filter}] {
+      _id,
+      customerName,
+      rating,
+      reviewText,
+      reviewDate,
+      associatedPub->{
+        name,
+        slug
+      },
+      verified,
+      featured,
+      source,
+      customerLocation
+    } | order(featured desc, reviewDate desc, rating desc)[0...$limit]
+  `, params);
+}
