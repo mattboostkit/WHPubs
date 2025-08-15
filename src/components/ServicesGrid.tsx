@@ -6,25 +6,25 @@ export default function ServicesGrid() {
       title: 'Events & Live Music',
       description: 'Regular entertainment across all our venues',
       link: '/events',
-      backgroundImage: '/images/dummy-placeholder.jpg' // Will be replaced with proper image from Sanity
+      backgroundImage: '/images/event-fallback.jpg' // Will be replaced with proper image from Sanity
     },
     {
       title: 'Sunday Roasts',
       description: 'Award-winning traditional roasts every Sunday',
       link: '/book-table',
-      backgroundImage: '/images/dummy-placeholder.jpg' // Will be replaced with proper image from Sanity
+      backgroundImage: '/images/food-fallback.jpg' // Will be replaced with proper image from Sanity
     },
     {
       title: 'Development Kitchen',
       description: 'Our unique culinary innovation hub - creating tomorrow\'s classics today',
       link: '/development-kitchen',
-      backgroundImage: '/images/dummy-placeholder.jpg' // Will be replaced with proper image from Sanity
+      backgroundImage: '/images/pub-interior-cozy.jpg' // Will be replaced with proper image from Sanity
     },
     {
       title: 'Local Ales',
       description: 'Carefully selected beers from regional breweries',
       link: '/our-pubs',
-      backgroundImage: '/images/dummy-placeholder.jpg' // Will be replaced with proper image from Sanity
+      backgroundImage: '/images/pub-fallback.jpg' // Will be replaced with proper image from Sanity
     }
   ];
 
