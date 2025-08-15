@@ -155,6 +155,7 @@ export async function getPubs(targetPubSlug = null) {
       locationName,
       addressLine1,
       postcode,
+      sortOrder,
       squareLogo {
         asset->{
           _id,
@@ -274,7 +275,7 @@ export async function getPubs(targetPubSlug = null) {
       instagramUrl,
       twitterUrl,
       colorScheme
-    } | order(featured desc, name asc)
+    } | order(sortOrder asc, name asc)
   `, params);
 }
 
