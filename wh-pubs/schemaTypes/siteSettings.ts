@@ -103,6 +103,15 @@ export default defineType({
       ]
     }),
     defineField({
+      name: 'hubLiveResWidgetUrl',
+      title: 'Hub LiveRes Widget URL',
+      type: 'url',
+      description: 'LiveRes booking widget URL for the main WH Pubs hub site',
+      validation: Rule => Rule.uri({
+        scheme: ['http', 'https']
+      })
+    }),
+    defineField({
       name: 'seo',
       title: 'Default SEO Settings',
       type: 'object',
