@@ -291,7 +291,6 @@ export default function InteractivePubFinder({ pubs = [] }) {
                             tabIndex={-1}
                           >
                             {isExt ? 'Visit Site' : 'View Details'}
-                            {isExt && <ExternalLink className="w-3 h-3 ml-2" aria-hidden="true" />}
                           </Button>
                         </a>
                         <a 
