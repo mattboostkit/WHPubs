@@ -40,6 +40,12 @@ async function updatePubLiveResUrls() {
     `);
 
     console.log(`📊 Found ${pubs.length} pubs in Sanity`);
+    
+    // First, let's see what slugs we actually have
+    console.log('\n📝 Current pub slugs in Sanity:');
+    pubs.forEach(pub => {
+      console.log(`   - ${pub.name}: "${pub.slug.current}"`);
+    });
 
     for (const pub of pubs) {
       const pubSlug = pub.slug.current;
