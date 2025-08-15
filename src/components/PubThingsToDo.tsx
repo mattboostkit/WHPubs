@@ -298,7 +298,7 @@ export default function PubThingsToDo({ pubName, pubSlug }: PubThingsToDoProps) 
           {/* Tips Section */}
           <div className="mt-16 bg-gradient-to-br from-secondary/5 to-primary/5 rounded-2xl p-8">
             <div className="max-w-4xl mx-auto text-center">
-              <h3 className="text-2xl font-bold text-primary mb-4">
+              <h3 className="header-subsection-compact">
                 Planning Your Visit?
               </h3>
               <p className="text-gray-600 mb-6">
