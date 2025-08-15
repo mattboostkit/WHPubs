@@ -197,6 +197,15 @@ export default defineType({
       description: 'Show this pub prominently on the main WH Pubs site',
       initialValue: false,
     }),
+    defineField({
+      name: 'sortOrder',
+      title: 'Sort Order',
+      type: 'number',
+      group: 'basic',
+      description: 'Order in which this pub appears on the homepage and pub listing pages (lower numbers appear first)',
+      validation: (Rule) => Rule.integer().min(1),
+      initialValue: 999,
+    }),
 
     // --- Location & Hours Group ---
     defineField({
