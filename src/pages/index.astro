@@ -26,8 +26,8 @@ import LocationFinder from '@/components/LocationFinder';
 
 // Fetch data needed for the hub page
 const pubs = await getPubs(); // Fetches all pubs
+console.log('All pubs data:', pubs.map(p => ({ name: p.name, slug: p.slug.current, hasImage: !!p.image }))); // Debug log
 const homepageData = await getHomepageData(); // Fetch homepage content
-console.log('Homepage data:', homepageData); // Debug log
 let developmentKitchen = null;
 try {
   developmentKitchen = await getDevelopmentKitchen(); // Fetch development kitchen data
