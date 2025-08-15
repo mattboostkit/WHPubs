@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Placeholder Images</title>
+</head>
+<body>
+    <h1>Placeholder Images Generator</h1>
+    
+    <canvas id="canvas" width="800" height="600"></canvas>
+    
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Create a simple gradient placeholder
+        function createPlaceholder(width, height, text) {
+            canvas.width = width;
+            canvas.height = height;
+            
+            // Create gradient
+            const gradient = ctx.createLinearGradient(0, 0, width, height);
+            gradient.addColorStop(0, '#1A1A1A');
+            gradient.addColorStop(1, '#2D2D2D');
+            
+            // Fill background
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, width, height);
+            
+            // Add WH Pubs branding
+            ctx.fillStyle = '#B79C64';
+            ctx.font = 'bold 48px serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('WH PUBS', width/2, height/2 - 30);
+            
+            // Add subtitle
+            ctx.font = '24px sans-serif';
+            ctx.fillStyle = '#B79C6480';
+            ctx.fillText(text || 'Traditional British Hospitality', width/2, height/2 + 20);
+            
+            // Convert to blob and download
+            canvas.toBlob((blob) => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `placeholder-${width}x${height}.jpg`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }, 'image/jpeg', 0.9);
+        }
+        
+        // Generate hero fallback
+        createPlaceholder(1920, 800, 'Loading...');
+        
+        // You can open this HTML file in a browser to generate the placeholder image
+        console.log('Open this file in a browser to download the placeholder image');
+    </script>
+    
+    <p>Open this file in a browser to generate and download placeholder images.</p>
+</body>
+</html>
