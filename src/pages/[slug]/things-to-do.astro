@@ -1,9 +1,27 @@
 ---
 // Things To Do page for individual pubs
 import Layout from '@/layouts/Layout.astro';
-import { getPubBySlug } from '@/lib/sanity';
+import { getPubBySlug, getPubs } from '@/lib/sanity';
 import PubThingsToDo from '@/components/PubThingsToDo';
 import PageHero from '@/components/PageHero.astro';
+
+// Generate static paths for all pubs
+export async function getStaticPaths() {
+  const targetPubSlug = import.meta.env.TARGET_PUB_SLUG;
+  
+  if (targetPubSlug) {
+    // For pub-specific builds, only build the Things To Do page for that pub
+    return [{
+      params: { slug: targetPubSlug }
+    }];
+  }
+  
+  // For main site, build Things To Do pages for all pubs
+  const pubs = await getPubs();
+  return pubs.map(pub => ({
+    params: { slug: pub.slug.current }
+  }));
+}
 
 // Get the pub slug from the URL
 const { slug } = Astro.params;
