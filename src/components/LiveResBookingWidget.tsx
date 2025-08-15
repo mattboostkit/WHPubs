@@ -29,7 +29,7 @@ export default function LiveResBookingWidget({
     }, 1000); // Delay iframe load to prevent focus stealing
     
     return () => clearTimeout(timer);
-  }, []);
+  }, [siteId, stylingURL]);
 
   return (
     <div ref={containerRef} className={`w-full ${className}`}>
