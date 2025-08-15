@@ -61,7 +61,7 @@ const pageDescription = "Reserve your table at any of our five traditional Briti
                 </CardHeader>
                 <CardContent class="p-0">
                   {/* LiveRes Booking Widget */}
-                  <LiveResBookingWidget height="850px" client:load />
+                  <LiveResBookingWidget height="1000px" client:load />
                 </CardContent>
               </Card>
 
@@ -81,10 +81,9 @@ const pageDescription = "Reserve your table at any of our five traditional Briti
                             {pub.contactPhone && (
                               <a 
                                 href={`tel:${pub.contactPhone.replace(/\s/g, '')}`}
-                                class="inline-flex items-center text-secondary hover:text-secondary/80 font-medium"
+                                class="text-secondary hover:text-secondary/80 font-medium"
                               >
-                                <Phone class="w-4 h-4 mr-2" />
-                                {pub.contactPhone}
+                                📞 {pub.contactPhone}
                               </a>
                             )}
                           </div>
@@ -199,7 +198,6 @@ const pageDescription = "Reserve your table at any of our five traditional Briti
                 <CardContent class="space-y-2 text-sm text-primary/70">
                   <p>• Tables are held for 15 minutes past booking time</p>
                   <p>• Cancellations can be made up to 2 hours before</p>
-                  <p>• For same-day bookings, please call directly</p>
                   <p>• Deposits may be required for large groups</p>
                 </CardContent>
               </Card>
