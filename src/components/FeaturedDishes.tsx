@@ -122,7 +122,7 @@ export default function FeaturedDishes({ signatureDishes }: FeaturedDishesProps)
           </div>
 
           {/* Dishes Grid */}
-          <div className="grid md:grid-cols-2 gap-8 mb-12">
+          <div className="grid grid-cols-1 gap-8 mb-12 max-w-4xl mx-auto">
             {dishes.slice(0, 4).map((dish, index) => (
               <div 
                 key={index}
