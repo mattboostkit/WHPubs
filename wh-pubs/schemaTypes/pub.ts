@@ -355,6 +355,23 @@ export default defineType({
       validation: Rule => Rule.required().error('Please upload a hero banner image')
     }),
     defineField({
+      name: 'thingsToDoHeroImage',
+      title: '🎯 Things To Do Page Hero Image (1920x768px)',
+      type: 'image',
+      group: 'media',
+      description: 'Hero image specifically for the Things To Do page of this pub. Should show local scenery or walking routes. 🖼️ REQUIRED SIZE: 1920x768px',
+      options: { hotspot: true },
+      fields: [
+        {
+          name: 'alt',
+          type: 'string',
+          title: 'Alternative text',
+          description: 'Describe this Things To Do hero image (e.g., "Walking path near The Cricketers Inn")',
+          validation: Rule => Rule.required().error('Alt text is required for accessibility')
+        }
+      ]
+    }),
+    defineField({
       name: 'exteriorImage',
       title: 'Exterior Image (828x605px)',
       type: 'image',
