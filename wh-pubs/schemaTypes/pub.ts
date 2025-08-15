@@ -567,31 +567,8 @@ export default defineType({
       type: 'array',
       group: 'features',
       of: [{ 
-        type: 'string',
-        options: {
-          list: [
-            { title: '🐕 Dog Friendly', value: 'Dog Friendly' },
-            { title: '🌳 Beer Garden', value: 'Beer Garden' },
-            { title: '🚗 Parking', value: 'Parking' },
-            { title: '📶 Free Wi-Fi', value: 'Free Wi-Fi' },
-            { title: '👨‍👩‍👧‍👦 Family Friendly', value: 'Family Friendly' },
-            { title: '♿ Wheelchair Accessible', value: 'Wheelchair Accessible' },
-            { title: '🍺 Local Ales', value: 'Local Ales' },
-            { title: '🔥 Open Fire', value: 'Open Fire' },
-            { title: '🎵 Live Music', value: 'Live Music' },
-            { title: '⚽ Sports TV', value: 'Sports TV' },
-            { title: '🎯 Traditional Games', value: 'Traditional Games' },
-            { title: '🌞 Sun Terrace', value: 'Sun Terrace' },
-            { title: '🍽️ Private Dining', value: 'Private Dining' },
-            { title: '🎉 Function Room', value: 'Function Room' },
-            { title: '🏡 Historic Building', value: 'Historic Building' },
-            { title: '🌿 Vegan Options', value: 'Vegan Options' },
-            { title: '🌾 Gluten Free Options', value: 'Gluten Free Options' },
-            { title: '☀️ Sunday Roasts', value: 'Sunday Roasts' },
-            { title: '🦐 Fresh Seafood', value: 'Fresh Seafood' },
-            { title: '🥧 Homemade Food', value: 'Homemade Food' }
-          ]
-        }
+        type: 'string'
+        // Removed the options.list to allow free text input
       }],
       options: {
         layout: 'tags'
