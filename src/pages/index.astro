@@ -35,8 +35,8 @@ try {
   // Development Kitchen data not available yet
 }
 
-// Fetch all reviews across all pubs for the testimonials carousel
-const allReviews = await getAllReviews(10); // Get top 10 reviews from all pubs
+// Fetch customer reviews for the testimonials carousel
+const customerReviews = await getCustomerReviews(null, 10); // Get top 10 featured reviews
 
 // Fetch active offers for the homepage
 const activeOffers = await getOffers(null, true); // Get active general offers
