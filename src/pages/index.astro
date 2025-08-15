@@ -185,31 +185,8 @@ const allPubs = pubs;
                   <CardDescription className="text-sm mb-4 line-clamp-2">{pub.description}</CardDescription>
                   
                   {/* Amenity badges */}
-                  <div class="flex flex-wrap gap-2 mb-4">
-                    {(pub.amenities?.some(a => a.toLowerCase().includes('dog')) && (
-                      <Badge variant="secondary" className="text-xs flex items-center gap-1 bg-secondary/20 text-primary border border-secondary/40">
-                        <Dog className="w-3 h-3" />
-                        Dog Friendly
-                      </Badge>
-                    ))}
-                    {(pub.amenities?.some(a => a.toLowerCase().includes('garden')) && (
-                      <Badge variant="secondary" className="text-xs flex items-center gap-1 bg-secondary/20 text-primary border border-secondary/40">
-                        <TreePine className="w-3 h-3" />
-                        Garden
-                      </Badge>
-                    ))}
-                    {(pub.amenities?.some(a => a.toLowerCase().includes('ale')) && (
-                      <Badge variant="secondary" className="text-xs flex items-center gap-1 bg-secondary/20 text-primary border border-secondary/40">
-                        <Beer className="w-3 h-3" />
-                        Local Ales
-                      </Badge>
-                    ))}
-                    {(pub.amenities?.some(a => a.toLowerCase().includes('food') || a.toLowerCase().includes('breakfast')) && (
-                      <Badge variant="secondary" className="text-xs flex items-center gap-1 bg-secondary/20 text-primary border border-secondary/40">
-                        <Utensils className="w-3 h-3" />
-                        Food
-                      </Badge>
-                    ))}
+                  <div class="mb-4">
+                    <AmenityBadges amenities={pub.amenities} maxDisplay={4} client:load />
                   </div>
                   
                   {(() => {
