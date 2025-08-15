@@ -9,7 +9,9 @@ interface LiveResBookingWidgetProps {
 
 export default function LiveResBookingWidget({ 
   className = '', 
-  height = '600px' 
+  height = '600px',
+  siteId,
+  stylingURL = 'Kl7AS'
 }: LiveResBookingWidgetProps) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
