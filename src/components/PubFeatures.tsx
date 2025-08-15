@@ -3,13 +3,13 @@ import React from 'react';
 interface Feature {
   title: string;
   description: string;
-  image: {
-    asset: {
+  image?: {
+    asset?: {
       _id: string;
       url: string;
-    };
+    } | null;
     alt?: string;
-  };
+  } | null;
   orderNumber: number;
 }
 
