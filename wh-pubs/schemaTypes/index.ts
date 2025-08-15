@@ -20,6 +20,7 @@ import loyaltyProgram from './loyaltyProgram'
 import pubFeatures from './pubFeatures'
 import privacyPolicy from './privacyPolicy'
 import featuredDishes from './featuredDishes'
+import customerReview from './customerReview'
 import { eventsPageSettings, blogPageSettings, aboutPageSettings, contactPageSettings, careersPageSettings, thingsToDoPageSettings, pubFinderPageSettings, suppliersPageSettings, giftCardsPageSettings, bookTablePageSettings } from './pageSettings'
 
 export const schemaTypes = [
