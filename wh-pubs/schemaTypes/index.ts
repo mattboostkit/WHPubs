@@ -36,6 +36,7 @@ export const schemaTypes = [
   pubFinderPageSettings,
   suppliersPageSettings,
   giftCardsPageSettings,
+  bookTablePageSettings,
   post, 
   pub, 
   menu, 
