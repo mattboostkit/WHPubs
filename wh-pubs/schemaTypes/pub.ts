@@ -241,7 +241,16 @@ export default defineType({
       title: 'Postcode',
       type: 'string',
       group: 'location',
-      validation: (Rule) => Rule.required(),
+      description: 'Optional for mobile services',
+      validation: (Rule) => Rule.custom((postcode, context) => {
+        // Make postcode optional for mobile services
+        if (context.document?.locationName === 'Mobile Service' || 
+            context.document?.locationName === 'Anywhere' ||
+            context.document?.slug?.current === 'your-wh-pub') {
+          return true; // Optional for mobile services
+        }
+        return postcode ? true : 'Postcode is required for fixed-location pubs';
+      }),
     }),
     defineField({
       name: 'email',
