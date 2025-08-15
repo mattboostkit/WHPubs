@@ -391,8 +391,16 @@ export default defineType({
           name: 'alt', 
           type: 'string', 
           title: 'Alternative text',
-          description: 'Describe this hero image',
-          validation: Rule => Rule.required() 
+          description: 'Describe this hero image (Optional for mobile services)',
+          validation: (Rule) => Rule.custom((alt, context) => {
+            // Make alt text optional for mobile services
+            if (context.document?.locationName === 'Mobile Service' || 
+                context.document?.locationName === 'Anywhere' ||
+                context.document?.slug?.current === 'your-wh-pub') {
+              return true; // Optional for mobile services
+            }
+            return alt ? true : 'Alt text is required for fixed-location pubs';
+          })
         }
       ],
       validation: Rule => Rule.required().error('Please upload a hero banner image')
