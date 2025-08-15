@@ -18,7 +18,10 @@ async function initSingletons() {
     { _id: 'contactPageSettings', _type: 'contactPageSettings', title: 'Contact Page' },
     { _id: 'careersPageSettings', _type: 'careersPageSettings', title: 'Join Our Crew Page' },
     { _id: 'thingsToDoPageSettings', _type: 'thingsToDoPageSettings', title: 'Things To Do Page' },
-    { _id: 'pubFinderPageSettings', _type: 'pubFinderPageSettings', title: 'Our Pubs Page' }
+    { _id: 'pubFinderPageSettings', _type: 'pubFinderPageSettings', title: 'Our Pubs Page' },
+    { _id: 'suppliersPageSettings', _type: 'suppliersPageSettings', title: 'Suppliers Page' },
+    { _id: 'giftCardsPageSettings', _type: 'giftCardsPageSettings', title: 'Gift Cards Page' },
+    { _id: 'bookTablePageSettings', _type: 'bookTablePageSettings', title: 'Book a Table' }
   ]
 
   for (const doc of singletons) {
