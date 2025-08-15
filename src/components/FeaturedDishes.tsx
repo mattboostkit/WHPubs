@@ -182,7 +182,7 @@ export default function FeaturedDishes({ signatureDishes }: FeaturedDishesProps)
               <div className="inline-flex p-3 rounded-full bg-secondary/10 mb-3">
                 <Award className="w-6 h-6 text-secondary" />
               </div>
-              <h4 className="font-semibold text-lg mb-2">Award Winning</h4>
+              <h4 className="header-small">Award Winning</h4>
               <p className="text-gray-600 text-sm">Recognized for culinary excellence</p>
             </div>
             <div className="text-center">
