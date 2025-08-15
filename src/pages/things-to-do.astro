@@ -23,7 +23,7 @@ const pageSettings = await getPageSettings('thingsToDo');
 
 // Determine page title
 const pageTitle = pubData ? `${pubData.name} - Things To Do` : "Things To Do - WH Pubs";
-const pageDescription = pubData ? `Discover activities and attractions near ${pubData.name}.` : "Discover activities and attractions near WH Pubs.";
+const pageDescription = pubData ? `Discover activities and attractions near ${pubData.name}.` : "Discover activities and attractions near our pubs.";
 
 // Group activities by category
 const groupedActivities = thingsToDo.reduce((acc, item) => {
