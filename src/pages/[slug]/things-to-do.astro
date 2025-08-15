@@ -1,0 +1,72 @@
+---
+// Things To Do page for individual pubs
+import Layout from '@/layouts/Layout.astro';
+import { getPubBySlug } from '@/lib/sanity';
+import PubThingsToDo from '@/components/PubThingsToDo';
+import PageHero from '@/components/PageHero.astro';
+
+// Get the pub slug from the URL
+const { slug } = Astro.params;
+
+// Fetch the pub data
+const pub = await getPubBySlug(slug);
+
+// Redirect to 404 if pub not found
+if (!pub) {
+  return Astro.redirect('/404');
+}
+
+// Page metadata
+const pageTitle = `Things To Do Near ${pub.name} - WH Pubs`;
+const pageDescription = `Discover local attractions, scenic walks, and exciting events near ${pub.name} in ${pub.locationName || pub.location}.`;
+
+// Use the pub's specific Things To Do hero image if available, otherwise use pub's main hero image
+const heroImage = pub.thingsToDoHeroImage || pub.heroImage;
+---
+
+<Layout title={pageTitle} description={pageDescription} pub={pub}>
+  {/* Hero Section with pub-specific Things To Do image */}
+  <PageHero 
+    image={heroImage}
+    title={`Things To Do Near ${pub.name}`}
+    subtitle={`Explore ${pub.locationName || pub.location} and the surrounding area`}
+    fallbackImage="/images/things-to-do-hero.jpg"
+  />
+  
+  <main>
+    {/* Things To Do Component with pub-specific content */}
+    <PubThingsToDo
+      pubName={pub.name}
+      pubSlug={pub.slug.current}
+      client:visible
+    />
+    
+    {/* Call to Action */}
+    <section class="py-16 bg-gray-50">
+      <div class="container mx-auto px-4">
+        <div class="max-w-3xl mx-auto text-center">
+          <h3 class="text-2xl font-bold text-primary mb-4">
+            Ready for Your Visit?
+          </h3>
+          <p class="text-lg text-gray-600 mb-8">
+            After exploring the area, stop by {pub.name} for a well-deserved refreshment!
+          </p>
+          <div class="flex flex-wrap gap-4 justify-center">
+            {pub.reservationsUrl && (
+              <a href="/book-table" class="inline-block">
+                <button class="px-8 py-3 bg-primary text-secondary font-semibold rounded-lg hover:bg-primary/90 transition-all duration-300 shadow-lg hover:shadow-xl">
+                  Book A Table
+                </button>
+              </a>
+            )}
+            <a href={`/${pub.slug.current}`} class="inline-block">
+              <button class="px-8 py-3 bg-white text-primary font-semibold rounded-lg border-2 border-primary hover:bg-primary hover:text-secondary transition-all duration-300">
+                Back to {pub.name}
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
