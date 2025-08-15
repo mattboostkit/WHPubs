@@ -40,10 +40,14 @@ export default function PubFeatures({ features }: PubFeaturesProps) {
             >
               <div className="relative h-64 overflow-hidden">
                 <img
-                  src={feature.image.asset.url}
-                  alt={feature.image.alt || feature.title}
+                  src={feature.image?.asset?.url || '/images/placeholder-pub.jpg'}
+                  alt={feature.image?.alt || feature.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   loading="lazy"
+                  onError={(e) => {
+                    const img = e.target as HTMLImageElement;
+                    img.src = '/images/placeholder-pub.jpg';
+                  }}
                 />
                 <div className="absolute top-4 left-4 bg-secondary text-white px-3 py-1 rounded-full font-bold text-lg">
                   {String(feature.orderNumber).padStart(2, '0')}
