@@ -219,7 +219,7 @@ function HeroContent({
   return (
     <div className="relative h-full flex items-center justify-center">
       <div className="text-center text-secondary px-4">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight text-secondary">
           {heroTitle || 'Traditional British Hospitality in the South East of England'}
         </h1>
         <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-6 sm:mb-8 text-secondary leading-relaxed">
