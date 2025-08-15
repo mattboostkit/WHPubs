@@ -573,7 +573,7 @@ export default defineType({
       options: {
         layout: 'tags'
       },
-      description: 'Select all amenities and features available at this pub. These will display as badges on the pub page.',
+      description: 'Type any amenity and press Enter to add it. Examples: Dog Friendly, Beer Garden, Parking, Free Wi-Fi, Family Friendly, Wheelchair Accessible, Local Ales, Open Fire, Live Music, Sports TV, Pool Table, Darts, Quiz Night, Tiki Huts, Craft Beers, Wine Bar, Cocktail Menu, Sunday Roasts, Vegan Options, Baby Changing, EV Charging, Function Room, Private Dining, etc. You can add emojis too like: 🐕 Dog Friendly',
     }),
     defineField({
       name: 'reservationsUrl',
