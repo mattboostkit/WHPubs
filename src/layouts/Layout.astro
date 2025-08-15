@@ -148,10 +148,50 @@ const metaDescription = description || footerDescription;
 		<meta name="theme-color" content="#1A1A1A">
 		<meta name="generator" content={Astro.generator} />
 		
-		<!-- Preload fonts -->
+		<!-- Critical Performance Optimizations -->
+		<link rel="dns-prefetch" href="https://cdn.sanity.io">
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		
+		<!-- Resource Hints for faster loading -->
+		<link rel="prefetch" href="/images/hero-fallback.jpg">
+		<link rel="prefetch" href="/images/book-table-hero.jpg">
+		
+		<!-- Optimized font loading with display=swap for faster LCP -->
 		<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Noto+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+		
+		<!-- Critical CSS for mobile-first design -->
+		<style>
+			/* Mobile-first critical CSS */
+			body { 
+				font-display: swap;
+				-webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
+				text-rendering: optimizeLegibility;
+			}
+			
+			/* Prevent layout shift from images */
+			img { 
+				max-width: 100%; 
+				height: auto;
+			}
+			
+			/* Mobile touch improvements */
+			@media (hover: none) {
+				button, a {
+					min-height: 44px;
+					min-width: 44px;
+				}
+			}
+			
+			/* Optimize for mobile viewport */
+			@media screen and (max-width: 768px) {
+				body {
+					font-size: 16px; /* Prevent zoom on iOS */
+					-webkit-text-size-adjust: 100%;
+				}
+			}
+		</style>
 		
 		<!-- Font configuration -->
 		<style>
