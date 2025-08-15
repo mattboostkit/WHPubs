@@ -328,17 +328,6 @@ export default function LocationFinder() {
             </div>
           </div>
 
-          {/* Bottom CTA */}
-          <div className="mt-12 text-center">
-            <p className="text-gray-600 mb-4">Can't decide? Let us help you find the perfect pub for your occasion.</p>
-            <a 
-              href="/contact"
-              className="inline-flex items-center gap-2 bg-primary text-secondary px-8 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors duration-300 shadow-lg hover:shadow-xl"
-            >
-              Contact Us
-              <Phone className="w-4 h-4" />
-            </a>
-          </div>
         </div>
       </div>
     </section>
