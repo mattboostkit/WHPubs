@@ -138,11 +138,9 @@ const pubActivities = {
       title: 'Walks & Nature',
       icon: <Footprints className="w-6 h-6" />,
       items: [
-        { name: 'High Elms Country Park', description: '250 acres with nature trails and BEECHE visitor centre', icon: <Mountain className="w-5 h-5" /> },
-        { name: 'Downe Bank Nature Reserve', description: "Darwin's thinking path with rare orchids", icon: <TreePine className="w-5 h-5" /> },
-        { name: 'Keston Common', description: 'Historic parkland with ponds and windmill', icon: <TreePine className="w-5 h-5" /> },
-        { name: 'Farnborough Village Walk', description: 'Circular walk through historic village', icon: <Footprints className="w-5 h-5" /> },
-        { name: 'Orpington to Chelsfield Walk', description: 'Scenic countryside route', icon: <Footprints className="w-5 h-5" /> }
+        { name: 'High Elms Country Park Loop', description: '4 miles through 250-acre country park. BEECHE visitor centre, orchid meadows, Shire horse centre. Start from pub, easy family walk. 2 hours.', icon: <Mountain className="w-5 h-5" /> },
+        { name: "Darwin's Downe Walk", description: '5 miles to Down House via Darwin\'s thinking path. Visit his home, explore Downe Bank Nature Reserve with rare orchids. 2.5 hours, moderate.', icon: <TreePine className="w-5 h-5" /> },
+        { name: 'Keston Common & Ponds', description: '3 miles circular via historic windmill and Caesar\'s Well. Ancient earthworks, picturesque ponds, ice house remains. 1.5 hours, easy.', icon: <TreePine className="w-5 h-5" /> }
       ]
     },
     events: {
@@ -204,11 +202,9 @@ const pubActivities = {
       title: 'Walks & Nature',
       icon: <Footprints className="w-6 h-6" />,
       items: [
-        { name: 'Greensand Way', description: 'Long-distance path through Kent countryside', icon: <Footprints className="w-5 h-5" /> },
-        { name: 'Ightham Mote Walk', description: 'Walk to medieval moated manor house', icon: <Castle className="w-5 h-5" /> },
-        { name: 'Plaxtol Circular Walk', description: 'Village to village countryside route', icon: <Footprints className="w-5 h-5" /> },
-        { name: 'Shipbourne Forest', description: 'Ancient woodland trails', icon: <TreePine className="w-5 h-5" /> },
-        { name: 'River Bourne Walk', description: 'Peaceful riverside walking route', icon: <Waves className="w-5 h-5" /> }
+        { name: 'Ightham Mote Circular', description: '5 miles to National Trust medieval moated manor. Start from Chaser Inn, through ancient woodland, visit 14th-century house. 2.5 hours, moderate.', icon: <Castle className="w-5 h-5" /> },
+        { name: 'Shipbourne to Plaxtol Loop', description: '4 miles through Weald of Kent countryside. Classic village-to-village walk, hop gardens, oast houses, return via Fairlawne Estate. 2 hours, easy.', icon: <Footprints className="w-5 h-5" /> },
+        { name: 'River Bourne & Greensand Way', description: '6 miles along riverside and ridge. Follow River Bourne, join Greensand Way for panoramic views, descend through Shipbourne Forest. 3 hours, moderate.', icon: <Waves className="w-5 h-5" /> }
       ]
     },
     events: {
