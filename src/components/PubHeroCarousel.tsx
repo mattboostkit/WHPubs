@@ -152,7 +152,7 @@ export function PubHeroCarousel({ images, pubName }: PubHeroCarouselProps) {
         <div className="relative z-10 h-full flex flex-col items-center justify-center text-center text-white px-6">
           {currentImage.caption && (
             <div className="animate-in fade-in slide-in-from-bottom-5 duration-700 mb-6">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white drop-shadow-lg">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-secondary drop-shadow-lg">
                 {currentImage.caption}
               </h2>
             </div>
