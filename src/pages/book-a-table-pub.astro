@@ -33,7 +33,7 @@ const pageDescription = `Reserve your table at ${pub.name}, ${pub.locationName |
   <PageHero 
     title={`Book a Table at ${pub.name}`}
     subtitle={`Reserve your perfect dining experience in ${pub.locationName || pub.location}`}
-    image={pub.heroImage}
+    image={pub.bookingPageHeroImage || pub.heroImage}
     fallbackImage="/images/book-table-hero.jpg"
   />
   
