@@ -75,34 +75,106 @@
     overflow-wrap: break-word;
   }
 
-  /* Typography Scale and Rhythm */
+  /* Universal Header System - WH Pubs Typography Hierarchy */
   h1, h2, h3, h4, h5, h6 {
-    @apply leading-tight;
+    @apply leading-tight text-primary;
     font-family: 'Lora', Georgia, serif;
   }
   
-  h1 {
-    @apply text-3xl sm:text-4xl md:text-5xl font-bold mb-6;
+  /* Base heading styles that can be overridden with color modifiers */
+  h1, .heading-1 {
+    @apply text-4xl sm:text-5xl md:text-6xl font-bold mb-8 leading-tight;
   }
   
-  h2 {
-    @apply text-2xl sm:text-3xl md:text-4xl font-bold mb-5;
+  h2, .heading-2 {
+    @apply text-3xl sm:text-4xl md:text-5xl font-bold mb-6 leading-tight;
   }
   
-  h3 {
-    @apply text-xl sm:text-2xl md:text-3xl font-semibold mb-4;
+  h3, .heading-3 {
+    @apply text-2xl sm:text-3xl md:text-4xl font-semibold mb-5 leading-tight;
   }
   
-  h4 {
-    @apply text-lg sm:text-xl md:text-2xl font-semibold mb-3;
+  h4, .heading-4 {
+    @apply text-xl sm:text-2xl md:text-3xl font-semibold mb-4 leading-tight;
   }
   
-  h5 {
-    @apply text-base sm:text-lg md:text-xl font-medium mb-2;
+  h5, .heading-5 {
+    @apply text-lg sm:text-xl md:text-2xl font-medium mb-3 leading-tight;
   }
   
-  h6 {
-    @apply text-base sm:text-lg font-medium mb-2;
+  h6, .heading-6 {
+    @apply text-base sm:text-lg md:text-xl font-medium mb-2 leading-tight;
+  }
+
+  /* Universal WH Pubs Header Utility Classes */
+  
+  /* Hero Headers (Large Impact) */
+  .header-hero {
+    @apply text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-primary mb-8 leading-tight;
+    font-family: 'Lora', Georgia, serif;
+  }
+  
+  /* Section Headers (Main Content Areas) */
+  .header-section {
+    @apply text-3xl sm:text-4xl md:text-5xl font-bold text-primary mb-6 leading-tight;
+    font-family: 'Lora', Georgia, serif;
+  }
+  
+  /* Sub-Section Headers */
+  .header-subsection {
+    @apply text-2xl sm:text-3xl md:text-4xl font-semibold text-primary mb-5 leading-tight;
+    font-family: 'Lora', Georgia, serif;
+  }
+  
+  /* Content Headers */
+  .header-content {
+    @apply text-xl sm:text-2xl md:text-3xl font-semibold text-primary mb-4 leading-tight;
+    font-family: 'Lora', Georgia, serif;
+  }
+  
+  /* Small Headers */
+  .header-small {
+    @apply text-lg sm:text-xl md:text-2xl font-medium text-primary mb-3 leading-tight;
+    font-family: 'Lora', Georgia, serif;
+  }
+  
+  /* Micro Headers */
+  .header-micro {
+    @apply text-base sm:text-lg md:text-xl font-medium text-primary mb-2 leading-tight;
+    font-family: 'Lora', Georgia, serif;
+  }
+  
+  /* Color Variants for All Header Levels */
+  .header-primary {
+    @apply text-primary;
+  }
+  
+  .header-secondary {
+    @apply text-secondary;
+  }
+  
+  .header-white {
+    @apply text-white;
+  }
+  
+  .header-gold {
+    @apply text-secondary; /* gold is our secondary brand color */
+  }
+  
+  /* Compact versions for tighter layouts */
+  .header-section-compact {
+    @apply text-2xl sm:text-3xl md:text-4xl font-bold text-primary mb-4 leading-tight;
+    font-family: 'Lora', Georgia, serif;
+  }
+  
+  .header-subsection-compact {
+    @apply text-xl sm:text-2xl md:text-3xl font-semibold text-primary mb-3 leading-tight;
+    font-family: 'Lora', Georgia, serif;
+  }
+  
+  /* Centered variants */
+  .header-center {
+    @apply text-center;
   }
   
   p {
