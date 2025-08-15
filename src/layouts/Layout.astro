@@ -501,7 +501,9 @@ const metaDescription = description || footerDescription;
 				history.scrollRestoration = 'auto';
 			}
 			
-			// Service Worker registration for better performance and offline functionality
+			// Service Worker temporarily disabled due to CSP issues
+			// Will re-enable once CSP headers are configured properly
+			/*
 			if ('serviceWorker' in navigator) {
 				window.addEventListener('load', () => {
 					navigator.serviceWorker.register('/sw.js')
@@ -511,6 +513,16 @@ const metaDescription = description || footerDescription;
 						.catch((registrationError) => {
 							console.log('SW registration failed: ', registrationError);
 						});
+				});
+			}
+			*/
+			
+			// Unregister existing service worker to fix CSP issues
+			if ('serviceWorker' in navigator) {
+				navigator.serviceWorker.getRegistrations().then(function(registrations) {
+					for(let registration of registrations) {
+						registration.unregister();
+					}
 				});
 			}
 		</script>
