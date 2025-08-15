@@ -39,7 +39,7 @@ export default function ServicesGrid() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <span className="text-secondary text-sm font-semibold uppercase tracking-wider">What We Offer</span>
-            <h2 className="text-4xl font-bold text-primary mt-2 mb-4">Everything You Need For The Perfect Visit</h2>
+            <h2 className="header-section">Everything You Need For The Perfect Visit</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               From intimate dinners to large celebrations, we have something for everyone
             </p>
