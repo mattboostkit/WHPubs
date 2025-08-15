@@ -212,3 +212,4 @@ export const thingsToDoPageSettings = createPageSettingsType('thingsToDo', 'Thin
 export const pubFinderPageSettings = createPageSettingsType('pubFinder', 'Our Pubs');
 export const suppliersPageSettings = createPageSettingsType('suppliers', 'Suppliers');
 export const giftCardsPageSettings = createPageSettingsType('giftCards', 'Gift Cards');
+export const bookTablePageSettings = createPageSettingsType('bookTable', 'Book a Table');
