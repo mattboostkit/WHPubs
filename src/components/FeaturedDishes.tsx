@@ -175,7 +175,7 @@ export default function FeaturedDishes({ signatureDishes }: FeaturedDishesProps)
               <div className="inline-flex p-3 rounded-full bg-secondary/10 mb-3">
                 <Clock className="w-6 h-6 text-secondary" />
               </div>
-              <h4 className="font-semibold text-lg mb-2">Fresh Daily</h4>
+              <h4 className="header-small">Fresh Daily</h4>
               <p className="text-gray-600 text-sm">Menu changes with seasonal availability</p>
             </div>
             <div className="text-center">
