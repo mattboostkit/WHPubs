@@ -12,7 +12,7 @@ const client = createClient({
   dataset: 'production',
   apiVersion: '2023-05-03',
   useCdn: false,
-  token: process.env.SANITY_TOKEN // Requires a token with write permissions
+  token: process.env.SANITY_API_TOKEN || process.env.SANITY_TOKEN // Requires a token with write permissions
 });
 
 // Mapping of pub slugs to their specific LiveRes widget URLs
