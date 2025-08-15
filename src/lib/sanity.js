@@ -557,6 +557,12 @@ export async function getPageSettings(pageName = null) {
         heroImage { asset->{ _id, url }, alt },
         heroTitle,
         heroSubtitle
+      },
+      "bookTable": *[_type == "bookTablePageSettings"][0] {
+        title,
+        heroImage { asset->{ _id, url }, alt },
+        heroTitle,
+        heroSubtitle
       }
     }
   `);
