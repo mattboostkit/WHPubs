@@ -176,6 +176,13 @@ export async function getPubs(targetPubSlug = null) {
         },
         alt
       },
+      bookingPageHeroImage {
+        asset->{
+          _id,
+          url
+        },
+        alt
+      },
       exteriorImage {
         asset->{
           _id,
