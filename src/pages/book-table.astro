@@ -11,6 +11,9 @@ import LiveResBookingWidget from '@/components/LiveResBookingWidget';
 // This is the main hub booking page
 // For individual pub sites, they have their own book-a-table pages
 
+// Fetch page settings for book table page
+const pageSettings = await getPageSettings('bookTable');
+
 // Fetch all pubs for the selector
 const allPubs = await getPubs();
 
