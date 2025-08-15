@@ -44,6 +44,7 @@ export const schemaTypes = [
   career, 
   event,
   review,
+  customerReview,
   offer,
   giftCard,
   teamMember,
