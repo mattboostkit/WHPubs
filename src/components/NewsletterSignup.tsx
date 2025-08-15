@@ -28,7 +28,7 @@ export default function NewsletterSignup() {
               <div className="inline-flex p-3 rounded-full bg-secondary/20 mb-4">
                 <Mail className="w-8 h-8 text-secondary" />
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">
                 Join The WH Pubs Family
               </h2>
               <p className="text-xl text-secondary/90 mb-6">
