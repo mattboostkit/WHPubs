@@ -213,10 +213,10 @@ const allPubs = pubs;
                 ))}
               </div>
               
-              {/* Second row - 2 pubs centered */}
+              {/* Second row - up to 3 pubs */}
               {allPubs.length > 3 && (
-                <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-                  {allPubs.slice(3, 5).map(pub => (
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                  {allPubs.slice(3, 6).map(pub => (
                     <PubCardHover pub={pub} client:load>
                       <Card key={pub.slug.current} className="border-0 shadow-none">
                       <CardHeader>
