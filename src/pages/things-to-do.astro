@@ -50,8 +50,8 @@ const categoryTitles = {
   markets: 'Markets'
 };
 
-// Only show page if we're on a pub site
-if (!pubData) {
+// Only show page if we're on a pub site OR if we have things to do data
+if (!pubData && (!thingsToDo || thingsToDo.length === 0)) {
   return Astro.redirect('/404');
 }
 ---
