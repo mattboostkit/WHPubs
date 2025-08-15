@@ -31,12 +31,12 @@ export default function EnhancedHero({
       <div className="relative z-10 container mx-auto px-4 text-center text-white">
         <div className="max-w-5xl mx-auto">
           {/* Tagline */}
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 tracking-tight">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 tracking-tight text-secondary">
             {tagline}
           </h1>
           
           {/* Subtitle */}
-          <p className="text-xl md:text-2xl lg:text-3xl mb-12 font-light opacity-95">
+          <p className="text-xl md:text-2xl lg:text-3xl mb-12 font-light opacity-95 text-white">
             {subtitle}
           </p>
 
