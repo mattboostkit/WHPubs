@@ -152,9 +152,9 @@ export default function InteractivePubFinder({ pubs = [] }) {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Locations</SelectItem>
-                {locations.map(location => (
-                  <SelectItem key={location} value={location}>
-                    {location}
+                {locations.map(locationEntry => (
+                  <SelectItem key={locationEntry.displayName} value={locationEntry.displayName}>
+                    {locationEntry.displayName}
                   </SelectItem>
                 ))}
               </SelectContent>
