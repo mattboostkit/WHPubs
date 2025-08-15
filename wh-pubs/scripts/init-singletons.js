@@ -1,4 +1,4 @@
-const {createClient} = require('@sanity/client')
+import {createClient} from '@sanity/client'
 
 const client = createClient({
   projectId: 'it7wwto3',
