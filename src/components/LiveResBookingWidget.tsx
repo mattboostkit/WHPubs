@@ -39,12 +39,13 @@ export default function LiveResBookingWidget({
         width="100%"
         height={height}
         frameBorder="0"
-        scrolling="no"
+        scrolling="auto"
         style={{
           border: 'none',
           maxWidth: '100%',
           minHeight: height,
           pointerEvents: 'auto',
+          overflow: 'visible',
         }}
         allow="payment"
         // Prevent iframe from stealing focus
