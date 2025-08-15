@@ -149,7 +149,7 @@ export default function FeaturedDishes({ signatureDishes }: FeaturedDishesProps)
                   {/* Content */}
                   <div className="p-6 lg:p-8 flex flex-col justify-between">
                     <div>
-                      <h3 className="text-2xl font-bold text-primary mb-2">{dish.name}</h3>
+                      <h3 className="header-subsection-compact">{dish.name}</h3>
                       <p className="text-gray-600 mb-4">{dish.description}</p>
                       <p className="text-xs text-gray-500 mb-4">{dish.pubLocation || 'Available at all locations'}</p>
                     </div>
