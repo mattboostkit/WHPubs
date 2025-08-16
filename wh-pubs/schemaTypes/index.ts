@@ -31,6 +31,7 @@ import { eventsPageSettings, blogPageSettings, aboutPageSettings, contactPageSet
 export const schemaTypes = [
   siteSettings,
   homepage, 
+  homepageStats,
   developmentKitchen,
   thingsToDo,
   eventsPageSettings,
@@ -59,6 +60,9 @@ export const schemaTypes = [
   pubHighlights,
   privacyPolicy,
   featuredDishes,
+  supplier,
+  socialMediaContent,
+  amenity,
   blockContent, 
   googleMapEmbed
 ]
