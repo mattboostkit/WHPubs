@@ -440,6 +440,91 @@ export default defineType({
       ]
     }),
     defineField({
+      name: 'menuHeroImage',
+      title: '🎯 Menu Page Hero Image (1920x768px)',
+      type: 'image',
+      group: 'media',
+      description: 'Hero image specifically for the Menu page of this pub. Should showcase delicious food or kitchen atmosphere. 🖼️ REQUIRED SIZE: 1920x768px',
+      options: { hotspot: true },
+      fields: [
+        {
+          name: 'alt',
+          type: 'string',
+          title: 'Alternative text',
+          description: 'Describe this menu page hero image (e.g., "Fresh ingredients and chef preparing food at The Bull")',
+          validation: Rule => Rule.required().error('Alt text is required for accessibility')
+        }
+      ]
+    }),
+    defineField({
+      name: 'eventsHeroImage',
+      title: '🎯 Events Page Hero Image (1920x768px)',
+      type: 'image',
+      group: 'media',
+      description: 'Hero image specifically for the What\'s On/Events page of this pub. Should showcase live music, events, or social atmosphere. 🖼️ REQUIRED SIZE: 1920x768px',
+      options: { hotspot: true },
+      fields: [
+        {
+          name: 'alt',
+          type: 'string',
+          title: 'Alternative text',
+          description: 'Describe this events page hero image (e.g., "Live music performance at The Bull")',
+          validation: Rule => Rule.required().error('Alt text is required for accessibility')
+        }
+      ]
+    }),
+    defineField({
+      name: 'galleryHeroImage',
+      title: '🎯 Gallery Page Hero Image (1920x768px)',
+      type: 'image',
+      group: 'media',
+      description: 'Hero image specifically for the Gallery page of this pub. Should be one of your best interior or exterior shots. 🖼️ REQUIRED SIZE: 1920x768px',
+      options: { hotspot: true },
+      fields: [
+        {
+          name: 'alt',
+          type: 'string',
+          title: 'Alternative text',
+          description: 'Describe this gallery page hero image (e.g., "Beautiful interior view of The Bull")',
+          validation: Rule => Rule.required().error('Alt text is required for accessibility')
+        }
+      ]
+    }),
+    defineField({
+      name: 'suppliersHeroImage',
+      title: '🎯 Suppliers Page Hero Image (1920x768px)',
+      type: 'image',
+      group: 'media',
+      description: 'Hero image specifically for the Suppliers page of this pub. Should showcase fresh ingredients, local produce, or kitchen preparation. 🖼️ REQUIRED SIZE: 1920x768px',
+      options: { hotspot: true },
+      fields: [
+        {
+          name: 'alt',
+          type: 'string',
+          title: 'Alternative text',
+          description: 'Describe this suppliers page hero image (e.g., "Fresh local ingredients at The Bull")',
+          validation: Rule => Rule.required().error('Alt text is required for accessibility')
+        }
+      ]
+    }),
+    defineField({
+      name: 'contactHeroImage',
+      title: '🎯 Contact Page Hero Image (1920x768px)',
+      type: 'image',
+      group: 'media',
+      description: 'Hero image specifically for the Contact page of this pub. Should showcase exterior view or welcoming entrance. 🖼️ REQUIRED SIZE: 1920x768px',
+      options: { hotspot: true },
+      fields: [
+        {
+          name: 'alt',
+          type: 'string',
+          title: 'Alternative text',
+          description: 'Describe this contact page hero image (e.g., "Welcome entrance to The Bull pub")',
+          validation: Rule => Rule.required().error('Alt text is required for accessibility')
+        }
+      ]
+    }),
+    defineField({
       name: 'exteriorImage',
       title: 'Exterior Image (828x605px)',
       type: 'image',
