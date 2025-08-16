@@ -1,19 +1,43 @@
 import React from 'react';
-import { Calendar, Utensils, Gift, Users, Star, TrendingUp, Clock, Award } from 'lucide-react';
+import { Calendar, Utensils, Gift, Users, Star, TrendingUp, Clock, Award, Music } from 'lucide-react';
+
+interface PubHighlight {
+  title: string;
+  subtitle: string;
+  description: string;
+  badge?: string;
+  badgeColor: string;
+  icon: string;
+  ctaText: string;
+  ctaLink: string;
+  image?: {
+    asset: { url: string };
+    alt?: string;
+  };
+  active: boolean;
+  validFrom?: string;
+  validUntil?: string;
+}
+
+interface PubHighlightsData {
+  sectionTitle: string;
+  sectionSubtitle: string;
+  highlights: PubHighlight[];
+  statisticsEnabled: boolean;
+  statistics: {
+    guestRating: string;
+    happyGuests: string;
+    yearsOfService: string;
+    eventsYearly: string;
+  };
+  ctaEnabled: boolean;
+  ctaText: string;
+  ctaLink: string;
+}
 
 interface HighlightProps {
   pubName: string;
-  highlights?: {
-    weeklySpecial?: string;
-    upcomingEvent?: {
-      title: string;
-      date: string;
-    };
-    featuredDish?: {
-      name: string;
-      price: string;
-    };
-  };
+  highlightsData?: PubHighlightsData;
 }
 
 export default function PubHighlights({ pubName, highlights }: HighlightProps) {
