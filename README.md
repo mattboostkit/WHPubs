@@ -2,7 +2,16 @@
 
 A website for WH Pubs, featuring traditional British pubs in South East England offering quality food, drink, and hospitality.
 
-## Latest Updates (January 2025)
+## Latest Updates (August 2025)
+
+### Pub Site Independence & Navigation Fixes
+- **Fixed Individual Pub Sites**: Each pub site now builds independently with correct TARGET_PUB_SLUG environment variables
+- **Resolved Navigation Issues**: Fixed "Explore More" buttons and all booking CTAs now work correctly
+- **Removed Fake Content**: Eliminated placeholder highlights content (Tuesday specials, jazz trio, sea bass)
+- **Independent Deployments**: All 5 pub sites are completely separate with no cross-linking to main hub
+- **Fixed Build Errors**: Removed duplicate page files that were causing deployment failures
+
+## Previous Updates (January 2025)
 
 ### Navigation & UI Enhancements
 - **Enhanced Navigation**: Comprehensive menu structure competitive with industry leaders (Home, Menus, What's On, Gallery, Suppliers, Things To Do, Contact)
