@@ -719,14 +719,26 @@ export default defineType({
       title: 'Amenities & Features',
       type: 'array',
       group: 'features',
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'amenity' }]
+        }
+      ],
+      description: 'Select amenities available at this pub. Standard amenities like "Sunday Roast" and "Dog Friendly" are automatically included for all pubs.',
+    }),
+    defineField({
+      name: 'customAmenities',
+      title: 'Custom Amenities (Free Text)',
+      type: 'array',
+      group: 'features',
       of: [{ 
         type: 'string'
-        // Removed the options.list to allow free text input
       }],
       options: {
         layout: 'tags'
       },
-      description: 'Type any amenity and press Enter to add it. Examples: Dog Friendly, Beer Garden, Parking, Free Wi-Fi, Family Friendly, Wheelchair Accessible, Local Ales, Open Fire, Live Music, Sports TV, Pool Table, Darts, Quiz Night, Tiki Huts, Craft Beers, Wine Bar, Cocktail Menu, Sunday Roasts, Vegan Options, Baby Changing, EV Charging, Function Room, Private Dining, etc. You can add emojis too like: 🐕 Dog Friendly',
+      description: 'Add any special amenities not covered by the standard list. Examples: Unique features specific to this pub.',
     }),
     defineField({
       name: 'reservationsUrl',
