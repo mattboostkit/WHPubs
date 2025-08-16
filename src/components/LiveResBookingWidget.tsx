@@ -56,9 +56,17 @@ export default function LiveResBookingWidget({
     
     // Simple delayed load without scroll interference
     const timer = setTimeout(() => {
-      if (iframeRef.current && siteId) {
+      if (iframeRef.current && liveresSiteId) {
         // Set source after delay using pub-specific siteId
-        iframeRef.current.src = `https://events-widget.liveres.co.uk/widget.html?siteId=${siteId}&stylingURL=${stylingURL}`;
+        iframeRef.current.src = `https://events-widget.liveres.co.uk/widget.html?siteId=${liveresSiteId}&stylingURL=${stylingURL}`;
+        // Track booking widget usage with analytics
+        if (typeof window !== 'undefined' && window.analytics) {
+          window.analytics.track('Booking Widget Loaded', {
+            pubName: pubName || 'WH Pubs',
+            pubSlug: pubSlug || 'unknown',
+            siteId: liveresSiteId
+          });
+        }
       } else if (iframeRef.current) {
         // Fallback to company-wide booking if no specific siteId provided
         iframeRef.current.src = `https://events-widget.liveres.co.uk/widget.html?companyId=ec8abb94-2a3c-4969-9122-a6f2f9b27a96&stylingURL=${stylingURL}`;
