@@ -99,7 +99,7 @@ const pubStructuredData = {
   "@type": "Restaurant",
   "name": pub.name,
   "image": pub.heroImage?.asset?.url || pub.image?.asset?.url,
-  "url": `https://whpubs.com/${pub.slug.current}`,
+  "url": `https://${pub.externalDomain || 'whpubs.com'}${pub.externalDomain ? '' : '/' + pub.slug.current}`,
   "telephone": pub.contactPhone,
   "address": {
     "@type": "PostalAddress",
