@@ -1,0 +1,295 @@
+---
+// Gallery page for individual pubs
+import Layout from '@/layouts/Layout.astro';
+import { getPubBySlug, getPubs } from '@/lib/sanity';
+import PageHero from '@/components/PageHero.astro';
+import ImageGallery from '@/components/ImageGallery.astro';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Camera, Image as ImageIcon, Users, UtensilsCrossed } from 'lucide-react';
+
+// Generate static paths for all pubs
+export async function getStaticPaths() {
+  const targetPubSlug = import.meta.env.TARGET_PUB_SLUG;
+  
+  if (targetPubSlug) {
+    // For pub-specific builds, only build the gallery page for that pub
+    return [{
+      params: { slug: targetPubSlug }
+    }];
+  }
+  
+  // For main site, build gallery pages for all pubs
+  const pubs = await getPubs();
+  return pubs.map(pub => ({
+    params: { slug: pub.slug.current }
+  }));
+}
+
+// Get the pub slug from the URL
+const { slug } = Astro.params;
+
+// Fetch the pub data
+const pub = await getPubBySlug(slug);
+
+// Redirect to 404 if pub not found
+if (!pub) {
+  return Astro.redirect('/404');
+}
+
+// Page metadata
+const pageTitle = `${pub.name} Gallery - WH Pubs`;
+const pageDescription = `Browse photos of ${pub.name} including our food, interiors, garden, and atmosphere in ${pub.locationName || pub.location}.`;
+
+// Use the pub's gallery hero image if available, otherwise use pub's main hero image
+const heroImage = pub.galleryHeroImage || pub.heroImage;
+
+// Organize gallery images by category if they have categories
+const categorizedImages = pub.gallery?.reduce((acc, image) => {
+  const category = image.category || 'general';
+  if (!acc[category]) {
+    acc[category] = [];
+  }
+  acc[category].push(image);
+  return acc;
+}, {}) || {};
+
+// Define category display names and icons
+const categoryInfo = {
+  food: { name: 'Food & Drink', icon: UtensilsCrossed },
+  interior: { name: 'Interior', icon: ImageIcon },
+  exterior: { name: 'Exterior & Garden', icon: Camera },
+  events: { name: 'Events & Entertainment', icon: Users },
+  general: { name: 'General', icon: ImageIcon }
+};
+---
+
+<Layout title={pageTitle} description={pageDescription} pub={pub}>
+  {/* Hero Section */}
+  <PageHero 
+    image={heroImage}
+    title={`${pub.name} Gallery`}
+    subtitle="A visual journey through our pub's atmosphere and offerings"
+    fallbackImage="/images/gallery-hero.jpg"
+  />
+  
+  <main>
+    {/* Gallery Introduction */}
+    <section class="py-12 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto text-center">
+          <h2 class="text-3xl font-bold text-primary mb-6">Experience {pub.name}</h2>
+          <p class="text-lg text-gray-600 mb-8">
+            Take a visual tour of our pub and discover the warm atmosphere, delicious food, 
+            and beautiful surroundings that make {pub.name} special. From cozy interior corners 
+            to our lovely garden spaces, see what awaits your visit.
+          </p>
+          
+          {/* Quick Stats */}
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <Card class="bg-secondary/10">
+              <CardContent class="p-4 text-center">
+                <div class="text-2xl font-bold text-secondary">{pub.gallery?.length || 0}</div>
+                <div class="text-sm text-gray-600">Photos</div>
+              </CardContent>
+            </Card>
+            <Card class="bg-secondary/10">
+              <CardContent class="p-4 text-center">
+                <div class="text-2xl font-bold text-secondary">{Object.keys(categorizedImages).length}</div>
+                <div class="text-sm text-gray-600">Categories</div>
+              </CardContent>
+            </Card>
+            <Card class="bg-secondary/10">
+              <CardContent class="p-4 text-center">
+                <div class="text-2xl font-bold text-secondary">★★★★★</div>
+                <div class="text-sm text-gray-600">Atmosphere</div>
+              </CardContent>
+            </Card>
+            <Card class="bg-secondary/10">
+              <CardContent class="p-4 text-center">
+                <div class="text-2xl font-bold text-secondary">📍</div>
+                <div class="text-sm text-gray-600">{pub.locationName || pub.location}</div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* CTA */}
+          <div class="space-x-4">
+            <a href="/book-a-table-pub">
+              <Button size="lg" className="bg-secondary hover:bg-secondary/90">
+                Book Your Visit
+              </Button>
+            </a>
+            <a href="/contact">
+              <Button variant="outline" size="lg">
+                Get Directions
+              </Button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* Main Gallery Section */}
+    {pub.gallery && pub.gallery.length > 0 ? (
+      <section class="py-12 bg-gray-50">
+        <div class="container mx-auto px-4">
+          <div class="max-w-7xl mx-auto">
+            {/* Gallery Navigation/Categories */}
+            {Object.keys(categorizedImages).length > 1 && (
+              <div class="mb-8">
+                <h3 class="text-2xl font-bold text-primary mb-6 text-center">Browse by Category</h3>
+                <div class="flex flex-wrap justify-center gap-4">
+                  {Object.keys(categorizedImages).map((category) => {
+                    const info = categoryInfo[category] || categoryInfo.general;
+                    const IconComponent = info.icon;
+                    return (
+                      <Card class="hover:shadow-md transition-shadow cursor-pointer" 
+                            onclick={`document.getElementById('category-${category}').scrollIntoView({behavior: 'smooth'})`}>
+                        <CardContent class="p-4 flex items-center gap-3">
+                          <IconComponent class="w-5 h-5 text-secondary" />
+                          <span class="font-medium">{info.name}</span>
+                          <span class="text-sm text-gray-500">({categorizedImages[category].length})</span>
+                        </CardContent>
+                      </Card>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Gallery by Categories */}
+            {Object.keys(categorizedImages).map((category) => {
+              const info = categoryInfo[category] || categoryInfo.general;
+              const IconComponent = info.icon;
+              return (
+                <div id={`category-${category}`} class="mb-12">
+                  <div class="flex items-center gap-3 mb-6">
+                    <IconComponent class="w-6 h-6 text-secondary" />
+                    <h3 class="text-2xl font-bold text-primary">{info.name}</h3>
+                    <span class="text-gray-500">({categorizedImages[category].length} photos)</span>
+                  </div>
+                  <ImageGallery 
+                    images={categorizedImages[category]} 
+                    showCategories={false}
+                    columns={3}
+                    className="gallery-enhanced"
+                  />
+                </div>
+              );
+            })}
+
+            {/* Single gallery if no categories */}
+            {Object.keys(categorizedImages).length === 1 && (
+              <div>
+                <ImageGallery 
+                  images={pub.gallery} 
+                  showCategories={false}
+                  columns={3}
+                  className="gallery-enhanced"
+                />
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+    ) : (
+      /* No Gallery Images */
+      <section class="py-12 bg-gray-50">
+        <div class="container mx-auto px-4">
+          <div class="max-w-4xl mx-auto text-center">
+            <Card class="p-12">
+              <CardHeader>
+                <div class="mx-auto w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mb-4">
+                  <Camera class="w-8 h-8 text-secondary" />
+                </div>
+                <CardTitle class="text-2xl text-primary mb-4">Gallery Coming Soon</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p class="text-lg text-gray-600 mb-6">
+                  We're currently updating our photo gallery with beautiful new images of {pub.name}. 
+                  In the meantime, why not visit us in person to experience our atmosphere firsthand?
+                </p>
+                <div class="space-y-2">
+                  <a href="/book-a-table-pub" class="w-full">
+                    <Button size="lg" className="bg-secondary hover:bg-secondary/90">
+                      Book Your Visit
+                    </Button>
+                  </a>
+                  {pub.instagramUrl && (
+                    <a href={pub.instagramUrl} target="_blank" rel="noopener noreferrer" class="w-full">
+                      <Button variant="outline" size="lg">
+                        View on Instagram
+                      </Button>
+                    </a>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+    )}
+
+    {/* Photo Submission Section */}
+    <section class="py-12 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+          <Card class="bg-primary/5 border-primary/20">
+            <CardHeader>
+              <CardTitle class="text-2xl text-primary text-center">Share Your Photos</CardTitle>
+            </CardHeader>
+            <CardContent class="text-center">
+              <p class="text-gray-600 mb-6">
+                We love seeing photos from our guests! Share your {pub.name} experience with us on social media 
+                or tag us in your posts. The best photos might even be featured in our gallery.
+              </p>
+              <div class="flex flex-wrap justify-center gap-4">
+                {pub.instagramUrl && (
+                  <a href={pub.instagramUrl} target="_blank" rel="noopener noreferrer">
+                    <Button variant="outline" className="flex items-center gap-2">
+                      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"></path>
+                      </svg>
+                      Follow on Instagram
+                    </Button>
+                  </a>
+                )}
+                {pub.facebookUrl && (
+                  <a href={pub.facebookUrl} target="_blank" rel="noopener noreferrer">
+                    <Button variant="outline" className="flex items-center gap-2">
+                      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"></path>
+                      </svg>
+                      Like on Facebook
+                    </Button>
+                  </a>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<script>
+  // Add click handlers for category navigation
+  document.addEventListener('DOMContentLoaded', () => {
+    const categoryCards = document.querySelectorAll('[onclick^="document.getElementById"]');
+    categoryCards.forEach(card => {
+      card.addEventListener('click', (e) => {
+        const onclickValue = card.getAttribute('onclick');
+        const match = onclickValue.match(/getElementById\('([^']+)'\)/);
+        if (match) {
+          const targetId = match[1];
+          const targetElement = document.getElementById(targetId);
+          if (targetElement) {
+            targetElement.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      });
+    });
+  });
+</script>
