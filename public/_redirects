@@ -1,0 +1,3 @@
+# Netlify redirects file
+# Redirect old book-table route to the correct pub booking page
+/book-table /book-a-table-pub 301
