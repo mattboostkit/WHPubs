@@ -969,3 +969,41 @@ export async function getCustomerReviews(targetPubSlug = null, limit = 10, featu
     } | order(featured desc, reviewDate desc, rating desc)[0...$limit]
   `, params);
 }
+
+// Helper function to get pub highlights
+export async function getPubHighlights(targetPubSlug) {
+  if (!targetPubSlug) return null;
+  
+  const params = { targetPubSlug };
+  
+  return client.fetch(`
+    *[_type == "pubHighlights" && pub->slug.current == $targetPubSlug][0] {
+      sectionTitle,
+      sectionSubtitle,
+      highlights[] {
+        title,
+        subtitle,
+        description,
+        badge,
+        badgeColor,
+        icon,
+        ctaText,
+        ctaLink,
+        image { asset->{ _id, url }, alt },
+        active,
+        validFrom,
+        validUntil
+      }[active == true && (!defined(validFrom) || validFrom <= now()) && (!defined(validUntil) || validUntil >= now())],
+      statisticsEnabled,
+      statistics {
+        guestRating,
+        happyGuests,
+        yearsOfService,
+        eventsYearly
+      },
+      ctaEnabled,
+      ctaText,
+      ctaLink
+    }
+  `, params);
+}
