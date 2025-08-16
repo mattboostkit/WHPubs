@@ -13,7 +13,9 @@ export default function LiveResBookingWidget({
   className = '', 
   height = '1000px',
   siteId,
-  stylingURL = 'Kl7AS'
+  stylingURL = 'Kl7AS',
+  pubName,
+  pubSlug
 }: LiveResBookingWidgetProps) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
