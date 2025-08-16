@@ -77,7 +77,7 @@ if (!pub) {
 }
 
 // 3. Fetch all related data for this pub
-const [relatedPosts, pubMenus, pubEvents, pubReviews, pubOffers, pubStories, pubTeam, detailedMenus, pubFeatures] = await Promise.all([
+const [relatedPosts, pubMenus, pubEvents, pubReviews, pubOffers, pubStories, pubTeam, detailedMenus, pubFeatures, pubHighlights] = await Promise.all([
   getPosts(pub.slug.current),
   getMenusForPub(pub.slug.current),
   getEvents(pub.slug.current),
@@ -86,7 +86,8 @@ const [relatedPosts, pubMenus, pubEvents, pubReviews, pubOffers, pubStories, pub
   getPubStories(pub.slug.current),
   getTeamMembers(pub.slug.current),
   getDetailedMenusForPub(pub.slug.current),
-  getPubFeatures(pub.slug.current)
+  getPubFeatures(pub.slug.current),
+  getPubHighlights(pub.slug.current)
 ]);
 
 const pageTitle = `${pub.name} - WH Pubs`;
