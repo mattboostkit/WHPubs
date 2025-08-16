@@ -41,46 +41,12 @@ interface HighlightProps {
 }
 
 export default function PubHighlights({ pubName, highlightsData }: HighlightProps) {
-  // Fallback data if no Sanity data is available
+  // Fallback data if no Sanity data is available - keeping minimal to avoid fake content
   const fallbackData: PubHighlightsData = {
     sectionTitle: "What's On This Week",
-    sectionSubtitle: "Don't miss out on our special offers and events",
-    highlights: [
-      {
-        title: "Tuesday Special",
-        subtitle: "2 Mains for £25",
-        description: "Every Tuesday, all day. Perfect for a midweek treat!",
-        badge: "Limited Time",
-        badgeColor: "orange",
-        icon: "food",
-        ctaText: "Book Now",
-        ctaLink: "/book-a-table-pub",
-        active: true
-      },
-      {
-        title: "Live Music Night",
-        subtitle: "Local Jazz Trio",
-        description: "8pm start • Free entry • Great atmosphere",
-        badge: "This Friday",
-        badgeColor: "blue",
-        icon: "music",
-        ctaText: "View Events",
-        ctaLink: "/events",
-        active: true
-      },
-      {
-        title: "Pan-Seared Sea Bass",
-        subtitle: "£18.95",
-        description: "With seasonal vegetables and lemon butter sauce",
-        badge: "Chef's Pick",
-        badgeColor: "green",
-        icon: "food",
-        ctaText: "View Menu",
-        ctaLink: "/menu",
-        active: true
-      }
-    ],
-    statisticsEnabled: true,
+    sectionSubtitle: "Check back soon for our latest offers and events",
+    highlights: [],
+    statisticsEnabled: false,
     statistics: {
       guestRating: "4.5",
       happyGuests: "2,500+",
