@@ -108,6 +108,7 @@ export async function getPubBySlug(slug) {
       foodServingTimes,
       reservationsUrl,
       liveResWidgetUrl,
+      liveResSiteId,
       gallery[] {
         asset->{
           _id,
@@ -210,6 +211,7 @@ export async function getPubs(targetPubSlug = null) {
       foodServingTimes,
       reservationsUrl,
       liveResWidgetUrl,
+      liveResSiteId,
       gallery[] {
         asset->{
           _id,
