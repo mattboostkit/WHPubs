@@ -90,7 +90,7 @@ export default function LiveResBookingWidget({
     <div ref={containerRef} className={`w-full ${className}`}>
       <iframe
         ref={iframeRef}
-        title="Book a Table - WH Pubs"
+        title={`Book a Table${pubName ? ` - ${pubName}` : ' - WH Pubs'}`}
         width="100%"
         height={height}
         frameBorder="0"
