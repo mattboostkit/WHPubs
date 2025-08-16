@@ -5,6 +5,8 @@ interface LiveResBookingWidgetProps {
   height?: string;
   siteId?: string;
   stylingURL?: string;
+  pubName?: string;
+  pubSlug?: string;
 }
 
 export default function LiveResBookingWidget({ 
