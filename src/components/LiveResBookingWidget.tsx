@@ -61,11 +61,17 @@ export default function LiveResBookingWidget({
           overflow: 'visible',
         }}
         allow="payment"
-        // Prevent iframe from stealing focus
+        // Prevent iframe from stealing focus and causing scroll jumps
         tabIndex={-1}
         loading="lazy"
-        // Remove sandbox to allow full functionality but keep focus prevention
+        // Additional attributes to prevent focus/scroll issues
         data-no-focus="true"
+        onLoad={() => {
+          // Ensure parent page scroll position is maintained when iframe loads
+          if (typeof window !== 'undefined') {
+            window.scrollTo(0, 0);
+          }
+        }}
       />
     </div>
   );
