@@ -181,7 +181,7 @@ export default function PubWarmWelcome({
             {/* CTA Buttons */}
             <div className="flex flex-wrap gap-4 pt-4">
               <a
-                href="/book-table"
+                href="/book-a-table-pub"
                 className="inline-flex items-center px-6 py-3 bg-primary text-secondary font-semibold rounded-lg hover:bg-primary/90 transition-all duration-300 shadow-lg hover:shadow-xl"
               >
                 Book Your Table
