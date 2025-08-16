@@ -16,9 +16,26 @@ export default function LiveResBookingWidget({
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Prevent any unwanted scrolling behavior
+  const preventScroll = useCallback(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   useEffect(() => {
-    // Store current scroll position before loading iframe
-    const currentScrollY = window.scrollY;
+    // Ensure page starts at top
+    window.scrollTo(0, 0);
+    
+    // Set up scroll prevention during iframe load
+    let scrollPreventionActive = true;
+    
+    const handleScroll = () => {
+      if (scrollPreventionActive) {
+        window.scrollTo(0, 0);
+      }
+    };
+    
+    // Add scroll listener during iframe load period
+    window.addEventListener('scroll', handleScroll, { passive: false });
     
     // Simple delayed load without scroll interference
     const timer = setTimeout(() => {
@@ -30,18 +47,18 @@ export default function LiveResBookingWidget({
         iframeRef.current.src = `https://events-widget.liveres.co.uk/widget.html?companyId=ec8abb94-2a3c-4969-9122-a6f2f9b27a96&stylingURL=${stylingURL}`;
       }
       
-      // Restore scroll position after iframe loads to prevent unwanted scrolling
-      const restoreScroll = () => {
-        window.scrollTo(0, currentScrollY);
-      };
-      
-      // Multiple attempts to prevent scroll jumps
-      setTimeout(restoreScroll, 100);
-      setTimeout(restoreScroll, 500);
-      setTimeout(restoreScroll, 1000);
+      // Continue preventing scroll for a bit after iframe loads
+      setTimeout(() => {
+        scrollPreventionActive = false;
+        window.removeEventListener('scroll', handleScroll);
+      }, 2000);
     }, 1000); // Delay iframe load to prevent focus stealing
     
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      scrollPreventionActive = false;
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, [siteId, stylingURL]);
 
   return (
