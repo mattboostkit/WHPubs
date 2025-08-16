@@ -180,7 +180,7 @@ const pubStructuredData = {
     </section>
 
     {/* Highlights Section - Show what's special this week */}
-    <PubHighlights pubName={pub.name} client:visible />
+    <PubHighlights pubName={pub.name} highlightsData={pubHighlights} client:visible />
 
     {/* Warm Welcome Section - Enhanced */}
     <PubWarmWelcome
