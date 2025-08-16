@@ -1,0 +1,257 @@
+---
+// Menu page for individual pubs
+import Layout from '@/layouts/Layout.astro';
+import { getPubBySlug, getPubs, getDetailedMenusForPub } from '@/lib/sanity';
+import PageHero from '@/components/PageHero.astro';
+import PubMenu from '@/components/PubMenu';
+import ChristmasMenu from '@/components/ChristmasMenu';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Clock, UtensilsCrossed, Phone } from 'lucide-react';
+
+// Generate static paths for all pubs
+export async function getStaticPaths() {
+  const targetPubSlug = import.meta.env.TARGET_PUB_SLUG;
+  
+  if (targetPubSlug) {
+    // For pub-specific builds, only build the menu page for that pub
+    return [{
+      params: { slug: targetPubSlug }
+    }];
+  }
+  
+  // For main site, build menu pages for all pubs
+  const pubs = await getPubs();
+  return pubs.map(pub => ({
+    params: { slug: pub.slug.current }
+  }));
+}
+
+// Get the pub slug from the URL
+const { slug } = Astro.params;
+
+// Fetch the pub data and menus
+const [pub, detailedMenus] = await Promise.all([
+  getPubBySlug(slug),
+  getDetailedMenusForPub(slug)
+]);
+
+// Redirect to 404 if pub not found
+if (!pub) {
+  return Astro.redirect('/404');
+}
+
+// Page metadata
+const pageTitle = `${pub.name} Menu - WH Pubs`;
+const pageDescription = `Discover our delicious menu at ${pub.name}. Fresh, locally-sourced dishes in ${pub.locationName || pub.location}.`;
+
+// Use the pub's menu hero image if available, otherwise use pub's main hero image
+const heroImage = pub.menuHeroImage || pub.heroImage;
+---
+
+<Layout title={pageTitle} description={pageDescription} pub={pub}>
+  {/* Hero Section */}
+  <PageHero 
+    image={heroImage}
+    title={`${pub.name} Menu`}
+    subtitle="Fresh, locally-sourced dishes made with love"
+    fallbackImage="/images/menu-hero.jpg"
+  />
+  
+  <main>
+    {/* Menu Information Section */}
+    <section class="py-12 bg-gradient-to-b from-white to-gray-50">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+          <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-primary mb-4">Our Kitchen Philosophy</h2>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+              At {pub.name}, we believe in serving exceptional food made from the finest local ingredients. 
+              Our chefs craft each dish with passion, celebrating traditional British cuisine with modern flair.
+            </p>
+          </div>
+
+          {/* Service Information Cards */}
+          <div class="grid md:grid-cols-3 gap-6 mb-12">
+            {/* Food Serving Times */}
+            <Card>
+              <CardHeader>
+                <CardTitle class="text-lg flex items-center gap-2">
+                  <Clock class="w-5 h-5 text-secondary" />
+                  Service Times
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                {pub.foodServingTimes ? (
+                  <div class="space-y-1 text-sm">
+                    {pub.foodServingTimes.split('\n').map((line) => (
+                      <p class="text-gray-600">{line}</p>
+                    ))}
+                  </div>
+                ) : (
+                  <div class="space-y-1 text-sm text-gray-600">
+                    <p>Lunch: Mon-Sat 12pm-3pm</p>
+                    <p>Dinner: Mon-Sat 6pm-9pm</p>
+                    <p>Sunday: 12pm-8pm</p>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
+            {/* Dietary Requirements */}
+            <Card>
+              <CardHeader>
+                <CardTitle class="text-lg flex items-center gap-2">
+                  <UtensilsCrossed class="w-5 h-5 text-secondary" />
+                  Dietary Options
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div class="space-y-2 text-sm text-gray-600">
+                  <p>✓ Vegetarian options</p>
+                  <p>✓ Vegan dishes available</p>
+                  <p>✓ Gluten-free alternatives</p>
+                  <p>✓ Allergen information provided</p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Booking Information */}
+            <Card class="bg-secondary/10 border-secondary/20">
+              <CardHeader>
+                <CardTitle class="text-lg flex items-center gap-2">
+                  <Phone class="w-5 h-5 text-secondary" />
+                  Book Your Table
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p class="text-sm text-gray-600 mb-4">
+                  Secure your table for the perfect dining experience.
+                </p>
+                <div class="space-y-2">
+                  <a href="/book-a-table-pub" class="w-full">
+                    <Button className="w-full bg-secondary hover:bg-secondary/90">
+                      Book Online
+                    </Button>
+                  </a>
+                  {pub.contactPhone && (
+                    <a href={`tel:${pub.contactPhone.replace(/\s/g, '')}`} class="w-full">
+                      <Button variant="outline" className="w-full">
+                        Call {pub.contactPhone}
+                      </Button>
+                    </a>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* Christmas Menu Section */}
+    {pub.christmasMenu && (
+      <section class="py-12">
+        <div class="container mx-auto px-4">
+          <ChristmasMenu 
+            christmasMenu={pub.christmasMenu}
+            pubName={pub.name}
+            bookingUrl="/book-a-table-pub"
+            client:load
+          />
+        </div>
+      </section>
+    )}
+
+    {/* Regular Menus Section */}
+    {detailedMenus && detailedMenus.length > 0 ? (
+      <section class="py-12">
+        <div class="container mx-auto px-4">
+          <PubMenu menus={detailedMenus} client:load />
+        </div>
+      </section>
+    ) : (
+      <section class="py-12 bg-gray-50">
+        <div class="container mx-auto px-4">
+          <div class="max-w-4xl mx-auto text-center">
+            <Card class="p-12">
+              <CardHeader>
+                <CardTitle class="text-2xl text-primary mb-4">Menu Coming Soon</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p class="text-lg text-gray-600 mb-6">
+                  We're currently updating our menu with exciting new dishes. 
+                  Please call us for information about today's offerings.
+                </p>
+                {pub.contactPhone && (
+                  <a href={`tel:${pub.contactPhone.replace(/\s/g, '')}`}>
+                    <Button size="lg" className="bg-secondary hover:bg-secondary/90">
+                      Call {pub.contactPhone}
+                    </Button>
+                  </a>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+    )}
+
+    {/* Special Offers */}
+    <section class="py-12 bg-secondary/5">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto text-center">
+          <h2 class="text-3xl font-bold text-primary mb-6">Special Offers</h2>
+          <div class="grid md:grid-cols-2 gap-6">
+            {/* Sunday Roast */}
+            <Card class="bg-white">
+              <CardHeader>
+                <CardTitle class="text-xl text-secondary">Sunday Roast</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p class="text-gray-600 mb-4">
+                  Traditional Sunday roast with all the trimmings. Choice of beef, lamb, pork, or chicken.
+                </p>
+                <p class="font-semibold text-primary">Every Sunday • 12pm-4pm</p>
+              </CardContent>
+            </Card>
+
+            {/* Weekly Specials */}
+            <Card class="bg-white">
+              <CardHeader>
+                <CardTitle class="text-xl text-secondary">Weekly Specials</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p class="text-gray-600 mb-4">
+                  Ask about our weekly specials featuring seasonal ingredients and chef's recommendations.
+                </p>
+                <p class="font-semibold text-primary">Changes Weekly</p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* Allergen Information */}
+    <section class="py-12 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+          <Card class="bg-primary/5 border-primary/20">
+            <CardHeader>
+              <CardTitle class="text-xl text-primary">Allergen Information</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p class="text-gray-600">
+                We take food allergies and intolerances seriously. Please inform our staff of any dietary requirements 
+                when ordering, and we'll be happy to provide detailed allergen information for all our dishes. 
+                Our kitchen takes precautions to avoid cross-contamination, but we cannot guarantee a completely 
+                allergen-free environment.
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
