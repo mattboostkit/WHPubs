@@ -17,6 +17,14 @@ const pageDescription = 'Discover the culinary innovation at the heart of WH Pub
   targetPub={targetPub}
   ogImage={developmentKitchen?.seo?.ogImage?.asset?.url}
 >
+  <main>
+    <section class="py-16">
+      <div class="container mx-auto px-4">
+        <DevelopmentKitchenShowcase client:load />
+      </div>
+    </section>
+  </main>
+</Layout>
   <!-- Hero Section -->
   <section class="relative h-[70vh] min-h-[500px] overflow-hidden">
     {developmentKitchen?.heroImage && (
