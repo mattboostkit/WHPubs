@@ -71,17 +71,12 @@ const heroImage = pub.thingsToDoHeroImage || pub.heroImage;
           </p>
           <div class="flex flex-wrap gap-4 justify-center">
             {pub.reservationsUrl && (
-              <a href="/book-table" class="inline-block">
+              <a href="/book-a-table-pub" class="inline-block">
                 <button class="px-8 py-3 bg-primary text-secondary font-semibold rounded-lg hover:bg-primary/90 transition-all duration-300 shadow-lg hover:shadow-xl">
                   Book A Table
                 </button>
               </a>
             )}
-            <a href={`/${pub.slug.current}`} class="inline-block">
-              <button class="px-8 py-3 bg-white text-primary font-semibold rounded-lg border-2 border-primary hover:bg-primary hover:text-secondary transition-all duration-300">
-                Back to {pub.name}
-              </button>
-            </a>
           </div>
         </div>
       </div>
