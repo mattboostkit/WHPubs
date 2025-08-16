@@ -1,0 +1,341 @@
+---
+// Suppliers page for individual pubs
+import Layout from '@/layouts/Layout.astro';
+import { getPubBySlug, getPubs } from '@/lib/sanity';
+import PageHero from '@/components/PageHero.astro';
+import PubSuppliers from '@/components/PubSuppliers';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Truck, Award, MapPin, Leaf, Clock, Shield } from 'lucide-react';
+
+// Generate static paths for all pubs
+export async function getStaticPaths() {
+  const targetPubSlug = import.meta.env.TARGET_PUB_SLUG;
+  
+  if (targetPubSlug) {
+    // For pub-specific builds, only build the suppliers page for that pub
+    return [{
+      params: { slug: targetPubSlug }
+    }];
+  }
+  
+  // For main site, build suppliers pages for all pubs
+  const pubs = await getPubs();
+  return pubs.map(pub => ({
+    params: { slug: pub.slug.current }
+  }));
+}
+
+// Get the pub slug from the URL
+const { slug } = Astro.params;
+
+// Fetch the pub data
+const pub = await getPubBySlug(slug);
+
+// Redirect to 404 if pub not found
+if (!pub) {
+  return Astro.redirect('/404');
+}
+
+// Page metadata
+const pageTitle = `Our Quality Suppliers - ${pub.name}`;
+const pageDescription = `Discover the local and artisan suppliers that provide the finest ingredients for ${pub.name} in ${pub.locationName || pub.location}.`;
+
+// Use the pub's suppliers hero image if available, otherwise use pub's main hero image
+const heroImage = pub.suppliersHeroImage || pub.heroImage;
+---
+
+<Layout title={pageTitle} description={pageDescription} pub={pub}>
+  {/* Hero Section */}
+  <PageHero 
+    image={heroImage}
+    title="Our Quality Suppliers"
+    subtitle="Partnering with the finest local and artisan producers"
+    fallbackImage="/images/suppliers-hero.jpg"
+  />
+  
+  <main>
+    {/* Introduction Section */}
+    <section class="py-12 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto text-center">
+          <h2 class="text-3xl font-bold text-primary mb-6">From Farm to Fork</h2>
+          <p class="text-lg text-gray-600 mb-8">
+            At {pub.name}, we believe that exceptional food starts with exceptional ingredients. 
+            That's why we've carefully selected partners who share our commitment to quality, 
+            sustainability, and supporting local communities across Kent and the South East.
+          </p>
+          
+          {/* Quality Commitments */}
+          <div class="grid md:grid-cols-3 gap-6 mb-12">
+            <Card class="bg-secondary/10 border-secondary/20">
+              <CardContent class="p-6 text-center">
+                <Leaf class="w-12 h-12 mx-auto text-secondary mb-4" />
+                <h3 class="font-bold text-primary mb-2">Sustainable Sourcing</h3>
+                <p class="text-sm text-gray-600">
+                  We prioritise suppliers who use sustainable farming and production methods.
+                </p>
+              </CardContent>
+            </Card>
+            
+            <Card class="bg-secondary/10 border-secondary/20">
+              <CardContent class="p-6 text-center">
+                <MapPin class="w-12 h-12 mx-auto text-secondary mb-4" />
+                <h3 class="font-bold text-primary mb-2">Local First</h3>
+                <p class="text-sm text-gray-600">
+                  Supporting Kent producers and reducing food miles wherever possible.
+                </p>
+              </CardContent>
+            </Card>
+            
+            <Card class="bg-secondary/10 border-secondary/20">
+              <CardContent class="p-6 text-center">
+                <Award class="w-12 h-12 mx-auto text-secondary mb-4" />
+                <h3 class="font-bold text-primary mb-2">Award Winners</h3>
+                <p class="text-sm text-gray-600">
+                  Many of our suppliers have won prestigious awards for their quality.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Statistics */}
+          <div class="bg-primary/5 rounded-xl p-8 mb-8">
+            <h3 class="text-2xl font-bold text-primary mb-6">Our Supplier Network</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+              <div class="text-center">
+                <div class="text-3xl font-bold text-secondary mb-2">18+</div>
+                <div class="text-sm text-gray-600">Trusted Partners</div>
+              </div>
+              <div class="text-center">
+                <div class="text-3xl font-bold text-secondary mb-2">6</div>
+                <div class="text-sm text-gray-600">Local to Kent</div>
+              </div>
+              <div class="text-3xl font-bold text-secondary mb-2">17</div>
+                <div class="text-sm text-gray-600">Sustainable Sources</div>
+              </div>
+              <div class="text-center">
+                <div class="text-3xl font-bold text-secondary mb-2">6</div>
+                <div class="text-sm text-gray-600">Award Winners</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* Main Suppliers Section */}
+    <section class="py-12 bg-gray-50">
+      <div class="container mx-auto px-4">
+        <PubSuppliers 
+          pubName={pub.name} 
+          pubSlug={pub.slug.current} 
+          compact={false}
+          client:visible
+        />
+      </div>
+    </section>
+
+    {/* Our Commitment Section */}
+    <section class="py-12 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="max-w-6xl mx-auto">
+          <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-primary mb-4">Our Quality Promise</h2>
+            <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+              Every supplier relationship represents a commitment to excellence and shared values.
+            </p>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-8">
+            {/* Food Safety & Standards */}
+            <Card>
+              <CardHeader>
+                <CardTitle class="text-xl flex items-center gap-3">
+                  <Shield class="w-6 h-6 text-secondary" />
+                  Food Safety & Standards
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul class="space-y-3 text-gray-600">
+                  <li class="flex items-start gap-2">
+                    <span class="text-secondary mt-1 text-sm">•</span>
+                    All suppliers meet or exceed UK food safety standards
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-secondary mt-1 text-sm">•</span>
+                    Regular quality audits and inspections
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-secondary mt-1 text-sm">•</span>
+                    Full traceability from source to plate
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-secondary mt-1 text-sm">•</span>
+                    Comprehensive allergen management systems
+                  </li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            {/* Delivery & Freshness */}
+            <Card>
+              <CardHeader>
+                <CardTitle class="text-xl flex items-center gap-3">
+                  <Truck class="w-6 h-6 text-secondary" />
+                  Delivery & Freshness
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul class="space-y-3 text-gray-600">
+                  <li class="flex items-start gap-2">
+                    <span class="text-secondary mt-1 text-sm">•</span>
+                    Daily deliveries ensure maximum freshness
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-secondary mt-1 text-sm">•</span>
+                    Temperature-controlled transport systems
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-secondary mt-1 text-sm">•</span>
+                    Minimal time from harvest to kitchen
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-secondary mt-1 text-sm">•</span>
+                    Flexible ordering to match seasonal availability
+                  </li>
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* Seasonal Spotlight */}
+    <section class="py-12 bg-secondary/5">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+          <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-primary mb-4">Seasonal Spotlight</h2>
+            <p class="text-lg text-gray-600">
+              Our menu changes with the seasons to showcase the best each supplier has to offer.
+            </p>
+          </div>
+
+          <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <Card class="bg-white">
+              <CardContent class="p-6 text-center">
+                <div class="text-4xl mb-3">🌱</div>
+                <h3 class="font-bold text-primary mb-2">Spring</h3>
+                <p class="text-sm text-gray-600 mb-3">Fresh asparagus, new season lamb, spring herbs</p>
+                <span class="text-xs bg-secondary/20 text-secondary px-2 py-1 rounded-full">Mar - May</span>
+              </CardContent>
+            </Card>
+            
+            <Card class="bg-white">
+              <CardContent class="p-6 text-center">
+                <div class="text-4xl mb-3">☀️</div>
+                <h3 class="font-bold text-primary mb-2">Summer</h3>
+                <p class="text-sm text-gray-600 mb-3">Kent strawberries, local salads, BBQ specials</p>
+                <span class="text-xs bg-secondary/20 text-secondary px-2 py-1 rounded-full">Jun - Aug</span>
+              </CardContent>
+            </Card>
+            
+            <Card class="bg-white">
+              <CardContent class="p-6 text-center">
+                <div class="text-4xl mb-3">🍂</div>
+                <h3 class="font-bold text-primary mb-2">Autumn</h3>
+                <p class="text-sm text-gray-600 mb-3">Game birds, mushrooms, harvest vegetables</p>
+                <span class="text-xs bg-secondary/20 text-secondary px-2 py-1 rounded-full">Sep - Nov</span>
+              </CardContent>
+            </Card>
+            
+            <Card class="bg-white">
+              <CardContent class="p-6 text-center">
+                <div class="text-4xl mb-3">❄️</div>
+                <h3 class="font-bold text-primary mb-2">Winter</h3>
+                <p class="text-sm text-gray-600 mb-3">Root vegetables, slow-cooked dishes, citrus</p>
+                <span class="text-xs bg-secondary/20 text-secondary px-2 py-1 rounded-full">Dec - Feb</span>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* Become a Supplier */}
+    <section class="py-12 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+          <Card class="bg-primary/5 border-primary/20">
+            <CardHeader>
+              <CardTitle class="text-2xl text-primary text-center">Interested in Supplying Us?</CardTitle>
+            </CardHeader>
+            <CardContent class="text-center">
+              <p class="text-gray-600 mb-6">
+                We're always looking for new suppliers who share our values of quality, sustainability, 
+                and local sourcing. If you're a producer in Kent or the South East, we'd love to hear from you.
+              </p>
+              <div class="space-y-4">
+                <div class="grid md:grid-cols-3 gap-4 text-sm">
+                  <div class="flex items-center gap-2 justify-center">
+                    <Clock class="w-4 h-4 text-secondary" />
+                    <span>Quick response times</span>
+                  </div>
+                  <div class="flex items-center gap-2 justify-center">
+                    <Shield class="w-4 h-4 text-secondary" />
+                    <span>Fair payment terms</span>
+                  </div>
+                  <div class="flex items-center gap-2 justify-center">
+                    <Truck class="w-4 h-4 text-secondary" />
+                    <span>Flexible delivery</span>
+                  </div>
+                </div>
+                <div class="space-x-4 pt-4">
+                  <a href="mailto:suppliers@whpubs.com">
+                    <Button className="bg-secondary hover:bg-secondary/90">
+                      Contact Our Procurement Team
+                    </Button>
+                  </a>
+                  {pub.contactPhone && (
+                    <a href={`tel:${pub.contactPhone.replace(/\s/g, '')}`}>
+                      <Button variant="outline">
+                        Call {pub.contactPhone}
+                      </Button>
+                    </a>
+                  )}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </section>
+
+    {/* Taste the Difference */}
+    <section class="py-12 bg-gray-50">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto text-center">
+          <h2 class="text-3xl font-bold text-primary mb-6">Taste the Difference</h2>
+          <p class="text-lg text-gray-600 mb-8">
+            Experience the exceptional quality that comes from our carefully chosen supplier partnerships. 
+            Every dish tells a story of local craftsmanship and dedication to excellence.
+          </p>
+          <div class="space-x-4">
+            <a href="/book-a-table-pub">
+              <Button size="lg" className="bg-secondary hover:bg-secondary/90">
+                Book Your Table
+              </Button>
+            </a>
+            <a href="/menu">
+              <Button variant="outline" size="lg">
+                View Our Menu
+              </Button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
