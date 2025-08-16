@@ -17,6 +17,9 @@ export default function LiveResBookingWidget({
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Store current scroll position before loading iframe
+    const currentScrollY = window.scrollY;
+    
     // Simple delayed load without scroll interference
     const timer = setTimeout(() => {
       if (iframeRef.current && siteId) {
@@ -26,6 +29,16 @@ export default function LiveResBookingWidget({
         // Fallback to company-wide booking if no specific siteId provided
         iframeRef.current.src = `https://events-widget.liveres.co.uk/widget.html?companyId=ec8abb94-2a3c-4969-9122-a6f2f9b27a96&stylingURL=${stylingURL}`;
       }
+      
+      // Restore scroll position after iframe loads to prevent unwanted scrolling
+      const restoreScroll = () => {
+        window.scrollTo(0, currentScrollY);
+      };
+      
+      // Multiple attempts to prevent scroll jumps
+      setTimeout(restoreScroll, 100);
+      setTimeout(restoreScroll, 500);
+      setTimeout(restoreScroll, 1000);
     }, 1000); // Delay iframe load to prevent focus stealing
     
     return () => clearTimeout(timer);
