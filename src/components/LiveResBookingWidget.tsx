@@ -84,7 +84,7 @@ export default function LiveResBookingWidget({
       scrollPreventionActive = false;
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [siteId, stylingURL]);
+  }, [liveresSiteId, stylingURL, pubName, pubSlug]);
 
   return (
     <div ref={containerRef} className={`w-full ${className}`}>
