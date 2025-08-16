@@ -1,0 +1,296 @@
+---
+// Events page for individual pubs
+import Layout from '@/layouts/Layout.astro';
+import { getPubBySlug, getPubs, getEvents } from '@/lib/sanity';
+import PageHero from '@/components/PageHero.astro';
+import PubEventsSection from '@/components/PubEventsSection';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Calendar, Clock, Users, Music, Phone } from 'lucide-react';
+
+// Generate static paths for all pubs
+export async function getStaticPaths() {
+  const targetPubSlug = import.meta.env.TARGET_PUB_SLUG;
+  
+  if (targetPubSlug) {
+    // For pub-specific builds, only build the events page for that pub
+    return [{
+      params: { slug: targetPubSlug }
+    }];
+  }
+  
+  // For main site, build events pages for all pubs
+  const pubs = await getPubs();
+  return pubs.map(pub => ({
+    params: { slug: pub.slug.current }
+  }));
+}
+
+// Get the pub slug from the URL
+const { slug } = Astro.params;
+
+// Fetch the pub data and events
+const [pub, pubEvents] = await Promise.all([
+  getPubBySlug(slug),
+  getEvents(slug)
+]);
+
+// Redirect to 404 if pub not found
+if (!pub) {
+  return Astro.redirect('/404');
+}
+
+// Page metadata
+const pageTitle = `What's On at ${pub.name} - WH Pubs`;
+const pageDescription = `Discover upcoming events, live music, and special offers at ${pub.name} in ${pub.locationName || pub.location}.`;
+
+// Use the pub's events hero image if available, otherwise use pub's main hero image
+const heroImage = pub.eventsHeroImage || pub.heroImage;
+---
+
+<Layout title={pageTitle} description={pageDescription} pub={pub}>
+  {/* Hero Section */}
+  <PageHero 
+    image={heroImage}
+    title={`What's On at ${pub.name}`}
+    subtitle="Live music, special events, and great times await"
+    fallbackImage="/images/events-hero.jpg"
+  />
+  
+  <main>
+    {/* Event Highlights Section */}
+    <section class="py-12 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="max-w-6xl mx-auto">
+          <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-primary mb-4">Regular Events & Entertainment</h2>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+              From live music to quiz nights, there's always something happening at {pub.name}. 
+              Join us for memorable evenings and special celebrations.
+            </p>
+          </div>
+
+          {/* Regular Events Grid */}
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {/* Live Music */}
+            <Card class="hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <CardTitle class="text-xl flex items-center gap-2">
+                  <Music class="w-6 h-6 text-secondary" />
+                  Live Music
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p class="text-gray-600 mb-4">
+                  Join us for live acoustic sessions and local bands performing your favourite songs.
+                </p>
+                <p class="font-semibold text-primary">Friday & Saturday evenings</p>
+                <p class="text-sm text-gray-500">8pm start • Free entry</p>
+              </CardContent>
+            </Card>
+
+            {/* Quiz Nights */}
+            <Card class="hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <CardTitle class="text-xl flex items-center gap-2">
+                  <Users class="w-6 h-6 text-secondary" />
+                  Quiz Night
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p class="text-gray-600 mb-4">
+                  Test your knowledge with friends in our weekly quiz. Great prizes to be won!
+                </p>
+                <p class="font-semibold text-primary">Every Thursday</p>
+                <p class="text-sm text-gray-500">7:30pm start • £2 per person</p>
+              </CardContent>
+            </Card>
+
+            {/* Sunday Roast */}
+            <Card class="hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <CardTitle class="text-xl flex items-center gap-2">
+                  <Clock class="w-6 h-6 text-secondary" />
+                  Sunday Roast
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p class="text-gray-600 mb-4">
+                  Traditional Sunday lunch with all the trimmings. Perfect for family gatherings.
+                </p>
+                <p class="font-semibold text-primary">Every Sunday</p>
+                <p class="text-sm text-gray-500">12pm-4pm • Booking recommended</p>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Booking CTA */}
+          <div class="text-center">
+            <Card class="bg-secondary/10 border-secondary/20 max-w-md mx-auto">
+              <CardContent class="p-6">
+                <h3 class="text-xl font-bold text-primary mb-4">Join Us for Events</h3>
+                <p class="text-gray-600 mb-6">
+                  Book your table to guarantee your spot for our popular events.
+                </p>
+                <div class="space-y-2">
+                  <a href="/book-a-table-pub" class="w-full">
+                    <Button className="w-full bg-secondary hover:bg-secondary/90">
+                      Book Your Table
+                    </Button>
+                  </a>
+                  {pub.contactPhone && (
+                    <a href={`tel:${pub.contactPhone.replace(/\s/g, '')}`} class="w-full">
+                      <Button variant="outline" className="w-full">
+                        Call {pub.contactPhone}
+                      </Button>
+                    </a>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* Upcoming Events Section */}
+    <section class="py-12 bg-gray-50">
+      <div class="container mx-auto px-4">
+        <PubEventsSection events={pubEvents} pubName={pub.name} client:load />
+      </div>
+    </section>
+
+    {/* Special Occasions */}
+    <section class="py-12 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+          <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-primary mb-4">Special Occasions</h2>
+            <p class="text-lg text-gray-600">
+              Let us help make your special day memorable with our private event services.
+            </p>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-8">
+            {/* Private Events */}
+            <Card>
+              <CardHeader>
+                <CardTitle class="text-2xl text-primary">Private Events</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul class="space-y-3 text-gray-600 mb-6">
+                  <li class="flex items-start gap-2">
+                    <span class="text-secondary mt-1">•</span>
+                    Birthday celebrations
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-secondary mt-1">•</span>
+                    Anniversary dinners
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-secondary mt-1">•</span>
+                    Corporate functions
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-secondary mt-1">•</span>
+                    Wedding receptions
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-secondary mt-1">•</span>
+                    Christmas parties
+                  </li>
+                </ul>
+                <p class="text-sm text-gray-500">
+                  We can accommodate groups of various sizes with tailored menus and dedicated service.
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* Contact for Events */}
+            <Card class="bg-primary/5">
+              <CardHeader>
+                <CardTitle class="text-2xl text-primary">Plan Your Event</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p class="text-gray-600 mb-6">
+                  Our events team will work with you to create the perfect celebration. 
+                  From intimate gatherings to large parties, we have the experience and 
+                  facilities to make your event special.
+                </p>
+                <div class="space-y-4">
+                  <div class="flex items-center gap-3">
+                    <Phone class="w-5 h-5 text-secondary" />
+                    <div>
+                      <p class="font-semibold">Call to discuss your event</p>
+                      {pub.contactPhone && (
+                        <a 
+                          href={`tel:${pub.contactPhone.replace(/\s/g, '')}`}
+                          class="text-secondary hover:text-secondary/80 transition-colors"
+                        >
+                          {pub.contactPhone}
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <Calendar class="w-5 h-5 text-secondary" />
+                    <div>
+                      <p class="font-semibold">Book a viewing</p>
+                      <p class="text-sm text-gray-500">See our facilities and discuss options</p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* Seasonal Events */}
+    <section class="py-12 bg-secondary/5">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto text-center">
+          <h2 class="text-3xl font-bold text-primary mb-6">Seasonal Celebrations</h2>
+          <p class="text-lg text-gray-600 mb-8">
+            Throughout the year, we host special seasonal events that bring the community together.
+          </p>
+          
+          <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <Card class="bg-white">
+              <CardContent class="p-6 text-center">
+                <div class="text-4xl mb-3">🎄</div>
+                <h3 class="font-bold text-primary mb-2">Christmas</h3>
+                <p class="text-sm text-gray-600">Festive menus and celebrations</p>
+              </CardContent>
+            </Card>
+            
+            <Card class="bg-white">
+              <CardContent class="p-6 text-center">
+                <div class="text-4xl mb-3">🌸</div>
+                <h3 class="font-bold text-primary mb-2">Spring</h3>
+                <p class="text-sm text-gray-600">Garden parties and Easter events</p>
+              </CardContent>
+            </Card>
+            
+            <Card class="bg-white">
+              <CardContent class="p-6 text-center">
+                <div class="text-4xl mb-3">☀️</div>
+                <h3 class="font-bold text-primary mb-2">Summer</h3>
+                <p class="text-sm text-gray-600">BBQs and outdoor entertainment</p>
+              </CardContent>
+            </Card>
+            
+            <Card class="bg-white">
+              <CardContent class="p-6 text-center">
+                <div class="text-4xl mb-3">🍂</div>
+                <h3 class="font-bold text-primary mb-2">Autumn</h3>
+                <p class="text-sm text-gray-600">Harvest celebrations and fireworks</p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
