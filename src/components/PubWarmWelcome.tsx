@@ -190,10 +190,10 @@ export default function PubWarmWelcome({
                 </svg>
               </a>
               <a
-                href="#menus"
+                href="/events"
                 className="inline-flex items-center px-6 py-3 bg-white text-primary font-semibold rounded-lg border-2 border-primary hover:bg-primary hover:text-secondary transition-all duration-300"
               >
-                View Our Menus
+                What's On
               </a>
             </div>
           </div>
