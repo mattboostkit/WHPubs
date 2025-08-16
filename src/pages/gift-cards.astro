@@ -37,31 +37,10 @@ const description = "Give the gift of great times at WH Pubs. Perfect for birthd
   />
 
   <main>
-    {/* Introduction Section */}
+    {/* Enhanced Gift Cards Component */}
     <section class="py-16">
       <div class="container mx-auto px-4">
-        <div class="max-w-3xl mx-auto text-center">
-          {giftCardData?.introText ? (
-            <div class="prose prose-lg max-w-none mb-8">
-              <SanityPortableText value={giftCardData.introText} />
-            </div>
-          ) : (
-            <p class="text-lg text-muted-foreground mb-8">
-              WH Pubs gift cards are the perfect way to treat family and friends to memorable moments at any of our traditional British pubs. 
-              Whether it's for a special meal, Sunday roast, or just drinks with friends, our gift cards offer flexibility and choice.
-            </p>
-          )}
-          
-          {giftCardData?.purchaseUrl && (
-            <a href={giftCardData.purchaseUrl} target="_blank" rel="noopener noreferrer" class="inline-block">
-              <Button size="lg" class="bg-primary hover:bg-primary/90">
-                <Gift class="w-5 h-5 mr-2" />
-                {giftCardData.purchaseButtonText || 'Buy Gift Cards'}
-                <ExternalLink class="w-4 h-4 ml-2" />
-              </Button>
-            </a>
-          )}
-        </div>
+        <EnhancedGiftCards client:load />
       </div>
     </section>
 
