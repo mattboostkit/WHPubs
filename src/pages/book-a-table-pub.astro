@@ -15,7 +15,7 @@ const targetPubSlug = import.meta.env.TARGET_PUB_SLUG;
 const pub = targetPubSlug ? await getPubBySlug(targetPubSlug) : null;
 
 if (!pub) {
-  return Astro.redirect('/book-table');
+  return Astro.redirect('/');
 }
 
 // Use the LiveRes site ID from Sanity, with fallback to URL extraction
