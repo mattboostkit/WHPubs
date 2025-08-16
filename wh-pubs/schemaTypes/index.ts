@@ -22,6 +22,10 @@ import privacyPolicy from './privacyPolicy'
 import featuredDishes from './featuredDishes'
 import customerReview from './customerReview'
 import pubHighlights from './pubHighlights'
+import supplier from './supplier'
+import socialMediaContent from './socialMediaContent'
+import homepageStats from './homepageStats'
+import amenity from './amenity'
 import { eventsPageSettings, blogPageSettings, aboutPageSettings, contactPageSettings, careersPageSettings, thingsToDoPageSettings, pubFinderPageSettings, suppliersPageSettings, giftCardsPageSettings, bookTablePageSettings } from './pageSettings'
 
 export const schemaTypes = [
