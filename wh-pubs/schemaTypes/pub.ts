@@ -743,6 +743,19 @@ export default defineType({
       description: 'Full LiveRes widget URL for this pub (e.g., https://events-widget.liveres.co.uk/widget.html?siteId=...&stylingURL=...)',
     }),
     defineField({
+      name: 'liveResSiteId',
+      title: 'LiveRes Site ID',
+      type: 'string',
+      group: 'features',
+      description: 'LiveRes site ID for this pub (e.g., 4c4d14e2-7bf3-4952-baea-69da60126460). Used to generate the booking widget.',
+      validation: (Rule) => Rule.custom((value) => {
+        if (value && !/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i.test(value)) {
+          return 'Site ID must be a valid UUID format (e.g., 4c4d14e2-7bf3-4952-baea-69da60126460)';
+        }
+        return true;
+      }),
+    }),
+    defineField({
       name: 'depositRequired',
       title: 'Booking Deposit Required?',
       type: 'boolean',
