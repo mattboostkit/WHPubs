@@ -48,7 +48,7 @@ export default function HeaderNavigation({ pubs, currentPath, isPubLayout, heade
       })}
       {/* Book a Table CTA Button - Always visible */}
       <a 
-        href="/book-table" 
+        href="/book-a-table-pub" 
         className="ml-4 px-6 py-2 bg-[#B79C64] text-primary font-semibold rounded-lg hover:bg-[#B79C64]/90 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
         aria-label="Book a table"
       >
