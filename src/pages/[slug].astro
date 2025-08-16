@@ -112,7 +112,7 @@ const pubStructuredData = {
   "servesCuisine": "British",
   "priceRange": "££",
   "openingHours": pub.openingHours ? pub.openingHours.split('\n').map(line => line.trim()).filter(Boolean) : [],
-  "menu": pub.menuUrl || `https://whpubs.com/${pub.slug.current}/menu`,
+  "menu": pub.menuUrl || `https://${pub.externalDomain || 'whpubs.com'}${pub.externalDomain ? '/menu' : '/' + pub.slug.current + '/menu'}`,
   "acceptsReservations": !!pub.reservationsUrl,
   "hasMenu": pubMenus && pubMenus.length > 0,
   "aggregateRating": pubReviews && pubReviews.length > 0 ? {
