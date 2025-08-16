@@ -10,7 +10,7 @@ const client = createClient({
 
 // Mapping of pub slugs to their Netlify URLs
 const pubUrlMappings = {
-  'the-bull': 'whpubs-thebull.netlify.app',
+  'the-bull-otford': 'whpubs-thebull.netlify.app',
   'the-chaser-inn': 'whpubs-thechaserinn.netlify.app',
   'the-rose-and-crown': 'whpubs-theroseandcrown.netlify.app',
   'the-cricketers-inn': 'whpubs-thecricketersinn.netlify.app',
