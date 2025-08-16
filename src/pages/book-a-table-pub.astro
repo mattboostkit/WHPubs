@@ -18,9 +18,9 @@ if (!pub) {
   return Astro.redirect('/book-table');
 }
 
-// Extract siteId from liveResWidgetUrl if available
-let siteId = null;
-if (pub.liveResWidgetUrl) {
+// Use the LiveRes site ID from Sanity, with fallback to URL extraction
+let siteId = pub.liveResSiteId;
+if (!siteId && pub.liveResWidgetUrl) {
   const urlParams = new URLSearchParams(pub.liveResWidgetUrl.split('?')[1]);
   siteId = urlParams.get('siteId');
 }
