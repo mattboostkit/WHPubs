@@ -1,0 +1,257 @@
+---
+// Performance optimization component
+// This component adds performance optimizations for mobile-first experience
+---
+
+<!-- Preload critical fonts -->
+<link rel="preload" href="/fonts/lora-v23-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/lora-v23-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+
+<!-- Critical CSS for above-the-fold content -->
+<style>
+  /* Critical CSS that loads immediately */
+  body {
+    font-family: Lora, serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Prevent layout shift during loading */
+  .loading-placeholder {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+  }
+  
+  @keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+  
+  /* Hero section critical styles */
+  .hero-section {
+    min-height: 50vh;
+    background-color: #1A1A1A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Button critical styles */
+  .btn-primary {
+    background-color: #B79C64;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    display: inline-block;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-primary:hover {
+    background-color: #9d8454;
+  }
+  
+  /* Prevent flash of unstyled text */
+  .font-loading {
+    font-display: swap;
+  }
+</style>
+
+<!-- Resource hints for faster loading -->
+<link rel="dns-prefetch" href="//events-widget.liveres.co.uk">
+<link rel="dns-prefetch" href="//cdn.sanity.io">
+<link rel="dns-prefetch" href="//www.google-analytics.com">
+
+<!-- Optimize third-party scripts -->
+<script>
+  // Defer non-critical scripts
+  function loadScript(src, async = true, defer = true) {
+    const script = document.createElement('script');
+    script.src = src;
+    script.async = async;
+    script.defer = defer;
+    document.head.appendChild(script);
+  }
+  
+  // Load non-critical scripts after page load
+  window.addEventListener('load', () => {
+    // Load analytics after page is fully loaded
+    if (typeof gtag === 'undefined' && window.GA_MEASUREMENT_ID) {
+      loadScript(`https://www.googletagmanager.com/gtag/js?id=${window.GA_MEASUREMENT_ID}`);
+    }
+  });
+  
+  // Implement intersection observer for lazy loading
+  if ('IntersectionObserver' in window) {
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          if (img.dataset.src) {
+            img.src = img.dataset.src;
+            img.classList.remove('loading-placeholder');
+            observer.unobserve(img);
+          }
+        }
+      });
+    });
+    
+    // Observe all images with data-src
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('img[data-src]').forEach(img => {
+        imageObserver.observe(img);
+      });
+    });
+  }
+  
+  // Optimize booking widget loading
+  window.optimizeBookingWidget = function() {
+    const bookingWidgets = document.querySelectorAll('iframe[src*="liveres.co.uk"]');
+    bookingWidgets.forEach(widget => {
+      // Add loading attribute for better performance
+      widget.loading = 'lazy';
+      
+      // Implement viewport-based loading
+      if ('IntersectionObserver' in window) {
+        const widgetObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              // Widget is visible, ensure it's loaded
+              const iframe = entry.target;
+              if (!iframe.src && iframe.dataset.src) {
+                iframe.src = iframe.dataset.src;
+              }
+              widgetObserver.unobserve(iframe);
+            }
+          });
+        });
+        widgetObserver.observe(widget);
+      }
+    });
+  };
+  
+  // Mobile-specific optimizations
+  if (window.innerWidth < 768) {
+    // Reduce image quality for mobile
+    window.mobileImageOptimization = true;
+    
+    // Implement touch-friendly interactions
+    document.addEventListener('DOMContentLoaded', () => {
+      // Add touch-friendly button spacing
+      const buttons = document.querySelectorAll('button, .btn, a[role="button"]');
+      buttons.forEach(btn => {
+        btn.style.minHeight = '44px';
+        btn.style.minWidth = '44px';
+      });
+    });
+  }
+  
+  // Performance monitoring
+  window.WHPubsPerformance = {
+    startTime: performance.now(),
+    
+    measureLCP: function() {
+      if ('PerformanceObserver' in window) {
+        const observer = new PerformanceObserver((list) => {
+          const entries = list.getEntries();
+          const lastEntry = entries[entries.length - 1];
+          console.log('LCP:', lastEntry.startTime, 'ms');
+          
+          // Track performance with analytics if available
+          if (window.analytics) {
+            window.analytics.track('Performance Metric', {
+              metric: 'LCP',
+              value: lastEntry.startTime,
+              page: window.location.pathname
+            });
+          }
+        });
+        observer.observe({ entryTypes: ['largest-contentful-paint'] });
+      }
+    },
+    
+    measureFID: function() {
+      if ('PerformanceObserver' in window) {
+        const observer = new PerformanceObserver((list) => {
+          const entries = list.getEntries();
+          entries.forEach(entry => {
+            console.log('FID:', entry.processingStart - entry.startTime, 'ms');
+            
+            if (window.analytics) {
+              window.analytics.track('Performance Metric', {
+                metric: 'FID',
+                value: entry.processingStart - entry.startTime,
+                page: window.location.pathname
+              });
+            }
+          });
+        });
+        observer.observe({ entryTypes: ['first-input'] });
+      }
+    },
+    
+    measureCLS: function() {
+      if ('PerformanceObserver' in window) {
+        let clsValue = 0;
+        const observer = new PerformanceObserver((list) => {
+          for (const entry of list.getEntries()) {
+            if (!entry.hadRecentInput) {
+              clsValue += entry.value;
+            }
+          }
+          console.log('CLS:', clsValue);
+          
+          if (window.analytics) {
+            window.analytics.track('Performance Metric', {
+              metric: 'CLS',
+              value: clsValue,
+              page: window.location.pathname
+            });
+          }
+        });
+        observer.observe({ entryTypes: ['layout-shift'] });
+      }
+    },
+    
+    init: function() {
+      this.measureLCP();
+      this.measureFID();
+      this.measureCLS();
+      
+      // Measure page load time
+      window.addEventListener('load', () => {
+        const loadTime = performance.now() - this.startTime;
+        console.log('Page Load Time:', loadTime, 'ms');
+        
+        if (window.analytics) {
+          window.analytics.track('Performance Metric', {
+            metric: 'Page Load Time',
+            value: loadTime,
+            page: window.location.pathname
+          });
+        }
+      });
+    }
+  };
+  
+  // Initialize performance monitoring
+  window.WHPubsPerformance.init();
+</script>
+
+<!-- Service Worker for caching -->
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js')
+        .then(registration => {
+          console.log('SW registered: ', registration);
+        })
+        .catch(registrationError => {
+          console.log('SW registration failed: ', registrationError);
+        });
+    });
+  }
+</script>
