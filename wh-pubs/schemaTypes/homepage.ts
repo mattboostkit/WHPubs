@@ -415,8 +415,8 @@ export default defineType({
                   name: 'bookingLink',
                   title: 'Book Now Link',
                   type: 'string',
-                  description: 'Optional booking link for this dish (defaults to /book-table)',
-                  initialValue: '/book-table',
+                  description: 'Optional booking link for this dish (defaults to /book-a-table-pub)',
+                  initialValue: '/book-a-table-pub',
                 },
               ],
               preview: {
