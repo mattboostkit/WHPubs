@@ -20,6 +20,19 @@ export default function LiveResBookingWidget({
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Pub-specific LiveRes site ID mapping (fallback if siteId not provided)
+  const pubSiteIdMap: Record<string, string> = {
+    'the-bull-otford': 'cc8b210d-e765-4aa6-b10e-f3dba5a9d039',
+    'the-bull': 'cc8b210d-e765-4aa6-b10e-f3dba5a9d039', // Fallback for old slug
+    'the-little-brown-jug': '4c4d14e2-7bf3-4952-baea-69da60126460',
+    'the-chaser-inn': '36a6d37c-eeb9-40d9-932f-f9ffdb5d630a',
+    'the-cricketers-inn': '329d4e4f-c7ff-4ca0-ab7b-7d866ce38670',
+    'the-rose-and-crown': '304df119-0d39-4f03-bce3-6deee8b79d90'
+  };
+
+  // Get the correct site ID - use provided siteId or fallback to mapping
+  const liveresSiteId = siteId || (pubSlug ? pubSiteIdMap[pubSlug] : null);
+
   // Prevent any unwanted scrolling behavior
   const preventScroll = useCallback(() => {
     window.scrollTo(0, 0);
