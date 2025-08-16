@@ -1009,3 +1009,177 @@ export async function getPubHighlights(targetPubSlug) {
     }
   `, params);
 }
+
+// Helper function to get suppliers
+export async function getSuppliers(targetPubSlug = null, category = null) {
+  let filter = '';
+  const params = {};
+  
+  if (targetPubSlug) {
+    // Get suppliers for a specific pub or those with no pub association (general suppliers)
+    filter = `&& (associatedPubs[]->slug.current match $targetPubSlug || !defined(associatedPubs))`;
+    params.targetPubSlug = targetPubSlug;
+  }
+  
+  if (category) {
+    filter += ` && category == $category`;
+    params.category = category;
+  }
+  
+  return client.fetch(`
+    *[_type == "supplier" ${filter}] {
+      name,
+      slug,
+      logo {
+        asset->{
+          _id,
+          url
+        },
+        alt
+      },
+      category,
+      description,
+      location,
+      specialties,
+      website,
+      partnershipType,
+      featured,
+      contactInfo
+    } | order(featured desc, sortOrder asc, name asc)
+  `, params);
+}
+
+// Helper function to get social media content
+export async function getSocialMediaContent(targetPubSlug = null, platform = null, limit = 10) {
+  let filter = '&& active == true';
+  const params = { limit };
+  
+  if (targetPubSlug) {
+    filter += ` && associatedPub->slug.current == $targetPubSlug`;
+    params.targetPubSlug = targetPubSlug;
+  } else {
+    // Get hub-wide content (no pub association)
+    filter += ` && !defined(associatedPub)`;
+  }
+  
+  if (platform) {
+    filter += ` && platform == $platform`;
+    params.platform = platform;
+  }
+  
+  return client.fetch(`
+    *[_type == "socialMediaContent" ${filter}] {
+      title,
+      platform,
+      postImage {
+        asset->{
+          _id,
+          url
+        },
+        alt
+      },
+      caption,
+      likes,
+      comments,
+      shares,
+      timestamp,
+      location,
+      author,
+      rating,
+      reviewPlatform,
+      verified,
+      featured,
+      externalUrl,
+      associatedPub->{
+        name,
+        slug
+      }
+    } | order(featured desc, sortOrder asc, _createdAt desc)[0...$limit]
+  `, params);
+}
+
+// Helper function to get homepage statistics
+export async function getHomepageStats() {
+  return client.fetch(`
+    *[_type == "homepageStats" && showOnHomepage == true][0] {
+      title,
+      subtitle,
+      stats[] {
+        number,
+        label,
+        description,
+        icon,
+        color
+      },
+      backgroundImage {
+        asset->{
+          _id,
+          url
+        },
+        alt
+      },
+      backgroundColor,
+      animationEnabled
+    }
+  `);
+}
+
+// Helper function to get amenities
+export async function getAmenities(category = null) {
+  let filter = '';
+  const params = {};
+  
+  if (category) {
+    filter = `&& category == $category`;
+    params.category = category;
+  }
+  
+  return client.fetch(`
+    *[_type == "amenity" ${filter}] {
+      name,
+      slug,
+      description,
+      icon,
+      category,
+      isStandard,
+      showOnCards,
+      featured,
+      additionalInfo
+    } | order(displayOrder asc, name asc)
+  `, params);
+}
+
+// Helper function to get pub amenities (including references)
+export async function getPubAmenities(targetPubSlug) {
+  if (!targetPubSlug) return [];
+  
+  const params = { targetPubSlug };
+  
+  return client.fetch(`
+    *[_type == "pub" && slug.current == $targetPubSlug][0] {
+      amenities[]->{
+        name,
+        slug,
+        description,
+        icon,
+        category,
+        isStandard,
+        showOnCards,
+        featured,
+        additionalInfo
+      },
+      customAmenities,
+      "standardAmenities": *[_type == "amenity" && isStandard == true] {
+        name,
+        slug,
+        description,
+        icon,
+        category,
+        isStandard,
+        showOnCards,
+        featured,
+        additionalInfo
+      }
+    }
+  `, params);
+}
