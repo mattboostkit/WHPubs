@@ -129,23 +129,23 @@ export default function WhatsOn() {
             ))}
           </div>
 
-          {/* Bottom CTA */}
-          <div className="bg-gradient-to-r from-primary to-primary/95 rounded-2xl p-8 md:p-12 text-center text-white">
-            <h3 className="text-3xl font-bold mb-4">Never Miss an Event</h3>
-            <p className="text-lg mb-6 opacity-90">
-              Join our mailing list for exclusive invites and special offers
+          {/* Bottom CTA - Join us for events */}
+          <div className="bg-gradient-to-r from-primary to-primary/95 rounded-2xl p-8 md:p-12 text-center text-white mt-8">
+            <h3 className="text-2xl md:text-3xl font-bold mb-4">Join Us for Events</h3>
+            <p className="text-base md:text-lg mb-8 opacity-90 max-w-2xl mx-auto">
+              From live music to quiz nights, special dinners to seasonal celebrations - there's always something happening at WH Pubs
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
               <a 
                 href="/events"
-                className="inline-flex items-center justify-center gap-2 bg-secondary text-primary px-6 py-3 rounded-lg font-semibold hover:bg-secondary/90 transition-colors duration-300"
+                className="inline-flex items-center justify-center gap-2 bg-secondary text-primary px-8 py-4 rounded-lg font-semibold hover:bg-secondary/90 transition-colors duration-300 shadow-lg"
               >
                 View All Events
                 <Calendar className="w-4 h-4" />
               </a>
               <a 
-                href="/book-table"
-                className="inline-flex items-center justify-center gap-2 bg-white/10 backdrop-blur-sm border-2 border-white/20 text-white px-6 py-3 rounded-lg font-semibold hover:bg-white/20 transition-colors duration-300"
+                href="/book-a-table"
+                className="inline-flex items-center justify-center gap-2 bg-white/10 backdrop-blur-sm border-2 border-white/20 text-white px-8 py-4 rounded-lg font-semibold hover:bg-white/20 transition-colors duration-300"
               >
                 Book Your Table
                 <ArrowRight className="w-4 h-4" />
